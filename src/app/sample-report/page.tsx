@@ -7,7 +7,7 @@ import { SampleEvidenceTable } from "@/components/sample-evidence-table";
 
 export const metadata: Metadata = {
   title: "Representative Sample Report",
-  description: "A fictional demonstration of the structure, evidence standards and confidence model used in a Lemon Cactus report.",
+  description: "A fictional demonstration of the structure, evidence standards and confidence model used in a MelonCactus report.",
   alternates: { canonical: "/sample-report" },
 };
 
@@ -15,7 +15,7 @@ export default function SampleReportPage() {
   return (
     <article className="sample-report">
       <PageHeader eyebrow="Representative demonstration" title="Production Readiness Assessment" intro="A fictional sample showing how evidence, assessment, confidence and limitations are presented. Northstar Thermal Systems and all source material below are invented for demonstration purposes." breadcrumbs={[{ label: "Sample Report" }]} />
-      <section className="report-cover"><Container><div className="report-meta"><div><span>Reference</span><strong>LC-DEMO-001</strong></div><div><span>Status</span><strong>Fictional demonstration</strong></div><div><span>Subject</span><strong>Northstar Thermal Systems</strong></div><div><span>Evidence cut-off</span><strong>Illustrative only</strong></div></div></Container></section>
+      <section className="report-cover"><Container><div className="report-meta"><div><span>Reference</span><strong>MC-DEMO-001</strong></div><div><span>Status</span><strong>Fictional demonstration</strong></div><div><span>Subject</span><strong>Northstar Thermal Systems</strong></div><div><span>Evidence cut-off</span><strong>Illustrative only</strong></div></div></Container></section>
       <section className="report-section"><Container className="report-grid"><aside><span>01</span><h2>Research question</h2></aside><div className="report-body"><p className="report-lead">What does the fictional public evidence indicate about Northstar Thermal Systems’ readiness to increase assembly output for its modular industrial heat systems?</p><h3>Scope</h3><p>The demonstration considers fictional corporate material, planning information, vacancy notices, facility imagery and trade-fair content. It does not estimate precise output, cost, yield or customer demand.</p></div></Container></section>
       <section className="report-section report-tinted"><Container className="report-grid"><aside><span>02</span><h2>Executive summary</h2></aside><div className="report-body"><p className="report-lead">The evidence is consistent with a company preparing for increased operational throughput, but it does not confirm realised production capacity.</p><p>A permitted facility extension, visible construction and recruitment across production and supplier-quality roles form a coherent expansion signal. Product literature confirms a modular architecture that could support repeatable assembly. However, no fictional source establishes commissioning status, installed line rate, staffing completion or order coverage.</p><div className="finding-summary"><div><span>Overall assessment</span><strong>Expansion preparation is likely</strong></div><div><span>Confidence</span><ConfidenceBadge level="High confidence" /></div><div><span>Key limitation</span><strong>No verified output data</strong></div></div></div></Container></section>
       <section className="report-section"><Container><div className="report-section-heading"><span>03</span><h2>Evidence register</h2><p>Observations remain separate from the assessment they support.</p></div><SampleEvidenceTable /></Container></section>
@@ -26,4 +26,3 @@ export default function SampleReportPage() {
     </article>
   );
 }
-

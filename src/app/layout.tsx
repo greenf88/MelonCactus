@@ -8,21 +8,21 @@ import { siteConfig } from "@/config/site";
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: "Lemon Cactus | Industrial Intelligence",
-    template: "%s | Lemon Cactus",
+    default: "MelonCactus | Industrial Intelligence",
+    template: "%s | MelonCactus",
   },
   description: siteConfig.description,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
-    title: "Lemon Cactus | Industrial Intelligence",
+    title: "MelonCactus | Industrial Intelligence",
     description: siteConfig.description,
     url: "/",
   },
   twitter: {
     card: "summary",
-    title: "Lemon Cactus | Industrial Intelligence",
+    title: "MelonCactus | Industrial Intelligence",
     description: siteConfig.description,
   },
   robots: process.env.VERCEL_ENV === "preview"

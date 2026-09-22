@@ -55,7 +55,7 @@ export default function Home() {
             <p className="eyebrow">Industrial Intelligence</p>
             <h1>Industrial intelligence built from public evidence.</h1>
             <p className="hero-intro">
-              Lemon Cactus turns fragmented public information into structured,
+              MelonCactus turns fragmented public information into structured,
               evidence-backed intelligence for industrial and technology leaders.
             </p>
             <div className="button-row">
@@ -69,7 +69,7 @@ export default function Home() {
           <div className="evidence-panel" role="group" aria-label="Example evidence classification">
             <div className="evidence-panel-top">
               <span>Evidence record</span>
-              <span>LC / 001</span>
+              <span>MC / 001</span>
             </div>
             <div className="evidence-lines" aria-hidden="true">
               <span className="line long" />
@@ -104,7 +104,7 @@ export default function Home() {
         <Container>
           <SectionHeading
             eyebrow="Research scope"
-            title="What Lemon Cactus investigates"
+            title="What MelonCactus investigates"
             intro="Focused research for decisions where technical detail, source quality and commercial context all matter."
           />
           <div className="investigation-grid">

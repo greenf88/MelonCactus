@@ -33,7 +33,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .header-inner { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
 .wordmark { display: inline-flex; flex-direction: column; line-height: 1; }
 .wordmark-name { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; letter-spacing: -.035em; }
-.wordmark-name i { display: inline-block; width: .48rem; height: .48rem; margin: 0 .05rem .1rem; border-radius: 50%; background: var(--lemon); }
 .wordmark-descriptor { margin-top: .4rem; color: var(--green); font-size: .65rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
 .desktop-nav { display: flex; align-items: center; gap: 1.45rem; font-size: .85rem; font-weight: 600; }
 .desktop-nav > a:not(.button) { padding: .7rem 0; border-bottom: 1px solid transparent; }
@@ -265,6 +264,8 @@ h3 { line-height: 1.25; }
 .form-submit-row { display: flex; align-items: center; gap: 1.2rem; margin-top: 1.5rem; }
 .form-submit-row p { margin: 0; color: var(--muted); font-size: .76rem; }
 .form-status { min-height: 2rem; margin-top: 1rem; color: var(--green-dark); font-weight: 700; }
+.form-status a { text-decoration: underline; text-underline-offset: 3px; }
+.form-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .legal-copy { max-width: 760px; }
 .legal-copy h2 { margin: 3rem 0 .7rem; font-size: 2rem; }
 .legal-copy h2:first-of-type { margin-top: 1rem; }

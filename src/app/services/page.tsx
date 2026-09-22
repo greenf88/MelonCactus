@@ -7,7 +7,7 @@ import { reportOptions } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Services and Report Options",
-  description: "Industrial competitive intelligence, technical analysis and public-source research report options from Lemon Cactus.",
+  description: "Industrial competitive intelligence, technical analysis and public-source research report options from MelonCactus.",
   alternates: { canonical: "/services" },
 };
 
@@ -28,7 +28,7 @@ export default function ServicesPage() {
       <PageHeader
         eyebrow="Services"
         title="Research shaped around a decision—not a data dump."
-        intro="Lemon Cactus investigates defined commercial and technical questions using lawful public sources, transparent evidence standards and proportionate conclusions."
+        intro="MelonCactus investigates defined commercial and technical questions using lawful public sources, transparent evidence standards and proportionate conclusions."
         breadcrumbs={[{ label: "Services" }]}
       />
       <section className="section">
@@ -51,7 +51,7 @@ export default function ServicesPage() {
         <Container className="split-content">
           <div><p className="eyebrow">Working boundary</p><h2>Public sources. Clear limits.</h2></div>
           <div className="prose-block">
-            <p>Work is limited to lawful public-source research. Lemon Cactus does not hack systems, bypass access controls, impersonate people, use social engineering or accept stolen or unlawfully acquired information.</p>
+            <p>Work is limited to lawful public-source research. MelonCactus does not hack systems, bypass access controls, impersonate people, use social engineering or accept stolen or unlawfully acquired information.</p>
             <p>Some questions cannot be answered responsibly from public material. Those limits are stated directly, with the remaining information gaps and sensible next research questions.</p>
             <ButtonLink href="/methodology" variant="secondary">Read the Methodology</ButtonLink>
           </div>
@@ -61,4 +61,3 @@ export default function ServicesPage() {
     </>
   );
 }
-

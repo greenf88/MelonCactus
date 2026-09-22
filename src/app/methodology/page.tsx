@@ -7,7 +7,7 @@ import { confidenceLevels } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Research Methodology and Evidence Standards",
-  description: "How Lemon Cactus collects, verifies and assesses lawful public evidence for industrial intelligence work.",
+  description: "How MelonCactus collects, verifies and assesses lawful public evidence for industrial intelligence work.",
   alternates: { canonical: "/methodology" },
 };
 
@@ -33,4 +33,3 @@ export default function MethodologyPage() {
     </>
   );
 }
-

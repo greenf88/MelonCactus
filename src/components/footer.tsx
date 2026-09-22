@@ -8,7 +8,7 @@ export function Footer() {
       <Container>
         <div className="footer-grid">
           <div>
-            <div className="footer-mark">Lemon Cactus</div>
+            <div className="footer-mark">{siteConfig.name}</div>
             <p>{siteConfig.coreStatement}</p>
           </div>
           <div>
@@ -33,11 +33,10 @@ export function Footer() {
           </div>
         </div>
         <div className="footer-base">
-          <span>© {new Date().getFullYear()} Lemon Cactus</span>
-          <span>Public-source research. Discreet by design.</span>
+          <span>© {new Date().getFullYear()} {siteConfig.name}</span>
+          <span>{siteConfig.operatorStatement}</span>
         </div>
       </Container>
     </footer>
   );
 }
-

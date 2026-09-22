@@ -1,14 +1,16 @@
 export const siteConfig = {
-  name: "Lemon Cactus",
+  name: "MelonCactus",
   descriptor: "Industrial Intelligence",
   description:
     "Discreet, evidence-based competitive and technical intelligence for industrial and technology companies.",
   coreStatement:
     "Evidence from public sources. Intelligence for technology leaders.",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  businessEmail: "contact@lemoncactus.example",
-  legalName: "Lemon Cactus — legal entity to be confirmed",
-  postalAddress: "Postal address to be confirmed",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://meloncactus.com",
+  businessEmail: "contact@meloncactus.com",
+  legalName: "GFNI",
+  operatorStatement: "MelonCactus is operated by GFNI.",
+  postalAddress: null,
+  registrationNumber: null,
   nav: [
     { href: "/services", label: "Services" },
     { href: "/methodology", label: "Methodology" },
@@ -93,4 +95,3 @@ export const confidenceLevels = [
     description: "Insufficient reliable evidence for an assessment.",
   },
 ] as const;
-

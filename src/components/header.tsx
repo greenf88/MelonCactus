@@ -7,10 +7,8 @@ export function Header() {
   return (
     <header className="site-header">
       <Container className="header-inner">
-        <Link className="wordmark" href="/" aria-label="Lemon Cactus home">
-          <span className="wordmark-name">
-            Lemon <i aria-hidden="true" /> Cactus
-          </span>
+        <Link className="wordmark" href="/" aria-label="MelonCactus home">
+          <span className="wordmark-name">{siteConfig.name}</span>
           <span className="wordmark-descriptor">{siteConfig.descriptor}</span>
         </Link>
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -28,4 +26,3 @@ export function Header() {
     </header>
   );
 }
-

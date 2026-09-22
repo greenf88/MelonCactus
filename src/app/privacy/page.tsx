@@ -3,7 +3,21 @@ import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { siteConfig } from "@/config/site";
 
-export const metadata: Metadata = { title: "Privacy", description: "Privacy information for the Lemon Cactus website.", alternates: { canonical: "/privacy" } };
+export const metadata: Metadata = {
+  title: "Privacy", description: "Privacy information for the MelonCactus website.",
+  alternates: { canonical: "/privacy" },
+};
 
-export default function PrivacyPage() { return <><PageHeader eyebrow="Information" title="Privacy statement" intro="A plain account of what this website currently does—and does not do—with personal information." breadcrumbs={[{ label: "Privacy" }]} /><section className="section"><Container className="legal-copy"><p className="legal-updated">Last updated: 22 September 2026</p><h2>Current website behaviour</h2><p>This first version does not use advertising trackers, behavioural profiling or non-essential cookies. No cookie banner is shown because the site does not currently set cookies that require consent.</p><h2>Enquiry form</h2><p>The enquiry form currently performs validation in your browser but is not connected to a transmission or storage provider. Information entered is not sent to Lemon Cactus. This will be updated before the form is activated.</p><h2>Information to avoid</h2><p>Do not provide passwords, unlawfully obtained material, special-category personal data or more personal information than is necessary to explain a research question.</p><h2>Future providers</h2><p>If a form, email or privacy-respecting analytics provider is connected later, this statement will be updated to explain the purpose, lawful basis, retention period and relevant processor before collection begins.</p><h2>Contact and responsible entity</h2><p>The business email, legal entity and postal address are awaiting verification. The current configuration placeholders are {siteConfig.businessEmail}, {siteConfig.legalName}, and {siteConfig.postalAddress}. These must be replaced before launch.</p></Container></section></>; }
-
+export default function PrivacyPage() {
+  return <>
+    <PageHeader eyebrow="Information" title="Privacy statement" intro="How we handle information submitted through this website." breadcrumbs={[{ label: "Privacy" }]} />
+    <section className="section"><Container className="legal-copy">
+      <p className="legal-updated">Last updated: 22 September 2026</p>
+      <h2>Who operates this site</h2><p>{siteConfig.operatorStatement} Contact us at <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
+      <h2>Enquiries</h2><p>When you submit the form, we use the name, work email, company and enquiry details you provide to review and respond to your request. The form sends those details to our business inbox through Resend, our email delivery provider. If the form is unavailable, you may contact us directly by email.</p>
+      <h2>Information to avoid</h2><p>Do not send passwords, credentials, unlawfully obtained material, special-category personal data or more personal information than is needed to explain your question.</p>
+      <h2>Website technology</h2><p>This version does not use advertising trackers, behavioural profiling or non-essential cookies. We do not sell enquiry information.</p>
+      <h2>Your questions</h2><p>For questions about an enquiry or your personal information, email <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
+    </Container></section>
+  </>;
+}

@@ -1,0 +1,13 @@
+export const validPayload = {
+  name: "Alex Example",
+  email: "alex@business.test",
+  company: "Acme Industries",
+  role: "Director",
+  question: "What public evidence supports the claimed production capability?",
+  outcome: "Inform a supplier selection decision.",
+  target: "A technology market",
+  timeframe: "Within 1 month",
+  report: "Rapid Intelligence Scan",
+  confidentiality: "Please call first.",
+  website: "",
+};

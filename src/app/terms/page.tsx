@@ -3,7 +3,22 @@ import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { siteConfig } from "@/config/site";
 
-export const metadata: Metadata = { title: "Website Terms", description: "Basic terms for use of the Lemon Cactus website.", alternates: { canonical: "/terms" } };
+export const metadata: Metadata = {
+  title: "Website Terms", description: "Basic terms for use of the MelonCactus website.",
+  alternates: { canonical: "/terms" },
+};
 
-export default function TermsPage() { return <><PageHeader eyebrow="Information" title="Website terms" intro="Basic conditions for using this website and its public educational material." breadcrumbs={[{ label: "Terms" }]} /><section className="section"><Container className="legal-copy"><p className="legal-updated">Last updated: 22 September 2026</p><h2>Information, not advice</h2><p>Website content is general information about industrial intelligence and public-source research. It is not legal, financial, investment, engineering or security advice for a specific situation.</p><h2>No client relationship</h2><p>Using this website or completing the current form does not create a client relationship. Any engagement begins only after scope, terms, timing and fees are agreed in writing.</p><h2>Sample material</h2><p>The sample report is a fictional demonstration. It does not describe a real company, commissioned assignment or verified industrial capability.</p><h2>Responsible use</h2><p>You must not use the website to submit illegal material, credentials, malware or information you are not authorised to share.</p><h2>Accuracy and availability</h2><p>Reasonable care is taken with public content, but the website may be changed and uninterrupted availability is not guaranteed. External sources can change after publication.</p><h2>Business details</h2><p>The verified legal entity and postal address have not yet been added. Current placeholders: {siteConfig.legalName}; {siteConfig.postalAddress}. Replace them before launch.</p></Container></section></>; }
-
+export default function TermsPage() {
+  return <>
+    <PageHeader eyebrow="Information" title="Website terms" intro="Basic conditions for using this website and its public educational material." breadcrumbs={[{ label: "Terms" }]} />
+    <section className="section"><Container className="legal-copy">
+      <p className="legal-updated">Last updated: 22 September 2026</p>
+      <h2>Information, not advice</h2><p>Website content is general information about industrial intelligence and public-source research. It is not legal, financial, investment, engineering or security advice for a specific situation.</p>
+      <h2>No client relationship</h2><p>Using this website or submitting an enquiry does not create a client relationship. Any engagement begins only after scope, terms, timing and fees are agreed in writing.</p>
+      <h2>Sample material</h2><p>The sample report is a fictional demonstration. It does not describe a real company, commissioned assignment or verified industrial capability.</p>
+      <h2>Responsible use</h2><p>You must not use the website to submit illegal material, credentials, malware or information you are not authorised to share.</p>
+      <h2>Accuracy and availability</h2><p>Reasonable care is taken with public content, but the website may be changed and uninterrupted availability is not guaranteed. External sources can change after publication.</p>
+      <h2>Business details</h2><p>{siteConfig.operatorStatement} Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
+    </Container></section>
+  </>;
+}

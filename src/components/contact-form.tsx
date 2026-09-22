@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { reportOptions } from "@/config/site";
-import { submitEnquiry } from "@/lib/enquiry-provider";
+import { reportOptions, siteConfig } from "@/config/site";
 
 export function ContactForm({ initialReport = "", callRequested = false }: { initialReport?: string; callRequested?: boolean }) {
   const [message, setMessage] = useState("");
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -14,30 +14,44 @@ export function ContactForm({ initialReport = "", callRequested = false }: { ini
       form.reportValidity();
       return;
     }
-    const payload = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
-    const result = await submitEnquiry(payload);
-    if (!result.ok) {
-      setMessage("Your details are complete, but online submission is not active yet. Nothing has been sent.");
+    setState("sending");
+    setMessage("Sending your enquiry…");
+    try {
+      const payload = Object.fromEntries(new FormData(form).entries());
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) throw new Error("delivery failed");
+      const result: { ok?: boolean } = await response.json();
+      if (!result.ok) throw new Error("delivery failed");
+      setState("sent");
+      setMessage("Your enquiry has been sent. We will respond by email.");
+      form.reset();
+    } catch {
+      setState("failed");
+      setMessage("The form is temporarily unavailable. Please email us instead.");
     }
   }
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
       <div className="form-grid two-columns">
-        <label>Name <span aria-hidden="true">*</span><input name="name" autoComplete="name" required /></label>
-        <label>Work email <span aria-hidden="true">*</span><input type="email" name="email" autoComplete="email" required /></label>
-        <label>Company <span aria-hidden="true">*</span><input name="company" autoComplete="organization" required /></label>
-        <label>Role<input name="role" autoComplete="organization-title" /></label>
+        <label>Name <span aria-hidden="true">*</span><input name="name" autoComplete="name" maxLength={100} required /></label>
+        <label>Work email <span aria-hidden="true">*</span><input type="email" name="email" autoComplete="email" maxLength={254} required /></label>
+        <label>Company <span aria-hidden="true">*</span><input name="company" autoComplete="organization" maxLength={160} required /></label>
+        <label>Role<input name="role" autoComplete="organization-title" maxLength={120} /></label>
       </div>
       <label>
         Research question <span aria-hidden="true">*</span>
-        <textarea name="question" rows={5} required minLength={20} placeholder="What do you need to understand?" />
+        <textarea name="question" rows={5} required minLength={20} maxLength={4000} placeholder="What do you need to understand?" />
       </label>
       <label>
         Desired decision or outcome <span aria-hidden="true">*</span>
-        <textarea name="outcome" rows={3} required minLength={10} placeholder="What decision will this research inform?" />
+        <textarea name="outcome" rows={3} required minLength={10} maxLength={2000} placeholder="What decision will this research inform?" />
       </label>
-      <label>Target company, market or technology<input name="target" /></label>
+      <label>Target company, market or technology<input name="target" maxLength={1000} /></label>
       <div className="form-grid two-columns">
         <label>
           Preferred delivery timeframe <span aria-hidden="true">*</span>
@@ -57,15 +71,15 @@ export function ContactForm({ initialReport = "", callRequested = false }: { ini
       </div>
       <label>
         Optional confidentiality note
-        <textarea name="confidentiality" rows={3} defaultValue={callRequested ? "I would prefer to discuss this scope in a confidential call." : ""} />
+        <textarea name="confidentiality" rows={3} maxLength={2000} defaultValue={callRequested ? "I would prefer to discuss this scope in a confidential call." : ""} />
       </label>
+      <div className="form-honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <p className="form-warning">Do not submit passwords, illegally obtained material or unnecessary sensitive personal data.</p>
       <div className="form-submit-row">
-        <button className="button button-primary" type="submit">Check request</button>
-        <p>Online transmission is not active until a verified provider is connected.</p>
+        <button className="button button-primary" type="submit" disabled={state === "sending"}>{state === "sending" ? "Sending…" : "Send enquiry"}</button>
+        <p>We use your details to review and respond to your enquiry.</p>
       </div>
-      <div className="form-status" role="status" aria-live="polite">{message}</div>
+      <div className="form-status" role="status" aria-live="polite">{message}{state === "failed" && <> <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a></>}</div>
     </form>
   );
 }
-
