@@ -6,6 +6,7 @@ import ServicesPage from "@/app/(en)/services/page";
 import TermsPage from "@/app/(en)/terms/page";
 import DutchServicesPage from "@/app/(nl)/nl/diensten/page";
 import DutchTermsPage from "@/app/(nl)/nl/voorwaarden/page";
+import DutchPrivacyPage from "@/app/(nl)/nl/privacy/page";
 import { calculateDeliveryTotal, DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "./delivery";
 
 describe("delivery-priority choices and pricing", () => {
@@ -73,5 +74,14 @@ describe("delivery-priority choices and pricing", () => {
     expect(services).toContain("€1.990");
     expect(services).toContain("€2.985");
     expect(terms).toContain("schriftelijk");
+  });
+
+  it("keeps the approved Dutch legal wording", () => {
+    const privacy = renderToStaticMarkup(createElement(DutchPrivacyPage));
+    const terms = renderToStaticMarkup(createElement(DutchTermsPage));
+    expect(privacy).toContain("andere toegangsgegevens");
+    expect(terms).toContain("technisch of beveiligingsadvies");
+    expect(terms).toContain("opdracht voor een klant");
+    expect(terms).toContain("toegangsgegevens");
   });
 });

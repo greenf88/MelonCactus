@@ -10,11 +10,11 @@ import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: { default: "MelonCactus | Industriële inlichtingen", template: "%s | MelonCactus" },
+  title: { default: "MelonCactus | Industrieel onderzoek", template: "%s | MelonCactus" },
   description: siteNl.description,
   alternates: languageAlternates("/", "nl"),
-  openGraph: { type: "website", siteName: siteConfig.name, title: "MelonCactus | Industriële inlichtingen", description: siteNl.description, url: "/nl", locale: "nl_NL" },
-  twitter: { card: "summary", title: "MelonCactus | Industriële inlichtingen", description: siteNl.description },
+  openGraph: { type: "website", siteName: siteConfig.name, title: "MelonCactus | Industrieel onderzoek", description: siteNl.description, url: "/nl", locale: "nl_NL" },
+  twitter: { card: "summary", title: "MelonCactus | Industrieel onderzoek", description: siteNl.description },
   robots: process.env.VERCEL_ENV === "preview" ? { index: false, follow: false } : { index: true, follow: true },
 };
 

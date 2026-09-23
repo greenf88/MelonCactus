@@ -46,7 +46,7 @@ export const insightsNl: readonly Insight[] = [
       {
         heading: "Wanneer is gericht onderzoek zinvol?",
         paragraphs: [
-          "Onderzoek heeft de meeste waarde wanneer de beslissing belangrijk is, openbare informatie versnipperd is en een onjuiste aanname gevolgen kan hebben. Een goede opdracht omschrijft de beslissing, het doel, de termijn en de bewijsstandaard. Ook de juridische en ethische grenzen horen erbij: alleen openbare bronnen, geen misleiding, geen ongeoorloofde toegang en geen onrechtmatig verkregen materiaal.",
+          "Onderzoek heeft de meeste waarde wanneer de beslissing belangrijk is, openbare informatie versnipperd is en een onjuiste aanname gevolgen kan hebben. Een goede opdracht omschrijft de beslissing, het doel, de termijn en de bewijsstandaard. Ook de juridische en ethische grenzen horen erbij: gebruik alleen openbare bronnen, doe u niet voor als een ander, zoek geen ongeoorloofde toegang en gebruik geen onrechtmatig verkregen materiaal.",
           "Een scherp afgebakende vraag levert meestal meer op dan het verzoek om alles over een bedrijf te vinden. Begin bij de onzekerheid die uw beslissing kan veranderen. Het onderzoek kan vervolgens aangeven wat bekend, aannemelijk of onbekend is en welke vervolgvraag de onzekerheid het meest verkleint.",
         ],
       },
@@ -173,7 +173,7 @@ export const insightsNl: readonly Insight[] = [
         heading: "Waar bruikbare signalen verschijnen",
         paragraphs: [
           "De meest zichtbare bronnen zijn niet altijd de meest onthullende. Bedrijfspresentaties worden vaak zorgvuldig nagekeken. Lokale vacaturepagina’s, conferentieslides van medewerkers, aanbestedingen, certificeringsregisters en portfolio’s van aannemers krijgen soms minder aandacht. Ook oudere bestanden kunnen vindbaar blijven nadat de hoofdwebsite is gewijzigd.",
-          "Openbare berichten op sociale media verdienen extra aandacht doordat zij vaak en visueel zijn. Een onschuldige fabrieksfoto kan passen, labels, whiteboards, aantallen werkplekken of apparatuurmodellen tonen. Het risico zit niet alleen in die foto, maar in de combinatie met openbare informatie over werving, klanten en investeringen.",
+          "Openbare berichten op sociale media verdienen extra aandacht: ze verschijnen vaak en bevatten veel beeldmateriaal. Een onschuldige fabrieksfoto kan passen, labels, whiteboards, aantallen werkplekken of apparatuurmodellen tonen. Het risico zit niet alleen in die foto, maar in de combinatie met openbare informatie over werving, klanten en investeringen.",
         ],
         bullets: [
           "Wervingsmateriaal met namen van gereedschap, processen of programmafasen",

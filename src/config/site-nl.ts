@@ -1,7 +1,7 @@
 import type { ReportOption } from "@/config/site";
 
 export const siteNl = {
-  descriptor: "Industriële inlichtingen",
+  descriptor: "Industrieel onderzoek",
   description: "Discreet, onderbouwd onderzoek naar concurrenten en technologie voor bedrijven in industrie en technologie.",
   coreStatement: "Inzicht uit openbare bronnen. Houvast voor technische beslissers.",
   operatorStatement: "MelonCactus wordt geëxploiteerd door GFNI.",
@@ -32,7 +32,7 @@ export const reportOptionsNl: readonly ReportOption[] = [
   {
     name: "Technische diepteanalyse",
     formValue: "Technical Deep Dive",
-    price: "€1,995",
+    price: "€1.995",
     summary: "Gedetailleerde analyse op basis van meerdere soorten technisch bewijs.",
     includes: ["Analyse van locaties, producten, processen of ecosystemen", "Meerdere soorten bronnen", "Bewijsbijlage en beoordeling van de zekerheid"],
     featured: true,
@@ -40,7 +40,7 @@ export const reportOptionsNl: readonly ReportOption[] = [
   {
     name: "Strategisch onderzoeksrapport",
     formValue: "Strategic Intelligence Report",
-    price: "€3,995",
+    price: "€3.995",
     summary: "Een breder onderzoek, toegespitst op een strategische beslissing.",
     includes: ["Meerdere bedrijven, markten of bewijsstromen", "Conclusies voor beslissers en gedetailleerde bevindingen", "Controleerbaar bronnenpad en strategische implicaties"],
   },

@@ -96,7 +96,7 @@ export function ContactForm({ initialReport = "", callRequested = false, locale 
           {nl ? "Indicatief budget / rapportoptie" : "Indicative budget / report option"} <span aria-hidden="true">*</span>
           <select name="report" required defaultValue={initialReport}>
             <option value="" disabled>{nl ? "Kies een optie" : "Select an option"}</option>
-            {reportOptions.map((option, index) => <option key={option.name} value={option.name}>{nl ? reportOptionsNl[index].name : option.name} — {nl ? "vanaf" : "from"} {option.price}</option>)}
+            {reportOptions.map((option, index) => <option key={option.name} value={option.name}>{nl ? reportOptionsNl[index].name : option.name} — {nl ? "vanaf" : "from"} {nl ? reportOptionsNl[index].price : option.price}</option>)}
             <option value="Not sure">{nl ? "Ik weet het nog niet" : "Not sure yet"}</option>
           </select>
         </label>

@@ -37,7 +37,7 @@ export default async function DutchInsightPage({ params }: Props) {
   return <article>
     <header className="article-header"><Container>
       <Breadcrumbs locale="nl" items={[{ label: "Artikelen", href: "/nl/artikelen" }, { label: insight.title }]} />
-      <p className="eyebrow">Artikel over industriële inlichtingen</p>
+      <p className="eyebrow">Artikel over industrieel onderzoek</p>
       <h1>{insight.title}</h1><p className="page-intro">{insight.description}</p>
       <p className="article-meta"><time dateTime={insight.date}>{insight.displayDate}</time><span>{insight.readingTime}</span></p>
     </Container></header>

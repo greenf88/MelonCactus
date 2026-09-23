@@ -36,7 +36,7 @@ const rowsNl = [
     confidence: "Confirmed",
   },
   {
-    source: "Bouwvergunning en locatiebeelden (fictief)",
+    source: "Vergunningsmelding en locatiebeelden (fictief)",
     observation: "Naast de assemblagehal is een vergunde uitbreiding zichtbaar; de dakvorm past bij een extra productiehal.",
     assessment: "De uitbreiding kan de assemblagecapaciteit vergroten. Interne apparatuur en de status van ingebruikname zijn niet te verifiëren.",
     confidence: "High confidence",
@@ -50,7 +50,7 @@ const rowsNl = [
   {
     source: "Presentatie op een vakbeurs (fictief)",
     observation: "Een dia noemt een nieuwe generatie units, maar bevat geen introductiedatum of gevalideerde specificatie.",
-    assessment: "Dit is een indicatief ontwikkelsignaal, geen bevestigde commerciële productintroductie.",
+    assessment: "Dit is een indicatief ontwikkelsignaal, geen bevestigd commercieel aanbod.",
     confidence: "Indicative",
   },
 ];

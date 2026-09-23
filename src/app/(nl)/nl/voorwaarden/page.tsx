@@ -24,10 +24,10 @@ export default function DutchTermsPage() {
       <p>Spoedopties zijn afhankelijk van beschikbare capaciteit en de geschiktheid van de opdracht. Het selecteren van een optie in het formulier geldt niet als aanvaarding. De toepasselijke deadline en definitieve prijs staan in de schriftelijke opdrachtbevestiging. De spoedtermijn begint pas nadat MelonCactus de opdracht, prijs en deadline schriftelijk heeft bevestigd én alle benodigde materialen heeft ontvangen. Wij kunnen een verzoek afwijzen als verantwoorde verificatie van het bewijs binnen de gevraagde termijn niet mogelijk is. Onze normen voor bewijs en kwaliteit blijven gelijk.</p>
 
       <h2>Voorbeeldmateriaal</h2>
-      <p>Het voorbeeldrapport is een fictieve demonstratie. Het beschrijft geen bestaand bedrijf, uitgevoerde klantopdracht of geverifieerde industriële capaciteit.</p>
+      <p>Het voorbeeldrapport is een fictieve demonstratie. Het beschrijft geen bestaand bedrijf, opdracht voor een klant of geverifieerde industriële capaciteit.</p>
 
       <h2>Verantwoord gebruik</h2>
-      <p>U mag via de website geen illegaal materiaal, inloggegevens, malware of informatie insturen die u niet mag delen.</p>
+      <p>U mag via de website geen illegaal materiaal, toegangsgegevens, malware of informatie insturen die u niet mag delen.</p>
 
       <h2>Juistheid en beschikbaarheid</h2>
       <p>Wij betrachten redelijke zorgvuldigheid bij openbare inhoud. De website kan echter worden gewijzigd en ononderbroken beschikbaarheid is niet gegarandeerd. Externe bronnen kunnen na publicatie veranderen.</p>

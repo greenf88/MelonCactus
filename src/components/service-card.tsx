@@ -19,7 +19,7 @@ export function ServiceCard({ service, locale = "en" }: { service: ReportOption;
           <li key={item}>{item}</li>
         ))}
       </ul>
-      <p className="priority-card-note">{isNl ? "Spoedlevering is mogelijk na schriftelijke bevestiging." : "Priority delivery may be available, subject to written confirmation."}</p>
+      <p className="priority-card-note">{isNl ? "Spoedlevering kan beschikbaar zijn, onder voorbehoud van beoordeling en schriftelijke bevestiging." : "Priority delivery may be available, subject to written confirmation."}</p>
       <ButtonLink href={`${isNl ? "/nl" : ""}/contact?report=${encodeURIComponent(service.formValue ?? service.name)}`} variant="text">
         {isNl ? "Bespreek dit rapport" : "Discuss this report"} <span aria-hidden="true">→</span>
       </ButtonLink>

@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { insights } from "@/data/insights";
 import { insightsNl } from "@/data/insights-nl";
+import { reportOptions } from "@/config/site";
+import { reportOptionsNl } from "@/config/site-nl";
 import sitemap from "@/app/sitemap";
 import { counterpartPath, languageAlternates, pathForLocale, routePairs } from "./i18n";
 
@@ -38,5 +40,12 @@ describe("localized public routes", () => {
         );
       }
     }
+  });
+
+  it("keeps report starting prices equivalent while formatting Dutch thousands", () => {
+    expect(reportOptionsNl.map(({ price }) => Number(price.replace(/\D/g, ""))))
+      .toEqual(reportOptions.map(({ price }) => Number(price.replace(/\D/g, ""))));
+    expect(reportOptionsNl[2].price).toBe("€1.995");
+    expect(reportOptionsNl[3].price).toBe("€3.995");
   });
 });

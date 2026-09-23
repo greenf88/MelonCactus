@@ -44,7 +44,7 @@ export default function DutchHome() {
   return <>
     <section className="hero"><Container className="hero-grid">
       <div className="hero-copy">
-        <p className="eyebrow">Industriële inlichtingen</p>
+        <p className="eyebrow">Industrieel onderzoek</p>
         <h1>Inzicht voor de industrie, gebaseerd op openbaar bewijs.</h1>
         <p className="hero-intro">MelonCactus brengt versnipperde openbare informatie samen tot gestructureerde, onderbouwde inzichten voor beslissers in industrie en technologie.</p>
         <div className="button-row"><ButtonLink href="/nl/contact">Rapport aanvragen</ButtonLink><ButtonLink href="/nl/voorbeeldrapport" variant="secondary">Bekijk een voorbeeldrapport</ButtonLink></div>
@@ -53,12 +53,12 @@ export default function DutchHome() {
       <div className="evidence-panel" role="group" aria-label="Voorbeeld van bewijsclassificatie">
         <div className="evidence-panel-top"><span>Bewijsregistratie</span><span>MC / 001</span></div>
         <div className="evidence-lines" aria-hidden="true"><span className="line long" /><span className="line medium" /><span className="line short" /></div>
-        <dl><div><dt>Bron</dt><dd>Primaire publicatie</dd></div><div><dt>Herkomst</dt><dd>Vastgelegd en herleidbaar</dd></div><div><dt>Beoordeling</dt><dd>Onafhankelijk bevestigd</dd></div><div><dt>Zekerheid</dt><dd><span className="badge confirmed">Bevestigd</span></dd></div></dl>
+        <dl><div><dt>Bron</dt><dd>Primaire publicatie</dd></div><div><dt>Herkomst</dt><dd>Vastgelegd en herleidbaar</dd></div><div><dt>Beoordeling</dt><dd>Door andere bronnen ondersteund</dd></div><div><dt>Zekerheid</dt><dd><span className="badge confirmed">Bevestigd</span></dd></div></dl>
         <p className="evidence-note">Een conclusie is nooit sterker dan het bewijs waarop zij berust.</p>
       </div>
     </Container></section>
 
-    <section className="trust-band"><Container className="trust-grid"><h2>Discreet van opzet. Bewijs als uitgangspunt.</h2><div className="trust-points"><p>Wij behandelen aanvragen en onderzoeksopdrachten vertrouwelijk.</p><p>Onderzoek gebruikt rechtmatig toegankelijke openbare bronnen.</p><p>Feiten, beoordelingen en gevolgtrekkingen blijven duidelijk gescheiden.</p></div></Container></section>
+    <section className="trust-band"><Container className="trust-grid"><h2>Discreet van opzet. Bewijs als uitgangspunt.</h2><div className="trust-points"><p>Wij behandelen aanvragen en onderzoeksopdrachten discreet.</p><p>Onderzoek gebruikt rechtmatig toegankelijke openbare bronnen.</p><p>Feiten, beoordelingen en gevolgtrekkingen blijven duidelijk gescheiden.</p></div></Container></section>
 
     <section className="section"><Container>
       <SectionHeading eyebrow="Onderzoeksgebied" title="Wat MelonCactus onderzoekt" intro="Gericht onderzoek voor beslissingen waarbij technische details, bronkwaliteit en commerciële context allemaal van belang zijn." />
