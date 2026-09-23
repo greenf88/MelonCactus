@@ -4,6 +4,7 @@ import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
 import { reportOptions } from "@/config/site";
+import { calculateDeliveryTotal, deliveryOptions } from "@/config/delivery";
 
 export const metadata: Metadata = {
   title: "Services and Report Options",
@@ -45,6 +46,32 @@ export default function ServicesPage() {
         <Container>
           <div className="content-heading"><p className="eyebrow">Report options</p><h2>Choose a starting scope.</h2><p>Prices are starting points, not fixed quotations. Scope, delivery time and fee are agreed before research begins.</p></div>
           <div className="pricing-grid">{reportOptions.map((service) => <ServiceCard service={service} key={service.name} />)}</div>
+        </Container>
+      </section>
+      <section className="section priority-section" id="priority-delivery">
+        <Container>
+          <div className="content-heading">
+            <p className="eyebrow">Delivery options</p>
+            <h2>Priority delivery</h2>
+            <p>Choose a delivery request to discuss during scope review. Each multiplier applies to the final agreed project fee, not to a starting price shown above.</p>
+          </div>
+          <div className="priority-grid">
+            {deliveryOptions.map((option) => (
+              <article className="priority-option" key={option.value}>
+                <h3>{option.title}</h3>
+                <p className="priority-multiplier">{option.multiplier}× <span>final agreed project fee</span></p>
+                <p>{option.description}</p>
+                <p className="priority-surcharge">{option.surcharge}</p>
+              </article>
+            ))}
+          </div>
+          <p className="priority-condition">The 24- and 48-hour options are subject to capacity and scope suitability. A request is not automatically accepted. Priority delivery becomes binding only when MelonCactus confirms the scope, final fee and deadline in writing and has received all required materials. We may decline a request when responsible evidence verification is not possible within the timeframe. Our evidence and quality standards remain the same.</p>
+          <p className="priority-example">Illustration only, not a quotation: if the final agreed project fee is €995, confirmed 48-hour delivery totals €{calculateDeliveryTotal(995, "within-48-hours").toLocaleString("en-IE")}; confirmed 24-hour delivery totals €{calculateDeliveryTotal(995, "within-24-hours").toLocaleString("en-IE")}.</p>
+          <div className="priority-faq">
+            <p className="eyebrow">FAQ</p>
+            <h3>Can every report be delivered within 24 or 48 hours?</h3>
+            <p>No. Suitability depends on the research scope, available sources and capacity. We will only confirm a priority deadline when the evidence can be checked responsibly within it.</p>
+          </div>
         </Container>
       </section>
       <section className="section">

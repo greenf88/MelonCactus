@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { reportOptions, siteConfig } from "@/config/site";
+import { DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "@/config/delivery";
 
 export function ContactForm({ initialReport = "", callRequested = false }: { initialReport?: string; callRequested?: boolean }) {
   const [message, setMessage] = useState("");
@@ -54,9 +55,9 @@ export function ContactForm({ initialReport = "", callRequested = false }: { ini
       <label>Target company, market or technology<input name="target" maxLength={1000} /></label>
       <div className="form-grid two-columns">
         <label>
-          Preferred delivery timeframe <span aria-hidden="true">*</span>
+          Decision timeframe <span aria-hidden="true">*</span>
           <select name="timeframe" required defaultValue="">
-            <option value="" disabled>Select a timeframe</option>
+            <option value="" disabled>Select when the findings are needed</option>
             <option>Within 1 week</option><option>Within 2 weeks</option><option>Within 1 month</option><option>Flexible</option>
           </select>
         </label>
@@ -69,6 +70,13 @@ export function ContactForm({ initialReport = "", callRequested = false }: { ini
           </select>
         </label>
       </div>
+      <label>
+        Delivery priority <span aria-hidden="true">*</span>
+        <select name="deliveryPriority" required defaultValue={DEFAULT_DELIVERY_PRIORITY}>
+          {deliveryOptions.map((option) => <option key={option.value} value={option.value}>{option.formLabel}</option>)}
+        </select>
+      </label>
+      <p className="form-field-note">Selecting 24- or 48-hour delivery is a request, subject to capacity, scope suitability and written acceptance by MelonCactus. The period starts after written scope, fee and deadline confirmation and receipt of all required materials.</p>
       <label>
         Optional confidentiality note
         <textarea name="confidentiality" rows={3} maxLength={2000} defaultValue={callRequested ? "I would prefer to discuss this scope in a confidential call." : ""} />

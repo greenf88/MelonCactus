@@ -8,6 +8,7 @@ export const validPayload = {
   target: "A technology market",
   timeframe: "Within 1 month",
   report: "Rapid Intelligence Scan",
+  deliveryPriority: "standard",
   confidentiality: "Please call first.",
   website: "",
 };

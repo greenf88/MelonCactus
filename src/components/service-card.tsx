@@ -17,10 +17,10 @@ export function ServiceCard({ service }: { service: ReportOption }) {
           <li key={item}>{item}</li>
         ))}
       </ul>
+      <p className="priority-card-note">Priority delivery may be available, subject to written confirmation.</p>
       <ButtonLink href={`/contact?report=${encodeURIComponent(service.name)}`} variant="text">
         Discuss this report <span aria-hidden="true">→</span>
       </ButtonLink>
     </article>
   );
 }
-

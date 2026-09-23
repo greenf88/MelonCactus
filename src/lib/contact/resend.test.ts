@@ -37,6 +37,7 @@ describe("Resend delivery", () => {
       to: "contact@meloncactus.com",
       from: "MelonCactus Website <website@send.meloncactus.com>",
       replyTo: "alex@business.test",
+      text: expect.stringContaining("Standard delivery"),
     }));
   });
 });
