@@ -2,8 +2,11 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { ContactForm } from "@/components/contact-form";
-import ServicesPage from "@/app/services/page";
-import TermsPage from "@/app/terms/page";
+import ServicesPage from "@/app/(en)/services/page";
+import TermsPage from "@/app/(en)/terms/page";
+import DutchServicesPage from "@/app/(nl)/nl/diensten/page";
+import DutchTermsPage from "@/app/(nl)/nl/voorwaarden/page";
+import DutchPrivacyPage from "@/app/(nl)/nl/privacy/page";
 import { calculateDeliveryTotal, DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "./delivery";
 
 describe("delivery-priority choices and pricing", () => {
@@ -47,5 +50,38 @@ describe("delivery-priority choices and pricing", () => {
     expect(html).toContain("written scope confirmation");
     expect(html).toContain("received all required materials");
     expect(html).toContain("200% surcharge");
+  });
+
+  it("keeps Dutch delivery values and report selections compatible with the server", () => {
+    const form = renderToStaticMarkup(createElement(ContactForm, { locale: "nl", initialReport: "Competitor Snapshot" }));
+    expect(form).toContain("Leveringsprioriteit");
+    expect(form).toContain("schriftelijke aanvaarding door MelonCactus");
+    expect(form).toMatch(/<option value="standard" selected="">Standaardlevering<\/option>/);
+    expect(form).toMatch(/<option value="Competitor Snapshot" selected="">Concurrentieprofiel/);
+    expect(form).toContain('value="within-48-hours"');
+    expect(form).toContain('value="within-24-hours"');
+  });
+
+  it("shows the same priority mathematics and conditions in Dutch", () => {
+    const services = renderToStaticMarkup(createElement(DutchServicesPage));
+    const terms = renderToStaticMarkup(createElement(DutchTermsPage));
+    expect(services).toContain("1×");
+    expect(services).toContain("2×");
+    expect(services).toContain("3×");
+    expect(services).toContain("100% toeslag");
+    expect(services).toContain("200% toeslag");
+    expect(services).not.toContain("300% toeslag");
+    expect(services).toContain("€1.990");
+    expect(services).toContain("€2.985");
+    expect(terms).toContain("schriftelijk");
+  });
+
+  it("keeps the approved Dutch legal wording", () => {
+    const privacy = renderToStaticMarkup(createElement(DutchPrivacyPage));
+    const terms = renderToStaticMarkup(createElement(DutchTermsPage));
+    expect(privacy).toContain("andere toegangsgegevens");
+    expect(terms).toContain("technisch of beveiligingsadvies");
+    expect(terms).toContain("opdracht voor een klant");
+    expect(terms).toContain("toegangsgegevens");
   });
 });

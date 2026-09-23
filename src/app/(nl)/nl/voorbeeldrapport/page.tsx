@@ -1,0 +1,34 @@
+import type { Metadata } from "next";
+import { ButtonLink } from "@/components/buttons";
+import { ConfidenceBadge } from "@/components/confidence-badge";
+import { Container } from "@/components/container";
+import { PageHeader } from "@/components/page-header";
+import { SampleEvidenceTable } from "@/components/sample-evidence-table";
+import { languageAlternates } from "@/lib/i18n";
+
+export const metadata: Metadata = {
+  title: "Fictief voorbeeldrapport",
+  description: "Een fictieve demonstratie van de opbouw, bewijsnormen en zekerheidsniveaus in een rapport van MelonCactus.",
+  alternates: languageAlternates("/sample-report", "nl"),
+};
+
+export default function DutchSampleReportPage() {
+  return <article className="sample-report">
+    <PageHeader locale="nl" eyebrow="Fictieve demonstratie" title="Gereedheid voor opschaling" intro="Dit fictieve voorbeeld laat zien hoe wij bewijs, beoordeling, zekerheid en beperkingen presenteren. Northstar Thermal Systems en al het bronmateriaal hieronder zijn uitsluitend voor deze demonstratie verzonnen." breadcrumbs={[{ label: "Voorbeeldrapport" }]} />
+    <section className="report-cover"><Container><div className="report-meta"><div><span>Referentie</span><strong>MC-DEMO-001</strong></div><div><span>Status</span><strong>Fictieve demonstratie</strong></div><div><span>Onderwerp</span><strong>Northstar Thermal Systems</strong></div><div><span>Peildatum bewijs</span><strong>Uitsluitend illustratief</strong></div></div></Container></section>
+
+    <section className="report-section"><Container className="report-grid"><aside><span>01</span><h2>Onderzoeksvraag</h2></aside><div className="report-body"><p className="report-lead">Wat zegt het fictieve openbare bewijs over de gereedheid van Northstar Thermal Systems om de assemblage van modulaire industriële warmtesystemen op te schalen?</p><h3>Afbakening</h3><p>De demonstratie gebruikt fictieve bedrijfsinformatie, planningsgegevens, vacatures, beelden van een locatie en materiaal van een vakbeurs. Zij schat geen exacte productie, kosten, rendement of klantvraag.</p></div></Container></section>
+
+    <section className="report-section report-tinted"><Container className="report-grid"><aside><span>02</span><h2>Samenvatting voor beslissers</h2></aside><div className="report-body"><p className="report-lead">Het bewijs past bij een bedrijf dat zich voorbereidt op een grotere operationele doorvoer, maar bevestigt geen gerealiseerde productiecapaciteit.</p><p>Een vergunde uitbreiding, zichtbare bouwwerkzaamheden en werving voor productie- en leverancierskwaliteitsfuncties vormen samen een samenhangend groeisignaal. Productinformatie bevestigt een modulaire opbouw die herhaalbare assemblage mogelijk kan maken. Geen enkele fictieve bron stelt echter de status van ingebruikname, de geïnstalleerde lijnsnelheid, de bezetting of de orderportefeuille vast.</p><div className="finding-summary"><div><span>Algehele beoordeling</span><strong>Voorbereiding op uitbreiding is aannemelijk</strong></div><div><span>Zekerheid</span><ConfidenceBadge level="High confidence" locale="nl" /></div><div><span>Belangrijkste beperking</span><strong>Geen geverifieerde productiegegevens</strong></div></div></div></Container></section>
+
+    <section className="report-section"><Container><div className="report-section-heading"><span>03</span><h2>Bewijsregister</h2><p>Waarnemingen blijven gescheiden van de beoordeling die zij ondersteunen.</p></div><SampleEvidenceTable locale="nl" /></Container></section>
+
+    <section className="report-section report-tinted"><Container className="report-grid"><aside><span>04</span><h2>Belangrijkste bevindingen</h2></aside><div className="report-body"><div className="finding-list"><article><span>B1</span><div><h3>Twee soorten bronnen ondersteunen de fysieke uitbreiding.</h3><p>De fictieve vergunningsmelding en gedateerde buitenbeelden stemmen overeen. Geen van beide verifieert de interne inrichting.</p></div><ConfidenceBadge level="High confidence" locale="nl" /></article><article><span>B2</span><div><h3>De werving past bij voorbereiding op meer doorvoer.</h3><p>De combinatie van productie-engineering, leverancierskwaliteit en ploegleiding past beter bij opschaling dan bij afzonderlijke vervangingsvacatures.</p></div><ConfidenceBadge level="Moderate confidence" locale="nl" /></article><article><span>B3</span><div><h3>Een nieuw product blijft een vroeg signaal.</h3><p>De verwijzing in de presentatie heeft geen gevalideerde specificatie, introductiedatum of onafhankelijke bevestiging.</p></div><ConfidenceBadge level="Indicative" locale="nl" /></article></div></div></Container></section>
+
+    <section className="report-section"><Container className="report-grid"><aside><span>05</span><h2>Beperkingen</h2></aside><div className="report-body"><ul className="editorial-list"><li>Geen bron bevestigt geïnstalleerde apparatuur, ingebruikname van de lijn of gerealiseerde cyclustijd.</li><li>Vacatures kunnen onvervuld blijven en bewijzen niet dat nieuwe ploegen actief zijn.</li><li>Beelden van buiten tonen geen interne procescapaciteit of kwaliteitsprestaties.</li><li>Er is geen betrouwbaar openbaar bewijs over ordervolume, beperkingen bij leveranciers of productierendement.</li></ul></div></Container></section>
+
+    <section className="report-section report-tinted"><Container className="report-grid"><aside><span>06</span><h2>Strategische implicaties</h2></aside><div className="report-body"><p>Het bewijs rechtvaardigt om Northstar te beschouwen als een concurrent die zich op opschaling voorbereidt, maar nog niet als een partij met bewezen hogere productie. Commerciële plannen moeten onderscheid maken tussen signalen voor de nabije toekomst en geverifieerde levercapaciteit.</p><p>Activiteit van leveranciers en werving zijn de nuttigste openbare signalen om verder te volgen. Een latere verwijzing naar ingebruikname, een verandering in ploegendienst of een productcertificering zou de zekerheid wezenlijk vergroten.</p><h3>Vervolgvragen</h3><ol className="numbered-questions"><li>Is er een vergunning voor ingebruikname van de uitbreiding verleend?</li><li>Verwijzen leveranciers van apparatuur naar installatie of ingebruikname?</li><li>Zijn productievacatures ingevuld, opnieuw geplaatst of op een ander functieniveau verschenen?</li><li>Toont latere productdocumentatie certificering of serieel aanbod?</li></ol></div></Container></section>
+
+    <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">Uw beslissing, uw opdracht</p><h2>Vraag een rapport aan rond een actuele vraag.</h2><p>De opbouw wordt afgestemd op het bewijs en de beslissing, niet klakkeloos overgenomen uit deze fictieve demonstratie.</p></div><ButtonLink href="/nl/contact">Vraag een vergelijkbaar rapport aan</ButtonLink></Container></section>
+  </article>;
+}

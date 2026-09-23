@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { LegalPageShell } from "@/components/legal-page-shell";
 import { siteConfig } from "@/config/site";
+import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Website Terms", description: "Basic terms for use of the MelonCactus website.",
-  alternates: { canonical: "/terms" },
+  alternates: languageAlternates("/terms", "en"),
 };
 
 export default function TermsPage() {

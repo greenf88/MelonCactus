@@ -37,6 +37,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .desktop-nav { display: flex; align-items: center; gap: 1.45rem; font-size: .85rem; font-weight: 600; }
 .desktop-nav > a:not(.button) { padding: .7rem 0; border-bottom: 1px solid transparent; }
 .desktop-nav > a:not(.button):hover { border-color: var(--green); }
+.header-actions { display: flex; align-items: center; gap: 1rem; }
+.language-switcher { display: inline-flex; align-items: center; gap: .4rem; white-space: nowrap; font-size: .78rem; font-weight: 700; }
+.language-switcher a { padding: .35rem .15rem; border-bottom: 2px solid transparent; }
+.language-switcher a[aria-current="page"] { color: var(--green-dark); border-bottom-color: var(--green-dark); }
+.language-switcher a:hover { color: var(--green); }
 .mobile-nav { display: none; }
 
 .button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .72rem 1.15rem; border: 1px solid transparent; font-size: .9rem; font-weight: 700; line-height: 1.2; transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .18s ease; }
@@ -365,7 +370,7 @@ h3 { line-height: 1.25; }
   .footer-base { flex-direction: column; gap: .4rem; }
   .breadcrumbs { margin-bottom: 2rem; }
   .page-hero, .article-header { padding-top: 2rem; }
-  .page-hero h1, .article-header h1 { font-size: clamp(2.7rem,14vw,4.3rem); }
+  .page-hero h1, .article-header h1 { font-size: clamp(2.7rem,14vw,4.3rem); hyphens: auto; overflow-wrap: anywhere; }
   .contact-section, .legal-page { padding-top: 1.5rem; }
   .contact-intro .breadcrumbs, .legal-page .breadcrumbs { margin-bottom: 1.25rem; }
   .contact-intro h1, .legal-page-header h1 { font-size: clamp(2.45rem,10vw,3.3rem); }

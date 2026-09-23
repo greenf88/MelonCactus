@@ -5,11 +5,12 @@ import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
 import { reportOptions } from "@/config/site";
 import { calculateDeliveryTotal, deliveryOptions } from "@/config/delivery";
+import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Services and Report Options",
   description: "Industrial competitive intelligence, technical analysis and public-source research report options from MelonCactus.",
-  alternates: { canonical: "/services" },
+  alternates: languageAlternates("/services", "en"),
 };
 
 const capabilities = [
