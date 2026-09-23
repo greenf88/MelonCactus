@@ -4,6 +4,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { StructuredData } from "@/components/structured-data";
 import { siteConfig } from "@/config/site";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             url: siteConfig.siteUrl,
           }}
         />
+        <Analytics />
       </body>
     </html>
   );
