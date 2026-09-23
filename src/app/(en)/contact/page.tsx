@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ContactForm } from "@/components/contact-form";
 import { Container } from "@/components/container";
+import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Request a Report",
   description: "Describe the industrial intelligence question, decision and timeframe you need MelonCactus to assess.",
-  alternates: { canonical: "/contact" },
+  alternates: languageAlternates("/contact", "en"),
 };
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ report?: string; call?: string }> }) {

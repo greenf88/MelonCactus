@@ -5,9 +5,9 @@ const { deliver } = vi.hoisted(() => ({ deliver: vi.fn() }));
 vi.mock("@/lib/contact/resend", () => ({ deliverEnquiry: deliver }));
 import { POST } from "./route";
 
-function request(payload: unknown) {
+function request(payload: unknown, language = "en") {
   return new Request("https://meloncactus.com/api/contact", {
-    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload),
+    method: "POST", headers: { "Content-Type": "application/json", "Accept-Language": language }, body: JSON.stringify(payload),
   });
 }
 
@@ -43,5 +43,16 @@ describe("contact endpoint", () => {
     const response = await POST(request(validPayload));
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ ok: true, message: "Your enquiry has been sent." });
+  });
+
+  it("uses Dutch status and validation messages without changing delivery", async () => {
+    const invalid = await POST(request({ ...validPayload, email: "bad" }, "nl-NL"));
+    expect(invalid.status).toBe(400);
+    expect(await invalid.json()).toEqual({ ok: false, message: "Controleer uw aanvraag en probeer het opnieuw." });
+    deliver.mockResolvedValue({ ok: true });
+    const response = await POST(request(validPayload, "nl-NL"));
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ ok: true, message: "Uw aanvraag is verzonden." });
+    expect(deliver).toHaveBeenCalledWith(expect.objectContaining({ email: validPayload.email }));
   });
 });

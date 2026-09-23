@@ -4,11 +4,12 @@ import { ConfidenceBadge } from "@/components/confidence-badge";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { SampleEvidenceTable } from "@/components/sample-evidence-table";
+import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Representative Sample Report",
   description: "A fictional demonstration of the structure, evidence standards and confidence model used in a MelonCactus report.",
-  alternates: { canonical: "/sample-report" },
+  alternates: languageAlternates("/sample-report", "en"),
 };
 
 export default function SampleReportPage() {

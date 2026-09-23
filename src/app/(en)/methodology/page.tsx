@@ -4,11 +4,12 @@ import { ConfidenceBadge } from "@/components/confidence-badge";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { confidenceLevels } from "@/config/site";
+import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Research Methodology and Evidence Standards",
   description: "How MelonCactus collects, verifies and assesses lawful public evidence for industrial intelligence work.",
-  alternates: { canonical: "/methodology" },
+  alternates: languageAlternates("/methodology", "en"),
 };
 
 const stages = [

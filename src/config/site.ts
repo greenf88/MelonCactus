@@ -22,6 +22,7 @@ export const siteConfig = {
 
 export type ReportOption = {
   name: string;
+  formValue?: string;
   price: string;
   summary: string;
   includes: readonly string[];

@@ -1,4 +1,5 @@
 import { ConfidenceBadge } from "./confidence-badge";
+import type { Locale } from "@/lib/i18n";
 
 const rows = [
   {
@@ -27,21 +28,49 @@ const rows = [
   },
 ];
 
-export function SampleEvidenceTable() {
+const rowsNl = [
+  {
+    source: "Productbrochure van het bedrijf (fictief)",
+    observation: "Het huidige assortiment vermeldt twee modulaire warmte-units voor middelgrote industriële toepassingen.",
+    assessment: "Het bedrijf heeft een omschreven modulaire productopbouw, maar de brochure zegt niets over het productievolume.",
+    confidence: "Confirmed",
+  },
+  {
+    source: "Bouwvergunning en locatiebeelden (fictief)",
+    observation: "Naast de assemblagehal is een vergunde uitbreiding zichtbaar; de dakvorm past bij een extra productiehal.",
+    assessment: "De uitbreiding kan de assemblagecapaciteit vergroten. Interne apparatuur en de status van ingebruikname zijn niet te verifiëren.",
+    confidence: "High confidence",
+  },
+  {
+    source: "Zes openbare vacatures (fictief)",
+    observation: "De functies omvatten productie-engineering, leverancierskwaliteit en twee ploegleiders.",
+    assessment: "De werving past bij voorbereiding op een hogere operationele doorvoer, maar vacatures bewijzen geen gerealiseerde groei.",
+    confidence: "Moderate confidence",
+  },
+  {
+    source: "Presentatie op een vakbeurs (fictief)",
+    observation: "Een dia noemt een nieuwe generatie units, maar bevat geen introductiedatum of gevalideerde specificatie.",
+    assessment: "Dit is een indicatief ontwikkelsignaal, geen bevestigde commerciële productintroductie.",
+    confidence: "Indicative",
+  },
+];
+
+export function SampleEvidenceTable({ locale = "en" }: { locale?: Locale }) {
+  const nl = locale === "nl";
   return (
-    <div className="table-scroll" tabIndex={0} aria-label="Scrollable evidence table">
+    <div className="table-scroll" tabIndex={0} aria-label={nl ? "Horizontaal verschuifbare bewijstabel" : "Scrollable evidence table"}>
       <table className="evidence-table">
-        <caption>Illustrative evidence register</caption>
+        <caption>{nl ? "Illustratief bewijsregister" : "Illustrative evidence register"}</caption>
         <thead>
-          <tr><th>Source type</th><th>Observation</th><th>Assessment</th><th>Confidence</th></tr>
+          <tr><th>{nl ? "Brontype" : "Source type"}</th><th>{nl ? "Waarneming" : "Observation"}</th><th>{nl ? "Beoordeling" : "Assessment"}</th><th>{nl ? "Zekerheid" : "Confidence"}</th></tr>
         </thead>
         <tbody>
-          {rows.map((row) => (
+          {(nl ? rowsNl : rows).map((row) => (
             <tr key={row.source}>
               <td>{row.source}</td>
               <td>{row.observation}</td>
               <td>{row.assessment}</td>
-              <td><ConfidenceBadge level={row.confidence} /></td>
+              <td><ConfidenceBadge level={row.confidence} locale={locale} /></td>
             </tr>
           ))}
         </tbody>
@@ -49,4 +78,3 @@ export function SampleEvidenceTable() {
     </div>
   );
 }
-

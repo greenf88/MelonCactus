@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { LegalPageShell } from "@/components/legal-page-shell";
 import { siteConfig } from "@/config/site";
+import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Privacy", description: "Privacy information for the MelonCactus website.",
-  alternates: { canonical: "/privacy" },
+  alternates: languageAlternates("/privacy", "en"),
 };
 
 export default function PrivacyPage() {
