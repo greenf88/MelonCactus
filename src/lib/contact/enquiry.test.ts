@@ -31,6 +31,16 @@ describe("enquiry validation", () => {
     expect(validateEnquiry({ ...validPayload, multiplier: 1 }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, price: "€995" }).ok).toBe(false);
   });
+  it("accepts only known service contexts and includes them in the internal email", () => {
+    const result = validateEnquiry({ ...validPayload, serviceFocus: "manufacturing-capability-analysis" });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const message = composeEnquiry(result.enquiry, new Date("2026-09-23T12:00:00Z"));
+    expect(message.text).toContain("Service focus:\nManufacturing capability analysis");
+    expect(message.html).toContain("Manufacturing capability analysis");
+    expect(validateEnquiry({ ...validPayload, serviceFocus: "unknown-service" }).ok).toBe(false);
+    expect(validateEnquiry({ ...validPayload, serviceFocus: "manufacturing-capability-analysis\r\nBcc: x@y.test" }).ok).toBe(false);
+  });
   it("includes the selected priority in plain text and HTML email", () => {
     const result = validateEnquiry({ ...validPayload, deliveryPriority: "within-48-hours" });
     expect(result.ok).toBe(true);

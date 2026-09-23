@@ -9,6 +9,7 @@ export const validPayload = {
   timeframe: "Within 1 month",
   report: "Rapid Intelligence Scan",
   deliveryPriority: "standard",
+  serviceFocus: "",
   confidentiality: "Please call first.",
   website: "",
 };

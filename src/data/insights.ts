@@ -10,7 +10,14 @@ export type Insight = {
   description: string;
   date: string;
   displayDate: string;
+  modifiedDate?: string;
+  displayModifiedDate?: string;
   readingTime: string;
+  relatedServiceSlug: string;
+  illustration?: {
+    scene: string;
+    rows: readonly { label: string; explanation: string }[];
+  };
   sections: readonly InsightSection[];
 };
 
@@ -22,6 +29,7 @@ export const insights: readonly Insight[] = [
     date: "2026-09-22",
     displayDate: "22 September 2026",
     readingTime: "7 min read",
+    relatedServiceSlug: "industrial-competitor-analysis",
     sections: [
       {
         heading: "A decision discipline, not a data collection exercise",
@@ -72,7 +80,20 @@ export const insights: readonly Insight[] = [
     description: "How to use public photographs and video as technical evidence without overstating what they prove.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    readingTime: "8 min read",
+    modifiedDate: "2026-09-23",
+    displayModifiedDate: "23 September 2026",
+    readingTime: "9 min read",
+    relatedServiceSlug: "manufacturing-capability-analysis",
+    illustration: {
+      scene: "Fictional illustration only: imagine a company-published photograph showing a labelled assembly station and several unfinished units. No real image or source is being described.",
+      rows: [
+        { label: "Directly visible", explanation: "One labelled station and several units appear in the imagined frame." },
+        { label: "What it might suggest", explanation: "The company may be preparing a repeatable assembly step for this product family." },
+        { label: "Alternative explanation", explanation: "The scene could show a short demonstration run, prototype work or units awaiting rework." },
+        { label: "Not established", explanation: "The image cannot prove the date of operation, commissioning, cycle time, yield or sustained production capacity." },
+        { label: "Public test", explanation: "A dated supplier commissioning reference or later published product documentation could help test whether the station entered routine use." },
+      ],
+    },
     sections: [
       {
         heading: "Images are evidence, but rarely the whole answer",
@@ -124,6 +145,7 @@ export const insights: readonly Insight[] = [
     date: "2026-09-22",
     displayDate: "22 September 2026",
     readingTime: "7 min read",
+    relatedServiceSlug: "industrial-competitor-analysis",
     sections: [
       {
         heading: "Why the distinction matters",
@@ -175,6 +197,7 @@ export const insights: readonly Insight[] = [
     date: "2026-09-22",
     displayDate: "22 September 2026",
     readingTime: "8 min read",
+    relatedServiceSlug: "public-information-exposure-review",
     sections: [
       {
         heading: "The exposure is usually cumulative",
@@ -225,4 +248,3 @@ export const insights: readonly Insight[] = [
 export function getInsight(slug: string) {
   return insights.find((insight) => insight.slug === slug);
 }
-

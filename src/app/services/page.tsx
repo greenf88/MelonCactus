@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ButtonLink } from "@/components/buttons";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
 import { reportOptions } from "@/config/site";
 import { calculateDeliveryTotal, deliveryOptions } from "@/config/delivery";
+import { focusedServices } from "@/config/focused-services";
 
 export const metadata: Metadata = {
-  title: "Services and Report Options",
-  description: "Industrial competitive intelligence, technical analysis and public-source research report options from MelonCactus.",
+  title: "Industrial Competitive Intelligence Services",
+  description: "Explore MelonCactus industrial competitor analysis, public-source manufacturing capability analysis and public-information exposure review, plus report options.",
   alternates: { canonical: "/services" },
 };
 
@@ -28,10 +30,18 @@ export default function ServicesPage() {
     <>
       <PageHeader
         eyebrow="Services"
-        title="Research shaped around a decision—not a data dump."
-        intro="MelonCactus investigates defined commercial and technical questions using lawful public sources, transparent evidence standards and proportionate conclusions."
+        title="Industrial competitor and technical intelligence services"
+        intro="Explore focused competitor, manufacturing capability and public-information exposure research. Each engagement starts with a decision and uses lawful public sources, transparent evidence standards and proportionate conclusions."
         breadcrumbs={[{ label: "Services" }]}
       />
+      <section className="section section-muted">
+        <Container>
+          <div className="content-heading"><p className="eyebrow">Focused services</p><h2>Find the service that fits your question.</h2><p>These pages explain what each investigation can establish, what it delivers and where public evidence has limits.</p></div>
+          <div className="focused-services-grid">
+            {focusedServices.map((service, index) => <article className="focused-service-card" key={service.slug}><span>{String(index + 1).padStart(2, "0")}</span><h3><Link href={`/services/${service.slug}`}>{service.title}</Link></h3><p>{service.summary}</p><Link className="section-link" href={`/services/${service.slug}`}>Explore this service <span aria-hidden="true">→</span></Link></article>)}
+          </div>
+        </Container>
+      </section>
       <section className="section">
         <Container>
           <div className="content-heading"><p className="eyebrow">Capabilities</p><h2>Where focused evidence can change the picture.</h2></div>

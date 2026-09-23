@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { reportOptions, siteConfig } from "@/config/site";
 import { DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "@/config/delivery";
+import type { FocusedService } from "@/config/focused-services";
 
-export function ContactForm({ initialReport = "", callRequested = false }: { initialReport?: string; callRequested?: boolean }) {
+export function ContactForm({ initialReport = "", initialService, callRequested = false }: { initialReport?: string; initialService?: FocusedService; callRequested?: boolean }) {
   const [message, setMessage] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
 
@@ -38,6 +39,8 @@ export function ContactForm({ initialReport = "", callRequested = false }: { ini
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
+      {initialService ? <p className="form-service-context">Enquiry focus: <strong>{initialService.title}</strong>. Tell us the specific decision or uncertainty below.</p> : null}
+      <input type="hidden" name="serviceFocus" value={initialService?.slug ?? ""} />
       <div className="form-grid two-columns">
         <label>Name <span aria-hidden="true">*</span><input name="name" autoComplete="name" maxLength={100} required /></label>
         <label>Work email <span aria-hidden="true">*</span><input type="email" name="email" autoComplete="email" maxLength={254} required /></label>

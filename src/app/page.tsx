@@ -5,6 +5,7 @@ import { MethodStep } from "@/components/method-step";
 import { SectionHeading } from "@/components/section-heading";
 import { ServiceCard } from "@/components/service-card";
 import { reportOptions, siteConfig } from "@/config/site";
+import { focusedServices } from "@/config/focused-services";
 
 const investigations = [
   "Competitors and corporate capabilities",
@@ -55,8 +56,10 @@ export default function Home() {
             <p className="eyebrow">Industrial Intelligence</p>
             <h1>Industrial intelligence built from public evidence.</h1>
             <p className="hero-intro">
-              MelonCactus turns fragmented public information into structured,
-              evidence-backed intelligence for industrial and technology leaders.
+              MelonCactus provides industrial competitor analysis, public-source
+              manufacturing capability analysis and public-information exposure
+              review. We turn fragmented public information into evidence-backed
+              intelligence for industrial and technology leaders.
             </p>
             <div className="button-row">
               <ButtonLink href="/contact">Request a Report</ButtonLink>
@@ -85,6 +88,15 @@ export default function Home() {
             <p className="evidence-note">
               Conclusions are only as strong as the evidence that supports them.
             </p>
+          </div>
+        </Container>
+      </section>
+
+      <section className="section section-muted">
+        <Container>
+          <SectionHeading eyebrow="Focused services" title="Three ways to test a consequential assumption." intro="Start with the question behind your decision. Each service explains its evidence sources, deliverable and limits." />
+          <div className="focused-services-grid">
+            {focusedServices.map((service, index) => <article className="focused-service-card" key={service.slug}><span>{String(index + 1).padStart(2, "0")}</span><h3><Link href={`/services/${service.slug}`}>{service.title}</Link></h3><p>{service.summary}</p><Link className="section-link" href={`/services/${service.slug}`}>Explore this service <span aria-hidden="true">→</span></Link></article>)}
           </div>
         </Container>
       </section>
