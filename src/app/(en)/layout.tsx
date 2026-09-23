@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer";
 import { StructuredData } from "@/components/structured-data";
 import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             inLanguage: "en",
           }}
         />
+        <Analytics />
       </body>
     </html>
   );

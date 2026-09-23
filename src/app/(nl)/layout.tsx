@@ -7,6 +7,7 @@ import { StructuredData } from "@/components/structured-data";
 import { siteConfig } from "@/config/site";
 import { siteNl } from "@/config/site-nl";
 import { languageAlternates } from "@/lib/i18n";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -36,6 +37,7 @@ export default function DutchLayout({ children }: { children: ReactNode }) {
           url: `${siteConfig.siteUrl}/nl`,
           inLanguage: "nl-NL",
         }} />
+        <Analytics />
       </body>
     </html>
   );
