@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ButtonLink } from "@/components/buttons";
+import { ArticleContent } from "@/components/article-content";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Container } from "@/components/container";
 import { StructuredData } from "@/components/structured-data";
 import { getInsightNl, insightsNl } from "@/data/insights-nl";
 import { siteConfig } from "@/config/site";
 import { counterpartPath, languageAlternates } from "@/lib/i18n";
+import { articleReadingLabel } from "@/lib/reading-time";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -39,10 +41,10 @@ export default async function DutchInsightPage({ params }: Props) {
       <Breadcrumbs locale="nl" items={[{ label: "Artikelen", href: "/nl/artikelen" }, { label: insight.title }]} />
       <p className="eyebrow">Artikel over industrieel onderzoek</p>
       <h1>{insight.title}</h1><p className="page-intro">{insight.description}</p>
-      <p className="article-meta"><time dateTime={insight.date}>{insight.displayDate}</time><span>{insight.readingTime}</span></p>
+      <p className="article-meta"><time dateTime={insight.date}>{insight.displayDate}</time><span>{articleReadingLabel(insight, "nl")}</span></p>
     </Container></header>
     <Container className="article-layout"><aside className="article-aside"><p>In dit artikel</p><ol>{insight.sections.map((section, index) => <li key={section.heading}><a href={`#sectie-${index + 1}`}>{section.heading}</a></li>)}</ol></aside>
-      <div className="article-body">{insight.sections.map((section, index) => <section id={`sectie-${index + 1}`} key={section.heading}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{section.bullets ? <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul> : null}</section>)}
+      <div className="article-body"><ArticleContent insight={insight} idPrefix="sectie" />
         <div className="article-cta"><h2>Gebruik deze aanpak voor uw actuele vraag.</h2><p>Bepaal de beslissing, de bewijsstandaard en de onzekerheid die ertoe doet.</p><div className="button-row"><ButtonLink href="/nl/contact">Rapport aanvragen</ButtonLink><Link className="section-link" href="/nl/werkwijze">Bekijk de werkwijze →</Link></div></div>
       </div>
     </Container>

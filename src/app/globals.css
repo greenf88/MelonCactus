@@ -260,6 +260,10 @@ h3 { line-height: 1.25; }
 .article-body h2 { font-size: clamp(2rem,4vw,3.2rem); }
 .article-body p, .article-body li { color: #404a44; font-family: var(--font-display); font-size: 1.12rem; line-height: 1.8; }
 .article-body ul { margin: 1.7rem 0; padding: 1.2rem 1.5rem 1.2rem 2.5rem; background: var(--white); border-left: 4px solid var(--green); }
+.article-body ol { margin: 1.7rem 0; padding-left: 2.5rem; }
+.article-body a { color: var(--green); text-decoration: underline; text-underline-offset: .2em; overflow-wrap: anywhere; }
+.article-body a:hover { text-decoration-thickness: 2px; }
+.article-intro { margin-bottom: 3rem; }
 .article-cta { margin-top: 5rem; padding: 2rem; background: var(--lemon-soft); border-top: 4px solid var(--green-dark); }
 .article-cta h2 { font-size: 2.25rem; }
 .article-cta p { font-family: var(--font-body); font-size: 1rem; }
@@ -371,6 +375,7 @@ h3 { line-height: 1.25; }
   .breadcrumbs { margin-bottom: 2rem; }
   .page-hero, .article-header { padding-top: 2rem; }
   .page-hero h1, .article-header h1 { font-size: clamp(2.7rem,14vw,4.3rem); hyphens: auto; overflow-wrap: anywhere; }
+  .article-header h1 { font-size: clamp(2.35rem,10vw,3rem); line-height: 1.05; }
   .contact-section, .legal-page { padding-top: 1.5rem; }
   .contact-intro .breadcrumbs, .legal-page .breadcrumbs { margin-bottom: 1.25rem; }
   .contact-intro h1, .legal-page-header h1 { font-size: clamp(2.45rem,10vw,3.3rem); }
