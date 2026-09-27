@@ -7,28 +7,111 @@ import { SampleEvidenceTable } from "@/components/sample-evidence-table";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Fictief voorbeeldrapport",
-  description: "Een fictieve demonstratie van de opbouw, bewijsnormen en zekerheidsniveaus in een rapport van MelonCactus.",
+  title: "Voorbeeldrapport industriële concurrentieanalyse | MelonCactus",
+  description: "Een fictieve beslisnotitie die laat zien hoe MelonCactus openbaar bewijs, alternatieve verklaringen en gevolgen voor een besluit scheidt.",
   alternates: languageAlternates("/sample-report", "nl"),
 };
 
 export default function DutchSampleReportPage() {
-  return <article className="sample-report">
-    <PageHeader locale="nl" eyebrow="Fictieve demonstratie" title="Gereedheid voor opschaling" intro="Dit fictieve voorbeeld laat zien hoe wij bewijs, beoordeling, zekerheid en beperkingen presenteren. Northstar Thermal Systems en al het bronmateriaal hieronder zijn uitsluitend voor deze demonstratie verzonnen." breadcrumbs={[{ label: "Voorbeeldrapport" }]} />
-    <section className="report-cover"><Container><div className="report-meta"><div><span>Referentie</span><strong>MC-DEMO-001</strong></div><div><span>Status</span><strong>Fictieve demonstratie</strong></div><div><span>Onderwerp</span><strong>Northstar Thermal Systems</strong></div><div><span>Peildatum bewijs</span><strong>Uitsluitend illustratief</strong></div></div></Container></section>
+  return (
+    <article className="sample-report">
+      <PageHeader
+        locale="nl"
+        eyebrow="Voorbeeldrapport · fictieve casus"
+        title="Kan Alderwick de productie opschalen?"
+        intro="Een voorbeeld van hoe MelonCactus openbare signalen omzet in een onderbouwde beoordeling voor een besluit. Alderwick Thermal Modules, de brondocumenten en alle data en getallen in deze casus zijn verzonnen."
+        breadcrumbs={[{ label: "Voorbeeldrapport" }]}
+      />
 
-    <section className="report-section"><Container className="report-grid"><aside><span>01</span><h2>Onderzoeksvraag</h2></aside><div className="report-body"><p className="report-lead">Wat zegt het fictieve openbare bewijs over de gereedheid van Northstar Thermal Systems om de assemblage van modulaire industriële warmtesystemen op te schalen?</p><h3>Afbakening</h3><p>De demonstratie gebruikt fictieve bedrijfsinformatie, planningsgegevens, vacatures, beelden van een locatie en materiaal van een vakbeurs. Zij schat geen exacte productie, kosten, rendement of klantvraag.</p></div></Container></section>
+      <section className="report-cover" aria-label="Rapportgegevens">
+        <Container>
+          <div className="report-meta">
+            <div><span>Referentie</span><strong>MC-DEMO-001</strong></div>
+            <div><span>Onderwerp</span><strong>Alderwick Thermal Modules</strong></div>
+            <div><span>Peildatum bewijs</span><strong>1 september 2026 · fictief</strong></div>
+            <div><span>Status</span><strong>Publieke demonstratie · geen klantopdracht</strong></div>
+          </div>
+        </Container>
+      </section>
 
-    <section className="report-section report-tinted"><Container className="report-grid"><aside><span>02</span><h2>Samenvatting voor beslissers</h2></aside><div className="report-body"><p className="report-lead">Het bewijs past bij een bedrijf dat zich voorbereidt op een grotere operationele doorvoer, maar bevestigt geen gerealiseerde productiecapaciteit.</p><p>Een vergunde uitbreiding, zichtbare bouwwerkzaamheden en werving voor productie- en leverancierskwaliteitsfuncties vormen samen een samenhangend groeisignaal. Productinformatie bevestigt een modulaire opbouw die herhaalbare assemblage mogelijk kan maken. Geen enkele fictieve bron stelt echter de status van ingebruikname, de geïnstalleerde lijnsnelheid, de bezetting of de orderportefeuille vast.</p><div className="finding-summary"><div><span>Algehele beoordeling</span><strong>Voorbereiding op uitbreiding is aannemelijk</strong></div><div><span>Zekerheid</span><ConfidenceBadge level="High confidence" locale="nl" /></div><div><span>Belangrijkste beperking</span><strong>Geen geverifieerde productiegegevens</strong></div></div></div></Container></section>
+      <section className="report-section report-decision" id="decision">
+        <Container className="report-grid">
+          <aside><span>01 / Beslisnotitie</span><h2>De kern in één minuut</h2></aside>
+          <div className="report-body">
+            <p className="report-kicker">Klantvraag in deze fictieve casus</p>
+            <p className="report-lead">Moet een industriële inkoper uitgaan van een kortere levertijd voor Alderwicks systemen omdat een nieuw assemblagegebouw vorm krijgt?</p>
+            <div className="decision-callout">
+              <span>Onze beoordeling</span>
+              <strong>Nee. Houd de bestaande aanname voor de levertijd aan tot de operationele productie onafhankelijk is onderbouwd.</strong>
+              <p>De openbare signalen ondersteunen voorbereiding op uitbreiding. Ze tonen geen in bedrijf gestelde lijn, stabiel productietempo of kortere levertijden. Bereid parallel een alternatieve inkoopoptie voor.</p>
+            </div>
+            <div className="finding-summary" aria-label="Drie beoordelingsniveaus">
+              <div><span>Fysieke uitbreiding</span><ConfidenceBadge level="High confidence" locale="nl" /></div>
+              <div><span>Voorbereiding op opschaling</span><ConfidenceBadge level="Moderate confidence" locale="nl" /></div>
+              <div><span>Hogere productie in bedrijf</span><ConfidenceBadge level="Unknown" locale="nl" /></div>
+            </div>
+          </div>
+        </Container>
+      </section>
 
-    <section className="report-section"><Container><div className="report-section-heading"><span>03</span><h2>Bewijsregister</h2><p>Waarnemingen blijven gescheiden van de beoordeling die zij ondersteunen.</p></div><SampleEvidenceTable locale="nl" /></Container></section>
+      <section className="report-section report-tinted">
+        <Container className="report-grid">
+          <aside><span>02 / Afbakening</span><h2>Vraag en grenzen</h2></aside>
+          <div className="report-body">
+            <p>We beoordelen of rechtmatig beschikbare openbare informatie een verhoging van de assemblagecapaciteit op korte termijn ondersteunt. Het fictieve dossier bevat een productblad, een vergunningmelding, een gedateerde buitenfoto, vacatures en een presentatiedia.</p>
+            <p>Dit voorbeeld toont bewust alleen een beknopt bronnenpad. Het bevat geen echte brondocumenten, vertrouwelijke informatie, specifieke verzamelstappen of berekening van productiecapaciteit. De casus demonstreert de redenering; zij doet geen uitspraak over een bestaande fabrikant.</p>
+          </div>
+        </Container>
+      </section>
 
-    <section className="report-section report-tinted"><Container className="report-grid"><aside><span>04</span><h2>Belangrijkste bevindingen</h2></aside><div className="report-body"><div className="finding-list"><article><span>B1</span><div><h3>Twee soorten bronnen ondersteunen de fysieke uitbreiding.</h3><p>De fictieve vergunningsmelding en gedateerde buitenbeelden stemmen overeen. Geen van beide verifieert de interne inrichting.</p></div><ConfidenceBadge level="High confidence" locale="nl" /></article><article><span>B2</span><div><h3>De werving past bij voorbereiding op meer doorvoer.</h3><p>De combinatie van productie-engineering, leverancierskwaliteit en ploegleiding past beter bij opschaling dan bij afzonderlijke vervangingsvacatures.</p></div><ConfidenceBadge level="Moderate confidence" locale="nl" /></article><article><span>B3</span><div><h3>Een nieuw product blijft een vroeg signaal.</h3><p>De verwijzing in de presentatie heeft geen gevalideerde specificatie, introductiedatum of onafhankelijke bevestiging.</p></div><ConfidenceBadge level="Indicative" locale="nl" /></article></div></div></Container></section>
+      <section className="report-section" id="evidence">
+        <Container>
+          <div className="report-section-heading"><span>03 / Bronnenpad</span><h2>Vijf signalen. Vijf bewijsgrenzen.</h2><p>Deze bronvermeldingen zijn voor de casus verzonnen. Bij een echte opdracht gebruiken we herleidbare, gedateerde bronnen die de opdrachtgever binnen de afgesproken scope kan beoordelen.</p></div>
+          <SampleEvidenceTable locale="nl" />
+        </Container>
+      </section>
 
-    <section className="report-section"><Container className="report-grid"><aside><span>05</span><h2>Beperkingen</h2></aside><div className="report-body"><ul className="editorial-list"><li>Geen bron bevestigt geïnstalleerde apparatuur, ingebruikname van de lijn of gerealiseerde cyclustijd.</li><li>Vacatures kunnen onvervuld blijven en bewijzen niet dat nieuwe ploegen actief zijn.</li><li>Beelden van buiten tonen geen interne procescapaciteit of kwaliteitsprestaties.</li><li>Er is geen betrouwbaar openbaar bewijs over ordervolume, beperkingen bij leveranciers of productierendement.</li></ul></div></Container></section>
+      <section className="report-section report-tinted" id="findings">
+        <Container className="report-grid">
+          <aside><span>04 / Bevindingen</span><h2>Wat het bewijs ondersteunt</h2></aside>
+          <div className="report-body">
+            <div className="finding-list">
+              <article><span>B1</span><div><h3>De bouw is verder dan een aankondiging.</h3><p>De goedgekeurde uitbreiding en de latere foto van een gesloten gebouwschil stemmen qua locatie en volgorde overeen. Dat ondersteunt de fysieke bouw, niet de gereedheid van de inrichting. <a href="#sample-source-s-02">S-02</a> · <a href="#sample-source-s-03">S-03</a></p></div><ConfidenceBadge level="High confidence" locale="nl" /></article>
+              <article><span>B2</span><div><h3>Operationele voorbereiding is aannemelijk, de omvang blijft onduidelijk.</h3><p>De bouw en de combinatie van productie-, kwaliteits- en ploegfuncties passen bij een uitbreidingsplan. Vervangingsvacatures en gebruik als opslagruimte blijven geloofwaardige alternatieven. <a href="#sample-source-s-02">S-02</a> · <a href="#sample-source-s-03">S-03</a> · <a href="#sample-source-s-04">S-04</a></p></div><ConfidenceBadge level="Moderate confidence" locale="nl" /></article>
+              <article><span>B3</span><div><h3>Snellere leveringen zijn niet aangetoond.</h3><p>Het productblad en de dia over een prototype vermelden geen lijnsnelheid, aantal afgeleverde units, rendement, orderachterstand of geverifieerde levertijd. Het bewijs draagt geen capaciteitscijfer. <a href="#sample-source-s-01">S-01</a> · <a href="#sample-source-s-05">S-05</a></p></div><ConfidenceBadge level="Unknown" locale="nl" /></article>
+            </div>
+          </div>
+        </Container>
+      </section>
 
-    <section className="report-section report-tinted"><Container className="report-grid"><aside><span>06</span><h2>Strategische implicaties</h2></aside><div className="report-body"><p>Het bewijs rechtvaardigt om Northstar te beschouwen als een concurrent die zich op opschaling voorbereidt, maar nog niet als een partij met bewezen hogere productie. Commerciële plannen moeten onderscheid maken tussen signalen voor de nabije toekomst en geverifieerde levercapaciteit.</p><p>Activiteit van leveranciers en werving zijn de nuttigste openbare signalen om verder te volgen. Een latere verwijzing naar ingebruikname, een verandering in ploegendienst of een productcertificering zou de zekerheid wezenlijk vergroten.</p><h3>Vervolgvragen</h3><ol className="numbered-questions"><li>Is er een vergunning voor ingebruikname van de uitbreiding verleend?</li><li>Verwijzen leveranciers van apparatuur naar installatie of ingebruikname?</li><li>Zijn productievacatures ingevuld, opnieuw geplaatst of op een ander functieniveau verschenen?</li><li>Toont latere productdocumentatie certificering of serieel aanbod?</li></ol></div></Container></section>
+      <section className="report-section">
+        <Container className="report-grid">
+          <aside><span>05 / Tegentoets</span><h2>Wat kan ons oordeel veranderen?</h2></aside>
+          <div className="report-body">
+            <p className="report-lead">Een gebouw kan klaar zijn terwijl de productielijn dat nog niet is. Werving kan een voornemen tonen zonder dat er een extra ploeg draait.</p>
+            <div className="report-challenge-grid">
+              <div><h3>Alternatieve verklaring</h3><p>De uitbreiding kan vooral voor opslag of testen dienen. De vacatures kunnen vertrekkende medewerkers vervangen. Buitenfoto’s geven over beide mogelijkheden geen uitsluitsel.</p></div>
+              <div><h3>Bewijs dat ertoe doet</h3><p>Een gedateerde mijlpaal voor ingebruikname, een bevestigde start van een ploeg of herhaalde verwijzingen naar seriële productie en leveringen versterken de beoordeling. Vertraagde inrichting of langdurig openstaande vacatures verzwakken haar.</p></div>
+            </div>
+          </div>
+        </Container>
+      </section>
 
-    <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">Uw beslissing, uw opdracht</p><h2>Vraag een rapport aan rond een actuele vraag.</h2><p>De opbouw wordt afgestemd op het bewijs en de beslissing, niet klakkeloos overgenomen uit deze fictieve demonstratie.</p></div><ButtonLink href="/nl/contact">Vraag een vergelijkbaar rapport aan</ButtonLink></Container></section>
-  </article>;
+      <section className="report-section report-tinted">
+        <Container className="report-grid">
+          <aside><span>06 / Besluit</span><h2>Van bevinding naar actie</h2></aside>
+          <div className="report-body">
+            <ol className="report-actions">
+              <li><span>Nu</span><p>Houd bestaande aannames over leverancier en levertijd aan. Baseer prijs of leverbelofte niet op de bouw alleen.</p></li>
+              <li><span>Parallel</span><p>Bereid een tweede inkooproute voor als een daadwerkelijke capaciteitsverhoging relevant is voor aanbestedingen of concurrentiepositie.</p></li>
+              <li><span>Herbeoordeel bij</span><p>Openbaar bewijs van ingebruikname en seriële leveringen, of een geloofwaardige vertraging die het uitbreidingsverhaal tegenspreekt.</p></li>
+            </ol>
+            <p className="report-disclaimer">Dit is een fictief voorbeeld, geen prognose, inkoopadvies over een bestaand bedrijf of weergave van een uitgevoerde klantopdracht. Het volledige bronpakket en de wijze van verzamelen vallen buiten deze publieke demonstratie.</p>
+          </div>
+        </Container>
+      </section>
+
+      <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">Een vraag waarop u kunt handelen</p><h2>Leg een werkelijke beslissing langs dezelfde meetlat.</h2><p>We stemmen de vraag, bewijsgrenzen en oplevering af op uw situatie.</p></div><ButtonLink href="/nl/contact">Bespreek een rapport</ButtonLink></Container></section>
+    </article>
+  );
 }
