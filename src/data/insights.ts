@@ -1,7 +1,10 @@
+import { industrialInsights } from "@/data/industrial-insights";
+
 export type InsightSection = {
   heading: string;
-  paragraphs: readonly string[];
+  paragraphs?: readonly string[];
   bullets?: readonly string[];
+  markdown?: string;
 };
 
 export type Insight = {
@@ -10,18 +13,17 @@ export type Insight = {
   description: string;
   date: string;
   displayDate: string;
-  readingTime: string;
+  introMarkdown?: string;
   sections: readonly InsightSection[];
 };
 
-export const insights: readonly Insight[] = [
+const originalInsights: readonly Insight[] = [
   {
     slug: "what-is-industrial-competitive-intelligence",
     title: "What Is Industrial Competitive Intelligence?",
     description: "A practical guide to evidence-led competitor research for industrial decision-makers.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    readingTime: "7 min read",
     sections: [
       {
         heading: "A decision discipline, not a data collection exercise",
@@ -72,7 +74,6 @@ export const insights: readonly Insight[] = [
     description: "How to use public photographs and video as technical evidence without overstating what they prove.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    readingTime: "8 min read",
     sections: [
       {
         heading: "Images are evidence, but rarely the whole answer",
@@ -123,7 +124,6 @@ export const insights: readonly Insight[] = [
     description: "A clear framework for keeping public-source conclusions traceable and proportionate.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    readingTime: "7 min read",
     sections: [
       {
         heading: "Why the distinction matters",
@@ -174,7 +174,6 @@ export const insights: readonly Insight[] = [
     description: "Common public information exposures—and how to review them without resorting to invasive monitoring.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    readingTime: "8 min read",
     sections: [
       {
         heading: "The exposure is usually cumulative",
@@ -221,6 +220,11 @@ export const insights: readonly Insight[] = [
     ],
   },
 ] as const;
+
+export const insights: readonly Insight[] = [
+  ...industrialInsights.filter((insight) => insight.locale === "en"),
+  ...originalInsights,
+];
 
 export function getInsight(slug: string) {
   return insights.find((insight) => insight.slug === slug);

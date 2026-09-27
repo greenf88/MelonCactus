@@ -16,6 +16,10 @@ export const routePairs = [
   ["/insights/what-public-images-can-reveal-about-industrial-capabilities", "/nl/artikelen/wat-publieke-beelden-vertellen-over-industriele-capaciteiten"],
   ["/insights/separate-evidence-assessment-inference-osint", "/nl/artikelen/onderscheid-tussen-bewijs-beoordeling-en-gevolgtrekking"],
   ["/insights/how-industrial-companies-expose-competitive-information", "/nl/artikelen/hoe-industriele-bedrijven-concurrentie-informatie-prijsgeven"],
+  ["/insights/what-a-factory-expansion-announcement-proves", "/nl/artikelen/wat-bewijst-een-aangekondigde-fabrieksuitbreiding"],
+  ["/insights/factory-opening-versus-full-production-infineon", "/nl/artikelen/nieuwe-fabriek-openen-versus-volledig-produceren"],
+  ["/insights/battery-factory-from-pilot-to-commercial-scale", "/nl/artikelen/batterijfabriek-van-proefproductie-naar-commerciele-schaal"],
+  ["/insights/asml-capacity-plans-reading-manufacturing-forecasts", "/nl/artikelen/asml-capaciteitsprognose-wat-zeggen-de-cijfers"],
 ] as const;
 
 const enToNl = new Map<string, string>(routePairs);

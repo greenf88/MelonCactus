@@ -1,13 +1,13 @@
 import type { Insight } from "@/data/insights";
+import { industrialInsights } from "@/data/industrial-insights";
 
-export const insightsNl: readonly Insight[] = [
+const originalInsightsNl: readonly Insight[] = [
   {
     slug: "wat-is-industriele-concurrentie-intelligentie",
     title: "Wat is industriële concurrentie-informatie?",
     description: "Een praktische gids voor onderbouwd onderzoek naar concurrenten, bedoeld voor industriële beslissers.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    readingTime: "7 min leestijd",
     sections: [
       {
         heading: "Een hulpmiddel voor beslissingen, geen verzamelwoede",
@@ -58,7 +58,6 @@ export const insightsNl: readonly Insight[] = [
     description: "Gebruik openbare foto’s en video’s als technisch bewijs zonder meer te concluderen dan zij toelaten.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    readingTime: "8 min leestijd",
     sections: [
       {
         heading: "Beelden zijn bewijs, maar zelden het hele antwoord",
@@ -109,7 +108,6 @@ export const insightsNl: readonly Insight[] = [
     description: "Een helder kader om conclusies uit openbare bronnen herleidbaar en evenwichtig te houden.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    readingTime: "7 min leestijd",
     sections: [
       {
         heading: "Waarom het onderscheid telt",
@@ -160,7 +158,6 @@ export const insightsNl: readonly Insight[] = [
     description: "Veelvoorkomende openbare informatiesporen en een proportionele manier om ze te beoordelen.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    readingTime: "8 min leestijd",
     sections: [
       {
         heading: "Het totaalbeeld ontstaat stap voor stap",
@@ -206,6 +203,11 @@ export const insightsNl: readonly Insight[] = [
       },
     ],
   },
+];
+
+export const insightsNl: readonly Insight[] = [
+  ...industrialInsights.filter((insight) => insight.locale === "nl"),
+  ...originalInsightsNl,
 ];
 
 export function getInsightNl(slug: string) {
