@@ -17,7 +17,7 @@ function parseArticle(chunk: string): Insight & { locale: "en" | "nl" } {
   const title = requiredMatch(chunk, /^## (?:EN|NL) \d+ — (.+)$/m, "title");
   const path = requiredMatch(chunk, /^\*\*(?:Suggested URL|Voorgestelde URL):\*\* `([^`]+)`$/m, "URL");
   const description = requiredMatch(chunk, /^\*\*Meta description:\*\* (.+)$/m, "description");
-  const dateLine = /^\*\*(?:Publication date|Publicatiedatum):\*\* .+$/m.exec(chunk);
+  const dateLine = /^\*\*(?:Publication date|Publicatiedatum):\*\* (\d{4}-\d{2}-\d{2})$/m.exec(chunk);
   if (!dateLine) throw new Error(`Missing publication date for ${path}`);
   const body = chunk.slice(dateLine.index + dateLine[0].length).trim();
   const [introMarkdown, ...sectionBlocks] = body.split(/\n(?=### )/);
@@ -28,7 +28,10 @@ function parseArticle(chunk: string): Insight & { locale: "en" | "nl" } {
   });
   const slug = path.split("/").at(-1);
   if (!slug) throw new Error(`Missing slug for ${path}`);
-  const date = "2026-09-25";
+  const date = dateLine[1];
+  if (new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) {
+    throw new Error(`Invalid publication date for ${path}`);
+  }
   return {
     locale,
     slug,
