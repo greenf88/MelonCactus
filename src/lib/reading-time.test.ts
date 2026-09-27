@@ -37,7 +37,7 @@ describe("article reading time", () => {
       expect(body).toContain("https://");
       expect(body).toMatch(/\]\(\/(?:nl\/)?(?:werkwijze|methodology|artikelen|insights)/);
       expect(body).not.toMatch(/!\[[^\]]*\]\(/);
-      expect(article.date).toBe("2026-09-25");
+      expect(article.date).toBe("2026-09-27");
     }
   });
 });
