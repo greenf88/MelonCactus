@@ -7,10 +7,10 @@ export function ServiceCard({ service, locale = "en" }: { service: ReportOption;
   return (
     <article className={`service-card ${service.featured ? "featured" : ""}`}>
       <div>
-        {service.featured ? <p className="card-flag">{isNl ? "Meest uitgebreide technische optie" : "Most comprehensive technical option"}</p> : null}
+        {service.featured ? <p className="card-flag">{isNl ? "Verdiepend onderzoek" : "In-depth assessment"}</p> : null}
         <h3>{service.name}</h3>
         <p className="price">
-          <span>{isNl ? "vanaf" : "from"}</span> {service.price}
+          <span>{service.priceQualifier}</span> {service.price}
         </p>
         <p>{service.summary}</p>
       </div>
@@ -19,9 +19,9 @@ export function ServiceCard({ service, locale = "en" }: { service: ReportOption;
           <li key={item}>{item}</li>
         ))}
       </ul>
-      <p className="priority-card-note">{isNl ? "Spoedlevering kan beschikbaar zijn, onder voorbehoud van beoordeling en schriftelijke bevestiging." : "Priority delivery may be available, subject to written confirmation."}</p>
+      <p className="priority-card-note">{isNl ? "Opdracht, vaste prijs en opleverdatum worden vooraf afgestemd." : "Scope, fixed fee and delivery date are agreed before work begins."}</p>
       <ButtonLink href={`${isNl ? "/nl" : ""}/contact?report=${encodeURIComponent(service.formValue ?? service.name)}`} variant="text">
-        {isNl ? "Bespreek dit rapport" : "Discuss this report"} <span aria-hidden="true">→</span>
+        {isNl ? "Bespreek deze opdracht" : "Discuss this assessment"} <span aria-hidden="true">→</span>
       </ButtonLink>
     </article>
   );

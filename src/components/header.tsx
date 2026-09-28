@@ -23,7 +23,7 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
             </Link>
           ))}
           <Link className="button button-primary button-small" href={isNl ? "/nl/contact" : "/contact"}>
-            {isNl ? "Rapport aanvragen" : "Request a Report"}
+            {isNl ? "Bespreek uw vraag" : "Discuss a Requirement"}
           </Link>
         </nav>
         <div className="header-actions"><LanguageSwitcher locale={locale} /><MobileNav locale={locale} /></div>

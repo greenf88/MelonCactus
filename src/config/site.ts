@@ -24,6 +24,7 @@ export type ReportOption = {
   name: string;
   formValue?: string;
   price: string;
+  priceQualifier: string;
   summary: string;
   includes: readonly string[];
   featured?: boolean;
@@ -31,42 +32,35 @@ export type ReportOption = {
 
 export const reportOptions: readonly ReportOption[] = [
   {
-    name: "Rapid Intelligence Scan",
-    price: "€495",
-    summary: "A tightly scoped first answer to a defined question.",
-    includes: [
-      "Focused public-source scan",
-      "Key findings and source list",
-      "Identified information gaps",
-    ],
-  },
-  {
-    name: "Competitor Snapshot",
+    name: "Focused Intelligence Assessment",
     price: "€995",
-    summary: "A structured company, product or technology profile.",
+    priceQualifier: "from",
+    summary: "A focused assessment of a defined decision and its most material uncertainties.",
     includes: [
-      "Evidence-backed observations",
-      "Capabilities and market signals",
-      "Risks and strategic questions",
+      "Agreed question and evidence boundary",
+      "Source-backed findings and limitations",
+      "Concise decision-oriented deliverable",
     ],
   },
   {
-    name: "Technical Deep Dive",
+    name: "Technical & Competitive Intelligence",
     price: "€1,995",
-    summary: "Detailed analysis across several technical evidence types.",
+    priceQualifier: "typically from",
+    summary: "A deeper investigation of a company, technology or competitive position.",
     includes: [
-      "Facility, product, process or ecosystem analysis",
-      "Multiple source types",
-      "Evidence appendix and confidence assessment",
+      "Multiple relevant source types",
+      "Technical and commercial assessment",
+      "Traceable evidence and confidence levels",
     ],
     featured: true,
   },
   {
-    name: "Strategic Intelligence Report",
+    name: "Strategic Intelligence Engagement",
     price: "€3,995",
-    summary: "A broad, decision-oriented investigation.",
+    priceQualifier: "from",
+    summary: "A broader, decision-led engagement across several evidence streams.",
     includes: [
-      "Multiple companies, markets or evidence streams",
+      "Agreed research workstreams",
       "Executive conclusions and detailed findings",
       "Evidence trail and strategic implications",
     ],

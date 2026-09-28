@@ -7,81 +7,67 @@ import TermsPage from "@/app/(en)/terms/page";
 import DutchServicesPage from "@/app/(nl)/nl/diensten/page";
 import DutchTermsPage from "@/app/(nl)/nl/voorwaarden/page";
 import DutchPrivacyPage from "@/app/(nl)/nl/privacy/page";
-import { calculateDeliveryTotal, DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "./delivery";
+import { reportOptions } from "./site";
+import { reportOptionsNl } from "./site-nl";
+import { DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "./delivery";
 
-describe("delivery-priority choices and pricing", () => {
-  it("has exactly the three approved choices and correct totals", () => {
-    expect(deliveryOptions.map(({ value, multiplier }) => [value, multiplier])).toEqual([
-      ["standard", 1], ["within-48-hours", 2], ["within-24-hours", 3],
-    ]);
-    expect(calculateDeliveryTotal(995, "standard")).toBe(995);
-    expect(calculateDeliveryTotal(995, "within-48-hours")).toBe(1990);
-    expect(calculateDeliveryTotal(995, "within-24-hours")).toBe(2985);
-  });
-
-  it("defaults the form to Standard and explains written acceptance", () => {
-    const html = renderToStaticMarkup(createElement(ContactForm));
-    const standard = html.match(/<option[^>]*>Standard delivery<\/option>/)?.[0];
+describe("decision-led assessment and delivery choices", () => {
+  it("offers only Standard, Priority and Critical, with no public multiplier", () => {
+    expect(deliveryOptions.map(({ value }) => value)).toEqual(["standard", "priority", "critical"]);
     expect(DEFAULT_DELIVERY_PRIORITY).toBe("standard");
-    expect(standard).toContain("selected");
-    expect(html).toContain("Delivery priority");
-    expect(html).toContain("Within 48 hours — 2× project fee");
-    expect(html).toContain("Within 24 hours — 3× project fee");
-    expect(html).toContain("written acceptance by MelonCactus");
+    expect(JSON.stringify(deliveryOptions)).not.toMatch(/[23]×|multiplier|surcharge/i);
   });
 
-  it("displays accurate multipliers, illustrations and conditions", () => {
-    const html = renderToStaticMarkup(createElement(ServicesPage));
-    expect(html).toContain("1×");
-    expect(html).toContain("2×");
-    expect(html).toContain("3×");
-    expect(html).toContain("100% surcharge");
-    expect(html).toContain("200% surcharge");
-    expect(html).not.toContain("300% surcharge");
-    expect(html).toContain("€1,990");
-    expect(html).toContain("€2,985");
-    expect(html).toContain("Illustration only, not a quotation");
-    expect(html).toContain("binding only when MelonCactus confirms");
-    expect(html).toContain("Can every report be delivered within 24 or 48 hours?");
+  it("renders the decision-led form, Standard default and an optional NDA request in both languages", () => {
+    const en = renderToStaticMarkup(createElement(ContactForm));
+    const nl = renderToStaticMarkup(createElement(ContactForm, { locale: "nl" }));
+    expect(en).toContain("What decision are you trying to make?");
+    expect(en).toContain("Company, market or technology to examine");
+    expect(en).toMatch(/<option value="standard" selected="">Standard/);
+    expect(en).toContain("not automatic acceptance");
+    expect(en).toContain('name="ndaRequest"');
+    expect(en).toContain("does not create an agreement");
+    expect(nl).toMatch(/<option value="standard" selected="">Standaard/);
+    expect(nl).toContain("geen automatische aanvaarding");
+    expect(nl).toContain("geen overeenkomst tot stand");
   });
 
-  it("states the start condition and final fee in the terms", () => {
-    const html = renderToStaticMarkup(createElement(TermsPage));
-    expect(html).toContain("written scope confirmation");
-    expect(html).toContain("received all required materials");
-    expect(html).toContain("200% surcharge");
+  it("preserves assessment preselection, including old inbound report links", () => {
+    const en = renderToStaticMarkup(createElement(ContactForm, { initialReport: "Technical Deep Dive" }));
+    const nl = renderToStaticMarkup(createElement(ContactForm, { locale: "nl", initialReport: "Focused Intelligence Assessment" }));
+    expect(en).toMatch(/<option value="Technical &amp; Competitive Intelligence" selected="">/);
+    expect(nl).toMatch(/<option value="Focused Intelligence Assessment" selected="">Gerichte intelligencebeoordeling/);
   });
 
-  it("keeps Dutch delivery values and report selections compatible with the server", () => {
-    const form = renderToStaticMarkup(createElement(ContactForm, { locale: "nl", initialReport: "Competitor Snapshot" }));
-    expect(form).toContain("Leveringsprioriteit");
-    expect(form).toContain("schriftelijke aanvaarding door MelonCactus");
-    expect(form).toMatch(/<option value="standard" selected="">Standaardlevering<\/option>/);
-    expect(form).toMatch(/<option value="Competitor Snapshot" selected="">Concurrentieprofiel/);
-    expect(form).toContain('value="within-48-hours"');
-    expect(form).toContain('value="within-24-hours"');
+  it("shows three indicative levels without the scan as a public product", () => {
+    expect(reportOptions.map(({ price }) => price)).toEqual(["€995", "€1,995", "€3,995"]);
+    expect(reportOptionsNl.map(({ price }) => price)).toEqual(["€995", "€1.995", "€3.995"]);
+    const en = renderToStaticMarkup(createElement(ServicesPage));
+    const nl = renderToStaticMarkup(createElement(DutchServicesPage));
+    expect(en).toContain("indicative starting fees");
+    expect(en).toContain("quoted individually after scoping");
+    expect(nl).toContain("indicatieve vanafprijzen");
+    expect(nl).toContain("afzonderlijk geoffreerd");
+    expect(`${en}${nl}`).not.toMatch(/€495|€1,990|€2,985|€1\.990|€2\.985|[23]×|100% surcharge|200% toeslag/);
   });
 
-  it("shows the same priority mathematics and conditions in Dutch", () => {
-    const services = renderToStaticMarkup(createElement(DutchServicesPage));
-    const terms = renderToStaticMarkup(createElement(DutchTermsPage));
-    expect(services).toContain("1×");
-    expect(services).toContain("2×");
-    expect(services).toContain("3×");
-    expect(services).toContain("100% toeslag");
-    expect(services).toContain("200% toeslag");
-    expect(services).not.toContain("300% toeslag");
-    expect(services).toContain("€1.990");
-    expect(services).toContain("€2.985");
-    expect(terms).toContain("schriftelijk");
+  it("keeps written acceptance and evidence limits in both versions of the terms", () => {
+    const en = renderToStaticMarkup(createElement(TermsPage));
+    const nl = renderToStaticMarkup(createElement(DutchTermsPage));
+    expect(en).toContain("confirmed the scope, fee and deadline in writing");
+    expect(en).toContain("received all required information");
+    expect(nl).toContain("schriftelijk heeft bevestigd");
+    expect(nl).toContain("benodigde informatie heeft ontvangen");
+    expect(`${en}${nl}`).not.toMatch(/[23]×|100% surcharge|200% toeslag/);
   });
 
-  it("keeps the approved Dutch legal wording", () => {
+  it("keeps approved Dutch legal wording and accurately covers new intake data", () => {
     const privacy = renderToStaticMarkup(createElement(DutchPrivacyPage));
     const terms = renderToStaticMarkup(createElement(DutchTermsPage));
     expect(privacy).toContain("andere toegangsgegevens");
+    expect(privacy).toContain("geheimhoudingsovereenkomst");
+    expect(privacy).toContain("bedrijf, functie of rol");
     expect(terms).toContain("technisch of beveiligingsadvies");
     expect(terms).toContain("opdracht voor een klant");
-    expect(terms).toContain("toegangsgegevens");
   });
 });

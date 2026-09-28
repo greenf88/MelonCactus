@@ -111,7 +111,7 @@ export default function DutchSampleReportPage() {
         </Container>
       </section>
 
-      <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">Een vraag waarop u kunt handelen</p><h2>Leg een werkelijke beslissing langs dezelfde meetlat.</h2><p>We stemmen de vraag, bewijsgrenzen en oplevering af op uw situatie.</p></div><ButtonLink href="/nl/contact">Bespreek een rapport</ButtonLink></Container></section>
+      <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">Een vraag waarop u kunt handelen</p><h2>Leg een werkelijke beslissing langs dezelfde meetlat.</h2><p>We stemmen de vraag, bewijsgrenzen en oplevering af op uw situatie.</p></div><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink></Container></section>
     </article>
   );
 }

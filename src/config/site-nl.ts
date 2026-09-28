@@ -16,33 +16,29 @@ export const siteNl = {
 
 export const reportOptionsNl: readonly ReportOption[] = [
   {
-    name: "Gerichte verkenning",
-    formValue: "Rapid Intelligence Scan",
-    price: "€495",
-    summary: "Een scherp afgebakend eerste antwoord op een concrete vraag.",
-    includes: ["Gericht onderzoek in openbare bronnen", "Belangrijkste bevindingen en bronnenlijst", "In kaart gebrachte kennislacunes"],
-  },
-  {
-    name: "Concurrentieprofiel",
-    formValue: "Competitor Snapshot",
+    name: "Gerichte intelligencebeoordeling",
+    formValue: "Focused Intelligence Assessment",
     price: "€995",
-    summary: "Een gestructureerd profiel van een bedrijf, product of technologie.",
-    includes: ["Waarnemingen met bronverwijzingen", "Capaciteiten en marktsignalen", "Risico’s en strategische vragen"],
+    priceQualifier: "vanaf",
+    summary: "Een gerichte beoordeling van een beslissing en de belangrijkste onzekerheden.",
+    includes: ["Afgesproken vraag en bewijsgrenzen", "Bevindingen met bronverwijzingen en beperkingen", "Beknopte oplevering voor de beslissing"],
   },
   {
-    name: "Technische diepteanalyse",
-    formValue: "Technical Deep Dive",
+    name: "Technische en concurrentie-intelligence",
+    formValue: "Technical & Competitive Intelligence",
     price: "€1.995",
-    summary: "Gedetailleerde analyse op basis van meerdere soorten technisch bewijs.",
-    includes: ["Analyse van locaties, producten, processen of ecosystemen", "Meerdere soorten bronnen", "Bewijsbijlage en beoordeling van de zekerheid"],
+    priceQualifier: "doorgaans vanaf",
+    summary: "Een diepgaander onderzoek naar een onderneming, technologie of concurrentiepositie.",
+    includes: ["Meerdere relevante brontypen", "Technische en zakelijke beoordeling", "Herleidbaar bewijs en zekerheidsniveaus"],
     featured: true,
   },
   {
-    name: "Strategisch onderzoeksrapport",
-    formValue: "Strategic Intelligence Report",
+    name: "Strategische intelligenceopdracht",
+    formValue: "Strategic Intelligence Engagement",
     price: "€3.995",
-    summary: "Een breder onderzoek, toegespitst op een strategische beslissing.",
-    includes: ["Meerdere bedrijven, markten of bewijsstromen", "Conclusies voor beslissers en gedetailleerde bevindingen", "Controleerbaar bronnenpad en strategische implicaties"],
+    priceQualifier: "vanaf",
+    summary: "Een bredere opdracht rond een strategische beslissing en meerdere bewijsstromen.",
+    includes: ["Afgesproken onderzoekslijnen", "Conclusies voor beslissers en gedetailleerde bevindingen", "Herleidbaar bewijs en strategische implicaties"],
   },
 ];
 

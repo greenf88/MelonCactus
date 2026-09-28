@@ -59,7 +59,7 @@ export default function Home() {
               evidence-backed intelligence for industrial and technology leaders.
             </p>
             <div className="button-row">
-              <ButtonLink href="/contact">Request a Report</ButtonLink>
+              <ButtonLink href="/contact">Request an Intelligence Assessment</ButtonLink>
               <ButtonLink href="/sample-report" variant="secondary">
                 View a Sample Report
               </ButtonLink>
@@ -156,15 +156,16 @@ export default function Home() {
       <section className="section pricing-section">
         <Container>
           <SectionHeading
-            eyebrow="Report options"
-            title="A scope matched to the question."
-            intro="Starting prices are indicative. Final scope, delivery time and fee are confirmed before work begins."
+            eyebrow="Indicative engagement levels"
+            title="A scope matched to the decision."
+            intro="Starting fees are indicative, not order prices. Scope, deliverables, a fixed fee and a delivery date are proposed before work begins."
           />
           <div className="pricing-grid">
             {reportOptions.map((service) => (
               <ServiceCard service={service} key={service.name} />
             ))}
           </div>
+          <p className="pricing-note">Complex, international or urgent assignments are quoted individually after scoping.</p>
         </Container>
       </section>
 
@@ -197,9 +198,9 @@ export default function Home() {
             <p>We will define the evidence, limits and appropriate research scope before work begins.</p>
           </div>
           <div className="button-row">
-            <ButtonLink href="/contact">Request a Report</ButtonLink>
+            <ButtonLink href="/contact">Request an Intelligence Assessment</ButtonLink>
             <ButtonLink href="/contact?call=true" variant="secondary">
-              Arrange a Confidential Call
+              Request a Confidential Call
             </ButtonLink>
           </div>
         </Container>

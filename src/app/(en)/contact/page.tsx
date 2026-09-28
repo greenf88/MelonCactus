@@ -5,8 +5,8 @@ import { Container } from "@/components/container";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Request a Report",
-  description: "Describe the industrial intelligence question, decision and timeframe you need MelonCactus to assess.",
+  title: "Request an Intelligence Assessment",
+  description: "Describe the decision, company, market or technology you need assessed. MelonCactus reviews lawful sources and evidence needs before proposing a fixed scope, fee and date.",
   alternates: languageAlternates("/contact", "en"),
 };
 
@@ -18,27 +18,25 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <Container className="contact-layout">
         <header className="contact-intro">
           <Breadcrumbs items={[{ label: "Contact" }]} />
-          <p className="eyebrow">Confidential enquiry</p>
-          <h1>Start with your question.</h1>
-          <p className="page-intro">Describe the decision and the uncertainty behind it. We confirm scope, timing and fee before research begins.</p>
+          <p className="eyebrow">Intelligence assessment</p>
+          <h1>Start with the decision.</h1>
+          <p className="page-intro">What decision are you trying to make, and which company, market or technology should be examined?</p>
+          <p>We first assess the question, the availability of lawful public sources and the evidence needed. Before work begins, you receive a defined scope, deliverables, fixed fee and agreed delivery date.</p>
         </header>
 
         <div className="contact-form-area">
           <ContactForm initialReport={query.report ?? ""} callRequested={query.call === "true"} />
+          <aside className="contact-guidance">
+            <h2>From question to assignment</h2>
+            <ol className="contact-steps">
+              <li><span>01</span><p>Initial review of your decision, question and lawful public sources.</p></li>
+              <li><span>02</span><p>Definition of the scope and what the evidence can and cannot establish.</p></li>
+              <li><span>03</span><p>A proposal with deliverables, a fixed fee and delivery date.</p></li>
+              <li><span>04</span><p>Research after written agreement, followed by the report and, for larger assignments, a discussion of the conclusions.</p></li>
+            </ol>
+            <p>We may decline a question that cannot be answered responsibly using lawful sources.</p>
+          </aside>
         </div>
-
-        <aside className="contact-guidance">
-          <p className="eyebrow">What happens next</p>
-          <ol className="contact-steps">
-            <li><span>01</span><p>We clarify the decision, target and useful evidence threshold.</p></li>
-            <li><span>02</span><p>We confirm scope, exclusions, timing and fee in writing.</p></li>
-            <li><span>03</span><p>Research begins only after the scope is agreed.</p></li>
-          </ol>
-          <div className="confidentiality-note">
-            <h2>Discreet by design.</h2>
-            <p>No public client list by default. No named client cases without written permission. Information supplied for scoping is kept to what is necessary for the enquiry.</p>
-          </div>
-        </aside>
       </Container>
     </section>
   );
