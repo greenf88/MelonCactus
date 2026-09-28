@@ -47,7 +47,7 @@ export default function DutchHome() {
         <p className="eyebrow">Industrieel onderzoek</p>
         <h1>Inzicht voor de industrie, gebaseerd op openbaar bewijs.</h1>
         <p className="hero-intro">MelonCactus brengt versnipperde openbare informatie samen tot gestructureerde, onderbouwde inzichten voor beslissers in industrie en technologie.</p>
-        <div className="button-row"><ButtonLink href="/nl/contact">Rapport aanvragen</ButtonLink><ButtonLink href="/nl/voorbeeldrapport" variant="secondary">Bekijk een voorbeeldrapport</ButtonLink></div>
+        <div className="button-row"><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink><ButtonLink href="/nl/voorbeeldrapport" variant="secondary">Bekijk een voorbeeldrapport</ButtonLink></div>
         <p className="core-statement">{siteNl.coreStatement}</p>
       </div>
       <div className="evidence-panel" role="group" aria-label="Voorbeeld van bewijsclassificatie">
@@ -77,12 +77,13 @@ export default function DutchHome() {
     </Container></section>
 
     <section className="section pricing-section"><Container>
-      <SectionHeading eyebrow="Rapportopties" title="Een opdracht die past bij de vraag." intro="De vanafprijzen zijn indicatief. Definitieve opdracht, levertijd en prijs worden bevestigd voordat het werk begint." />
+      <SectionHeading eyebrow="Indicatieve opdrachtniveaus" title="Een opdracht die past bij uw beslissing." intro="De vanafprijzen zijn indicatief, geen bestelprijzen. Omvang, resultaten, vaste prijs en opleverdatum worden vóór aanvang voorgesteld." />
       <div className="pricing-grid">{reportOptionsNl.map((service) => <ServiceCard service={service} locale="nl" key={service.name} />)}</div>
+      <p className="pricing-note">Complexe, internationale of urgente opdrachten worden na afbakening afzonderlijk geoffreerd.</p>
     </Container></section>
 
     <section className="section sample-section"><Container className="sample-grid"><div><p className="eyebrow">In het rapport</p><h2>Conclusies die u kunt controleren, bevragen en gebruiken.</h2><p className="section-intro">Elk rapport maakt duidelijk wat het bewijs ondersteunt, waar onzekerheid blijft en welke vragen nader onderzoek verdienen.</p><ButtonLink href="/nl/voorbeeldrapport" variant="secondary">Bekijk het voorbeeldrapport</ButtonLink></div><ul className="report-contents">{reportContents.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>)}</ul></Container></section>
 
-    <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Een bruikbaar vertrekpunt</p><h2>Beschrijf de vraag waarop u antwoord zoekt.</h2><p>Voordat wij beginnen, bepalen wij het benodigde bewijs, de grenzen en een passende onderzoeksopdracht.</p></div><div className="button-row"><ButtonLink href="/nl/contact">Rapport aanvragen</ButtonLink><ButtonLink href="/nl/contact?call=true" variant="secondary">Plan een vertrouwelijk gesprek</ButtonLink></div></Container></section>
+    <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Een bruikbaar vertrekpunt</p><h2>Beschrijf de vraag waarop u antwoord zoekt.</h2><p>Voordat wij beginnen, bepalen wij het benodigde bewijs, de grenzen en een passende onderzoeksopdracht.</p></div><div className="button-row"><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink><ButtonLink href="/nl/contact?call=true" variant="secondary">Vraag een vertrouwelijk gesprek aan</ButtonLink></div></Container></section>
   </>;
 }

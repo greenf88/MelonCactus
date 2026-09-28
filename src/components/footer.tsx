@@ -28,7 +28,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
             <a href={`mailto:${siteConfig.businessEmail}`}>
               {siteConfig.businessEmail}
             </a>
-            <Link href={isNl ? "/nl/contact" : "/contact"}>{isNl ? "Rapport aanvragen" : "Request a report"}</Link>
+            <Link href={isNl ? "/nl/contact" : "/contact"}>{isNl ? "Bespreek uw onderzoeksvraag" : "Request an assessment"}</Link>
           </div>
           <div>
             <p className="footer-label">{isNl ? "Informatie" : "Information"}</p>

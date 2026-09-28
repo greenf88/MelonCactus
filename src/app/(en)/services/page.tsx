@@ -4,12 +4,12 @@ import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
 import { reportOptions } from "@/config/site";
-import { calculateDeliveryTotal, deliveryOptions } from "@/config/delivery";
+import { deliveryOptions } from "@/config/delivery";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Services and Report Options",
-  description: "Industrial competitive intelligence, technical analysis and public-source research report options from MelonCactus.",
+  title: "Industrial Intelligence Services",
+  description: "Decision-led industrial intelligence assessments with indicative scope and fees. Each assignment is agreed before research begins.",
   alternates: languageAlternates("/services", "en"),
 };
 
@@ -45,33 +45,31 @@ export default function ServicesPage() {
       </section>
       <section className="section pricing-section" id="reports">
         <Container>
-          <div className="content-heading"><p className="eyebrow">Report options</p><h2>Choose a starting scope.</h2><p>Prices are starting points, not fixed quotations. Scope, delivery time and fee are agreed before research begins.</p></div>
+          <div className="content-heading"><p className="eyebrow">Indicative engagement levels</p><h2>Scope follows the decision.</h2><p>These are indicative starting fees, not order prices or quotations. A defined assignment, deliverables, fixed fee and delivery date are proposed after scope review.</p></div>
           <div className="pricing-grid">{reportOptions.map((service) => <ServiceCard service={service} key={service.name} />)}</div>
+          <p className="pricing-note">Complex, international or urgent assignments are quoted individually after scoping. A smaller paid pilot may be proposed when appropriate.</p>
         </Container>
       </section>
       <section className="section priority-section" id="priority-delivery">
         <Container>
           <div className="content-heading">
             <p className="eyebrow">Delivery options</p>
-            <h2>Priority delivery</h2>
-            <p>Choose a delivery request to discuss during scope review. Each multiplier applies to the final agreed project fee, not to a starting price shown above.</p>
+            <h2>Timing shaped by the evidence.</h2>
+            <p>Tell us when the decision is needed. We assess the scope, source availability and capacity before confirming any delivery date.</p>
           </div>
           <div className="priority-grid">
             {deliveryOptions.map((option) => (
               <article className="priority-option" key={option.value}>
                 <h3>{option.title}</h3>
-                <p className="priority-multiplier">{option.multiplier}× <span>final agreed project fee</span></p>
                 <p>{option.description}</p>
-                <p className="priority-surcharge">{option.surcharge}</p>
               </article>
             ))}
           </div>
-          <p className="priority-condition">The 24- and 48-hour options are subject to capacity and scope suitability. A request is not automatically accepted. Priority delivery becomes binding only when MelonCactus confirms the scope, final fee and deadline in writing and has received all required materials. We may decline a request when responsible evidence verification is not possible within the timeframe. Our evidence and quality standards remain the same.</p>
-          <p className="priority-example">Illustration only, not a quotation: if the final agreed project fee is €995, confirmed 48-hour delivery totals €{calculateDeliveryTotal(995, "within-48-hours").toLocaleString("en-IE")}; confirmed 24-hour delivery totals €{calculateDeliveryTotal(995, "within-24-hours").toLocaleString("en-IE")}.</p>
+          <p className="priority-condition">Priority and critical requests are scoped and quoted individually before work begins. Neither is accepted by form selection alone. The agreed period starts only after written confirmation of scope, fixed fee and deadline and receipt of required information. We may decline a request when the evidence cannot be checked responsibly in time; our evidence standards do not change.</p>
           <div className="priority-faq">
             <p className="eyebrow">FAQ</p>
-            <h3>Can every report be delivered within 24 or 48 hours?</h3>
-            <p>No. Suitability depends on the research scope, available sources and capacity. We will only confirm a priority deadline when the evidence can be checked responsibly within it.</p>
+            <h3>Is a 24–48-hour assessment always possible?</h3>
+            <p>No. This is considered only for selected questions where lawful sources, scope and capacity permit responsible verification. We confirm feasibility and price in writing first.</p>
           </div>
         </Container>
       </section>
@@ -85,7 +83,7 @@ export default function ServicesPage() {
           </div>
         </Container>
       </section>
-      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Define the question</p><h2>Which uncertainty is shaping your decision?</h2><p>A concise brief is enough to start a confidential scope discussion.</p></div><ButtonLink href="/contact">Request a Report</ButtonLink></Container></section>
+      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Define the question</p><h2>Which uncertainty is shaping your decision?</h2><p>A concise brief is enough to begin an assessment of scope and evidence.</p></div><ButtonLink href="/contact">Request an Intelligence Assessment</ButtonLink></Container></section>
     </>
   );
 }

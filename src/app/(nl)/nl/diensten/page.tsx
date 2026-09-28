@@ -4,12 +4,12 @@ import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
 import { reportOptionsNl } from "@/config/site-nl";
-import { calculateDeliveryTotal, deliveryOptions } from "@/config/delivery";
+import { deliveryOptions } from "@/config/delivery";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Diensten en rapportopties",
-  description: "Onderzoek naar concurrenten, technologie en openbare bronnen, met rapportopties voor industriële beslissingen.",
+  title: "Diensten voor industriële intelligence",
+  description: "Onderzoek voor industriële beslissingen, met indicatieve opdrachtniveaus en prijzen. Elke opdracht wordt vooraf afgebakend.",
   alternates: languageAlternates("/services", "nl"),
 };
 
@@ -24,10 +24,10 @@ const capabilities = [
   ["Doorlopende signalering", "Volg afgesproken signalen uit openbare bronnen en rapporteer relevante veranderingen zonder ruis."],
 ] as const;
 
-const deliveryCopy: Record<string, { title: string; description: string; surcharge: string }> = {
-  standard: { title: "Standaardlevering", description: "Leverdatum na beoordeling van de opdracht te bevestigen.", surcharge: "Geen toeslag" },
-  "within-48-hours": { title: "Prioriteit: binnen 48 uur", description: "De totale prijs is het dubbele van de definitief overeengekomen projectprijs.", surcharge: "100% toeslag" },
-  "within-24-hours": { title: "Spoed: binnen 24 uur", description: "De totale prijs is drie keer de definitief overeengekomen projectprijs.", surcharge: "200% toeslag" },
+const deliveryCopy: Record<(typeof deliveryOptions)[number]["value"], { title: string; description: string }> = {
+  standard: { title: "Standaard", description: "De opleverdatum wordt na beoordeling van de vraag en de opdracht afgesproken." },
+  priority: { title: "Prioriteit", description: "Voor tijdgevoelige beslissingen, afhankelijk van de opdracht, bewijsbehoefte en beschikbaarheid." },
+  critical: { title: "Kritiek / 24–48 uur", description: "Alleen voor geselecteerde opdrachten wanneer de bewijsstandaard haalbaar blijft." },
 };
 
 export default function DutchServicesPage() {
@@ -39,21 +39,21 @@ export default function DutchServicesPage() {
         <div className="capability-list">{capabilities.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div>
       </Container></section>
       <section className="section pricing-section" id="rapporten"><Container>
-        <div className="content-heading"><p className="eyebrow">Rapportopties</p><h2>Kies een passende uitgangspositie.</h2><p>Dit zijn vanafprijzen, geen vaste offertes. Opdracht, levertijd en prijs worden overeengekomen voordat het onderzoek begint.</p></div>
+        <div className="content-heading"><p className="eyebrow">Indicatieve opdrachtniveaus</p><h2>De opdracht volgt uit uw beslissing.</h2><p>Deze bedragen zijn indicatieve vanafprijzen, geen bestelprijzen of offertes. Na beoordeling ontvangt u een afgebakende opdracht met resultaten, vaste prijs en opleverdatum.</p></div>
         <div className="pricing-grid">{reportOptionsNl.map((service) => <ServiceCard locale="nl" service={service} key={service.name} />)}</div>
+        <p className="pricing-note">Complexe, internationale of urgente opdrachten worden na afbakening afzonderlijk geoffreerd. Waar passend kan een kleinere betaalde pilot worden voorgesteld.</p>
       </Container></section>
       <section className="section priority-section" id="spoedlevering"><Container>
-        <div className="content-heading"><p className="eyebrow">Leveringsopties</p><h2>Spoedlevering</h2><p>Bespreek uw gewenste levertijd bij het bepalen van de opdracht. Elke factor geldt voor de definitief overeengekomen projectprijs, niet voor de hierboven genoemde vanafprijs.</p></div>
-        <div className="priority-grid">{deliveryOptions.map((option) => <article className="priority-option" key={option.value}><h3>{deliveryCopy[option.value].title}</h3><p className="priority-multiplier">{option.multiplier}× <span>de definitief overeengekomen projectprijs</span></p><p>{deliveryCopy[option.value].description}</p><p className="priority-surcharge">{deliveryCopy[option.value].surcharge}</p></article>)}</div>
-        <p className="priority-condition">Levering binnen 24 of 48 uur is afhankelijk van capaciteit en de geschiktheid van de opdracht. Een verzoek wordt niet automatisch aanvaard en is pas bindend na schriftelijke bevestiging door MelonCactus. De termijn begint pas nadat opdracht, definitieve prijs en deadline schriftelijk zijn bevestigd én alle benodigde materialen zijn ontvangen. Wij kunnen een verzoek afwijzen wanneer het bewijs niet verantwoord binnen de gevraagde termijn kan worden gecontroleerd. Onze bewijs- en kwaliteitsnormen blijven gelijk.</p>
-        <p className="priority-example">Uitsluitend ter illustratie, geen offerte: bij een definitief overeengekomen projectprijs van €995 bedraagt bevestigde levering binnen 48 uur €{calculateDeliveryTotal(995, "within-48-hours").toLocaleString("nl-NL")} en binnen 24 uur €{calculateDeliveryTotal(995, "within-24-hours").toLocaleString("nl-NL")}.</p>
-        <div className="priority-faq"><p className="eyebrow">Veelgestelde vraag</p><h3>Kan elk rapport binnen 24 of 48 uur worden geleverd?</h3><p>Nee. Dit hangt af van de onderzoeksvraag, de beschikbare bronnen en onze capaciteit. Wij bevestigen een spoeddeadline alleen als wij het bewijs binnen die termijn verantwoord kunnen controleren.</p></div>
+        <div className="content-heading"><p className="eyebrow">Leveringsopties</p><h2>De termijn volgt uit de bewijsbehoefte.</h2><p>Geef aan wanneer u de beslissing moet nemen. Wij beoordelen opdracht, bronnen en capaciteit voordat wij een opleverdatum bevestigen.</p></div>
+        <div className="priority-grid">{deliveryOptions.map((option) => <article className="priority-option" key={option.value}><h3>{deliveryCopy[option.value].title}</h3><p>{deliveryCopy[option.value].description}</p></article>)}</div>
+        <p className="priority-condition">Verzoeken met prioriteit of een kritieke termijn worden vóór aanvang individueel afgebakend en geoffreerd. Een keuze in het formulier is geen aanvaarding. De afgesproken termijn begint pas na schriftelijke bevestiging van opdracht, vaste prijs en opleverdatum én ontvangst van de benodigde informatie. Wij kunnen weigeren als het bewijs niet tijdig verantwoord te controleren is; onze bewijsnormen blijven gelijk.</p>
+        <div className="priority-faq"><p className="eyebrow">Veelgestelde vraag</p><h3>Is een beoordeling binnen 24–48 uur altijd mogelijk?</h3><p>Nee. Dit is alleen mogelijk bij geselecteerde vragen waarvoor rechtmatige bronnen, opdracht en capaciteit verantwoorde verificatie toelaten. Wij bevestigen haalbaarheid en prijs eerst schriftelijk.</p></div>
       </Container></section>
       <section className="section"><Container className="split-content">
         <div><p className="eyebrow">Grenzen van ons werk</p><h2>Openbare bronnen. Heldere grenzen.</h2></div>
         <div className="prose-block"><p>Ons werk is beperkt tot rechtmatig onderzoek in openbare bronnen. MelonCactus hackt geen systemen, omzeilt geen toegangsbeveiliging, doet zich niet voor als iemand anders, gebruikt geen social engineering en accepteert geen gestolen of onrechtmatig verkregen informatie.</p><p>Sommige vragen zijn niet verantwoord te beantwoorden op basis van openbaar materiaal. Wij benoemen die grenzen, de resterende kennislacunes en zinvolle vervolgvraagstukken.</p><ButtonLink href="/nl/werkwijze" variant="secondary">Bekijk onze werkwijze</ButtonLink></div>
       </Container></section>
-      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Bepaal uw vraag</p><h2>Welke onzekerheid beïnvloedt uw beslissing?</h2><p>Een beknopte omschrijving is genoeg om vertrouwelijk over de opdracht te spreken.</p></div><ButtonLink href="/nl/contact">Rapport aanvragen</ButtonLink></Container></section>
+      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Bepaal uw vraag</p><h2>Welke onzekerheid beïnvloedt uw beslissing?</h2><p>Een beknopte omschrijving is genoeg om de opdracht en het benodigde bewijs te beoordelen.</p></div><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink></Container></section>
     </>
   );
 }

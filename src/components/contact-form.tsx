@@ -6,18 +6,23 @@ import { reportOptionsNl } from "@/config/site-nl";
 import { DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "@/config/delivery";
 import type { Locale } from "@/lib/i18n";
 
-const timeframes = [
-  ["Within 1 week", "Binnen 1 week"],
-  ["Within 2 weeks", "Binnen 2 weken"],
-  ["Within 1 month", "Binnen 1 maand"],
-  ["Flexible", "Flexibel"],
-] as const;
-
-const priorityLabelsNl: Record<string, string> = {
-  standard: "Standaardlevering",
-  "within-48-hours": "Binnen 48 uur — 2× de projectprijs",
-  "within-24-hours": "Binnen 24 uur — 3× de projectprijs",
+const priorityLabelsNl: Record<(typeof deliveryOptions)[number]["value"], string> = {
+  standard: "Standaard — planning na beoordeling van de opdracht",
+  priority: "Prioriteit — voor een tijdgevoelige beslissing",
+  critical: "Kritiek / 24–48 uur — alleen geselecteerde opdrachten",
 };
+
+const previousReportMapping: Record<string, string> = {
+  "Rapid Intelligence Scan": "Focused Intelligence Assessment",
+  "Competitor Snapshot": "Focused Intelligence Assessment",
+  "Technical Deep Dive": "Technical & Competitive Intelligence",
+  "Strategic Intelligence Report": "Strategic Intelligence Engagement",
+};
+
+function initialAssessment(value: string) {
+  const mapped = previousReportMapping[value] ?? value;
+  return reportOptions.some((option) => option.name === mapped) ? mapped : "";
+}
 
 type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
@@ -73,50 +78,48 @@ export function ContactForm({ initialReport = "", callRequested = false, locale 
         <label>{nl ? "Naam" : "Name"} <span aria-hidden="true">*</span><input name="name" autoComplete="name" maxLength={100} required /></label>
         <label>{nl ? "Zakelijk e-mailadres" : "Work email"} <span aria-hidden="true">*</span><input type="email" name="email" autoComplete="email" maxLength={254} required /></label>
         <label>{nl ? "Bedrijf" : "Company"} <span aria-hidden="true">*</span><input name="company" autoComplete="organization" maxLength={160} required /></label>
-        <label>{nl ? "Functie" : "Role"}<input name="role" autoComplete="organization-title" maxLength={120} /></label>
+        <label>{nl ? "Functie of rol" : "Role"} <span aria-hidden="true">*</span><input name="role" autoComplete="organization-title" maxLength={120} required /></label>
       </div>
       <label>
-        {nl ? "Onderzoeksvraag" : "Research question"} <span aria-hidden="true">*</span>
-        <textarea name="question" rows={5} required minLength={20} maxLength={4000} placeholder={nl ? "Wat wilt u weten?" : "What do you need to understand?"} />
+        {nl ? "Welke beslissing probeert u te nemen?" : "What decision are you trying to make?"} <span aria-hidden="true">*</span>
+        <textarea name="decision" rows={3} required minLength={20} maxLength={2000} placeholder={nl ? "Welke keuze moet het onderzoek helpen onderbouwen?" : "What choice should the research help you assess?"} />
       </label>
       <label>
-        {nl ? "Gewenste beslissing of uitkomst" : "Desired decision or outcome"} <span aria-hidden="true">*</span>
-        <textarea name="outcome" rows={3} required minLength={10} maxLength={2000} placeholder={nl ? "Welke beslissing moet dit onderzoek ondersteunen?" : "What decision will this research inform?"} />
+        {nl ? "Te onderzoeken onderneming, markt of technologie" : "Company, market or technology to examine"} <span aria-hidden="true">*</span>
+        <input name="target" required minLength={3} maxLength={1000} placeholder={nl ? "Omschrijf het onderzoeksobject kort" : "Briefly identify the subject"} />
       </label>
-      <label>{nl ? "Doelbedrijf, markt of technologie" : "Target company, market or technology"}<input name="target" maxLength={1000} /></label>
-      <div className="form-grid two-columns">
-        <label>
-          {nl ? "Gewenste termijn voor de beslissing" : "Decision timeframe"} <span aria-hidden="true">*</span>
-          <select name="timeframe" required defaultValue="">
-            <option value="" disabled>{nl ? "Wanneer heeft u de bevindingen nodig?" : "Select when the findings are needed"}</option>
-            {timeframes.map(([value, label]) => <option value={value} key={value}>{nl ? label : value}</option>)}
-          </select>
-        </label>
-        <label>
-          {nl ? "Indicatief budget / rapportoptie" : "Indicative budget / report option"} <span aria-hidden="true">*</span>
-          <select name="report" required defaultValue={initialReport}>
-            <option value="" disabled>{nl ? "Kies een optie" : "Select an option"}</option>
-            {reportOptions.map((option, index) => <option key={option.name} value={option.name}>{nl ? reportOptionsNl[index].name : option.name} — {nl ? "vanaf" : "from"} {nl ? reportOptionsNl[index].price : option.price}</option>)}
-            <option value="Not sure">{nl ? "Ik weet het nog niet" : "Not sure yet"}</option>
-          </select>
-        </label>
-      </div>
       <label>
-        {nl ? "Leveringsprioriteit" : "Delivery priority"} <span aria-hidden="true">*</span>
+        {nl ? "Gewenste termijn" : "Requested timing"} <span aria-hidden="true">*</span>
         <select name="deliveryPriority" required defaultValue={DEFAULT_DELIVERY_PRIORITY}>
           {deliveryOptions.map((option) => <option key={option.value} value={option.value}>{nl ? priorityLabelsNl[option.value] : option.formLabel}</option>)}
         </select>
       </label>
-      <p className="form-field-note">{nl ? "Een keuze voor levering binnen 24 of 48 uur is een verzoek, afhankelijk van capaciteit, passende omvang en schriftelijke aanvaarding door MelonCactus. De termijn begint pas na schriftelijke bevestiging van opdracht, prijs en deadline en ontvangst van alle benodigde materialen." : "Selecting 24- or 48-hour delivery is a request, subject to capacity, scope suitability and written acceptance by MelonCactus. The period starts after written scope, fee and deadline confirmation and receipt of all required materials."}</p>
+      <p className="form-field-note">{nl ? "Een versnelde termijn is een verzoek, geen automatische aanvaarding. De opdracht, vaste prijs en opleverdatum worden eerst schriftelijk bevestigd. De benodigde informatie moet zijn ontvangen voordat een afgesproken termijn ingaat." : "An accelerated timeframe is a request, not automatic acceptance. Scope, fixed fee and delivery date are confirmed in writing first. Any agreed period starts after required information has been received."}</p>
       <label>
-        {nl ? "Aanvullende vertrouwelijkheidsopmerking" : "Optional confidentiality note"}
-        <textarea name="confidentiality" rows={3} maxLength={2000} defaultValue={callRequested ? (nl ? "Ik bespreek de opdracht bij voorkeur in een vertrouwelijk gesprek." : "I would prefer to discuss this scope in a confidential call.") : ""} />
+        {nl ? "Indicatief opdrachtniveau (optioneel)" : "Indicative assessment level (optional)"}
+        <select name="report" defaultValue={initialAssessment(initialReport)}>
+          <option value="">{nl ? "Nog te bepalen" : "To be discussed"}</option>
+          {reportOptions.map((option, index) => <option key={option.name} value={option.name}>{nl ? reportOptionsNl[index].name : option.name}</option>)}
+        </select>
       </label>
+      <div className="form-grid two-columns">
+        <label>{nl ? "Geografisch gebied (optioneel)" : "Geography (optional)"}<input name="geography" maxLength={160} /></label>
+        <label>{nl ? "Indicatief budget (optioneel)" : "Indicative budget (optional)"}<input name="budget" maxLength={100} /></label>
+      </div>
+      <label>
+        {nl ? "Aanvullende context (optioneel)" : "Additional context (optional)"}
+        <textarea name="context" rows={3} maxLength={2000} defaultValue={callRequested ? (nl ? "Ik bespreek de vraag bij voorkeur eerst in een gesprek." : "I would prefer to discuss the question in a call first.") : ""} />
+      </label>
+      <label className="checkbox-row">
+        <input type="checkbox" name="ndaRequest" value="on" />
+        <span>{nl ? "Ik bespreek graag een geheimhoudingsovereenkomst voordat wij inhoudelijke details uitwisselen." : "I would like to discuss an NDA before sharing substantive details."}</span>
+      </label>
+      <p className="form-field-note">{nl ? "Dit is een verzoek om vooraf contact op te nemen; met deze keuze komt geen overeenkomst tot stand." : "This is a request to discuss arrangements first; selecting it does not create an agreement."}</p>
       <div className="form-honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
-      <p className="form-warning">{nl ? "Stuur geen wachtwoorden, onrechtmatig verkregen materiaal of onnodige gevoelige persoonsgegevens." : "Do not submit passwords, illegally obtained material or unnecessary sensitive personal data."}</p>
+      <p className="form-warning">{nl ? "Stuur in dit formulier geen vertrouwelijke documenten, toegangsgegevens of onrechtmatig verkregen materiaal." : "Do not submit confidential documents, credentials or unlawfully obtained material in this form."}</p>
       <div className="form-submit-row">
-        <button className="button button-primary" type="submit" disabled={state === "sending"}>{state === "sending" ? (nl ? "Verzenden…" : "Sending…") : (nl ? "Aanvraag verzenden" : "Send enquiry")}</button>
-        <p>{nl ? "Wij gebruiken uw gegevens om uw aanvraag te beoordelen en te beantwoorden." : "We use your details to review and respond to your enquiry."}</p>
+        <button className="button button-primary" type="submit" disabled={state === "sending"}>{state === "sending" ? (nl ? "Verzenden…" : "Sending…") : (nl ? "Onderzoeksvraag versturen" : "Send assessment request")}</button>
+        <p>{nl ? "Wij gebruiken uw gegevens om uw vraag te beoordelen en te beantwoorden." : "We use your details to review and respond to your question."}</p>
       </div>
       <div className="form-status" role="status" aria-live="polite">{message}{state === "failed" && <> <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a></>}</div>
     </form>

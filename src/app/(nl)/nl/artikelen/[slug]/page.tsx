@@ -45,7 +45,7 @@ export default async function DutchInsightPage({ params }: Props) {
     </Container></header>
     <Container className="article-layout"><aside className="article-aside"><p>In dit artikel</p><ol>{insight.sections.map((section, index) => <li key={section.heading}><a href={`#sectie-${index + 1}`}>{section.heading}</a></li>)}</ol></aside>
       <div className="article-body"><ArticleContent insight={insight} idPrefix="sectie" />
-        <div className="article-cta"><h2>Gebruik deze aanpak voor uw actuele vraag.</h2><p>Bepaal de beslissing, de bewijsstandaard en de onzekerheid die ertoe doet.</p><div className="button-row"><ButtonLink href="/nl/contact">Rapport aanvragen</ButtonLink><Link className="section-link" href="/nl/werkwijze">Bekijk de werkwijze →</Link></div></div>
+        <div className="article-cta"><h2>Gebruik deze aanpak voor uw actuele vraag.</h2><p>Bepaal de beslissing, de bewijsstandaard en de onzekerheid die ertoe doet.</p><div className="button-row"><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink><Link className="section-link" href="/nl/werkwijze">Bekijk de werkwijze →</Link></div></div>
       </div>
     </Container>
     <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", headline: insight.title, description: insight.description, inLanguage: "nl-NL", datePublished: insight.date, dateModified: insight.date, mainEntityOfPage: url, author: { "@type": "Organization", name: siteConfig.name }, publisher: { "@type": "Organization", name: siteConfig.name } }} />

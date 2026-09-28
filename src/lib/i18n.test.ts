@@ -46,7 +46,7 @@ describe("localized public routes", () => {
   it("keeps report starting prices equivalent while formatting Dutch thousands", () => {
     expect(reportOptionsNl.map(({ price }) => Number(price.replace(/\D/g, ""))))
       .toEqual(reportOptions.map(({ price }) => Number(price.replace(/\D/g, ""))));
-    expect(reportOptionsNl[2].price).toBe("€1.995");
-    expect(reportOptionsNl[3].price).toBe("€3.995");
+    expect(reportOptionsNl[1].price).toBe("€1.995");
+    expect(reportOptionsNl[2].price).toBe("€3.995");
   });
 });

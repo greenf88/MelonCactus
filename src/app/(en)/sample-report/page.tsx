@@ -110,7 +110,7 @@ export default function SampleReportPage() {
         </Container>
       </section>
 
-      <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">A question you can act on</p><h2>Put a real decision under the same scrutiny.</h2><p>We define the question, evidence boundary and deliverable around your situation.</p></div><ButtonLink href="/contact">Discuss a report</ButtonLink></Container></section>
+      <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">A question you can act on</p><h2>Put a real decision under the same scrutiny.</h2><p>We define the question, evidence boundary and deliverable around your situation.</p></div><ButtonLink href="/contact">Discuss an Intelligence Requirement</ButtonLink></Container></section>
     </article>
   );
 }

@@ -7,4 +7,4 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function NotFound() { return <section className="not-found"><Container><p className="eyebrow">404 / Not found</p><h1>This evidence trail ends here.</h1><p>The page may have moved, or the address may be incomplete.</p><div className="button-row"><ButtonLink href="/">Return Home</ButtonLink><ButtonLink href="/contact" variant="secondary">Request a Report</ButtonLink></div></Container></section>; }
+export default function NotFound() { return <section className="not-found"><Container><p className="eyebrow">404 / Not found</p><h1>This evidence trail ends here.</h1><p>The page may have moved, or the address may be incomplete.</p><div className="button-row"><ButtonLink href="/">Return Home</ButtonLink><ButtonLink href="/contact" variant="secondary">Discuss a Requirement</ButtonLink></div></Container></section>; }

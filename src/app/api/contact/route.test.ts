@@ -15,7 +15,7 @@ describe("contact endpoint", () => {
   it("rejects invalid input and oversized bodies", async () => {
     expect((await POST(request({ ...validPayload, email: "bad" }))).status).toBe(400);
     expect((await POST(request({ ...validPayload, website: "bot" }))).status).toBe(400);
-    expect((await POST(request({ ...validPayload, question: "x".repeat(33000) }))).status).toBe(413);
+    expect((await POST(request({ ...validPayload, context: "x".repeat(33000) }))).status).toBe(413);
     expect(deliver).not.toHaveBeenCalled();
   });
   it("rejects malformed JSON and unsupported content types", async () => {

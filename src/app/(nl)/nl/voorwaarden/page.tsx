@@ -12,16 +12,16 @@ export const metadata: Metadata = {
 
 export default function DutchTermsPage() {
   return (
-    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal." updated="23 september 2026">
+    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal." updated="28 september 2026">
       <h2>Informatie, geen advies</h2>
       <p>De inhoud van deze website is algemene informatie over industriële inlichtingen en onderzoek in openbare bronnen. Zij vormt geen juridisch, financieel, beleggings-, technisch of beveiligingsadvies voor een specifieke situatie.</p>
 
       <h2>Geen klantrelatie</h2>
       <p>Het gebruik van deze website of het indienen van een aanvraag schept geen klantrelatie. Een opdracht begint pas nadat de omvang, voorwaarden, termijn en prijs schriftelijk zijn overeengekomen.</p>
 
-      <h2>Spoedlevering</h2>
-      <p>Bij standaardlevering wordt de leverdatum na beoordeling van de opdracht bevestigd tegen 1× de overeengekomen projectprijs. Een aangevraagde levering binnen 48 uur bedraagt in totaal 2× de overeengekomen projectprijs (een toeslag van 100%); een aangevraagde levering binnen 24 uur bedraagt in totaal 3× de overeengekomen projectprijs (een toeslag van 200%). De factor wordt toegepast op de definitief overeengekomen projectprijs.</p>
-      <p>Spoedopties zijn afhankelijk van beschikbare capaciteit en de geschiktheid van de opdracht. Het selecteren van een optie in het formulier geldt niet als aanvaarding. De toepasselijke deadline en definitieve prijs staan in de schriftelijke opdrachtbevestiging. De spoedtermijn begint pas nadat MelonCactus de opdracht, prijs en deadline schriftelijk heeft bevestigd én alle benodigde materialen heeft ontvangen. Wij kunnen een verzoek afwijzen als verantwoorde verificatie van het bewijs binnen de gevraagde termijn niet mogelijk is. Onze normen voor bewijs en kwaliteit blijven gelijk.</p>
+      <h2>Termijn en spoedverzoeken</h2>
+      <p>Bij standaardlevering wordt de opleverdatum na beoordeling van de opdracht afgesproken. Prioriteit voor tijdgevoelige beslissingen en een kritieke termijn van 24–48 uur zijn alleen mogelijk als opdracht, bewijsbehoefte en capaciteit dat toelaten. Een spoedverzoek wordt vóór aanvang afzonderlijk afgebakend en geoffreerd; het selecteren van een optie in het formulier is geen aanvaarding.</p>
+      <p>De vaste prijs en toepasselijke opleverdatum staan in de schriftelijke opdrachtbevestiging. Een afgesproken termijn begint pas nadat MelonCactus opdracht, prijs en deadline schriftelijk heeft bevestigd én alle benodigde informatie heeft ontvangen. Wij kunnen een verzoek afwijzen als het bewijs niet tijdig verantwoord kan worden gecontroleerd. Onze normen voor bewijs en kwaliteit blijven gelijk.</p>
 
       <h2>Voorbeeldmateriaal</h2>
       <p>Het voorbeeldrapport is een fictieve demonstratie. Het beschrijft geen bestaand bedrijf, opdracht voor een klant of geverifieerde industriële capaciteit.</p>

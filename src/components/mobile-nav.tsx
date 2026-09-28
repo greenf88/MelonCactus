@@ -34,7 +34,7 @@ export function MobileNav({ locale = "en" }: { locale?: Locale }) {
             </Link>
           ))}
           <Link className="button button-primary" href={isNl ? "/nl/contact" : "/contact"} onClick={() => setOpen(false)}>
-            {isNl ? "Rapport aanvragen" : "Request a Report"}
+            {isNl ? "Bespreek uw vraag" : "Discuss a Requirement"}
           </Link>
         </nav>
       ) : null}
