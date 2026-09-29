@@ -21,7 +21,8 @@ describe("localized public routes", () => {
   });
 
   it("includes every translated article and both language URLs in the sitemap", () => {
-    expect(routePairs.length).toBe(9 + insights.length);
+    expect(routePairs.length).toBe(10 + insights.length);
+    expect(routePairs).toContainEqual(["/example-case/fourth-pillar", "/nl/voorbeeldcase/vierde-pijler"]);
     expect(insightsNl).toHaveLength(insights.length);
     const entries = sitemap();
     expect(entries).toHaveLength(routePairs.length * 2);

@@ -172,15 +172,16 @@ export default function Home() {
       <section className="section sample-section">
         <Container className="sample-grid">
           <div>
-            <p className="eyebrow">Inside the report</p>
-            <h2>Conclusions you can inspect, question and use.</h2>
+            <p className="eyebrow">Fictional examples</p>
+            <h2>See how evidence shapes a decision.</h2>
             <p className="section-intro">
-              Each report explains what the evidence supports, where uncertainty remains
-              and which questions deserve further attention.
+              Explore a sample evidence trail and a separate two-stage example case.
+              Both show how a decision leads to a focused research question.
             </p>
-            <ButtonLink href="/sample-report" variant="secondary">
-              View the Sample Report
-            </ButtonLink>
+            <div className="button-row">
+              <ButtonLink href="/sample-report" variant="secondary">View the Sample Report</ButtonLink>
+              <ButtonLink href="/example-case/fourth-pillar" variant="secondary">Explore a Fictional Example Case</ButtonLink>
+            </div>
           </div>
           <ul className="report-contents">
             {reportContents.map((item, index) => (

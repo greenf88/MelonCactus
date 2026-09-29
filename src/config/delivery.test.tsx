@@ -68,6 +68,6 @@ describe("decision-led assessment and delivery choices", () => {
     expect(privacy).toContain("geheimhoudingsovereenkomst");
     expect(privacy).toContain("bedrijf, functie of rol");
     expect(terms).toContain("technisch of beveiligingsadvies");
-    expect(terms).toContain("opdracht voor een klant");
+    expect(terms).toContain("opdrachten voor klanten");
   });
 });

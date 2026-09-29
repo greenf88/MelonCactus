@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function DutchTermsPage() {
   return (
-    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal." updated="28 september 2026">
+    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal." updated="29 september 2026">
       <h2>Informatie, geen advies</h2>
       <p>De inhoud van deze website is algemene informatie over industriële inlichtingen en onderzoek in openbare bronnen. Zij vormt geen juridisch, financieel, beleggings-, technisch of beveiligingsadvies voor een specifieke situatie.</p>
 
@@ -24,7 +24,7 @@ export default function DutchTermsPage() {
       <p>De vaste prijs en toepasselijke opleverdatum staan in de schriftelijke opdrachtbevestiging. Een afgesproken termijn begint pas nadat MelonCactus opdracht, prijs en deadline schriftelijk heeft bevestigd én alle benodigde informatie heeft ontvangen. Wij kunnen een verzoek afwijzen als het bewijs niet tijdig verantwoord kan worden gecontroleerd. Onze normen voor bewijs en kwaliteit blijven gelijk.</p>
 
       <h2>Voorbeeldmateriaal</h2>
-      <p>Het voorbeeldrapport is een fictieve demonstratie. Het beschrijft geen bestaand bedrijf, opdracht voor een klant of geverifieerde industriële capaciteit.</p>
+      <p>Het voorbeeldrapport en de voorbeeldcase zijn fictieve demonstraties. Zij beschrijven geen bestaande bedrijven, opdrachten voor klanten of geverifieerde industriële capaciteiten.</p>
 
       <h2>Verantwoord gebruik</h2>
       <p>U mag via de website geen illegaal materiaal, toegangsgegevens, malware of informatie insturen die u niet mag delen.</p>
