@@ -175,12 +175,13 @@ export default function Home() {
             <p className="eyebrow">Fictional examples</p>
             <h2>See how evidence shapes a decision.</h2>
             <p className="section-intro">
-              Explore a sample evidence trail and a separate two-stage example case.
-              Both show how a decision leads to a focused research question.
+              Explore a sample evidence trail and two separate fictional cases.
+              Each shows how a decision leads to a focused research question.
             </p>
             <div className="button-row">
               <ButtonLink href="/sample-report" variant="secondary">View the Sample Report</ButtonLink>
               <ButtonLink href="/example-case/fourth-pillar" variant="secondary">Explore a Fictional Example Case</ButtonLink>
+              <ButtonLink href="/example-case/public-profile" variant="secondary">Explore the Public-Profile Case</ButtonLink>
             </div>
           </div>
           <ul className="report-contents">

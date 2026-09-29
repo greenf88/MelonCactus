@@ -24,7 +24,7 @@ export default function DutchTermsPage() {
       <p>De vaste prijs en toepasselijke opleverdatum staan in de schriftelijke opdrachtbevestiging. Een afgesproken termijn begint pas nadat MelonCactus opdracht, prijs en deadline schriftelijk heeft bevestigd én alle benodigde informatie heeft ontvangen. Wij kunnen een verzoek afwijzen als het bewijs niet tijdig verantwoord kan worden gecontroleerd. Onze normen voor bewijs en kwaliteit blijven gelijk.</p>
 
       <h2>Voorbeeldmateriaal</h2>
-      <p>Het voorbeeldrapport en de voorbeeldcase zijn fictieve demonstraties. Zij beschrijven geen bestaande bedrijven, opdrachten voor klanten of geverifieerde industriële capaciteiten.</p>
+      <p>Het voorbeeldrapport en de voorbeeldcases zijn fictieve demonstraties. Zij beschrijven geen bestaande bedrijven, opdrachten voor klanten of geverifieerde industriële capaciteiten.</p>
 
       <h2>Verantwoord gebruik</h2>
       <p>U mag via de website geen illegaal materiaal, toegangsgegevens, malware of informatie insturen die u niet mag delen.</p>

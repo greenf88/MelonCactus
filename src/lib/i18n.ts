@@ -8,6 +8,7 @@ export const routePairs = [
   ["/methodology", "/nl/werkwijze"],
   ["/sample-report", "/nl/voorbeeldrapport"],
   ["/example-case/fourth-pillar", "/nl/voorbeeldcase/vierde-pijler"],
+  ["/example-case/public-profile", "/nl/voorbeeldcase/openbaar-profiel"],
   ["/about", "/nl/over-ons"],
   ["/insights", "/nl/artikelen"],
   ["/contact", "/nl/contact"],
