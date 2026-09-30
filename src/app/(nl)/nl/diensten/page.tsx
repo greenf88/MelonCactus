@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/buttons";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
-import { reportOptionsNl } from "@/config/site-nl";
+import { publicProfileScanNl, reportOptionsNl } from "@/config/site-nl";
 import { deliveryOptions } from "@/config/delivery";
 import { languageAlternates } from "@/lib/i18n";
 
@@ -37,6 +37,10 @@ export default function DutchServicesPage() {
       <section className="section"><Container>
         <div className="content-heading"><p className="eyebrow">Onderzoeksterreinen</p><h2>Waar gericht bewijs het beeld kan veranderen.</h2></div>
         <div className="capability-list">{capabilities.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div>
+      </Container></section>
+      <section className="section section-muted"><Container className="split-content">
+        <div className="prose-block"><p className="eyebrow">Defensief vertrekpunt</p><h2>Beoordeel wat uw eigen openbare profiel kan prijsgeven.</h2><p>Een strak afgebakende scan van uw bedrijfswebsite, officiële openbare kanalen en geselecteerd beeldmateriaal. De scan scheidt waarnemingen van voorzichtige gevolgtrekkingen en geeft praktische prioriteiten voor publicaties.</p><ButtonLink href="/nl/diensten/openbare-informatiescan" variant="secondary">Bekijk de scope van de scan</ButtonLink></div>
+        <ServiceCard locale="nl" service={publicProfileScanNl} />
       </Container></section>
       <section className="section pricing-section" id="rapporten"><Container>
         <div className="content-heading"><p className="eyebrow">Indicatieve opdrachtniveaus</p><h2>De opdracht volgt uit uw beslissing.</h2><p>Deze bedragen zijn indicatieve vanafprijzen, geen bestelprijzen of offertes. Na beoordeling ontvangt u een afgebakende opdracht met resultaten, vaste prijs en opleverdatum.</p></div>

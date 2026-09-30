@@ -1,4 +1,4 @@
-import { reportOptions } from "@/config/site";
+import { publicProfileScan, reportOptions } from "@/config/site";
 import { deliveryOptionFor } from "@/config/delivery";
 
 export const MAX_BODY_BYTES = 32_768;
@@ -14,7 +14,7 @@ type ValidationResult = { ok: true; enquiry: Enquiry } | { ok: false; reason: "i
 const required = ["name", "email", "company", "role", "decision", "target", "deliveryPriority"] as const;
 const singleLine = ["name", "email", "company", "role", "target", "deliveryPriority", "report", "geography", "budget", "ndaRequest"] as const;
 const multiline = ["decision", "context"] as const;
-const reports = new Set(["", ...reportOptions.map((option) => option.name)]);
+const reports = new Set(["", publicProfileScan.name, ...reportOptions.map((option) => option.name)]);
 
 export function validateEnquiry(input: unknown): ValidationResult {
   if (!input || typeof input !== "object" || Array.isArray(input)) return { ok: false, reason: "invalid" };

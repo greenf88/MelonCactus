@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { reportOptions, siteConfig } from "@/config/site";
-import { reportOptionsNl } from "@/config/site-nl";
+import { publicProfileScan, reportOptions, siteConfig } from "@/config/site";
+import { publicProfileScanNl, reportOptionsNl } from "@/config/site-nl";
 import { DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "@/config/delivery";
 import type { Locale } from "@/lib/i18n";
 
@@ -19,9 +19,12 @@ const previousReportMapping: Record<string, string> = {
   "Strategic Intelligence Report": "Strategic Intelligence Engagement",
 };
 
+const assessmentOptions = [publicProfileScan, ...reportOptions];
+const assessmentOptionsNl = [publicProfileScanNl, ...reportOptionsNl];
+
 function initialAssessment(value: string) {
   const mapped = previousReportMapping[value] ?? value;
-  return reportOptions.some((option) => option.name === mapped) ? mapped : "";
+  return assessmentOptions.some((option) => option.name === mapped) ? mapped : "";
 }
 
 type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
@@ -99,7 +102,7 @@ export function ContactForm({ initialReport = "", callRequested = false, locale 
         {nl ? "Indicatief opdrachtniveau (optioneel)" : "Indicative assessment level (optional)"}
         <select name="report" defaultValue={initialAssessment(initialReport)}>
           <option value="">{nl ? "Nog te bepalen" : "To be discussed"}</option>
-          {reportOptions.map((option, index) => <option key={option.name} value={option.name}>{nl ? reportOptionsNl[index].name : option.name}</option>)}
+          {assessmentOptions.map((option, index) => <option key={option.name} value={option.name}>{nl ? assessmentOptionsNl[index].name : option.name}</option>)}
         </select>
       </label>
       <div className="form-grid two-columns">

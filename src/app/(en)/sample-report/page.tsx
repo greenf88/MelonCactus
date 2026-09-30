@@ -110,6 +110,7 @@ export default function SampleReportPage() {
         </Container>
       </section>
 
+      <section className="section section-muted no-print"><Container className="split-content"><div><p className="eyebrow">Another fictional scenario</p><h2>What if the decision is about a new business pillar?</h2></div><div className="prose-block"><p>See how an initial search for a fourth pillar could lead to a separately scoped report on competitors, projects and suppliers.</p><ButtonLink href="/example-case/fourth-pillar" variant="secondary">Explore the Example Case</ButtonLink></div></Container></section>
       <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">A question you can act on</p><h2>Put a real decision under the same scrutiny.</h2><p>We define the question, evidence boundary and deliverable around your situation.</p></div><ButtonLink href="/contact">Discuss an Intelligence Requirement</ButtonLink></Container></section>
     </article>
   );

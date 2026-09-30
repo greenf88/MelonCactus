@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/buttons";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
-import { reportOptions } from "@/config/site";
+import { publicProfileScan, reportOptions } from "@/config/site";
 import { deliveryOptions } from "@/config/delivery";
 import { languageAlternates } from "@/lib/i18n";
 
@@ -41,6 +41,17 @@ export default function ServicesPage() {
               <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p>{copy}</p></div></article>
             ))}
           </div>
+        </Container>
+      </section>
+      <section className="section section-muted">
+        <Container className="split-content">
+          <div className="prose-block">
+            <p className="eyebrow">Defensive starting point</p>
+            <h2>Review what your own public profile may reveal.</h2>
+            <p>A tightly scoped scan of your company website, official public channels and selected visual material. It separates direct observations from cautious inferences and gives practical publication priorities.</p>
+            <ButtonLink href="/services/public-profile-exposure-scan" variant="secondary">View the Scan Scope</ButtonLink>
+          </div>
+          <ServiceCard service={publicProfileScan} />
         </Container>
       </section>
       <section className="section pricing-section" id="reports">

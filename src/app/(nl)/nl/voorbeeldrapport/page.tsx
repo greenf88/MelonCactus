@@ -111,6 +111,7 @@ export default function DutchSampleReportPage() {
         </Container>
       </section>
 
+      <section className="section section-muted no-print"><Container className="split-content"><div><p className="eyebrow">Een ander fictief scenario</p><h2>Wat als de beslissing over een nieuwe bedrijfspijler gaat?</h2></div><div className="prose-block"><p>Bekijk hoe de zoektocht naar een vierde pijler kan leiden tot een afzonderlijk rapport over concurrenten, projecten en leveranciers.</p><ButtonLink href="/nl/voorbeeldcase/vierde-pijler" variant="secondary">Bekijk de voorbeeldcase</ButtonLink></div></Container></section>
       <section className="closing-cta no-print"><Container className="closing-inner"><div><p className="eyebrow">Een vraag waarop u kunt handelen</p><h2>Leg een werkelijke beslissing langs dezelfde meetlat.</h2><p>We stemmen de vraag, bewijsgrenzen en oplevering af op uw situatie.</p></div><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink></Container></section>
     </article>
   );

@@ -4,7 +4,7 @@ import { Container } from "@/components/container";
 import { MethodStep } from "@/components/method-step";
 import { SectionHeading } from "@/components/section-heading";
 import { ServiceCard } from "@/components/service-card";
-import { reportOptionsNl, siteNl } from "@/config/site-nl";
+import { publicProfileScanNl, reportOptionsNl, siteNl } from "@/config/site-nl";
 
 const investigations = [
   "Concurrenten en bedrijfsactiviteiten",
@@ -82,7 +82,12 @@ export default function DutchHome() {
       <p className="pricing-note">Complexe, internationale of urgente opdrachten worden na afbakening afzonderlijk geoffreerd.</p>
     </Container></section>
 
-    <section className="section sample-section"><Container className="sample-grid"><div><p className="eyebrow">In het rapport</p><h2>Conclusies die u kunt controleren, bevragen en gebruiken.</h2><p className="section-intro">Elk rapport maakt duidelijk wat het bewijs ondersteunt, waar onzekerheid blijft en welke vragen nader onderzoek verdienen.</p><ButtonLink href="/nl/voorbeeldrapport" variant="secondary">Bekijk het voorbeeldrapport</ButtonLink></div><ul className="report-contents">{reportContents.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>)}</ul></Container></section>
+    <section className="section section-muted"><Container className="split-content">
+      <div className="prose-block"><p className="eyebrow">Onderzoek uw eigen bedrijf</p><h2>Wat kan een buitenstaander uit uw openbare profiel afleiden?</h2><p>De scan met vaste scope beoordeelt uw bedrijfswebsite, maximaal twee officiële openbare kanalen en geselecteerd beeldmateriaal. Het is een defensief vertrekpunt, los van de bredere intelligenceopdrachten hierboven.</p><ButtonLink href="/nl/diensten/openbare-informatiescan" variant="secondary">Bekijk de openbare-informatiescan</ButtonLink></div>
+      <ServiceCard locale="nl" service={publicProfileScanNl} />
+    </Container></section>
+
+    <section className="section sample-section"><Container className="sample-grid"><div><p className="eyebrow">Fictieve voorbeelden</p><h2>Bekijk hoe bewijs richting geeft aan een beslissing.</h2><p className="section-intro">Bekijk een voorbeeld van een bronnenpad en twee afzonderlijke fictieve cases. Elk voorbeeld laat zien hoe een beslissing tot een gerichte onderzoeksvraag leidt.</p><div className="button-row"><ButtonLink href="/nl/voorbeeldrapport" variant="secondary">Bekijk het voorbeeldrapport</ButtonLink><ButtonLink href="/nl/voorbeeldcase/vierde-pijler" variant="secondary">Bekijk de case over een vierde pijler</ButtonLink><ButtonLink href="/nl/voorbeeldcase/openbaar-profiel" variant="secondary">Bekijk de case over een openbaar profiel</ButtonLink></div></div><ul className="report-contents">{reportContents.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>)}</ul></Container></section>
 
     <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Een bruikbaar vertrekpunt</p><h2>Beschrijf de vraag waarop u antwoord zoekt.</h2><p>Voordat wij beginnen, bepalen wij het benodigde bewijs, de grenzen en een passende onderzoeksopdracht.</p></div><div className="button-row"><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink><ButtonLink href="/nl/contact?call=true" variant="secondary">Vraag een vertrouwelijk gesprek aan</ButtonLink></div></Container></section>
   </>;

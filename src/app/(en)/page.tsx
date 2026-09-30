@@ -4,7 +4,7 @@ import { Container } from "@/components/container";
 import { MethodStep } from "@/components/method-step";
 import { SectionHeading } from "@/components/section-heading";
 import { ServiceCard } from "@/components/service-card";
-import { reportOptions, siteConfig } from "@/config/site";
+import { publicProfileScan, reportOptions, siteConfig } from "@/config/site";
 
 const investigations = [
   "Competitors and corporate capabilities",
@@ -169,18 +169,27 @@ export default function Home() {
         </Container>
       </section>
 
+      <section className="section section-muted">
+        <Container className="split-content">
+          <div className="prose-block"><p className="eyebrow">Review your own company</p><h2>What could an outside observer infer from your public profile?</h2><p>The fixed-scope scan reviews your company-owned website, up to two official public channels and selected visual material. It is a defensive starting point, separate from the broader intelligence engagements above.</p><ButtonLink href="/services/public-profile-exposure-scan" variant="secondary">View the Public Profile Scan</ButtonLink></div>
+          <ServiceCard service={publicProfileScan} />
+        </Container>
+      </section>
+
       <section className="section sample-section">
         <Container className="sample-grid">
           <div>
-            <p className="eyebrow">Inside the report</p>
-            <h2>Conclusions you can inspect, question and use.</h2>
+            <p className="eyebrow">Fictional examples</p>
+            <h2>See how evidence shapes a decision.</h2>
             <p className="section-intro">
-              Each report explains what the evidence supports, where uncertainty remains
-              and which questions deserve further attention.
+              Explore a sample evidence trail and two separate fictional cases.
+              Each shows how a decision leads to a focused research question.
             </p>
-            <ButtonLink href="/sample-report" variant="secondary">
-              View the Sample Report
-            </ButtonLink>
+            <div className="button-row">
+              <ButtonLink href="/sample-report" variant="secondary">View the Sample Report</ButtonLink>
+              <ButtonLink href="/example-case/fourth-pillar" variant="secondary">Explore a Fictional Example Case</ButtonLink>
+              <ButtonLink href="/example-case/public-profile" variant="secondary">Explore the Public-Profile Case</ButtonLink>
+            </div>
           </div>
           <ul className="report-contents">
             {reportContents.map((item, index) => (
