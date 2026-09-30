@@ -7,7 +7,7 @@ import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Over ons",
-  description: "MelonCactus is een door GFNI geëxploiteerde praktijk voor industrieel onderzoek in rechtmatige openbare bronnen, met heldere bewijsgrenzen.",
+  description: "MelonCactus is een door GFNI geëxploiteerd onafhankelijk onderzoeksbureau voor industriële intelligence, met rechtmatig toegankelijke openbare bronnen en heldere bewijsgrenzen.",
   alternates: languageAlternates("/about", "nl"),
 };
 
