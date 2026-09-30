@@ -4,7 +4,7 @@ import { Container } from "@/components/container";
 import { MethodStep } from "@/components/method-step";
 import { SectionHeading } from "@/components/section-heading";
 import { ServiceCard } from "@/components/service-card";
-import { reportOptions, siteConfig } from "@/config/site";
+import { publicProfileScan, reportOptions, siteConfig } from "@/config/site";
 
 const investigations = [
   "Competitors and corporate capabilities",
@@ -166,6 +166,13 @@ export default function Home() {
             ))}
           </div>
           <p className="pricing-note">Complex, international or urgent assignments are quoted individually after scoping.</p>
+        </Container>
+      </section>
+
+      <section className="section section-muted">
+        <Container className="split-content">
+          <div className="prose-block"><p className="eyebrow">Review your own company</p><h2>What could an outside observer infer from your public profile?</h2><p>The fixed-scope scan reviews your company-owned website, up to two official public channels and selected visual material. It is a defensive starting point, separate from the broader intelligence engagements above.</p><ButtonLink href="/services/public-profile-exposure-scan" variant="secondary">View the Public Profile Scan</ButtonLink></div>
+          <ServiceCard service={publicProfileScan} />
         </Container>
       </section>
 
