@@ -9,7 +9,7 @@ export const siteNl = {
     { href: "/nl/diensten", label: "Diensten" },
     { href: "/nl#voorbeelden", label: "Voorbeelden" },
     { href: "/nl/werkwijze", label: "Werkwijze" },
-    { href: "/nl/diensten#rapporten", label: "Prijzen" },
+    { href: "/nl#prijzen", label: "Prijzen" },
     { href: "/nl/artikelen", label: "Artikelen" },
     { href: "/nl/over-ons", label: "Over ons" },
   ],
