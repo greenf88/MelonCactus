@@ -22,6 +22,8 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                 {item.label}
               </Link>
             ))}
+            <Link href={isNl ? "/nl/voorbeeldrapport" : "/sample-report"}>{isNl ? "Voorbeeldrapport" : "Sample Report"}</Link>
+            <Link href={isNl ? "/nl/diensten/openbare-informatiescan" : "/services/public-profile-exposure-scan"}>{isNl ? "Openbare-informatiescan" : "Public Profile Scan"}</Link>
           </div>
           <div>
             <p className="footer-label">Contact</p>

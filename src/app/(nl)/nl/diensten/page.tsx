@@ -43,7 +43,7 @@ export default function DutchServicesPage() {
         <ServiceCard locale="nl" service={publicProfileScanNl} />
       </Container></section>
       <section className="section pricing-section" id="rapporten"><Container>
-        <div className="content-heading"><p className="eyebrow">Indicatieve opdrachtniveaus</p><h2>De opdracht volgt uit uw beslissing.</h2><p>Deze bedragen zijn indicatieve vanafprijzen, geen bestelprijzen of offertes. Na beoordeling ontvangt u een afgebakende opdracht met resultaten, vaste prijs en opleverdatum.</p></div>
+        <div className="content-heading"><p className="eyebrow">Indicatieve opdrachtniveaus</p><h2>De opdracht volgt uit uw beslissing.</h2><p>Anders dan de scan van €499 voor uw eigen openbare profiel behandelen onderstaande beoordelingen externe intelligencevragen. De bedragen zijn indicatieve vanafprijzen, geen bestelprijzen of offertes. Na beoordeling ontvangt u een afgebakende opdracht met resultaten, vaste prijs en opleverdatum.</p></div>
         <div className="pricing-grid">{reportOptionsNl.map((service) => <ServiceCard locale="nl" service={service} key={service.name} />)}</div>
         <p className="pricing-note">Complexe, internationale of urgente opdrachten worden na afbakening afzonderlijk geoffreerd. Waar passend kan een kleinere betaalde pilot worden voorgesteld.</p>
       </Container></section>
