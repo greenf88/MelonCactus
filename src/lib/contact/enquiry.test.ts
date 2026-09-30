@@ -1,12 +1,18 @@
 import { describe, expect, it } from "vitest";
 import { composeEnquiry, validateEnquiry } from "./enquiry";
 import { validPayload } from "./fixture";
+import { publicProfileScan } from "@/config/site";
 
 describe("enquiry validation", () => {
   it("accepts a valid enquiry", () => {
     const result = validateEnquiry(validPayload);
     expect(result.ok).toBe(true);
     if (result.ok) expect(result.enquiry.email).toBe(validPayload.email);
+  });
+  it("accepts the fixed-scope public-profile scan as an assessment choice", () => {
+    const result = validateEnquiry({ ...validPayload, report: publicProfileScan.name });
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.enquiry.report).toBe(publicProfileScan.name);
   });
   it("rejects missing fields and invalid email", () => {
     expect(validateEnquiry({ ...validPayload, name: "" }).ok).toBe(false);
