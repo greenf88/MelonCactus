@@ -7,8 +7,8 @@ import TermsPage from "@/app/(en)/terms/page";
 import DutchServicesPage from "@/app/(nl)/nl/diensten/page";
 import DutchTermsPage from "@/app/(nl)/nl/voorwaarden/page";
 import DutchPrivacyPage from "@/app/(nl)/nl/privacy/page";
-import { reportOptions } from "./site";
-import { reportOptionsNl } from "./site-nl";
+import { publicProfileScan, reportOptions } from "./site";
+import { publicProfileScanNl, reportOptionsNl } from "./site-nl";
 import { DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "./delivery";
 
 describe("decision-led assessment and delivery choices", () => {
@@ -37,9 +37,13 @@ describe("decision-led assessment and delivery choices", () => {
     const nl = renderToStaticMarkup(createElement(ContactForm, { locale: "nl", initialReport: "Focused Intelligence Assessment" }));
     expect(en).toMatch(/<option value="Technical &amp; Competitive Intelligence" selected="">/);
     expect(nl).toMatch(/<option value="Focused Intelligence Assessment" selected="">Gerichte intelligencebeoordeling/);
+    expect(renderToStaticMarkup(createElement(ContactForm, { initialReport: publicProfileScan.name }))).toMatch(/<option value="Public Profile Exposure Scan" selected="">/);
+    expect(renderToStaticMarkup(createElement(ContactForm, { locale: "nl", initialReport: publicProfileScan.name }))).toMatch(/<option value="Public Profile Exposure Scan" selected="">Openbare-informatiescan voor uw bedrijf/);
   });
 
-  it("shows three indicative levels without the scan as a public product", () => {
+  it("keeps the fixed-scope scan separate from the three indicative engagement levels", () => {
+    expect(publicProfileScan.price).toBe("€499");
+    expect(publicProfileScanNl.price).toBe("€499");
     expect(reportOptions.map(({ price }) => price)).toEqual(["€995", "€1,995", "€3,995"]);
     expect(reportOptionsNl.map(({ price }) => price)).toEqual(["€995", "€1.995", "€3.995"]);
     const en = renderToStaticMarkup(createElement(ServicesPage));
@@ -48,6 +52,8 @@ describe("decision-led assessment and delivery choices", () => {
     expect(en).toContain("quoted individually after scoping");
     expect(nl).toContain("indicatieve vanafprijzen");
     expect(nl).toContain("afzonderlijk geoffreerd");
+    expect(en).toContain("Public Profile Exposure Scan");
+    expect(nl).toContain("Openbare-informatiescan voor uw bedrijf");
     expect(`${en}${nl}`).not.toMatch(/€495|€1,990|€2,985|€1\.990|€2\.985|[23]×|100% surcharge|200% toeslag/);
   });
 

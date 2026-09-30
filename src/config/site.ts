@@ -30,6 +30,18 @@ export type ReportOption = {
   featured?: boolean;
 };
 
+export const publicProfileScan: ReportOption = {
+  name: "Public Profile Exposure Scan",
+  price: "€499",
+  priceQualifier: "fixed fee",
+  summary: "A compact defensive review of what an outside observer may infer from your company-owned public presence.",
+  includes: [
+    "One company website and up to two official public channels",
+    "Direct observations, cautious inferences and unknowns",
+    "Prioritised recommendations for future publications",
+  ],
+};
+
 export const reportOptions: readonly ReportOption[] = [
   {
     name: "Focused Intelligence Assessment",

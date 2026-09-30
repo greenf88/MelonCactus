@@ -14,6 +14,19 @@ export const siteNl = {
   ],
 } as const;
 
+export const publicProfileScanNl: ReportOption = {
+  name: "Openbare-informatiescan voor uw bedrijf",
+  formValue: "Public Profile Exposure Scan",
+  price: "€499",
+  priceQualifier: "vaste prijs",
+  summary: "Een compacte, defensieve beoordeling van wat een buitenstaander uit uw eigen openbare bedrijfsprofiel kan afleiden.",
+  includes: [
+    "Eén bedrijfswebsite en maximaal twee officiële openbare kanalen",
+    "Waarnemingen, voorzichtige gevolgtrekkingen en onbekenden",
+    "Prioriteiten voor toekomstige publicaties",
+  ],
+};
+
 export const reportOptionsNl: readonly ReportOption[] = [
   {
     name: "Gerichte intelligencebeoordeling",
