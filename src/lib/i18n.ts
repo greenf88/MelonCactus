@@ -5,6 +5,7 @@ export type Locale = "en" | "nl";
 export const routePairs = [
   ["/", "/nl"],
   ["/services", "/nl/diensten"],
+  ["/services/public-profile-exposure-scan", "/nl/diensten/openbare-informatiescan"],
   ["/methodology", "/nl/werkwijze"],
   ["/sample-report", "/nl/voorbeeldrapport"],
   ["/example-case/fourth-pillar", "/nl/voorbeeldcase/vierde-pijler"],

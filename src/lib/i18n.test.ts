@@ -21,7 +21,8 @@ describe("localized public routes", () => {
   });
 
   it("includes every translated article and both language URLs in the sitemap", () => {
-    expect(routePairs.length).toBe(11 + insights.length);
+    expect(routePairs.length).toBe(12 + insights.length);
+    expect(routePairs).toContainEqual(["/services/public-profile-exposure-scan", "/nl/diensten/openbare-informatiescan"]);
     expect(routePairs).toContainEqual(["/example-case/fourth-pillar", "/nl/voorbeeldcase/vierde-pijler"]);
     expect(routePairs).toContainEqual(["/example-case/public-profile", "/nl/voorbeeldcase/openbaar-profiel"]);
     expect(insightsNl).toHaveLength(insights.length);
