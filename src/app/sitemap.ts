@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const en = `${siteConfig.siteUrl}${enPath}`;
     const nl = `${siteConfig.siteUrl}${nlPath}`;
     const article = insights.find((item) => enPath === `/insights/${item.slug}`);
-    const lastModified = new Date(article?.date ?? (enPath.startsWith("/example-case/") ? "2026-09-29" : "2026-09-22"));
+    const lastModified = new Date(article?.date ?? (enPath.startsWith("/example-case/") ? "2026-09-29" : enPath === "/services/public-profile-exposure-scan" ? "2026-09-30" : "2026-09-22"));
     const alternates = { languages: { en, "nl-NL": nl, "x-default": en } };
     return [
       { url: en, lastModified, changeFrequency: enPath === "/" ? "weekly" as const : "monthly" as const, priority: enPath === "/" ? 1 : article ? .75 : .7, alternates },
