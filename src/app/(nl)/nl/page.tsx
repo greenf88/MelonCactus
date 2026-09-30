@@ -4,7 +4,7 @@ import { Container } from "@/components/container";
 import { MethodStep } from "@/components/method-step";
 import { SectionHeading } from "@/components/section-heading";
 import { ServiceCard } from "@/components/service-card";
-import { reportOptionsNl, siteNl } from "@/config/site-nl";
+import { publicProfileScanNl, reportOptionsNl, siteNl } from "@/config/site-nl";
 
 const investigations = [
   "Concurrenten en bedrijfsactiviteiten",
@@ -80,6 +80,11 @@ export default function DutchHome() {
       <SectionHeading eyebrow="Indicatieve opdrachtniveaus" title="Een opdracht die past bij uw beslissing." intro="De vanafprijzen zijn indicatief, geen bestelprijzen. Omvang, resultaten, vaste prijs en opleverdatum worden vóór aanvang voorgesteld." />
       <div className="pricing-grid">{reportOptionsNl.map((service) => <ServiceCard service={service} locale="nl" key={service.name} />)}</div>
       <p className="pricing-note">Complexe, internationale of urgente opdrachten worden na afbakening afzonderlijk geoffreerd.</p>
+    </Container></section>
+
+    <section className="section section-muted"><Container className="split-content">
+      <div className="prose-block"><p className="eyebrow">Onderzoek uw eigen bedrijf</p><h2>Wat kan een buitenstaander uit uw openbare profiel afleiden?</h2><p>De scan met vaste scope beoordeelt uw bedrijfswebsite, maximaal twee officiële openbare kanalen en geselecteerd beeldmateriaal. Het is een defensief vertrekpunt, los van de bredere intelligenceopdrachten hierboven.</p><ButtonLink href="/nl/diensten/openbare-informatiescan" variant="secondary">Bekijk de openbare-informatiescan</ButtonLink></div>
+      <ServiceCard locale="nl" service={publicProfileScanNl} />
     </Container></section>
 
     <section className="section sample-section"><Container className="sample-grid"><div><p className="eyebrow">Fictieve voorbeelden</p><h2>Bekijk hoe bewijs richting geeft aan een beslissing.</h2><p className="section-intro">Bekijk een voorbeeld van een bronnenpad en twee afzonderlijke fictieve cases. Elk voorbeeld laat zien hoe een beslissing tot een gerichte onderzoeksvraag leidt.</p><div className="button-row"><ButtonLink href="/nl/voorbeeldrapport" variant="secondary">Bekijk het voorbeeldrapport</ButtonLink><ButtonLink href="/nl/voorbeeldcase/vierde-pijler" variant="secondary">Bekijk de case over een vierde pijler</ButtonLink><ButtonLink href="/nl/voorbeeldcase/openbaar-profiel" variant="secondary">Bekijk de case over een openbaar profiel</ButtonLink></div></div><ul className="report-contents">{reportContents.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>)}</ul></Container></section>
