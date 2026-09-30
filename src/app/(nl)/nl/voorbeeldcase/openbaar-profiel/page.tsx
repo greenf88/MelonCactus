@@ -23,7 +23,7 @@ export default function DutchPublicProfileExampleCasePage() {
 
       <section className="section">
         <Container className="split-content">
-          <div><p className="eyebrow">De vraag</p><h2>Wat is zichtbaar naast de bedoelde boodschap?</h2></div>
+          <div><p className="eyebrow">De vraag</p><h2>Wat wordt zichtbaar naast de bedoelde boodschap?</h2></div>
           <div className="prose-block">
             <p>In de loop der tijd heeft het bedrijf webteksten, berichten op sociale media, beelden en bedrijfsvideo&apos;s gepubliceerd. Het vraagt om een zorgvuldige beoordeling van zijn openbare profiel: wat kan een buitenstaander waarnemen, wat zou die daar redelijkerwijs uit kunnen afleiden en waar gaat een conclusie verder dan het bewijs?</p>
             <p>Relevante beelden worden in hun context beoordeeld, niet als zelfstandig bewijs behandeld. De afgesproken opdracht bepaalt welke publicaties worden onderzocht. Er is geen toegang tot besloten systemen of accounts nodig.</p>
@@ -38,12 +38,12 @@ export default function DutchPublicProfileExampleCasePage() {
           <div className="prose-block">
             <p>In deze fictieve case geeft geen enkele publicatie op zichzelf een volledig beeld. Samen kunnen openbare uitingen en beelden echter meer vertellen over de richting en capaciteiten van het bedrijf dan elk onderdeel afzonderlijk doet vermoeden.</p>
             <p>Het rapport zou directe waarnemingen onderscheiden van voorzichtige gevolgtrekkingen en open vragen. Daarmee kan het bedrijf bepalen welke toekomstige publicaties extra aandacht verdienen, zonder nuttige communicatie met klanten en partners onnodig te beperken.</p>
-            <p className="report-disclaimer">Dit voorbeeld blijft bewust op hoofdlijnen en is geen beoordeling van een bestaand bedrijf. Het beweert niet dat een concurrent informatie heeft verkregen of een product heeft nagemaakt. Concrete bevindingen, bronnen en onderzoekswerkwijzen worden hier niet gepubliceerd.</p>
+            <p className="report-disclaimer">Dit voorbeeld blijft bewust op hoofdlijnen en is geen beoordeling van een bestaand bedrijf. Het beweert niet dat een concurrent informatie heeft verkregen of een product heeft nagemaakt. Het toont de vorm van de beoordeling, niet de bronnenlijst of concrete bevindingen uit een werkelijke opdracht.</p>
           </div>
         </Container>
       </section>
 
-      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Een vraag over uw eigen profiel?</p><h2>Begrijp wat uw openbare aanwezigheid kan vertellen.</h2><p>Wij kunnen een afgebakende, op bewijs gebaseerde beoordeling bespreken.</p></div><div className="button-row"><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink><ButtonLink href="/nl/voorbeeldcase/vierde-pijler" variant="secondary">Bekijk een andere voorbeeldcase</ButtonLink></div></Container></section>
+      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Een vraag over uw eigen profiel?</p><h2>Begrijp wat uw openbare aanwezigheid kan vertellen.</h2><p>Onze scan met vaste scope geeft een compacte, onderbouwde beoordeling van het openbare profiel van uw eigen bedrijf.</p></div><div className="button-row"><ButtonLink href="/nl/diensten/openbare-informatiescan">Bekijk de scan van €499</ButtonLink><ButtonLink href="/nl/voorbeeldcase/vierde-pijler" variant="secondary">Bekijk een andere voorbeeldcase</ButtonLink></div></Container></section>
     </article>
   );
 }
