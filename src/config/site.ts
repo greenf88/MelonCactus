@@ -13,8 +13,9 @@ export const siteConfig = {
   registrationNumber: null,
   nav: [
     { href: "/services", label: "Services" },
+    { href: "/#examples", label: "Examples" },
     { href: "/methodology", label: "Methodology" },
-    { href: "/sample-report", label: "Sample Report" },
+    { href: "/#pricing", label: "Pricing" },
     { href: "/insights", label: "Insights" },
     { href: "/about", label: "About" },
   ],
@@ -26,6 +27,8 @@ export type ReportOption = {
   price: string;
   priceQualifier: string;
   summary: string;
+  bestFor?: string;
+  boundary?: string;
   includes: readonly string[];
   featured?: boolean;
 };
@@ -35,6 +38,8 @@ export const publicProfileScan: ReportOption = {
   price: "€499",
   priceQualifier: "fixed fee",
   summary: "A compact defensive review of what an outside observer may infer from your company-owned public presence.",
+  bestFor: "Your own company's public communications.",
+  boundary: "No private accounts, penetration testing or external competitor assessment.",
   includes: [
     "One company website and up to two official public channels",
     "Direct observations, cautious inferences and unknowns",
@@ -48,6 +53,8 @@ export const reportOptions: readonly ReportOption[] = [
     price: "€995",
     priceQualifier: "from",
     summary: "A focused assessment of a defined decision and its most material uncertainties.",
+    bestFor: "One defined external intelligence question.",
+    boundary: "Not a review of your own public profile or a broad competitor landscape.",
     includes: [
       "Agreed question and evidence boundary",
       "Source-backed findings and limitations",
@@ -59,6 +66,8 @@ export const reportOptions: readonly ReportOption[] = [
     price: "€1,995",
     priceQualifier: "typically from",
     summary: "A deeper investigation of a company, technology or competitive position.",
+    bestFor: "A more detailed technical or competitive decision.",
+    boundary: "Subjects, sources and depth are set in the written scope; no private-system access.",
     includes: [
       "Multiple relevant source types",
       "Technical and commercial assessment",
@@ -71,6 +80,8 @@ export const reportOptions: readonly ReportOption[] = [
     price: "€3,995",
     priceQualifier: "from",
     summary: "A broader, decision-led engagement across several evidence streams.",
+    bestFor: "A strategic decision with several related questions.",
+    boundary: "Workstreams and exclusions are agreed in writing; ongoing monitoring is separate unless scoped.",
     includes: [
       "Agreed research workstreams",
       "Executive conclusions and detailed findings",
