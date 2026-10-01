@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function DutchTermsPage() {
   return (
-    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal." updated="29 september 2026">
+    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal. Dit zijn geen voorwaarden voor betaalde onderzoeksopdrachten." updated="1 oktober 2026">
       <h2>Informatie, geen advies</h2>
       <p>De inhoud van deze website is algemene informatie over industriële inlichtingen en onderzoek in openbare bronnen. Zij vormt geen juridisch, financieel, beleggings-, technisch of beveiligingsadvies voor een specifieke situatie.</p>
 
@@ -29,11 +29,14 @@ export default function DutchTermsPage() {
       <h2>Verantwoord gebruik</h2>
       <p>U mag via de website geen illegaal materiaal, toegangsgegevens, malware of informatie insturen die u niet mag delen.</p>
 
+      <h2>Inhoud en externe bronnen</h2>
+      <p>U mag websiteteksten en onze oorspronkelijke presentatie niet zonder toestemming als eigen werk publiceren, behoudens toepasselijke uitzonderingen. Externe links dienen als bron of context; inhoud en rechten van derden blijven bij hun rechthebbenden. Wij hebben geen zeggenschap over latere wijzigingen van externe sites.</p>
+
       <h2>Juistheid en beschikbaarheid</h2>
       <p>Wij betrachten redelijke zorgvuldigheid bij openbare inhoud. De website kan echter worden gewijzigd en ononderbroken beschikbaarheid is niet gegarandeerd. Externe bronnen kunnen na publicatie veranderen.</p>
 
       <h2>Bedrijfsgegevens</h2>
-      <p>{siteNl.operatorStatement} Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
+      <p>{siteNl.operatorStatement} KvK-nummer {siteConfig.registrationNumber}. Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>; <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
     </LegalPageShell>
   );
 }

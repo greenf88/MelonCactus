@@ -7,10 +7,12 @@ export const siteConfig = {
     "Evidence from public sources. Intelligence for technology leaders.",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://meloncactus.com",
   businessEmail: "contact@meloncactus.com",
+  businessPhoneDisplay: "0622328034",
+  businessPhoneHref: "tel:+31622328034",
   legalName: "GFNI",
   operatorStatement: "MelonCactus is operated by GFNI.",
   postalAddress: null,
-  registrationNumber: null,
+  registrationNumber: "93879695",
   nav: [
     { href: "/services", label: "Services" },
     { href: "/#examples", label: "Examples" },

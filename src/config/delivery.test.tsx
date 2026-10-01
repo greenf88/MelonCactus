@@ -72,7 +72,7 @@ describe("decision-led assessment and delivery choices", () => {
     const terms = renderToStaticMarkup(createElement(DutchTermsPage));
     expect(privacy).toContain("andere toegangsgegevens");
     expect(privacy).toContain("geheimhoudingsovereenkomst");
-    expect(privacy).toContain("bedrijf, functie of rol");
+    expect(privacy).toContain("bedrijf en functie of rol");
     expect(terms).toContain("technisch of beveiligingsadvies");
     expect(terms).toContain("opdrachten voor klanten");
   });

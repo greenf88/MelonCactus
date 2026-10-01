@@ -1,32 +1,34 @@
 import type { Metadata } from "next";
 import { LegalPageShell } from "@/components/legal-page-shell";
 import { siteConfig } from "@/config/site";
-import { siteNl } from "@/config/site-nl";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Privacyverklaring",
-  description: "Hoe MelonCactus omgaat met gegevens die u via de website verstrekt.",
+  description: "Hoe MelonCactus omgaat met aanvragen, websiteanalyse en persoonsgegevens in onderzoek uit openbare bronnen.",
   alternates: languageAlternates("/privacy", "nl"),
 };
 
 export default function DutchPrivacyPage() {
   return (
-    <LegalPageShell locale="nl" title="Privacyverklaring" intro="Hoe wij omgaan met informatie die u via deze website verstrekt." updated="28 september 2026">
-      <h2>Wie beheert deze website?</h2>
-      <p>{siteNl.operatorStatement} U kunt contact opnemen via <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
-
-      <h2>Aanvragen</h2>
-      <p>Als u het formulier verstuurt, gebruiken wij uw naam, zakelijke e-mailadres, bedrijf, functie of rol, de te nemen beslissing, het onderzoeksobject en de gewenste termijn om uw vraag te beoordelen en te beantwoorden. U kunt ook een indicatief opdrachtniveau, geografisch gebied, budget, aanvullende context en de voorkeur om vóór inhoudelijke uitwisseling een geheimhoudingsovereenkomst te bespreken opgeven. Die voorkeur brengt op zichzelf geen overeenkomst tot stand. Het formulier verzendt deze gegevens via Resend, onze e-maildienstverlener, naar onze zakelijke inbox. Als het formulier niet beschikbaar is, kunt u rechtstreeks per e-mail contact met ons opnemen.</p>
-
-      <h2>Welke informatie kunt u beter niet sturen?</h2>
-      <p>Stuur in het eerste formulier geen vertrouwelijke documenten, wachtwoorden of andere toegangsgegevens, onrechtmatig verkregen materiaal, bijzondere categorieën persoonsgegevens of meer persoonsgegevens dan nodig is om uw vraag toe te lichten.</p>
-
-      <h2>Websitetechnologie</h2>
-      <p>Wij gebruiken Vercel Web Analytics om paginaweergaven op de Engelse en Nederlandse pagina’s te tellen. Voor geaggregeerde statistieken worden de pagina-URL, verwijzende website, globale locatie en het browser- en apparaattype verwerkt. Deze meting gebruikt geen cookies. Wij gebruiken geen advertentietrackers of gedragsprofilering en verkopen geen informatie uit aanvragen.</p>
-
-      <h2>Vragen over uw gegevens</h2>
-      <p>Heeft u vragen over een aanvraag of uw persoonsgegevens? Stuur dan een e-mail naar <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
+    <LegalPageShell locale="nl" title="Privacyverklaring" intro="Hoe wij omgaan met persoonsgegevens wanneer u de website bezoekt, een aanvraag doet of met ons samenwerkt." updated="1 oktober 2026">
+      <h2>Wie is verantwoordelijk?</h2>
+      <p>MelonCactus wordt geëxploiteerd door {siteConfig.legalName} (KvK-nummer {siteConfig.registrationNumber}). Voor vragen of privacyverzoeken mailt u <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a> of belt u <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>. Wij publiceren op deze website geen postadres.</p>
+      <h2>Aanvragen en zakelijke correspondentie</h2>
+      <p>Het formulier vraagt uw naam, zakelijke e-mailadres, bedrijf en functie of rol, de beslissing en het onderzoeksobject, en de gewenste termijn. Opdrachtniveau, geografisch gebied, budget, aanvullende context en het verzoek om een geheimhoudingsovereenkomst te bespreken zijn optioneel. Wij gebruiken deze gegevens en verdere zakelijke correspondentie om uw vraag te beoordelen en te beantwoorden, eventueel een voorstel te doen en met u te communiceren. Een aanvraag is nog geen aanvaarde opdracht; een NDA-verzoek vormt nog geen overeenkomst. Stuur in het eerste formulier geen vertrouwelijke documenten, wachtwoorden of andere toegangsgegevens, onrechtmatig verkregen materiaal, bijzondere categorieën persoonsgegevens of meer persoonsgegevens dan nodig is.</p>
+      <p>Bij een natuurlijke persoon die zelf contractspartij wordt, kunnen noodzakelijke stappen vóór een overeenkomst of de uitvoering daarvan de grondslag vormen. Voor medewerkers en andere contactpersonen die namens een bedrijf handelen, baseren wij ons op ons gerechtvaardigd belang bij het behandelen van relevante zakelijke aanvragen en correspondentie, onder voorbehoud van een belangenafweging en uw recht van bezwaar. Het formulier bevat geen marketinginschrijving.</p>
+      <h2>Opdrachten en onderzoek in openbare bronnen</h2>
+      <p>Bij een overeengekomen zakelijke opdracht kunnen wij contact-, project- en factuurgegevens verwerken voor uitvoering en administratie. Bij een individuele opdrachtgever kan uitvoering van de overeenkomst de grondslag zijn; voor vertegenwoordigers van een bedrijf beoordelen wij gerechtvaardigde belangen. Voor de financiële administratie kunnen wettelijke bewaarplichten gelden. Onderzoek kan zakelijke persoonsgegevens uit rechtmatig toegankelijke openbare bronnen omvatten. Openbaarheid neemt de bescherming van persoonsgegevens niet weg. Per opdracht beoordelen wij noodzaak, evenredigheid, professionele relevantie, betrouwbaarheid van bronnen, informatieplichten bij indirect verkregen gegevens en de rollen van ons en de opdrachtgever. Wij nemen niet aan dat een uitzondering op de informatieplicht automatisch geldt.</p>
+      <h2>Hosting, beveiliging en websiteanalyse</h2>
+      <p>Vercel host de website en kan technische verzoek- en beveiligingsgegevens verwerken die nodig zijn om de website te leveren en te beschermen. Vercel Web Analytics telt paginaweergaven op de Engelse en Nederlandse pagina’s. Wij beperken de meting tot bekende openbare paginapaden en verwijderen queryparameters en fragmenten voordat een paginaweergave wordt verstuurd. Volgens Vercel worden voor geaggregeerde statistieken onder meer tijdstip, pad, verwijzende website, globale locatie, browser, besturingssysteem en apparaattype verwerkt. De dienst gebruikt een kortlevende bezoekerhash in plaats van analytische cookies. Wij sturen geen formuliervelden als analyticsgebeurtenissen, gebruiken geen advertentietrackers of gedragsprofilering. Wij beroepen ons op een beperkt gerechtvaardigd belang om geaggregeerd websitegebruik te begrijpen; de werkelijke configuratie en gevolgen moeten wel worden beoordeeld.</p>
+      <h2>Ontvangers en verwerking buiten Europa</h2>
+      <p>Resend bezorgt formulieraanvragen in onze zakelijke mailbox. Vercel levert hosting en analytics. Ook onze zakelijke mailbox heeft een dienstverlener; diens identiteit en contractuele afspraken moeten vóór goedkeuring van deze verklaring worden bevestigd. Wij delen gegevens met dienstverleners alleen waar dat voor deze doelen nodig is en met de opdrachtgever of anderen waar een afgesproken opdracht dat vereist. Deze dienstverleners kunnen gegevens buiten de EER verwerken. Wij beloven geen opslag uitsluitend binnen de EER. Wij beoordelen vóór gebruik de toepasselijke doorgiftegrondslag, leveranciersvoorwaarden en eventuele aanvullende waarborgen.</p>
+      <h2>Hoe lang bewaren wij gegevens?</h2>
+      <p>Correspondentie over een aanvraag bewaren wij zolang wij een mogelijke opdracht beoordelen en gedurende een beperkte vervolgperiode; de exacte uitvoerbare verwijdertermijn moet nog worden vastgesteld. Gegevens van overeengekomen werk bewaren wij niet langer dan nodig voor oplevering, correcties of een evenredige verdediging tegen aanspraken, volgens de afgesproken opdracht en toepasselijke verjaringstermijnen. De financiële administratie bewaren wij gedurende de wettelijke termijn, in Nederland doorgaans zeven jaar. Voor hosting en analytics gelden de ingestelde leverancierstermijnen; Vercel meldt dat de identificatie van een bezoekersessie na 24 uur vervalt. Wij beoordelen de termijnen en verwijderen of anonimiseren gegevens wanneer het toepasselijke doel eindigt. Een concreet verwijderbeleid is een voorwaarde voor publicatie van deze conceptverklaring.</p>
+      <h2>Uw rechten</h2>
+      <p>U kunt verzoeken om inzage, correctie, verwijdering of beperking van de verwerking en bezwaar maken tegen verwerking op grond van gerechtvaardigd belang. Gegevensoverdraagbaarheid geldt waar de wettelijke voorwaarden zijn vervuld. Als wij voor een specifieke verwerking ooit toestemming gebruiken, kunt u die intrekken zonder gevolgen voor eerdere rechtmatige verwerking. Mail ons uw verzoek; wij vragen alleen gegevens die nodig zijn om uw identiteit vast te stellen. U kunt ook een klacht indienen bij de Autoriteit Persoonsgegevens.</p>
+      <h2>Wijzigingen</h2>
+      <p>Wij passen deze verklaring aan bij wezenlijke veranderingen in onze verwerking en vermelden de wijzigingsdatum hierboven. Waar nodig maken wij belangrijke wijzigingen via een passend kanaal bekend.</p>
     </LegalPageShell>
   );
 }

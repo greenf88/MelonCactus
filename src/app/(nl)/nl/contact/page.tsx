@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ContactForm } from "@/components/contact-form";
 import { Container } from "@/components/container";
 import { languageAlternates } from "@/lib/i18n";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Bespreek uw onderzoeksvraag",
@@ -21,6 +22,7 @@ export default async function DutchContactPage({ searchParams }: { searchParams:
           <h1>Begin bij uw beslissing.</h1>
           <p className="page-intro">Welke beslissing probeert u te nemen? Welke onderneming, markt of technologie moet worden onderzocht?</p>
           <p>Wij beoordelen eerst de vraag, de beschikbaarheid van rechtmatige openbare bronnen en het benodigde bewijs. Vóór aanvang ontvangt u een afgebakende opdracht met resultaten, vaste prijs en afgesproken opleverdatum.</p>
+          <p>Bespreekt u uw vraag liever eerst? Bel <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a> of mail <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
         </header>
         <div className="contact-form-area">
           <ContactForm locale="nl" initialReport={query.report ?? ""} callRequested={query.call === "true"} />

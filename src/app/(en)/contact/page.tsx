@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ContactForm } from "@/components/contact-form";
 import { Container } from "@/components/container";
 import { languageAlternates } from "@/lib/i18n";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Request an Intelligence Assessment",
@@ -22,6 +23,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <h1>Start with the decision.</h1>
           <p className="page-intro">What decision are you trying to make, and which company, market or technology should be examined?</p>
           <p>We first assess the question, the availability of lawful public sources and the evidence needed. Before work begins, you receive a defined scope, deliverables, fixed fee and agreed delivery date.</p>
+          <p>Prefer to speak first? Call <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a> or email <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
         </header>
 
         <div className="contact-form-area">
