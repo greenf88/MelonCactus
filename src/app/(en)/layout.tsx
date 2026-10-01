@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
 import "../globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -6,6 +7,7 @@ import { StructuredData } from "@/components/structured-data";
 import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
 import { Analytics } from "@vercel/analytics/next";
+import { entityGraph, socialImageUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -21,11 +23,13 @@ export const metadata: Metadata = {
     title: "MelonCactus | Industrial Intelligence",
     description: siteConfig.description,
     url: "/",
+    images: [{ url: socialImageUrl("en", "default"), width: 1200, height: 630, alt: "MelonCactus Industrial Intelligence: public evidence for decisions" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "MelonCactus | Industrial Intelligence",
     description: siteConfig.description,
+    images: [socialImageUrl("en", "default")],
   },
   robots: process.env.VERCEL_ENV === "preview"
     ? { index: false, follow: false }
@@ -37,7 +41,7 @@ export const viewport: Viewport = {
   themeColor: "#f4f2e9",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
@@ -45,16 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
-        <StructuredData
-          data={{
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: siteConfig.name,
-            description: siteConfig.description,
-            url: siteConfig.siteUrl,
-            inLanguage: "en",
-          }}
-        />
+        <StructuredData data={entityGraph()} />
         <Analytics />
       </body>
     </html>

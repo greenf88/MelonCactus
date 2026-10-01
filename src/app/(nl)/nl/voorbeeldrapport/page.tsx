@@ -7,7 +7,7 @@ import { SampleEvidenceTable } from "@/components/sample-evidence-table";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Voorbeeldrapport industriële concurrentieanalyse | MelonCactus",
+  title: "Fictief voorbeeldrapport industriële concurrentieanalyse",
   description: "Een fictieve beslisnotitie die laat zien hoe MelonCactus openbaar bewijs, alternatieve verklaringen en gevolgen voor een besluit scheidt.",
   alternates: languageAlternates("/sample-report", "nl"),
 };

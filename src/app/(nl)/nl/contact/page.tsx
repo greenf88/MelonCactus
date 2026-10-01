@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ContactForm } from "@/components/contact-form";
 import { Container } from "@/components/container";
+import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Bespreek uw onderzoeksvraag",
-  description: "Beschrijf de beslissing en de onderneming, markt of technologie waarover u inzicht zoekt. MelonCactus beoordeelt eerst bronnen en bewijsbehoefte en stelt dan opdracht, vaste prijs en datum voor.",
+  description: "Bespreek uw industriële onderzoeksvraag. MelonCactus beoordeelt de beschikbare bronnen en stemt opdracht, vaste prijs en planning schriftelijk met u af.",
   alternates: languageAlternates("/contact", "nl"),
 };
 
@@ -21,6 +22,7 @@ export default async function DutchContactPage({ searchParams }: { searchParams:
           <h1>Begin bij uw beslissing.</h1>
           <p className="page-intro">Welke beslissing probeert u te nemen? Welke onderneming, markt of technologie moet worden onderzocht?</p>
           <p>Wij beoordelen eerst de vraag, de beschikbaarheid van rechtmatige openbare bronnen en het benodigde bewijs. Vóór aanvang ontvangt u een afgebakende opdracht met resultaten, vaste prijs en afgesproken opleverdatum.</p>
+          <p>Neemt u liever rechtstreeks contact op? Mail <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a> of bel <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>. MelonCactus wordt vanuit Enschede geëxploiteerd door GFNI.</p>
         </header>
         <div className="contact-form-area">
           <ContactForm locale="nl" initialReport={query.report ?? ""} callRequested={query.call === "true"} />

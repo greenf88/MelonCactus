@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CommercialHome } from "@/components/commercial-home";
 import { languageAlternates } from "@/lib/i18n";
+import { socialImageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Industrial Intelligence for Better-Informed Decisions | MelonCactus",
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
     title: "Industrial Intelligence for Better-Informed Decisions | MelonCactus",
     description: "Public evidence for decisions about competitors, technology and markets.",
     url: "/",
+    ...socialImageMetadata("en", "default", "MelonCactus Industrial Intelligence").openGraph,
   },
+  twitter: socialImageMetadata("en", "default", "MelonCactus Industrial Intelligence").twitter,
 };
 
 export default function Home() {
