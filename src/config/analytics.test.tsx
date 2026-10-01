@@ -19,6 +19,8 @@ describe("Web Analytics privacy notices", () => {
     expect(english).toContain("advertising trackers or build behavioural profiles");
     expect(english).toContain("no later than twelve months after the last substantive contact");
     expect(english).toContain("no later than 24 months after final delivery");
+    expect(english).toContain("no longer than five years after final delivery");
+    expect(english).toContain("generally seven years in the Netherlands");
     expect(english).toContain(siteConfig.registrationNumber);
 
     expect(dutch).toContain("Vercel Web Analytics");
@@ -27,6 +29,8 @@ describe("Web Analytics privacy notices", () => {
     expect(dutch).toContain("geen advertentietrackers of gedragsprofilering");
     expect(dutch).toContain("uiterlijk twaalf maanden na het laatste inhoudelijke contact");
     expect(dutch).toContain("uiterlijk 24 maanden na definitieve oplevering");
+    expect(dutch).toContain("uiterlijk vijf jaar na definitieve oplevering");
+    expect(dutch).toContain("in Nederland doorgaans zeven jaar");
     expect(dutch).toContain(siteConfig.registrationNumber);
   });
 
