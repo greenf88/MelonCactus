@@ -37,4 +37,4 @@
 2. Hoe een technisch directeur prototypeclaims, octrooien en commerciële toepassing uit elkaar houdt.
 3. Hoe een strategieteam signalen over een nieuwe productielocatie in een tijdlijn zet, inclusief tegenbewijs en open vragen.
 
-Deze selectie volgt inhoudelijke en commerciële relevantie, niet gemeten Search Console-prestaties; die toegang is nog niet aangetoond. Geen kanaal is benaderd en er is geen backlink of plaatsing gekocht.
+Deze selectie volgt inhoudelijke en commerciële relevantie, niet gemeten Search Console-prestaties. De bestaande Search Console-property is toegankelijk, maar de beschikbare signalen (1 klik en 8 vertoningen op 1 oktober) zijn te beperkt voor een betrouwbare kanaalkeuze. Geen kanaal is benaderd en er is geen backlink of plaatsing gekocht.
