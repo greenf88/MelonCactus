@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { publicProfileScan, reportOptions, siteConfig } from "@/config/site";
 import { publicProfileScanNl, reportOptionsNl } from "@/config/site-nl";
 import { DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "@/config/delivery";
@@ -120,6 +121,7 @@ export function ContactForm({ initialReport = "", callRequested = false, locale 
       <p className="form-field-note">{nl ? "Dit is een verzoek om vooraf contact op te nemen; met deze keuze komt geen overeenkomst tot stand." : "This is a request to discuss arrangements first; selecting it does not create an agreement."}</p>
       <div className="form-honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <p className="form-warning">{nl ? "Stuur in dit formulier geen vertrouwelijke documenten, toegangsgegevens of onrechtmatig verkregen materiaal." : "Do not submit confidential documents, credentials or unlawfully obtained material in this form."}</p>
+      <p className="form-field-note">{nl ? <>Wij gebruiken uw gegevens om uw vraag te beoordelen en te beantwoorden. Lees vóór verzending onze <Link href="/nl/privacy">privacyverklaring</Link>. Een aanvraag is geen opdracht en het verzoek om een geheimhoudingsovereenkomst vormt nog geen overeenkomst.</> : <>We use your details to review and respond to your question. Please read our <Link href="/privacy">privacy statement</Link> before sending. An enquiry is not an accepted assignment, and an NDA request does not create an agreement.</>}</p>
       <div className="form-submit-row">
         <button className="button button-primary" type="submit" disabled={state === "sending"}>{state === "sending" ? (nl ? "Verzenden…" : "Sending…") : (nl ? "Onderzoeksvraag versturen" : "Send assessment request")}</button>
         <p>{nl ? "Wij gebruiken uw gegevens om uw vraag te beoordelen en te beantwoorden." : "We use your details to review and respond to your question."}</p>

@@ -10,7 +10,7 @@ export function ServiceCard({ service, locale = "en" }: { service: ReportOption;
         {service.featured ? <p className="card-flag">{isNl ? "Verdiepend onderzoek" : "In-depth assessment"}</p> : null}
         <h3>{service.name}</h3>
         <p className="price">
-          <span>{service.priceQualifier}</span> {service.price}
+          <span>{service.priceQualifier}</span> {service.price} <span>{isNl ? "excl. btw" : "excl. VAT"}</span>
         </p>
         <p>{service.summary}</p>
         {service.bestFor ? <p className="service-fit"><strong>{isNl ? "Geschikt voor" : "Best for"}:</strong> {service.bestFor}</p> : null}

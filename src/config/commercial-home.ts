@@ -131,7 +131,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       title: "Choose the scope that fits the question.",
       intro: "The fixed-scope scan is for your own public profile. The three intelligence options address external decisions with increasing analytical depth.",
       distinction: "The €499 scan reviews your own company-owned public presence. An assessment from €995 addresses a defined external intelligence question; it is not an expanded version of the scan.",
-      note: "Starting fees are indicative, not online order prices. Final scope, deliverables, fixed fee and delivery date are confirmed in writing before work begins. Timing and any priority request depend on scope, evidence and capacity.",
+      note: "All listed fees exclude VAT; applicable VAT is added to the agreed project fee. Starting fees are indicative, not online order prices. Final scope, deliverables, fixed fee and delivery date are confirmed in writing before work begins. Timing and any priority request depend on scope, evidence and capacity.",
       cta: "Compare the services and scope",
     },
     process: {
@@ -259,7 +259,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       eyebrow: "Opdrachten en indicatieve prijzen", title: "Kies de omvang die past bij uw vraag.",
       intro: "De scan met vaste scope gaat over uw eigen openbare profiel. De drie intelligenceopdrachten ondersteunen externe beslissingen met oplopende analytische diepgang.",
       distinction: "De scan van €499 onderzoekt de openbare aanwezigheid van uw eigen bedrijf. De beoordeling vanaf €995 gaat over een afgebakende externe intelligencevraag; het is geen uitgebreide versie van de scan.",
-      note: "Vanafprijzen zijn indicatief, geen online bestelprijzen. Definitieve opdracht, resultaten, vaste prijs en opleverdatum worden vóór aanvang schriftelijk bevestigd. Doorlooptijd en een eventueel verzoek om prioriteit hangen af van de opdracht, bronnen en capaciteit.",
+      note: "Alle genoemde bedragen zijn exclusief btw; toepasselijke btw wordt bij de overeengekomen projectprijs opgeteld. Vanafprijzen zijn indicatief, geen online bestelprijzen. Definitieve opdracht, resultaten, vaste prijs en opleverdatum worden vóór aanvang schriftelijk bevestigd. Doorlooptijd en een eventueel verzoek om prioriteit hangen af van de opdracht, bronnen en capaciteit.",
       cta: "Vergelijk diensten en afbakening",
     },
     process: {

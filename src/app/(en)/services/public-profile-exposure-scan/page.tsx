@@ -8,7 +8,7 @@ import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Public Profile Exposure Scan for Industrial Companies",
-  description: "A fixed-fee €499 review of what an outside observer may infer from your company website, official public channels and selected visual material.",
+  description: "A fixed-fee €499 excl. VAT review of what an outside observer may infer from your company website, official public channels and selected visual material.",
   alternates: languageAlternates("/services/public-profile-exposure-scan", "en"),
 };
 
@@ -67,7 +67,7 @@ export default function PublicProfileExposureScanPage() {
         </Container>
       </section>
 
-      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Review your own public profile</p><h2>Request the fixed-scope scan.</h2><p>We confirm the public channels, sample and boundaries before accepting the assignment.</p></div><ButtonLink href={`/contact?report=${encodeURIComponent(publicProfileScan.name)}`}>Request the €499 Scan</ButtonLink></Container></section>
+      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Review your own public profile</p><h2>Request the fixed-scope scan.</h2><p>We confirm the public channels, sample and boundaries before accepting the assignment. The €499 fee excludes VAT; applicable VAT is added in the written proposal.</p></div><ButtonLink href={`/contact?report=${encodeURIComponent(publicProfileScan.name)}`}>Request the €499 Scan</ButtonLink></Container></section>
     </>
   );
 }

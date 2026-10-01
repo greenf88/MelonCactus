@@ -34,4 +34,4 @@ npm run test:client-bundle
 
 The contact endpoint validates and limits inputs, treats visitor content as text, uses an invisible honeypot, and returns a generic failure if delivery is unavailable. It does not store enquiries in a database.
 
-No database, authentication, CMS, analytics or advertising trackers are included.
+No database, authentication, CMS or advertising trackers are included. Vercel Web Analytics counts page views on both language versions; the privacy statement describes this measurement.

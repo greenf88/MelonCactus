@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
 import "../globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { StructuredData } from "@/components/structured-data";
 import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
-import { Analytics } from "@vercel/analytics/next";
+import { PrivacyAnalytics } from "@/components/privacy-analytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     template: "%s | MelonCactus",
   },
   description: siteConfig.description,
+  referrer: "origin",
   alternates: languageAlternates("/", "en"),
   openGraph: {
     type: "website",
@@ -37,7 +39,7 @@ export const viewport: Viewport = {
   themeColor: "#f4f2e9",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
@@ -55,7 +57,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             inLanguage: "en",
           }}
         />
-        <Analytics />
+        <PrivacyAnalytics />
       </body>
     </html>
   );

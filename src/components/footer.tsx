@@ -30,6 +30,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
             <a href={`mailto:${siteConfig.businessEmail}`}>
               {siteConfig.businessEmail}
             </a>
+            <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>
             <Link href={isNl ? "/nl/contact" : "/contact"}>{isNl ? "Bespreek uw onderzoeksvraag" : "Request an assessment"}</Link>
           </div>
           <div>
@@ -41,6 +42,8 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
         <div className="footer-base">
           <span>© {new Date().getFullYear()} {siteConfig.name}</span>
           <span>{isNl ? siteNl.operatorStatement : siteConfig.operatorStatement}</span>
+          <span>{isNl ? "KvK" : "Dutch Chamber of Commerce"} {siteConfig.registrationNumber} · {isNl ? "btw-id" : "VAT ID"} {siteConfig.vatId}</span>
+          <span>{siteConfig.postalAddress}</span>
         </div>
       </Container>
     </footer>
