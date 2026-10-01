@@ -19,7 +19,7 @@ export default function TermsPage() {
       <h2>Responsible use</h2><p>You must not use the website to submit illegal material, credentials, malware or information you are not authorised to share.</p>
       <h2>Content and external sources</h2><p>Website text and original presentation may not be republished as your own without permission, subject to applicable exceptions. External links are provided as sources or context; third-party content and rights remain with their owners. We do not control changes to external sites.</p>
       <h2>Accuracy and availability</h2><p>Reasonable care is taken with public content, but the website may be changed and uninterrupted availability is not guaranteed. External sources can change after publication.</p>
-      <h2>Business details</h2><p>{siteConfig.operatorStatement} Dutch Chamber of Commerce number {siteConfig.registrationNumber}. Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>; <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
+      <h2>Business details</h2><p>{siteConfig.operatorStatement} GFNI is a Dutch sole proprietorship, Dutch Chamber of Commerce number {siteConfig.registrationNumber}, VAT ID {siteConfig.vatId}. Business address: {siteConfig.postalAddress}. Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>; <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
     </LegalPageShell>
   );
 }

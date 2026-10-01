@@ -11,8 +11,9 @@ export const siteConfig = {
   businessPhoneHref: "tel:+31622328034",
   legalName: "GFNI",
   operatorStatement: "MelonCactus is operated by GFNI.",
-  postalAddress: null,
+  postalAddress: "Ans van den Berglaan 68, 7545 RV Enschede",
   registrationNumber: "93879695",
+  vatId: "NL003451568B17",
   nav: [
     { href: "/services", label: "Services" },
     { href: "/#examples", label: "Examples" },

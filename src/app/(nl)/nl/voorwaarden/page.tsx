@@ -39,7 +39,7 @@ export default function DutchTermsPage() {
       <p>Wij betrachten redelijke zorgvuldigheid bij openbare inhoud. De website kan echter worden gewijzigd en ononderbroken beschikbaarheid is niet gegarandeerd. Externe bronnen kunnen na publicatie veranderen.</p>
 
       <h2>Bedrijfsgegevens</h2>
-      <p>{siteNl.operatorStatement} KvK-nummer {siteConfig.registrationNumber}. Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>; <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
+      <p>{siteNl.operatorStatement} GFNI is een eenmanszaak, KvK-nummer {siteConfig.registrationNumber}, btw-id {siteConfig.vatId}. Bedrijfsadres: {siteConfig.postalAddress}. Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>; <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
     </LegalPageShell>
   );
 }

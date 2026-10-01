@@ -23,6 +23,8 @@ describe("Web Analytics privacy notices", () => {
     expect(english).toContain("generally seven years in the Netherlands");
     expect(english).toContain("OVHcloud using Zimbra");
     expect(english).toContain(siteConfig.registrationNumber);
+    expect(english).toContain(siteConfig.vatId);
+    expect(english).toContain(siteConfig.postalAddress);
 
     expect(dutch).toContain("Vercel Web Analytics");
     expect(dutch).toContain("Engelse en Nederlandse pagina’s");
@@ -34,6 +36,8 @@ describe("Web Analytics privacy notices", () => {
     expect(dutch).toContain("in Nederland doorgaans zeven jaar");
     expect(dutch).toContain("OVHcloud met Zimbra");
     expect(dutch).toContain(siteConfig.registrationNumber);
+    expect(dutch).toContain(siteConfig.vatId);
+    expect(dutch).toContain(siteConfig.postalAddress);
   });
 
   it("removes query and fragment data and ignores unknown paths and custom events", () => {
@@ -54,6 +58,8 @@ describe("Web Analytics privacy notices", () => {
       expect(footer).toContain(`href="${siteConfig.businessPhoneHref}"`);
       expect(footer).toContain(siteConfig.registrationNumber);
       expect(footer).toContain(siteConfig.businessEmail);
+      expect(footer).toContain(siteConfig.vatId);
+      expect(footer).toContain(siteConfig.postalAddress);
     }
   });
 });
