@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 export default function DutchPrivacyPage() {
   return (
-    <LegalPageShell locale="nl" title="Privacyverklaring" intro="Hoe wij omgaan met informatie die u via deze website verstrekt." updated="28 september 2026">
+    <LegalPageShell locale="nl" title="Privacyverklaring" intro="Hoe wij omgaan met informatie die u via deze website verstrekt." updated="1 oktober 2026">
       <h2>Wie beheert deze website?</h2>
-      <p>{siteNl.operatorStatement} U kunt contact opnemen via <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
+      <p>{siteNl.operatorStatement} GFNI is een eenmanszaak (KvK {siteConfig.registrationNumber}; btw-id {siteConfig.vatId}) op {siteConfig.postalAddress}. U kunt contact opnemen via <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a> of <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
 
       <h2>Aanvragen</h2>
       <p>Als u het formulier verstuurt, gebruiken wij uw naam, zakelijke e-mailadres, bedrijf, functie of rol, de te nemen beslissing, het onderzoeksobject en de gewenste termijn om uw vraag te beoordelen en te beantwoorden. U kunt ook een indicatief opdrachtniveau, geografisch gebied, budget, aanvullende context en de voorkeur om vóór inhoudelijke uitwisseling een geheimhoudingsovereenkomst te bespreken opgeven. Die voorkeur brengt op zichzelf geen overeenkomst tot stand. Het formulier verzendt deze gegevens via Resend, onze e-maildienstverlener, naar onze zakelijke inbox. Als het formulier niet beschikbaar is, kunt u rechtstreeks per e-mail contact met ons opnemen.</p>

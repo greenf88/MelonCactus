@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CommercialHome } from "@/components/commercial-home";
 import { languageAlternates } from "@/lib/i18n";
+import { socialImageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Industrieel onderzoek voor onderbouwde beslissingen",
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
     title: "Industrieel onderzoek voor onderbouwde beslissingen | MelonCactus",
     description: "Openbaar bewijs voor beslissingen over concurrenten, technologie en markten.",
     url: "/nl",
+    ...socialImageMetadata("nl", "default", "MelonCactus: industrieel onderzoek").openGraph,
   },
+  twitter: socialImageMetadata("nl", "default", "MelonCactus: industrieel onderzoek").twitter,
 };
 
 export default function DutchHome() {

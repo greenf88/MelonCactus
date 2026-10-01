@@ -3,12 +3,15 @@ import { insights } from "@/data/insights";
 import { siteConfig } from "@/config/site";
 import { routePairs } from "@/lib/i18n";
 
+const updatedPaths = new Set(["/", "/about", "/contact", "/services", "/insights", "/privacy", "/terms", "/sample-report"]);
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return routePairs.flatMap(([enPath, nlPath]) => {
     const en = `${siteConfig.siteUrl}${enPath}`;
     const nl = `${siteConfig.siteUrl}${nlPath}`;
     const article = insights.find((item) => enPath === `/insights/${item.slug}`);
-    const lastModified = new Date(article?.date ?? (enPath === "/" ? "2026-09-30" : enPath.startsWith("/example-case/") ? "2026-09-29" : enPath === "/services/public-profile-exposure-scan" ? "2026-09-30" : "2026-09-22"));
+    const updated = Boolean(article) || updatedPaths.has(enPath) || enPath.startsWith("/topics/") || enPath.startsWith("/services/");
+    const lastModified = new Date(updated ? "2026-10-01" : enPath.startsWith("/example-case/") ? "2026-09-29" : "2026-09-22");
     const alternates = { languages: { en, "nl-NL": nl, "x-default": en } };
     return [
       { url: en, lastModified, changeFrequency: enPath === "/" ? "weekly" as const : "monthly" as const, priority: enPath === "/" ? 1 : article ? .75 : .7, alternates },

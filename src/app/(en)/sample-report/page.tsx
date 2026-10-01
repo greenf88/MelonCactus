@@ -7,8 +7,8 @@ import { SampleEvidenceTable } from "@/components/sample-evidence-table";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Sample Industrial Intelligence Report | MelonCactus",
-  description: "A fictional decision memo showing how MelonCactus separates public evidence, competing explanations and decision implications in an industrial capability assessment.",
+  title: "Fictional Industrial Intelligence Sample Report",
+  description: "A fictional decision memo showing how MelonCactus separates public evidence, alternative explanations and implications for an industrial decision.",
   alternates: languageAlternates("/sample-report", "en"),
 };
 

@@ -1,3 +1,12 @@
+const businessAddress = {
+  streetAddress: "Ans van den Berglaan 68",
+  postalCode: "7545 RV",
+  addressLocality: "Enschede",
+  addressCountry: "NL",
+} as const;
+
+const businessPhoneE164 = "+31622328034";
+
 export const siteConfig = {
   name: "MelonCactus",
   descriptor: "Industrial Intelligence",
@@ -7,10 +16,17 @@ export const siteConfig = {
     "Evidence from public sources. Intelligence for technology leaders.",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://meloncactus.com",
   businessEmail: "contact@meloncactus.com",
+  businessPhoneDisplay: "0622328034",
+  businessPhoneE164,
+  businessPhoneHref: `tel:${businessPhoneE164}`,
   legalName: "GFNI",
   operatorStatement: "MelonCactus is operated by GFNI.",
-  postalAddress: null,
-  registrationNumber: null,
+  contactPerson: "Rick Groeneveld",
+  address: businessAddress,
+  postalAddress: `${businessAddress.streetAddress}, ${businessAddress.postalCode} ${businessAddress.addressLocality}`,
+  registrationNumber: "93879695",
+  vatId: "NL003451568B17",
+  linkedInCompanyUrl: "https://www.linkedin.com/company/meloncactus/",
   nav: [
     { href: "/services", label: "Services" },
     { href: "/#examples", label: "Examples" },

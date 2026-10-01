@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function DutchTermsPage() {
   return (
-    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal." updated="29 september 2026">
+    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal." updated="1 oktober 2026">
       <h2>Informatie, geen advies</h2>
       <p>De inhoud van deze website is algemene informatie over industriële inlichtingen en onderzoek in openbare bronnen. Zij vormt geen juridisch, financieel, beleggings-, technisch of beveiligingsadvies voor een specifieke situatie.</p>
 
@@ -33,7 +33,7 @@ export default function DutchTermsPage() {
       <p>Wij betrachten redelijke zorgvuldigheid bij openbare inhoud. De website kan echter worden gewijzigd en ononderbroken beschikbaarheid is niet gegarandeerd. Externe bronnen kunnen na publicatie veranderen.</p>
 
       <h2>Bedrijfsgegevens</h2>
-      <p>{siteNl.operatorStatement} Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>.</p>
+      <p>{siteNl.operatorStatement} GFNI is een eenmanszaak, KvK {siteConfig.registrationNumber}, btw-id {siteConfig.vatId}. Bedrijfsadres: {siteConfig.postalAddress}. Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>; <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
     </LegalPageShell>
   );
 }

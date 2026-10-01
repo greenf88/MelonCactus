@@ -30,17 +30,21 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
             <a href={`mailto:${siteConfig.businessEmail}`}>
               {siteConfig.businessEmail}
             </a>
+            <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>
             <Link href={isNl ? "/nl/contact" : "/contact"}>{isNl ? "Bespreek uw onderzoeksvraag" : "Request an assessment"}</Link>
           </div>
           <div>
             <p className="footer-label">{isNl ? "Informatie" : "Information"}</p>
             <Link href={isNl ? "/nl/privacy" : "/privacy"}>Privacy</Link>
             <Link href={isNl ? "/nl/voorwaarden" : "/terms"}>{isNl ? "Voorwaarden" : "Terms"}</Link>
+            <a href={siteConfig.linkedInCompanyUrl} rel="noopener noreferrer">LinkedIn</a>
           </div>
         </div>
         <div className="footer-base">
           <span>© {new Date().getFullYear()} {siteConfig.name}</span>
           <span>{isNl ? siteNl.operatorStatement : siteConfig.operatorStatement}</span>
+          <span>{isNl ? "KvK" : "Chamber of Commerce"} {siteConfig.registrationNumber} · {isNl ? "btw-id" : "VAT ID"} {siteConfig.vatId}</span>
+          <span>{siteConfig.postalAddress}</span>
         </div>
       </Container>
     </footer>
