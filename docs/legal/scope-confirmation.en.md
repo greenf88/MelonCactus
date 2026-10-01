@@ -4,6 +4,7 @@ This is an **internal working template**, not an offer or a contract formed auto
 
 | Item | Record before agreement |
 | --- | --- |
+| Dossier number | Existing shared enquiry/project number (`YYMMNNN`), for example `2610001` for `26-10-001`; retain it when an enquiry becomes an assignment |
 | Provider | Fully verified legal name, form, register number, address, VAT ID and contact person |
 | Client | Full business name, form, address, contact and authority |
 | Decision question | The specific technical, commercial or strategic decision supported |

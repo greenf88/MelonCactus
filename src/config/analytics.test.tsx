@@ -17,12 +17,16 @@ describe("Web Analytics privacy notices", () => {
     expect(english).toContain("English and Dutch pages");
     expect(english).toContain("rather than analytics cookies");
     expect(english).toContain("advertising trackers or build behavioural profiles");
+    expect(english).toContain("no later than twelve months after the last substantive contact");
+    expect(english).toContain("no later than 24 months after final delivery");
     expect(english).toContain(siteConfig.registrationNumber);
 
     expect(dutch).toContain("Vercel Web Analytics");
     expect(dutch).toContain("Engelse en Nederlandse pagina’s");
     expect(dutch).toContain("in plaats van analytische cookies");
     expect(dutch).toContain("geen advertentietrackers of gedragsprofilering");
+    expect(dutch).toContain("uiterlijk twaalf maanden na het laatste inhoudelijke contact");
+    expect(dutch).toContain("uiterlijk 24 maanden na definitieve oplevering");
     expect(dutch).toContain(siteConfig.registrationNumber);
   });
 

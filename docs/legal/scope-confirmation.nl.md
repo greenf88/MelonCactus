@@ -4,6 +4,7 @@ Dit is een invulbaar **intern concept**, geen aanbod en geen automatisch door he
 
 | Onderdeel | Vast te leggen vóór akkoord |
 | --- | --- |
+| Dossiernummer | Bestaand gedeeld aanvraag-/projectnummer (`YYMMNNN`), bijvoorbeeld `2610001` voor `26-10-001`; behoud het nummer bij omzetting van aanvraag naar opdracht |
 | Opdrachtnemer | Volledig geverifieerde naam, rechtsvorm, KvK, adres, btw-id en contactpersoon |
 | Opdrachtgever | Volledige bedrijfsnaam, rechtsvorm, adres, contactpersoon en bevoegdheid |
 | Beslisvraag | Welke concrete technische, zakelijke of strategische beslissing wordt ondersteund? |
