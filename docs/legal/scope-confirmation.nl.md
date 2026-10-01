@@ -11,7 +11,7 @@ Dit is een invulbaar **intern concept**, geen aanbod en geen automatisch door he
 | Uitsluitingen | Wat wordt niet onderzocht of gegarandeerd; geen besloten toegang, pentest of onbeperkte monitoring |
 | Resultaten | Rapport, samenvatting, bronverwijzingen, bestandsvorm, eventuele bespreking |
 | Klantinformatie | Welke materialen en antwoorden nodig zijn, verantwoordelijke contactpersoon, uiterste ontvangstdatum |
-| Prijs | Vaste totaalprijs, expliciete btw-behandeling, eventuele afzonderlijk afgesproken kosten |
+| Prijs | Vaste projectprijs exclusief btw, toepasselijke btw en totaal inclusief btw; eventuele afzonderlijk afgesproken kosten |
 | Facturatie | Factuurmoment, betaaltermijn en betaalwijze |
 | Planning | Concrete opleverdatum of schriftelijk vast te stellen mechanisme; startvoorwaarden |
 | Versnelde levering | Alleen indien afzonderlijk geaccepteerd: termijn, prijs, startmoment na schriftelijke bevestiging en ontvangst van alle materialen |

@@ -19,6 +19,9 @@ export default function DutchTermsPage() {
       <h2>Geen klantrelatie</h2>
       <p>Het gebruik van deze website of het indienen van een aanvraag schept geen klantrelatie. Een opdracht begint pas nadat de omvang, voorwaarden, termijn en prijs schriftelijk zijn overeengekomen.</p>
 
+      <h2>Gepubliceerde prijzen</h2>
+      <p>Alle gepubliceerde prijzen zijn voor zakelijke klanten en exclusief btw. Toepasselijke btw wordt bij de definitief overeengekomen projectprijs opgeteld en staat in het schriftelijke voorstel. Een vanafprijs is geen offerte of online bestelprijs.</p>
+
       <h2>Termijn en spoedverzoeken</h2>
       <p>Bij standaardlevering wordt de opleverdatum na beoordeling van de opdracht afgesproken. Prioriteit voor tijdgevoelige beslissingen en een kritieke termijn van 24–48 uur zijn alleen mogelijk als opdracht, bewijsbehoefte en capaciteit dat toelaten. Een spoedverzoek wordt vóór aanvang afzonderlijk afgebakend en geoffreerd; het selecteren van een optie in het formulier is geen aanvaarding.</p>
       <p>De vaste prijs en toepasselijke opleverdatum staan in de schriftelijke opdrachtbevestiging. Een afgesproken termijn begint pas nadat MelonCactus opdracht, prijs en deadline schriftelijk heeft bevestigd én alle benodigde informatie heeft ontvangen. Wij kunnen een verzoek afwijzen als het bewijs niet tijdig verantwoord kan worden gecontroleerd. Onze normen voor bewijs en kwaliteit blijven gelijk.</p>

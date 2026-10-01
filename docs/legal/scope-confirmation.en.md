@@ -11,7 +11,7 @@ This is an **internal working template**, not an offer or a contract formed auto
 | Exclusions | What is not researched or guaranteed; no private access, penetration testing or unlimited monitoring |
 | Deliverables | Report, summary, citations, file formats and any discussion |
 | Client material | Required material and answers, responsible contact, receipt deadline |
-| Fee | Fixed total fee, explicit VAT treatment and separately agreed expenses |
+| Fee | Fixed project fee excluding VAT, applicable VAT and total including VAT; separately agreed expenses |
 | Payment | Invoice point, payment period and method |
 | Timing | Specific deadline or written method for fixing it; start conditions |
 | Acceleration | Only if separately accepted: period, fee and start after written confirmation and receipt of all material |
