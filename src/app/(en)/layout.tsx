@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 import { StructuredData } from "@/components/structured-data";
 import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
-import { Analytics } from "@vercel/analytics/next";
+import { PrivacyAnalytics } from "@/components/privacy-analytics";
 import { entityGraph, socialImageUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     template: "%s | MelonCactus",
   },
   description: siteConfig.description,
+  referrer: "origin",
   alternates: languageAlternates("/", "en"),
   openGraph: {
     type: "website",
@@ -50,7 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main id="main-content">{children}</main>
         <Footer />
         <StructuredData data={entityGraph()} />
-        <Analytics />
+        <PrivacyAnalytics />
       </body>
     </html>
   );

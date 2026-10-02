@@ -12,12 +12,15 @@ export const metadata: Metadata = {
 
 export default function DutchTermsPage() {
   return (
-    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal." updated="1 oktober 2026">
+    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal. Dit zijn geen voorwaarden voor betaalde onderzoeksopdrachten." updated="1 oktober 2026">
       <h2>Informatie, geen advies</h2>
       <p>De inhoud van deze website is algemene informatie over industriële inlichtingen en onderzoek in openbare bronnen. Zij vormt geen juridisch, financieel, beleggings-, technisch of beveiligingsadvies voor een specifieke situatie.</p>
 
       <h2>Geen klantrelatie</h2>
       <p>Het gebruik van deze website of het indienen van een aanvraag schept geen klantrelatie. Een opdracht begint pas nadat de omvang, voorwaarden, termijn en prijs schriftelijk zijn overeengekomen.</p>
+
+      <h2>Gepubliceerde prijzen</h2>
+      <p>Alle gepubliceerde prijzen zijn voor zakelijke klanten en exclusief btw. Toepasselijke btw wordt bij de definitief overeengekomen projectprijs opgeteld en staat in het schriftelijke voorstel. Een vanafprijs is geen offerte of online bestelprijs.</p>
 
       <h2>Termijn en spoedverzoeken</h2>
       <p>Bij standaardlevering wordt de opleverdatum na beoordeling van de opdracht afgesproken. Prioriteit voor tijdgevoelige beslissingen en een kritieke termijn van 24–48 uur zijn alleen mogelijk als opdracht, bewijsbehoefte en capaciteit dat toelaten. Een spoedverzoek wordt vóór aanvang afzonderlijk afgebakend en geoffreerd; het selecteren van een optie in het formulier is geen aanvaarding.</p>
@@ -29,11 +32,14 @@ export default function DutchTermsPage() {
       <h2>Verantwoord gebruik</h2>
       <p>U mag via de website geen illegaal materiaal, toegangsgegevens, malware of informatie insturen die u niet mag delen.</p>
 
+      <h2>Inhoud en externe bronnen</h2>
+      <p>U mag websiteteksten en onze oorspronkelijke presentatie niet zonder toestemming als eigen werk publiceren, behoudens toepasselijke uitzonderingen. Externe links dienen als bron of context; inhoud en rechten van derden blijven bij hun rechthebbenden. Wij hebben geen zeggenschap over latere wijzigingen van externe sites.</p>
+
       <h2>Juistheid en beschikbaarheid</h2>
       <p>Wij betrachten redelijke zorgvuldigheid bij openbare inhoud. De website kan echter worden gewijzigd en ononderbroken beschikbaarheid is niet gegarandeerd. Externe bronnen kunnen na publicatie veranderen.</p>
 
       <h2>Bedrijfsgegevens</h2>
-      <p>{siteNl.operatorStatement} GFNI is een eenmanszaak, KvK {siteConfig.registrationNumber}, btw-id {siteConfig.vatId}. Bedrijfsadres: {siteConfig.postalAddress}. Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>; <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
+      <p>{siteNl.operatorStatement} GFNI is een eenmanszaak, KvK-nummer {siteConfig.registrationNumber}, btw-id {siteConfig.vatId}. Bedrijfsadres: {siteConfig.postalAddress}. Contact: <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a>; <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>.</p>
     </LegalPageShell>
   );
 }

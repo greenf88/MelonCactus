@@ -10,7 +10,7 @@ import { breadcrumbSchema, serviceSchema, socialImageMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: "Public Profile Exposure Scan for Industrial Companies",
-  description: "A fixed-fee €499 review of what an outside observer may infer from your company website, official public channels and selected visual material.",
+  description: "A fixed-fee €499 excl. VAT review of what an outside observer may infer from your company website, official public channels and selected visual material.",
   alternates: languageAlternates("/services/public-profile-exposure-scan", "en"),
   openGraph: { title: "Public Profile Exposure Scan for Industrial Companies", ...socialImageMetadata("en", "service", "Public Profile Exposure Scan", "public-profile-exposure-scan").openGraph },
 };
@@ -70,7 +70,7 @@ export default function PublicProfileExposureScanPage() {
         </Container>
       </section>
 
-      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Review your own public profile</p><h2>Request the fixed-scope scan.</h2><p>We confirm the public channels, sample and boundaries before accepting the assignment.</p></div><ButtonLink href={`/contact?report=${encodeURIComponent(publicProfileScan.name)}`}>Request the €499 Scan</ButtonLink></Container></section>
+      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Review your own public profile</p><h2>Request the fixed-scope scan.</h2><p>We confirm the public channels, sample and boundaries before accepting the assignment. The €499 fee excludes VAT; applicable VAT is added in the written proposal.</p></div><ButtonLink href={`/contact?report=${encodeURIComponent(publicProfileScan.name)}`}>Request the €499 Scan</ButtonLink></Container></section>
       <StructuredData data={breadcrumbSchema("en", [{ name: "Services", path: "/services" }, { name: "Public Profile Exposure Scan", path: "/services/public-profile-exposure-scan" }])} />
       <StructuredData data={serviceSchema({ path: "/services/public-profile-exposure-scan", name: publicProfileScan.name, description: publicProfileScan.summary, locale: "en", price: 499, priceNote: "Fixed fee of €499 excluding VAT, subject to agreed scope and written confirmation." })} />
     </>

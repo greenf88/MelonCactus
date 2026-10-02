@@ -35,3 +35,7 @@ npm run test:client-bundle
 The contact endpoint validates and limits inputs, treats visitor content as text, uses an invisible honeypot, and returns a generic failure if delivery is unavailable. It does not store enquiries in a database.
 
 No database, authentication, CMS or advertising trackers are included. Vercel Web Analytics is included in both language layouts; the privacy pages describe this measurement. Search Console and Bing Webmaster Tools require separate owner-controlled verification and are not silently configured by this repository.
+
+## Combined SEO/legal review branch
+
+The integration of draft PRs #13 and #14 is documented in [the integration review](docs/seo/integration-review-20261002.md). Both language layouts retain the SEO entity graph and social metadata and use the privacy-filtered Analytics component. This branch is for review: unresolved legal/provider/retention decisions remain publication gates in `docs/legal/release-audit.md`. Paid-engagement terms in `docs/legal` are drafts and are not operative website terms.

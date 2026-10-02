@@ -43,7 +43,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
         <div className="footer-base">
           <span>© {new Date().getFullYear()} {siteConfig.name}</span>
           <span>{isNl ? siteNl.operatorStatement : siteConfig.operatorStatement}</span>
-          <span>{isNl ? "KvK" : "Chamber of Commerce"} {siteConfig.registrationNumber} · {isNl ? "btw-id" : "VAT ID"} {siteConfig.vatId}</span>
+          <span>{isNl ? "KvK" : "Dutch Chamber of Commerce"} {siteConfig.registrationNumber} · {isNl ? "btw-id" : "VAT ID"} {siteConfig.vatId}</span>
           <span>{siteConfig.postalAddress}</span>
         </div>
       </Container>

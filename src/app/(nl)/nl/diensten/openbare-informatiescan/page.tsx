@@ -10,7 +10,7 @@ import { breadcrumbSchema, serviceSchema, socialImageMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: "Openbare-informatiescan voor industriële bedrijven",
-  description: "Een compacte scan voor €499 van wat buitenstaanders uit uw bedrijfswebsite, officiële openbare kanalen en geselecteerd beeldmateriaal kunnen afleiden.",
+  description: "Een compacte scan voor €499 excl. btw van wat buitenstaanders uit uw bedrijfswebsite, officiële openbare kanalen en geselecteerd beeldmateriaal kunnen afleiden.",
   alternates: languageAlternates("/services/public-profile-exposure-scan", "nl"),
   openGraph: { title: "Openbare-informatiescan voor industriële bedrijven", ...socialImageMetadata("nl", "service", "Openbare-informatiescan", "openbare-informatiescan").openGraph },
 };
@@ -71,7 +71,7 @@ export default function DutchPublicProfileExposureScanPage() {
         </Container>
       </section>
 
-      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Beoordeel uw eigen openbare profiel</p><h2>Vraag de scan met vaste scope aan.</h2><p>Wij bevestigen de openbare kanalen, selectie en grenzen voordat wij de opdracht accepteren.</p></div><ButtonLink href={`/nl/contact?report=${encodeURIComponent(publicProfileScanNl.formValue ?? publicProfileScanNl.name)}`}>Vraag de scan van €499 aan</ButtonLink></Container></section>
+      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">Beoordeel uw eigen openbare profiel</p><h2>Vraag de scan met vaste scope aan.</h2><p>Wij bevestigen de openbare kanalen, selectie en grenzen voordat wij de opdracht accepteren. De prijs van €499 is exclusief btw; toepasselijke btw wordt in het schriftelijke voorstel opgeteld.</p></div><ButtonLink href={`/nl/contact?report=${encodeURIComponent(publicProfileScanNl.formValue ?? publicProfileScanNl.name)}`}>Vraag de scan van €499 aan</ButtonLink></Container></section>
       <StructuredData data={breadcrumbSchema("nl", [{ name: "Diensten", path: "/nl/diensten" }, { name: "Openbare-informatiescan", path: "/nl/diensten/openbare-informatiescan" }])} />
       <StructuredData data={serviceSchema({ path: "/nl/diensten/openbare-informatiescan", name: publicProfileScanNl.name, description: publicProfileScanNl.summary, locale: "nl", price: 499, priceNote: "Vaste prijs van €499 exclusief btw, na afbakening en schriftelijke bevestiging." })} />
     </>
