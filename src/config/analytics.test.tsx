@@ -18,8 +18,10 @@ describe("Web Analytics privacy notices", () => {
 
     expect(english).toContain("Vercel Web Analytics");
     expect(english).toContain("English and Dutch pages");
-    expect(english).toContain("daily-reset visitor hash rather than Analytics cookies");
+    expect(english).toContain("short-lived visitor hash created from the incoming request, without third-party Analytics cookies");
     expect(english).toContain("not configured to send field values as Analytics events");
+    expect(english).toContain("connection data such as an IP address");
+    expect(english).toContain("this proposal requires approval before publication");
     expect(english).toContain("advertising trackers or build behavioural profiles");
     expect(english).toContain("no later than twelve months after the last substantive contact");
     expect(english).toContain("no later than 24 months after final delivery");
@@ -41,8 +43,10 @@ describe("Web Analytics privacy notices", () => {
 
     expect(dutch).toContain("Vercel Web Analytics");
     expect(dutch).toContain("Engelse en Nederlandse pagina’s");
-    expect(dutch).toContain("dagelijks vernieuwde bezoekerhash in plaats van analyticscookies");
+    expect(dutch).toContain("kortdurende bezoekerhash op basis van het inkomende verzoek, zonder cookies van derden voor Analytics");
     expect(dutch).toContain("niet ingericht om veldwaarden als Analytics-gebeurtenissen te versturen");
+    expect(dutch).toContain("verbindingsgegevens zoals een IP-adres");
+    expect(dutch).toContain("dit voorstel moet vóór publicatie worden goedgekeurd");
     expect(dutch).toContain("geen advertentietrackers of gedragsprofilering");
     expect(dutch).toContain("uiterlijk twaalf maanden na het laatste inhoudelijke contact");
     expect(dutch).toContain("uiterlijk 24 maanden na definitieve oplevering");
