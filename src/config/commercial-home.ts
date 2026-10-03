@@ -140,7 +140,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       intro: "The commercial process is separate from the research method: first agree the decision and assignment, then validate the evidence.",
       question: "What decision are you trying to make?",
       items: [
-        { title: "Confidential enquiry", description: "Tell us the decision and any relevant timing; an enquiry is not an order." },
+        { title: "Initial enquiry", description: "Tell us the decision and any relevant timing; an enquiry is not an order." },
         { title: "Define the question", description: "Discuss decision context, boundaries and what public evidence could reasonably answer." },
         { title: "Written scope confirmation", description: "Confirm deliverables, fixed fee and delivery date in writing before research begins." },
         { title: "Research and validation", description: "Examine lawful public sources and test material findings against their provenance and limits." },
@@ -170,7 +170,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
     identity: {
       eyebrow: "Business identity", title: "Independent research with explicit boundaries.",
       body: "MelonCactus is an industrial-intelligence practice operated by GFNI. We structure lawful public evidence around a defined business decision and make the limits of that evidence visible.",
-      operator: "Operated by GFNI", boundary: "Public sources only · no unauthorised access", emailLabel: "Confidential enquiry",
+      operator: "Operated by GFNI", boundary: "Public sources only · no unauthorised access", emailLabel: "Contact by email",
     },
     closing: {
       eyebrow: "Begin with the decision", title: "What do you need to decide?",
@@ -267,7 +267,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       intro: "Het klantproces staat los van de onderzoeksmethode: eerst bepalen wij de beslissing en de opdracht, daarna controleren wij het bewijs.",
       question: "Welke beslissing probeert u te nemen?",
       items: [
-        { title: "Vertrouwelijke intake", description: "Beschrijf de beslissing en gewenste termijn; een aanvraag is nog geen opdracht." },
+        { title: "Eerste aanvraag", description: "Beschrijf de beslissing en gewenste termijn; een aanvraag is nog geen opdracht." },
         { title: "Vraag afbakenen", description: "Bespreek de besliscontext, grenzen en wat met openbaar bewijs redelijkerwijs kan worden vastgesteld." },
         { title: "Schriftelijke bevestiging", description: "Wij bevestigen de afbakening, op te leveren onderdelen, vaste prijs en opleverdatum schriftelijk voordat het onderzoek begint." },
         { title: "Onderzoek en broncontrole", description: "Onderzoek rechtmatig toegankelijke openbare bronnen en toets belangrijke bevindingen op herkomst en beperkingen." },
@@ -297,7 +297,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
     identity: {
       eyebrow: "Bedrijfsidentiteit", title: "Onafhankelijk onderzoek met duidelijke grenzen.",
       body: "MelonCactus is een onafhankelijk onderzoeksbureau voor industriële intelligence, geëxploiteerd door GFNI. Wij ordenen rechtmatig toegankelijk openbaar bewijs rond een afgebakende zakelijke beslissing en maken de beperkingen daarvan zichtbaar.",
-      operator: "Geëxploiteerd door GFNI", boundary: "Alleen openbare bronnen · geen ongeautoriseerde toegang", emailLabel: "Vertrouwelijke aanvraag",
+      operator: "Geëxploiteerd door GFNI", boundary: "Alleen openbare bronnen · geen ongeautoriseerde toegang", emailLabel: "Contact per e-mail",
     },
     closing: {
       eyebrow: "Begin bij de beslissing", title: "Welke beslissing wilt u nemen?",

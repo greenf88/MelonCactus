@@ -3,6 +3,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import PrivacyPage from "@/app/(en)/privacy/page";
 import DutchPrivacyPage from "@/app/(nl)/nl/privacy/page";
+import TermsPage from "@/app/(en)/terms/page";
+import DutchTermsPage from "@/app/(nl)/nl/voorwaarden/page";
 import { redactAnalyticsEvent } from "@/components/privacy-analytics";
 import { ContactForm } from "@/components/contact-form";
 import { siteConfig } from "@/config/site";
@@ -16,7 +18,8 @@ describe("Web Analytics privacy notices", () => {
 
     expect(english).toContain("Vercel Web Analytics");
     expect(english).toContain("English and Dutch pages");
-    expect(english).toContain("rather than analytics cookies");
+    expect(english).toContain("daily-reset visitor hash rather than Analytics cookies");
+    expect(english).toContain("not configured to send field values as Analytics events");
     expect(english).toContain("advertising trackers or build behavioural profiles");
     expect(english).toContain("no later than twelve months after the last substantive contact");
     expect(english).toContain("no later than 24 months after final delivery");
@@ -27,7 +30,7 @@ describe("Web Analytics privacy notices", () => {
     expect(english).toContain("stored locally on our computer");
     expect(english).toContain("provider-held copies or security records");
     expect(english).toContain("EU standard contractual clauses");
-    expect(english).toContain("https://resend.com/security/gdpr");
+    expect(english).toContain("https://resend.com/legal/dpa");
     expect(english).toContain("https://vercel.com/legal/dpa");
     expect(english).toContain("routine 30-day period for email content and logs");
     expect(english).toContain("not a general deletion period");
@@ -38,7 +41,8 @@ describe("Web Analytics privacy notices", () => {
 
     expect(dutch).toContain("Vercel Web Analytics");
     expect(dutch).toContain("Engelse en Nederlandse pagina’s");
-    expect(dutch).toContain("in plaats van analyticscookies");
+    expect(dutch).toContain("dagelijks vernieuwde bezoekerhash in plaats van analyticscookies");
+    expect(dutch).toContain("niet ingericht om veldwaarden als Analytics-gebeurtenissen te versturen");
     expect(dutch).toContain("geen advertentietrackers of gedragsprofilering");
     expect(dutch).toContain("uiterlijk twaalf maanden na het laatste inhoudelijke contact");
     expect(dutch).toContain("uiterlijk 24 maanden na definitieve oplevering");
@@ -49,7 +53,7 @@ describe("Web Analytics privacy notices", () => {
     expect(dutch).toContain("staan momenteel lokaal op onze computer");
     expect(dutch).toContain("kopieën of beveiligingsgegevens bij leveranciers");
     expect(dutch).toContain("EU-modelcontractbepalingen");
-    expect(dutch).toContain("https://resend.com/security/gdpr");
+    expect(dutch).toContain("https://resend.com/legal/dpa");
     expect(dutch).toContain("https://vercel.com/legal/dpa");
     expect(dutch).toContain("reguliere termijn van 30 dagen voor e-mailinhoud en logs");
     expect(dutch).toContain("geen algemene verwijdertermijn");
@@ -57,6 +61,15 @@ describe("Web Analytics privacy notices", () => {
     expect(dutch).toContain(siteConfig.registrationNumber);
     expect(dutch).toContain(siteConfig.vatId);
     expect(dutch).toContain(siteConfig.postalAddress);
+  });
+
+  it("separates website terms from written paid-assignment terms in both languages", () => {
+    const english = renderToStaticMarkup(createElement(TermsPage));
+    const dutch = renderToStaticMarkup(createElement(DutchTermsPage));
+    expect(english).toContain("does not create a paid research assignment");
+    expect(english).toContain("payment, cancellation, report-use and liability terms in writing");
+    expect(dutch).toContain("schept geen betaalde onderzoeksopdracht");
+    expect(dutch).toContain("betaling, annulering, gebruik van het rapport en aansprakelijkheid afzonderlijk schriftelijk vast");
   });
 
   it("removes query and fragment data and ignores unknown paths and custom events", () => {

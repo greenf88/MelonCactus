@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 
 export default function DutchTermsPage() {
   return (
-    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal. Dit zijn geen voorwaarden voor betaalde onderzoeksopdrachten." updated="1 oktober 2026">
+    <LegalPageShell locale="nl" title="Websitevoorwaarden" intro="Basisvoorwaarden voor het gebruik van deze website en het openbare informatiemateriaal. Dit zijn geen voorwaarden voor betaalde onderzoeksopdrachten." updated="3 oktober 2026">
       <h2>Informatie, geen advies</h2>
       <p>De inhoud van deze website is algemene informatie over industriële inlichtingen en onderzoek in openbare bronnen. Zij vormt geen juridisch, financieel, beleggings-, technisch of beveiligingsadvies voor een specifieke situatie.</p>
 
-      <h2>Geen klantrelatie</h2>
-      <p>Het gebruik van deze website of het indienen van een aanvraag schept geen klantrelatie. Een opdracht begint pas nadat de omvang, voorwaarden, termijn en prijs schriftelijk zijn overeengekomen.</p>
+      <h2>Aanvragen en betaalde opdrachten</h2>
+      <p>Het gebruik van deze website of het indienen van een aanvraag schept geen betaalde onderzoeksopdracht. Voordat wij een opdracht aanvaarden, leggen wij de afbakening, oplevering, prijs en toepasselijke btw, opleverdatum, geheimhoudingsafspraken en relevante afspraken over betaling, annulering, gebruik van het rapport en aansprakelijkheid afzonderlijk schriftelijk vast. Deze websitevoorwaarden vervangen die opdrachtgebonden afspraken niet.</p>
 
       <h2>Gepubliceerde prijzen</h2>
       <p>Alle gepubliceerde prijzen zijn voor zakelijke klanten en exclusief btw. Toepasselijke btw wordt bij de definitief overeengekomen projectprijs opgeteld en staat in het schriftelijke voorstel. Een vanafprijs is geen offerte of online bestelprijs.</p>
