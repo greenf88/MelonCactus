@@ -17,12 +17,13 @@ describe("Web Analytics privacy notices", () => {
     const dutch = renderToStaticMarkup(createElement(DutchPrivacyPage));
 
     expect(english).toContain("Vercel Web Analytics");
-    expect(english).toContain("English and Dutch pages");
+    expect(english).toContain("known public English and Dutch pages");
     expect(english).toContain("short-lived visitor hash created from the incoming request, without third-party Analytics cookies");
-    expect(english).toContain("not configured to send field values as Analytics events");
+    expect(english).toContain("does not send form field values as Analytics events");
     expect(english).toContain("connection data such as an IP address");
-    expect(english).toContain("this proposal requires approval before publication");
-    expect(english).toContain("advertising trackers or build behavioural profiles");
+    expect(english).toContain("we rely on our legitimate interest in understanding and improving use of the website");
+    expect(english).toContain(`href="mailto:${siteConfig.businessEmail}"`);
+    expect(english).not.toContain("this proposal requires approval before publication");
     expect(english).toContain("no later than twelve months after the last substantive contact");
     expect(english).toContain("no later than 24 months after final delivery");
     expect(english).toContain("We retain final reports only while needed for corrections or proportionate contractual claims");
@@ -42,12 +43,13 @@ describe("Web Analytics privacy notices", () => {
     expect(english).toContain(siteConfig.postalAddress);
 
     expect(dutch).toContain("Vercel Web Analytics");
-    expect(dutch).toContain("Engelse en Nederlandse pagina’s");
+    expect(dutch).toContain("bekende openbare Engelse en Nederlandse pagina&#x27;s");
     expect(dutch).toContain("kortdurende bezoekerhash op basis van het inkomende verzoek, zonder cookies van derden voor Analytics");
-    expect(dutch).toContain("niet ingericht om veldwaarden als Analytics-gebeurtenissen te versturen");
+    expect(dutch).toContain("verstuurt geen formulierwaarden als Analytics-gebeurtenissen");
     expect(dutch).toContain("verbindingsgegevens zoals een IP-adres");
-    expect(dutch).toContain("dit voorstel moet vóór publicatie worden goedgekeurd");
-    expect(dutch).toContain("geen advertentietrackers of gedragsprofilering");
+    expect(dutch).toContain("gebruiken wij ons gerechtvaardigd belang om het gebruik van de website te begrijpen en te verbeteren");
+    expect(dutch).toContain(`href="mailto:${siteConfig.businessEmail}"`);
+    expect(dutch).not.toContain("dit voorstel moet vóór publicatie worden goedgekeurd");
     expect(dutch).toContain("uiterlijk twaalf maanden na het laatste inhoudelijke contact");
     expect(dutch).toContain("uiterlijk 24 maanden na definitieve oplevering");
     expect(dutch).toContain("Definitieve rapporten bewaren wij alleen zolang zij nodig zijn voor correcties of evenredige contractuele aanspraken");
