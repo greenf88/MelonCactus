@@ -16,6 +16,7 @@
 /playwright-report
 /test-results
 /.agent-browser
+/.npm-cache
 
 # next.js
 /.next/

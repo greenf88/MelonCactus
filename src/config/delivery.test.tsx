@@ -2,6 +2,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { ContactForm } from "@/components/contact-form";
+import { ServiceCard } from "@/components/service-card";
 import ServicesPage from "@/app/(en)/services/page";
 import TermsPage from "@/app/(en)/terms/page";
 import DutchServicesPage from "@/app/(nl)/nl/diensten/page";
@@ -57,6 +58,21 @@ describe("decision-led assessment and delivery choices", () => {
     expect(`${en}${nl}`).not.toMatch(/€495|€1,990|€2,985|€1\.990|€2\.985|[23]×|100% surcharge|200% toeslag/);
   });
 
+  it("states that every listed B2B fee excludes VAT and applicable VAT is added", () => {
+    const enCard = renderToStaticMarkup(createElement(ServiceCard, { service: reportOptions[0] }));
+    const nlCard = renderToStaticMarkup(createElement(ServiceCard, { service: reportOptionsNl[0], locale: "nl" }));
+    const enServices = renderToStaticMarkup(createElement(ServicesPage));
+    const nlServices = renderToStaticMarkup(createElement(DutchServicesPage));
+    const enTerms = renderToStaticMarkup(createElement(TermsPage));
+    const nlTerms = renderToStaticMarkup(createElement(DutchTermsPage));
+    expect(enCard).toContain("excl. VAT");
+    expect(nlCard).toContain("excl. btw");
+    expect(enServices).toContain("applicable VAT is added to the agreed project fee");
+    expect(nlServices).toContain("toepasselijke btw wordt bij de overeengekomen projectprijs opgeteld");
+    expect(enTerms).toContain("exclude VAT");
+    expect(nlTerms).toContain("exclusief btw");
+  });
+
   it("keeps written acceptance and evidence limits in both versions of the terms", () => {
     const en = renderToStaticMarkup(createElement(TermsPage));
     const nl = renderToStaticMarkup(createElement(DutchTermsPage));
@@ -72,7 +88,7 @@ describe("decision-led assessment and delivery choices", () => {
     const terms = renderToStaticMarkup(createElement(DutchTermsPage));
     expect(privacy).toContain("andere toegangsgegevens");
     expect(privacy).toContain("geheimhoudingsovereenkomst");
-    expect(privacy).toContain("bedrijf, functie of rol");
+    expect(privacy).toContain("bedrijf en functie of rol");
     expect(terms).toContain("technisch of beveiligingsadvies");
     expect(terms).toContain("opdrachten voor klanten");
   });

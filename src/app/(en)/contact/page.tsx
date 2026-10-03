@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ContactForm } from "@/components/contact-form";
 import { Container } from "@/components/container";
+import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Request an Intelligence Assessment",
-  description: "Describe the decision, company, market or technology you need assessed. MelonCactus reviews lawful sources and evidence needs before proposing a fixed scope, fee and date.",
+  description: "Discuss an industrial research question. MelonCactus reviews lawful sources and agrees the scope, fixed fee and delivery date in writing before work begins.",
   alternates: languageAlternates("/contact", "en"),
 };
 
@@ -22,6 +23,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <h1>Start with the decision.</h1>
           <p className="page-intro">What decision are you trying to make, and which company, market or technology should be examined?</p>
           <p>We first assess the question, the availability of lawful public sources and the evidence needed. Before work begins, you receive a defined scope, deliverables, fixed fee and agreed delivery date.</p>
+          <p>Prefer to contact us directly? Email <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a> or call <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>. MelonCactus is operated by GFNI in Enschede, Netherlands.</p>
         </header>
 
         <div className="contact-form-area">

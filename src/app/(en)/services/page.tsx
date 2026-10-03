@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ButtonLink } from "@/components/buttons";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
 import { publicProfileScan, reportOptions } from "@/config/site";
 import { deliveryOptions } from "@/config/delivery";
+import { seoTopics } from "@/data/seo-topics";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
@@ -43,6 +45,7 @@ export default function ServicesPage() {
           </div>
         </Container>
       </section>
+      <section className="section section-muted"><Container><div className="content-heading"><p className="eyebrow">Research topics</p><h2>Explore the questions behind the services.</h2><p>These guides explain the evidence, decisions and limits behind four common research themes.</p></div><div className="seo-link-grid">{seoTopics.en.map((topic) => <article key={topic.slug}><h3><Link href={`/topics/${topic.slug}`}>{topic.title}</Link></h3><p>{topic.description}</p></article>)}</div></Container></section>
       <section className="section section-muted">
         <Container className="split-content">
           <div className="prose-block">
@@ -56,7 +59,7 @@ export default function ServicesPage() {
       </section>
       <section className="section pricing-section" id="reports">
         <Container>
-          <div className="content-heading"><p className="eyebrow">Indicative engagement levels</p><h2>Scope follows the decision.</h2><p>Unlike the €499 scan of your own public presence, the assessments below address external intelligence questions. These are indicative starting fees, not order prices or quotations. A defined assignment, deliverables, fixed fee and delivery date are proposed after scope review.</p></div>
+          <div className="content-heading"><p className="eyebrow">Indicative engagement levels</p><h2>Scope follows the decision.</h2><p>Unlike the €499 scan of your own public presence, the assessments below address external intelligence questions. All listed fees exclude VAT; applicable VAT is added to the agreed project fee. These are indicative starting fees, not order prices or quotations. A defined assignment, deliverables, fixed fee and delivery date are proposed after scope review.</p></div>
           <div className="pricing-grid">{reportOptions.map((service) => <ServiceCard service={service} key={service.name} />)}</div>
           <p className="pricing-note">Complex, international or urgent assignments are quoted individually after scoping. A smaller paid pilot may be proposed when appropriate.</p>
         </Container>

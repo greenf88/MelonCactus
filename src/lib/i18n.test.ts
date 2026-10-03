@@ -3,6 +3,8 @@ import { insights } from "@/data/insights";
 import { insightsNl } from "@/data/insights-nl";
 import { reportOptions } from "@/config/site";
 import { reportOptionsNl } from "@/config/site-nl";
+import { seoServices } from "@/data/seo-services";
+import { seoTopics } from "@/data/seo-topics";
 import sitemap from "@/app/sitemap";
 import { counterpartPath, languageAlternates, pathForLocale, routePairs } from "./i18n";
 
@@ -21,11 +23,15 @@ describe("localized public routes", () => {
   });
 
   it("includes every translated article and both language URLs in the sitemap", () => {
-    expect(routePairs.length).toBe(12 + insights.length);
+    expect(routePairs.length).toBe(12 + insights.length + 3 + 4);
     expect(routePairs).toContainEqual(["/services/public-profile-exposure-scan", "/nl/diensten/openbare-informatiescan"]);
     expect(routePairs).toContainEqual(["/example-case/fourth-pillar", "/nl/voorbeeldcase/vierde-pijler"]);
     expect(routePairs).toContainEqual(["/example-case/public-profile", "/nl/voorbeeldcase/openbaar-profiel"]);
     expect(insightsNl).toHaveLength(insights.length);
+    expect(seoServices.en).toHaveLength(3);
+    expect(seoServices.nl).toHaveLength(3);
+    expect(seoTopics.en).toHaveLength(4);
+    expect(seoTopics.nl).toHaveLength(4);
     const entries = sitemap();
     expect(entries).toHaveLength(routePairs.length * 2);
     for (const [enPath, nlPath] of routePairs) {
