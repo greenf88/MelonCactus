@@ -5,9 +5,10 @@ This document records policy choices and a **written procedure**, not evidence t
 | Category | Start of period | Active-file rule | Status |
 | --- | --- | --- | --- |
 | Enquiry not converted to an assignment, including related correspondence | Last substantive contact | Delete by 12 months, sooner if follow-up is no longer needed | Owner-approved maximum, 1 October 2026 |
+| Non-fiscal assignment correspondence | Written scope confirmation; outer period measured from final delivery | Proposed: delete active copies by 24 months after final delivery, sooner when handover/corrections end; limit a concrete claim exception to relevant correspondence | **New owner decision needed**; not part of the unsuccessful-enquiry category |
 | Research working files | Final delivery of the assignment | Delete by 24 months, sooner if no longer needed | Owner-approved maximum, 1 October 2026 |
-| Final report | Final delivery | Keep only while needed for corrections or proportionate contractual claims; review separately from working files | **Five years is a proposal, not expressly confirmed by the owner. Decide a justified maximum before publication.** |
-| Scope confirmation and necessary financial records | Relevant transaction / financial year | Keep only records needed for the applicable statutory accounting duty, generally seven years in the Netherlands | Legal category; check the exact record and trigger, not every research file |
+| Final report | Final delivery | Proposed: delete active copy by 24 months after final delivery, sooner if correction/contractual need ends; limit a concrete claim exception to relevant records and review on resolution | **New owner decision needed; no five-year rule approved.** |
+| Scope confirmation and necessary basic financial records | When the record ceases to have current administrative value | Keep only records needed for the applicable statutory accounting duty, generally seven years in the Netherlands; check any specific exception | Legal category; check the exact record and trigger, not every research file |
 | Records connected to a concrete claim or other legal duty | Date and nature of the claim/duty | Restrict the hold to relevant records; document reason and next review date | Exception requiring case-specific decision, not an indefinite whole-dossier hold |
 
 ## Monthly review to put into operation
@@ -20,7 +21,7 @@ This document records policy choices and a **written procedure**, not evidence t
 
 **Implementation status:** The categories and two approved maxima above are documented, but a first inventory, actual monthly reviews, deletion log, Outlook-copy check and restored-backup procedure have not been observed. Rick must set these up and test them before the public wording is approved as an operational promise. This procedure authorises no deletion in this PR.
 
-The owner intends to take up monthly retention management after the first sale, and a conditional reminder exists for that point. A reminder is not an operating control. Existing enquiries and other personal records require a separate inventory and action against the approved rule **now**, not automatic postponement until a sale. The 12-/24-month public draft wording therefore still requires an implementation decision before publication; see the [3 October review](publication-review-20261003.md).
+The owner intends to take up monthly retention management after the first sale, and a conditional reminder exists for that point. A reminder is not an operating control. Existing enquiries and other personal records require a separate inventory and action against the approved rule **now**, not automatic postponement until a sale. Rick's preference to keep the wording generic did not expressly revoke the two chosen maxima. The 12-/24-month public draft wording still requires an implementation decision before publication. [The 5 October decision record](retention-analytics-decisions-20261005.md) gives the complete proposed bilingual text and clearly identifies the **new** assignment-correspondence/report rule for owner approval; it has not been put on the public pages.
 
 ## Backup proposal, not an installed control
 
