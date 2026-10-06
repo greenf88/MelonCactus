@@ -131,7 +131,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       title: "Choose the scope that fits the question.",
       intro: "The fixed-scope scan is for your own public profile. The three intelligence options address external decisions with increasing analytical depth.",
       distinction: "The €499 scan reviews your own company-owned public presence. An assessment from €995 addresses a defined external intelligence question; it is not an expanded version of the scan.",
-      note: "Starting fees are indicative, not online order prices. Final scope, deliverables, fixed fee and delivery date are confirmed in writing before work begins. Timing and any priority request depend on scope, evidence and capacity.",
+      note: "All listed fees exclude VAT; applicable VAT is added to the agreed project fee. Starting fees are indicative, not online order prices. Final scope, deliverables, fixed fee and delivery date are confirmed in writing before work begins. Timing and any priority request depend on scope, evidence and capacity.",
       cta: "Compare the services and scope",
     },
     process: {
@@ -140,7 +140,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       intro: "The commercial process is separate from the research method: first agree the decision and assignment, then validate the evidence.",
       question: "What decision are you trying to make?",
       items: [
-        { title: "Confidential enquiry", description: "Tell us the decision and any relevant timing; an enquiry is not an order." },
+        { title: "Initial enquiry", description: "Tell us the decision and any relevant timing; an enquiry is not an order." },
         { title: "Define the question", description: "Discuss decision context, boundaries and what public evidence could reasonably answer." },
         { title: "Written scope confirmation", description: "Confirm deliverables, fixed fee and delivery date in writing before research begins." },
         { title: "Research and validation", description: "Examine lawful public sources and test material findings against their provenance and limits." },
@@ -170,7 +170,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
     identity: {
       eyebrow: "Business identity", title: "Independent research with explicit boundaries.",
       body: "MelonCactus is an industrial-intelligence practice operated by GFNI. We structure lawful public evidence around a defined business decision and make the limits of that evidence visible.",
-      operator: "Operated by GFNI", boundary: "Public sources only · no unauthorised access", emailLabel: "Confidential enquiry",
+      operator: "Operated by GFNI", boundary: "Public sources only · no unauthorised access", emailLabel: "Contact by email",
     },
     closing: {
       eyebrow: "Begin with the decision", title: "What do you need to decide?",
@@ -259,7 +259,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       eyebrow: "Opdrachten en indicatieve prijzen", title: "Kies de omvang die past bij uw vraag.",
       intro: "De scan met vaste scope gaat over uw eigen openbare profiel. De drie intelligenceopdrachten ondersteunen externe beslissingen met oplopende analytische diepgang.",
       distinction: "De scan van €499 onderzoekt de openbare aanwezigheid van uw eigen bedrijf. De beoordeling vanaf €995 gaat over een afgebakende externe intelligencevraag; het is geen uitgebreide versie van de scan.",
-      note: "Vanafprijzen zijn indicatief, geen online bestelprijzen. Definitieve opdracht, resultaten, vaste prijs en opleverdatum worden vóór aanvang schriftelijk bevestigd. Doorlooptijd en een eventueel verzoek om prioriteit hangen af van de opdracht, bronnen en capaciteit.",
+      note: "Alle genoemde bedragen zijn exclusief btw; toepasselijke btw wordt bij de overeengekomen projectprijs opgeteld. Vanafprijzen zijn indicatief, geen online bestelprijzen. Definitieve opdracht, resultaten, vaste prijs en opleverdatum worden vóór aanvang schriftelijk bevestigd. Doorlooptijd en een eventueel verzoek om prioriteit hangen af van de opdracht, bronnen en capaciteit.",
       cta: "Vergelijk diensten en afbakening",
     },
     process: {
@@ -267,7 +267,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       intro: "Het klantproces staat los van de onderzoeksmethode: eerst bepalen wij de beslissing en de opdracht, daarna controleren wij het bewijs.",
       question: "Welke beslissing probeert u te nemen?",
       items: [
-        { title: "Vertrouwelijke intake", description: "Beschrijf de beslissing en gewenste termijn; een aanvraag is nog geen opdracht." },
+        { title: "Eerste aanvraag", description: "Beschrijf de beslissing en gewenste termijn; een aanvraag is nog geen opdracht." },
         { title: "Vraag afbakenen", description: "Bespreek de besliscontext, grenzen en wat met openbaar bewijs redelijkerwijs kan worden vastgesteld." },
         { title: "Schriftelijke bevestiging", description: "Wij bevestigen de afbakening, op te leveren onderdelen, vaste prijs en opleverdatum schriftelijk voordat het onderzoek begint." },
         { title: "Onderzoek en broncontrole", description: "Onderzoek rechtmatig toegankelijke openbare bronnen en toets belangrijke bevindingen op herkomst en beperkingen." },
@@ -297,7 +297,7 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
     identity: {
       eyebrow: "Bedrijfsidentiteit", title: "Onafhankelijk onderzoek met duidelijke grenzen.",
       body: "MelonCactus is een onafhankelijk onderzoeksbureau voor industriële intelligence, geëxploiteerd door GFNI. Wij ordenen rechtmatig toegankelijk openbaar bewijs rond een afgebakende zakelijke beslissing en maken de beperkingen daarvan zichtbaar.",
-      operator: "Geëxploiteerd door GFNI", boundary: "Alleen openbare bronnen · geen ongeautoriseerde toegang", emailLabel: "Vertrouwelijke aanvraag",
+      operator: "Geëxploiteerd door GFNI", boundary: "Alleen openbare bronnen · geen ongeautoriseerde toegang", emailLabel: "Contact per e-mail",
     },
     closing: {
       eyebrow: "Begin bij de beslissing", title: "Welke beslissing wilt u nemen?",

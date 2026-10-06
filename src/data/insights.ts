@@ -166,6 +166,34 @@ const originalInsights: readonly Insight[] = [
           "Unknown does not mean useless. It helps a decision-maker understand where risk remains, which claim should not be relied upon and what additional public evidence could improve the picture. The objective is not certainty at any cost; it is a better-calibrated decision.",
         ],
       },
+      {
+        heading: "Begin with a decision and a testable claim",
+        paragraphs: [
+          "Before collecting sources, write down the decision that the research must support. 'Understand a competitor' is too broad to test. 'Should we treat its announced plant as additional supply for the product we buy next year?' identifies a time period, a product and a practical consequence. It also exposes the assumptions that require checking: whether the facility is intended for that product, whether its process is qualified and whether deliveries have begun. A good research question narrows the evidence search without presuming the answer.",
+          "Then define what would count as direct support, what would weaken the claim and what may remain inaccessible. A planning permit can establish permission for a specified development. A company update may establish that management says equipment is being installed. Neither necessarily establishes qualified output. A later product-specific statement, supported by other dated material, may change the assessment. Recording these thresholds at the outset reduces the temptation to move the goalposts after finding an attractive source.",
+        ],
+      },
+      {
+        heading: "Build a source record that preserves context",
+        paragraphs: [
+          "A conclusion should be traceable to the material a reader could inspect. For each important item, record the publisher, original location, publication date, date of the event described and the exact statement or visible feature used. Those dates can differ. A report published in September about a planned opening in the following year is not evidence of production in September. Keep the publication's stated scope: a site-wide capacity claim does not automatically answer a question about one component or product line.",
+          "Source independence also needs attention. Several articles may repeat the same press release, creating the appearance of corroboration without adding independent observation. A supplier quotation, a company announcement and a news rewrite may all trace back to one interested party. Conversely, a public register may corroborate a location or permit while remaining silent on output. The source record should make those relationships visible, rather than treating every URL as a separate vote for the conclusion.",
+        ],
+      },
+      {
+        heading: "Test the strongest alternative explanation",
+        paragraphs: [
+          "A useful assessment asks what else could explain the same evidence. Hiring engineers may support a new production programme, but it might also replace departing staff or support an existing line. A new building may add floor space while production simply moves from another site. Published images may show demonstration equipment rather than machines operating at commercial scale. These alternatives are not reasons to ignore the signals; they are reasons to calibrate the conclusion.",
+          "Rank alternatives by the evidence available, and state what new observation would distinguish them. A dated commissioning announcement might support progress beyond construction; a product qualification notice may narrow the remaining question; a shipment claim may indicate commercial activity but still need its scope checked. If no public source can discriminate between plausible explanations, keep the result as an inference or an unknown. The honest answer can still tell a decision-maker which assumption carries the greatest risk.",
+        ],
+      },
+      {
+        heading: "Turn the assessment into a decision-ready record",
+        paragraphs: [
+          "An executive reader needs a short answer tied to the original decision, not a chronology of every search. State the finding, its confidence, the best supporting evidence, the material contradiction and the consequence if the assessment is wrong. Follow with the source trail so a technical colleague can challenge the reasoning. If evidence supports several outcomes, present the conditions under which each would matter rather than compressing them into a single prediction.",
+          "Finally, specify what would trigger a review. A revised company timetable, new regulatory record, product-specific customer statement or verified operating milestone may change confidence. The report need not promise continuous monitoring; it can simply identify the signals worth checking when the decision is revisited. This gives uncertainty a practical role: it determines what to verify next, what not to assume in the meantime and how strongly the current evidence should influence action.",
+        ],
+      },
     ],
   },
   {

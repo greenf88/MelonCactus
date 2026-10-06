@@ -328,9 +328,24 @@ h3 { line-height: 1.25; }
 .legal-page-header .page-intro { font-size: 1.08rem; }
 .legal-page .legal-updated { margin: 1.8rem 0 0; }
 .legal-page .legal-copy h2:first-of-type { margin-top: 2rem; }
+.analytics-preference { margin: 1.5rem 0 2rem; padding: 1.25rem 1.5rem; border: 1px solid var(--line); background: var(--lemon-soft); }
+.analytics-preference h3 { margin: 0 0 .5rem; font-size: 1.08rem; }
+.analytics-preference p { margin: 0 0 1rem; }
+.analytics-preference .button { cursor: pointer; text-align: center; }
 .not-found { min-height: 70vh; display: grid; align-items: center; padding: 5rem 0; }
 .not-found h1 { max-width: 820px; }
 .not-found > .container > p:not(.eyebrow) { margin: 0 0 2rem; color: var(--muted); font-size: 1.15rem; }
+.seo-link-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem; }
+.seo-link-grid article { min-width: 0; padding: 1.45rem; border: 1px solid var(--line); background: var(--white); }
+.seo-link-grid h3 { margin: 0 0 .55rem; font-family: var(--font-display); font-size: 1.45rem; line-height: 1.2; }
+.seo-link-grid h3 a { text-decoration: underline; text-decoration-color: var(--green); text-underline-offset: .2em; }
+.seo-link-grid p { margin: 0; color: var(--muted); }
+.article-summary { padding: 1.35rem 1.55rem; border-left: 4px solid var(--green); background: var(--green-soft); }
+.article-summary h2 { margin-top: 0; font-size: 1.45rem; }
+.article-summary p { margin-bottom: 0; }
+.article-related { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.article-related li { margin: .5rem 0; }
+.article-related a { color: var(--green-dark); text-decoration: underline; text-underline-offset: .18em; }
 
 /* Commercial home: decision, deliverable, examples, scope, process. */
 .home-hero { padding: clamp(3.5rem, 6vw, 5.5rem) 0; }
@@ -512,7 +527,7 @@ h3 { line-height: 1.25; }
   .contact-layout { gap: 1.25rem; }
   .stage-list li { grid-template-columns: 45px 1fr; }
   .stage-list li > div { grid-column: 2; }
-  .confidence-list, .values-grid, .insights-grid { grid-template-columns: 1fr; }
+  .confidence-list, .values-grid, .insights-grid, .seo-link-grid { grid-template-columns: 1fr; }
   .confidence-list article, .values-grid article { min-height: auto; }
   .boundary-grid, .two-columns, .finding-summary { grid-template-columns: 1fr; }
   .report-meta { grid-template-columns: 1fr 1fr; }

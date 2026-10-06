@@ -150,6 +150,34 @@ const originalInsightsNl: readonly Insight[] = [
           "Onbekend betekent niet nutteloos. Het laat u zien waar risico overblijft, op welke claim u beter niet kunt vertrouwen en welk aanvullend openbaar bewijs het beeld kan verbeteren. Het doel is geen zekerheid tegen elke prijs, maar een beter afgewogen beslissing.",
         ],
       },
+      {
+        heading: "Begin bij een beslissing en een toetsbare claim",
+        paragraphs: [
+          "Leg vóór het zoeken vast welke beslissing het onderzoek moet ondersteunen. 'Een concurrent begrijpen' is te breed om te toetsen. 'Kunnen wij de aangekondigde fabriek volgend jaar meetellen als extra aanbod van het product dat wij inkopen?' maakt periode, product en zakelijke consequentie concreet. Ook de aannames worden zichtbaar: is de locatie voor dit product bedoeld, is het proces gekwalificeerd en zijn leveringen al begonnen? Een goede onderzoeksvraag begrenst het zoeken zonder het antwoord vooraf vast te leggen.",
+          "Bepaal vervolgens wat direct bewijs zou zijn, welk gegeven de claim verzwakt en wat mogelijk ontoegankelijk blijft. Een vergunning kan de toestemming voor een bepaalde uitbreiding bevestigen. Een bedrijfsbericht kan bevestigen dat de directie zegt apparatuur te installeren. Geen van beide bewijst noodzakelijkerwijs gekwalificeerde output. Een latere productspecifieke mededeling, naast ander gedateerd materiaal, kan het oordeel veranderen. Vooraf vastgelegde criteria voorkomen dat u de norm ongemerkt verlegt zodra een aantrekkelijke bron verschijnt.",
+        ],
+      },
+      {
+        heading: "Leg bronnen vast zonder de context te verliezen",
+        paragraphs: [
+          "Een conclusie moet terug te voeren zijn op materiaal dat een lezer kan controleren. Noteer bij elk belangrijk stuk de uitgever, oorspronkelijke locatie, publicatiedatum, datum van de beschreven gebeurtenis en de gebruikte uitspraak of zichtbare eigenschap. Die data kunnen uiteenlopen. Een bericht uit september over een opening in het volgende jaar is geen bewijs van productie in september. Bewaar ook de reikwijdte: een capaciteitsclaim voor een hele locatie beantwoordt niet vanzelf de vraag naar één component of productlijn.",
+          "Let daarnaast op de onafhankelijkheid van bronnen. Meerdere nieuwsartikelen kunnen hetzelfde persbericht herhalen en zo de schijn van bevestiging wekken zonder nieuwe waarneming. Een leverancierscitaat, bedrijfsbericht en nieuwsbericht kunnen allemaal op dezelfde belanghebbende teruggaan. Een openbaar register kan een locatie of vergunning juist onafhankelijk bevestigen, maar niets zeggen over output. Een goed bronoverzicht maakt zulke relaties zichtbaar in plaats van elke URL als afzonderlijke stem voor de conclusie te tellen.",
+        ],
+      },
+      {
+        heading: "Toets de sterkste alternatieve verklaring",
+        paragraphs: [
+          "Vraag bij een beoordeling wat dezelfde signalen nog meer kunnen betekenen. Het werven van ingenieurs kan passen bij een nieuw productieprogramma, maar ook bij vervanging van vertrokken medewerkers of versterking van een bestaande lijn. Een nieuw gebouw kan meer ruimte bieden terwijl productie alleen verhuist. Gepubliceerde beelden kunnen demonstratieapparatuur tonen in plaats van machines die op commerciële schaal draaien. Dat maakt de signalen niet waardeloos; het bepaalt hoe voorzichtig de conclusie moet zijn.",
+          "Rangschik de verklaringen naar de beschikbare onderbouwing en benoem welke nieuwe waarneming onderscheid zou maken. Een gedateerde melding van ingebruikname kan een stap na de bouw bevestigen; een productkwalificatie kan de vraag verder vernauwen; een leveringsclaim kan commerciële activiteit aanwijzen, maar vraagt nog steeds om afbakening. Als geen openbare bron tussen redelijke verklaringen kan kiezen, blijft het resultaat een gevolgtrekking of een onbekende. Ook dat kan een beslisser tonen welke aanname het meeste risico draagt.",
+        ],
+      },
+      {
+        heading: "Maak van het oordeel een bruikbaar beslisdocument",
+        paragraphs: [
+          "Een directielid heeft een kort antwoord nodig dat aan de oorspronkelijke beslissing is gekoppeld, geen chronologisch verslag van elke zoekactie. Vermeld de bevinding, de mate van zekerheid, het sterkste bewijs, de belangrijke tegenspraak en het gevolg als de beoordeling onjuist blijkt. Voeg daarna het bronspoor toe zodat een technische collega de redenering kan bevragen. Als het bewijs meerdere uitkomsten ondersteunt, beschrijf dan wanneer elke uitkomst relevant wordt in plaats van ze in één voorspelling samen te persen.",
+          "Benoem tot slot waardoor herbeoordeling nodig wordt. Een gewijzigd bedrijfstijdpad, nieuw registergegeven, productspecifieke klantmededeling of verifieerbare productiemijlpaal kan de zekerheid veranderen. Het rapport hoeft geen doorlopende monitoring te beloven; het kan aangeven welke signalen bij een volgende beslissing moeten worden gecontroleerd. Zo krijgt onzekerheid een praktische rol: zij laat zien wat u als volgende moet verifiëren, wat u intussen niet mag aannemen en hoe zwaar het huidige bewijs kan meewegen.",
+        ],
+      },
     ],
   },
   {
