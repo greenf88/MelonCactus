@@ -18,15 +18,19 @@ describe("Web Analytics privacy notices", () => {
 
     expect(english).toContain("Vercel Web Analytics");
     expect(english).toContain("known public English and Dutch pages");
-    expect(english).toContain("short-lived visitor hash created from the incoming request, without third-party Analytics cookies");
+    expect(english).toContain("visitor hash derived from the incoming request that is valid for one day, without third-party Analytics cookies");
     expect(english).toContain("does not send form field values as Analytics events");
     expect(english).toContain("connection data such as an IP address");
     expect(english).toContain("we rely on our legitimate interest in understanding and improving use of the website");
     expect(english).toContain(`href="mailto:${siteConfig.businessEmail}"`);
+    expect(english).toContain("turn off future Analytics measurement in this browser using the setting below");
+    expect(english).toContain("local browser storage, without a visitor ID");
+    expect(english).toContain("Earlier aggregate statistics cannot be searched by name");
+    expect(english).toContain("Analytics in this browser");
     expect(english).not.toContain("this proposal requires approval before publication");
-    expect(english).toContain("no later than twelve months after the last substantive contact");
+    expect(english).toContain("no more than twelve months after the last substantive contact");
     expect(english).toContain("no later than 24 months after final delivery");
-    expect(english).toContain("We retain final reports only while needed for corrections or proportionate contractual claims");
+    expect(english).toContain("We keep the final report for no more than 24 months from final delivery");
     expect(english).not.toContain("five years after final delivery");
     expect(english).toContain("generally seven years in the Netherlands");
     expect(english).toContain("OVHcloud through Zimbra");
@@ -35,7 +39,7 @@ describe("Web Analytics privacy notices", () => {
     expect(english).toContain("EU standard contractual clauses");
     expect(english).toContain("https://resend.com/legal/dpa");
     expect(english).toContain("https://vercel.com/legal/dpa");
-    expect(english).toContain("routine 30-day period for email content and logs");
+    expect(english).toContain("routine 30-day period for email content and delivery logs");
     expect(english).toContain("not a general deletion period");
     expect(english).not.toContain("must still be checked before this notice");
     expect(english).toContain(siteConfig.registrationNumber);
@@ -44,15 +48,19 @@ describe("Web Analytics privacy notices", () => {
 
     expect(dutch).toContain("Vercel Web Analytics");
     expect(dutch).toContain("bekende openbare Engelse en Nederlandse pagina&#x27;s");
-    expect(dutch).toContain("kortdurende bezoekerhash op basis van het inkomende verzoek, zonder cookies van derden voor Analytics");
+    expect(dutch).toContain("bezoekerhash op basis van het inkomende verzoek die één dag geldig is, zonder cookies van derden voor Analytics");
     expect(dutch).toContain("verstuurt geen formulierwaarden als Analytics-gebeurtenissen");
     expect(dutch).toContain("verbindingsgegevens zoals een IP-adres");
     expect(dutch).toContain("gebruiken wij ons gerechtvaardigd belang om het gebruik van de website te begrijpen en te verbeteren");
     expect(dutch).toContain(`href="mailto:${siteConfig.businessEmail}"`);
+    expect(dutch).toContain("verdere Analytics-meting in deze browser hieronder uitschakelen");
+    expect(dutch).toContain("lokale browseropslag van deze website, zonder bezoekers-ID");
+    expect(dutch).toContain("Eerdere geaggregeerde statistieken zijn niet op naam doorzoekbaar");
+    expect(dutch).toContain("Analytics in deze browser");
     expect(dutch).not.toContain("dit voorstel moet vóór publicatie worden goedgekeurd");
-    expect(dutch).toContain("uiterlijk twaalf maanden na het laatste inhoudelijke contact");
+    expect(dutch).toContain("tot maximaal twaalf maanden na het laatste inhoudelijke contact");
     expect(dutch).toContain("uiterlijk 24 maanden na definitieve oplevering");
-    expect(dutch).toContain("Definitieve rapporten bewaren wij alleen zolang zij nodig zijn voor correcties of evenredige contractuele aanspraken");
+    expect(dutch).toContain("Voor het definitieve rapport geldt vanaf de definitieve oplevering eveneens een maximum van 24 maanden");
     expect(dutch).not.toContain("vijf jaar na definitieve oplevering");
     expect(dutch).toContain("in Nederland doorgaans zeven jaar");
     expect(dutch).toContain("OVHcloud via Zimbra");
@@ -61,7 +69,7 @@ describe("Web Analytics privacy notices", () => {
     expect(dutch).toContain("EU-modelcontractbepalingen");
     expect(dutch).toContain("https://resend.com/legal/dpa");
     expect(dutch).toContain("https://vercel.com/legal/dpa");
-    expect(dutch).toContain("reguliere termijn van 30 dagen voor e-mailinhoud en logs");
+    expect(dutch).toContain("reguliere termijn van 30 dagen voor e-mailinhoud en afleverlogs");
     expect(dutch).toContain("geen algemene verwijdertermijn");
     expect(dutch).not.toContain("vóór goedkeuring van deze verklaring");
     expect(dutch).toContain(siteConfig.registrationNumber);
