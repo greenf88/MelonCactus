@@ -25,10 +25,12 @@ export function ServiceCard({ service, locale = "en" }: { service: ReportOption;
       </ul>
       {service.boundary ? <p className="service-boundary"><strong>{isNl ? "Buiten deze opdracht" : "Outside this scope"}:</strong> {service.boundary}</p> : null}
       <p className="priority-card-note">{isNl ? "Opdracht, vaste prijs en opleverdatum worden vooraf afgestemd." : "Scope, fixed fee and delivery date are agreed before work begins."}</p>
-      {detail ? <Link className="section-link" href={`${isNl ? "/nl/diensten" : "/services"}/${detail.slug}`}>{isNl ? "Bekijk de dienst" : "Explore this service"} →</Link> : null}
-      <ButtonLink href={`${isNl ? "/nl" : ""}/contact?report=${encodeURIComponent(service.formValue ?? service.name)}`} variant="text">
-        {isNl ? "Bespreek deze opdracht" : "Discuss this assessment"} <span aria-hidden="true">→</span>
-      </ButtonLink>
+      <div className="service-card-actions">
+        <ButtonLink href={`${isNl ? "/nl" : ""}/contact?report=${encodeURIComponent(service.formValue ?? service.name)}`}>
+          {isNl ? "Bespreek deze opdracht" : "Discuss this assessment"}
+        </ButtonLink>
+        {detail ? <Link className="service-detail-link" href={`${isNl ? "/nl/diensten" : "/services"}/${detail.slug}`}>{isNl ? "Bekijk de dienst" : "Explore this service"} <span aria-hidden="true">→</span></Link> : null}
+      </div>
     </article>
   );
 }

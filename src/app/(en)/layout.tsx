@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
 import { PrivacyAnalytics } from "@/components/privacy-analytics";
 import { entityGraph, socialImageUrl } from "@/lib/seo";
+import { sourceSans, sourceSerif } from "../fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -44,7 +45,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${sourceSans.variable} ${sourceSerif.variable}`}>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <Header />

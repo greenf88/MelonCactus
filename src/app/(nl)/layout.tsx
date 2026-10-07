@@ -9,6 +9,7 @@ import { siteNl } from "@/config/site-nl";
 import { languageAlternates } from "@/lib/i18n";
 import { PrivacyAnalytics } from "@/components/privacy-analytics";
 import { entityGraph, socialImageUrl } from "@/lib/seo";
+import { sourceSans, sourceSerif } from "../fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -25,7 +26,7 @@ export const viewport: Viewport = { colorScheme: "light", themeColor: "#f4f2e9" 
 
 export default function DutchLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="nl">
+    <html lang="nl" className={`${sourceSans.variable} ${sourceSerif.variable}`}>
       <body>
         <a className="skip-link" href="#main-content">Ga naar de inhoud</a>
         <Header locale="nl" />
