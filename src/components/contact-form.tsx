@@ -126,7 +126,7 @@ export function ContactForm({ initialReport = "", callRequested = false, locale 
         <button className="button button-primary" type="submit" disabled={state === "sending"}>{state === "sending" ? (nl ? "Verzenden…" : "Sending…") : (nl ? "Onderzoeksvraag versturen" : "Send assessment request")}</button>
         <p>{nl ? "Wij gebruiken uw gegevens om uw vraag te beoordelen en te beantwoorden." : "We use your details to review and respond to your question."}</p>
       </div>
-      <div className="form-status" role="status" aria-live="polite">{message}{state === "failed" && <> <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a></>}</div>
+      <div className={`form-status form-status-${state}`} role="status" aria-live="polite">{message}{state === "failed" && <> <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a></>}</div>
     </form>
   );
 }
