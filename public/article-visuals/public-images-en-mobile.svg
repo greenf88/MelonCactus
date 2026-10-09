@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Observation is not the same as capability</title>
+  <desc id="desc">A conceptual visible detail can support several possible explanations while operating status, capacity and date remain unestablished.</desc>
+  <defs><marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1 1l9 5-9 5z" fill="#275a45"/></marker></defs>
+  <rect width="760" height="1100" fill="#fbfaf6"/>
+  <text x="50" y="61" fill="#8f4938" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" letter-spacing="2">CONCEPTUAL EXAMPLE — NOT SOURCE EVIDENCE</text>
+  <g transform="translate(50 100)">
+    <rect width="660" height="260" fill="#173d2d"/>
+    <text x="28" y="49" fill="#d8c95d" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" letter-spacing="3">OBSERVED</text>
+    <rect x="28" y="76" width="230" height="150" fill="#dce5dc"/>
+    <path d="M57 194h172v-67h-49V99h-66v36H57z" fill="#f4f2e9" stroke="#275a45" stroke-width="4"/>
+    <circle cx="91" cy="169" r="13" fill="#d8c95d" stroke="#173d2d" stroke-width="3"/>
+    <circle cx="191" cy="157" r="13" fill="#d8c95d" stroke="#173d2d" stroke-width="3"/>
+    <text x="295" y="120" fill="#fff" font-family="Georgia,serif" font-size="40" font-weight="600">Visible detail</text>
+    <text x="295" y="166" fill="#dce5dc" font-family="Arial,Helvetica,sans-serif" font-size="24">Objects, labels and</text>
+    <text x="295" y="199" fill="#dce5dc" font-family="Arial,Helvetica,sans-serif" font-size="24">spatial relationships</text>
+  </g>
+  <path d="M380 375v42" stroke="#275a45" stroke-width="6" marker-end="url(#arrow)"/>
+  <g transform="translate(50 430)">
+    <rect width="660" height="250" fill="#f4f2e9" stroke="#cbcfc6" stroke-width="3"/>
+    <text x="28" y="49" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" letter-spacing="3">POSSIBLE EXPLANATIONS</text>
+    <rect x="28" y="79" width="287" height="130" fill="#fff" stroke="#cbcfc6"/>
+    <text x="50" y="125" fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">Operational</text>
+    <text x="50" y="163" fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">equipment</text>
+    <rect x="345" y="79" width="287" height="130" fill="#fff" stroke="#cbcfc6"/>
+    <text x="367" y="125" fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">Demonstration</text>
+    <text x="367" y="163" fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">or test setup</text>
+  </g>
+  <path d="M380 695v42" stroke="#8f4938" stroke-width="6" stroke-dasharray="12 10" marker-end="url(#arrow)"/>
+  <g transform="translate(50 750)">
+    <rect width="660" height="230" fill="#fff" stroke="#8f4938" stroke-width="3"/>
+    <text x="28" y="49" fill="#8f4938" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" letter-spacing="3">NOT ESTABLISHED BY APPEARANCE</text>
+    <rect x="28" y="76" width="604" height="34" rx="8" fill="#F4F2E9"/>
+    <rect x="28" y="116" width="604" height="34" rx="8" fill="#F4F2E9"/>
+    <rect x="28" y="156" width="604" height="34" rx="8" fill="#F4F2E9"/>
+    <g fill="#18201d" font-family="Georgia,serif" font-size="24" font-weight="600">
+      <text x="45" y="101">Operating status</text><text x="45" y="141">Capacity</text><text x="45" y="181">Image date</text>
+    </g>
+    <text x="28" y="211" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="22">Context and independent support</text>
+    <text x="28" y="228" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="22">are still required.</text>
+  </g>
+  <rect x="50" y="1003" width="660" height="67" fill="#dce5dc"/>
+  <text x="78" y="1046" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700">OBSERVE FIRST · INTERPRET SECOND</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Van openbare bronnen naar een verdedigbare beslisvraag</title>
+  <desc id="desc">Openbare bronnen worden getoetst op herkomst, datum, reikwijdte en bevestiging voordat ze een beslisvraag ondersteunen. Bekend, beoordeeld en onbekend blijven gescheiden.</desc>
+  <defs><marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1 1l9 5-9 5z" fill="#275a45"/></marker></defs>
+  <rect width="1200" height="760" fill="#fbfaf6"/>
+  <text x="70" y="82" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" letter-spacing="4">VAN BEWIJS NAAR BESLISSING</text>
+  <g transform="translate(70 150)">
+    <rect width="280" height="390" fill="#f4f2e9" stroke="#cbcfc6" stroke-width="3"/>
+    <text x="32" y="48" fill="#18201d" font-family="Georgia,serif" font-size="34" font-weight="600"><tspan x="32">Openbare</tspan><tspan x="32" dy="36">bronnen</tspan></text>
+    <g font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#404a44">
+      <rect x="32" y="100" width="216" height="54" fill="#fff" stroke="#cbcfc6"/><text x="54" y="136">Bedrijfsmateriaal</text>
+      <rect x="32" y="170" width="216" height="54" fill="#fff" stroke="#cbcfc6"/><text x="54" y="206">Openbare registers</text>
+      <rect x="32" y="240" width="216" height="54" fill="#fff" stroke="#cbcfc6"/><text x="54" y="276">Technische bronnen</text>
+      <rect x="32" y="310" width="216" height="54" fill="#fff" stroke="#cbcfc6"/><text x="54" y="346">Beeld en video</text>
+    </g>
+  </g>
+  <path d="M374 345h74" stroke="#275a45" stroke-width="6" marker-end="url(#arrow)"/>
+  <g transform="translate(462 150)">
+    <rect width="280" height="390" fill="#dce5dc" stroke="#275a45" stroke-width="3"/>
+    <text x="32" y="58" fill="#18201d" font-family="Georgia,serif" font-size="32" font-weight="600">Toets &amp; vergelijk</text>
+    <line x1="32" y1="83" x2="248" y2="83" stroke="#275a45" stroke-width="3"/>
+    <g font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#173d2d">
+      <circle cx="49" cy="133" r="8" fill="#275a45"/><text x="72" y="143">Herkomst</text>
+      <circle cx="49" cy="193" r="8" fill="#275a45"/><text x="72" y="203">Datum</text>
+      <circle cx="49" cy="253" r="8" fill="#275a45"/><text x="72" y="263">Reikwijdte</text>
+      <circle cx="49" cy="313" r="8" fill="#275a45"/><text x="72" y="323">Bevestiging</text>
+    </g>
+    <text x="32" y="356" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="19"><tspan x="32">Leg beperkingen en</tspan><tspan x="32" dy="24">tegenspraak vast</tspan></text>
+  </g>
+  <path d="M766 345h74" stroke="#275a45" stroke-width="6" marker-end="url(#arrow)"/>
+  <g transform="translate(854 150)">
+    <rect width="276" height="390" fill="#173d2d"/>
+    <text x="30" y="58" fill="#d8c95d" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="700" letter-spacing="3">BESLISVRAAG</text>
+    <text x="30" y="128" fill="#fff" font-family="Georgia,serif" font-size="36" font-weight="600"><tspan x="30">Wat kan dit</tspan><tspan x="30" dy="46">bewijs</tspan><tspan x="30" dy="46">verantwoord</tspan><tspan x="30" dy="46">dragen?</tspan></text>
+    <line x1="30" y1="336" x2="246" y2="336" stroke="#d8c95d" stroke-width="3"/>
+    <text x="30" y="370" fill="#dce5dc" font-family="Arial,Helvetica,sans-serif" font-size="20">Antwoord op beslisvraag</text>
+  </g>
+  <g transform="translate(70 592)">
+    <rect width="1060" height="100" fill="#eee9be"/>
+    <text x="35" y="61" fill="#18201d" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700">BEKEND</text>
+    <line x1="208" y1="24" x2="208" y2="76" stroke="#8f4938" stroke-width="3"/>
+    <text x="252" y="61" fill="#18201d" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700">BEOORDEELD</text>
+    <line x1="505" y1="24" x2="505" y2="76" stroke="#8f4938" stroke-width="3"/>
+    <text x="550" y="61" fill="#18201d" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700">ONBEKEND</text>
+    <text x="758" y="60" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="23">Houd de grenzen zichtbaar</text>
+  </g>
+</svg>

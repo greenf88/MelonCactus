@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Afzonderlijke openbare signalen kunnen samen extra context geven</title>
+  <desc id="desc">Vier gewone openbare signalen leiden naar een vlak met gecombineerde context, gevolgd door een bewijsgrens die onzekerheid zichtbaar houdt.</desc>
+  <rect width="760" height="1100" rx="32" fill="#F4F2E9"/>
+  <text x="50" y="67" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">AFZONDERLIJKE OPENBARE SIGNALEN</text>
+
+  <rect x="50" y="105" width="315" height="150" rx="22" fill="#FFFFFF" stroke="#CDD5CE" stroke-width="2"/>
+  <circle cx="92" cy="147" r="18" fill="#EEE9BE"/>
+  <text x="92" y="154" text-anchor="middle" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">1</text>
+  <text x="124" y="145" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">Vacature</text>
+  <text x="82" y="191" fill="#4C5852" font-family="Arial, Helvetica, sans-serif" font-size="20">Vaardigheden, locatie</text>
+  <text x="82" y="220" fill="#4C5852" font-family="Arial, Helvetica, sans-serif" font-size="20">en timing</text>
+
+  <rect x="395" y="105" width="315" height="150" rx="22" fill="#FFFFFF" stroke="#CDD5CE" stroke-width="2"/>
+  <circle cx="437" cy="147" r="18" fill="#EEE9BE"/>
+  <text x="437" y="154" text-anchor="middle" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">2</text>
+  <text x="469" y="145" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700">Leverancierscase</text>
+  <text x="427" y="191" fill="#4C5852" font-family="Arial, Helvetica, sans-serif" font-size="20">Apparatuur en</text>
+  <text x="427" y="220" fill="#4C5852" font-family="Arial, Helvetica, sans-serif" font-size="20">relaties</text>
+
+  <rect x="50" y="285" width="315" height="150" rx="22" fill="#FFFFFF" stroke="#CDD5CE" stroke-width="2"/>
+  <circle cx="92" cy="327" r="18" fill="#EEE9BE"/>
+  <text x="92" y="334" text-anchor="middle" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">3</text>
+  <text x="124" y="325" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700">Beursvideo</text>
+  <text x="82" y="371" fill="#4C5852" font-family="Arial, Helvetica, sans-serif" font-size="20">Procesvolgorde en</text>
+  <text x="82" y="400" fill="#4C5852" font-family="Arial, Helvetica, sans-serif" font-size="20">indeling</text>
+
+  <rect x="395" y="285" width="315" height="150" rx="22" fill="#FFFFFF" stroke="#CDD5CE" stroke-width="2"/>
+  <circle cx="437" cy="327" r="18" fill="#EEE9BE"/>
+  <text x="437" y="334" text-anchor="middle" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">4</text>
+  <text x="469" y="325" fill="#173D2D" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700">Planstuk</text>
+  <text x="427" y="371" fill="#4C5852" font-family="Arial, Helvetica, sans-serif" font-size="20">Capaciteit en</text>
+  <text x="427" y="400" fill="#4C5852" font-family="Arial, Helvetica, sans-serif" font-size="20">locatiewijziging</text>
+
+  <path d="M207 445v47M552 445v47" stroke="#789184" stroke-width="5"/>
+  <path d="M207 492h345" stroke="#789184" stroke-width="5"/>
+  <path d="M380 492v43" stroke="#789184" stroke-width="5"/>
+  <path d="m366 525 14 14 14-14" fill="none" stroke="#789184" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="50" y="555" width="660" height="270" rx="26" fill="#173D2D"/>
+  <text x="82" y="609" fill="#EEE9BE" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700">GECOMBINEERDE CONTEXT</text>
+  <text x="82" y="668" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="700">Samen kunnen de signalen</text>
+  <text x="82" y="710" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="700">een betere beslisvraag ondersteunen.</text>
+  <text x="82" y="762" fill="#DCE5DC" font-family="Arial, Helvetica, sans-serif" font-size="22">Samenhang voegt context toe, maar maakt</text>
+  <text x="82" y="793" fill="#DCE5DC" font-family="Arial, Helvetica, sans-serif" font-size="22">een verklaring nog geen feit.</text>
+
+  <rect x="50" y="855" width="660" height="180" rx="24" fill="#EEE9BE"/>
+  <text x="82" y="908" fill="#18201D" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">BEWIJSGRENS</text>
+  <text x="82" y="953" fill="#18201D" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Brondata, alternatieven en onbekenden</text>
+  <text x="82" y="986" fill="#18201D" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">blijven expliciet.</text>
+  <text x="82" y="1021" fill="#3F443F" font-family="Arial, Helvetica, sans-serif" font-size="20">Geen enkel signaal bewijst de combinatie.</text>
+</svg>

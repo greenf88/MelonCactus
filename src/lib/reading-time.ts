@@ -29,6 +29,11 @@ export function articleWordCount(insight: Insight, locale: Locale = "en"): numbe
       `accessed ${source.accessed}`,
       source.note[locale],
     ]),
+    ...(insight.visual ? [
+      insight.visual.title,
+      insight.visual.caption,
+      ...insight.visual.details.flatMap((detail) => [detail.label, detail.text]),
+    ] : []),
   ].join("\n");
   return [...plainText(text).matchAll(/[\p{L}\p{N}]+(?:[’'-][\p{L}\p{N}]+)*/gu)].length;
 }

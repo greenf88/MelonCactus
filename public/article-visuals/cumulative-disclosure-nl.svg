@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Losse openbare uitingen kunnen extra context opleveren</title>
+  <desc id="desc">Een vacature, leverancierscase, beursvideo en openbaar planningsdocument kunnen bijdragen aan gezamenlijke context, maar ieder item behoudt zijn eigen herkomst, reikwijdte, datum en onzekerheid.</desc>
+  <defs><marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1 1l9 5-9 5z" fill="#275a45"/></marker></defs>
+  <rect width="1200" height="760" fill="#fbfaf6"/>
+  <text x="70" y="76" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="700" letter-spacing="4">LOSSE SIGNALEN — LOSSE BEWIJSGRENZEN BLIJVEN GELDEN</text>
+  <g font-family="Arial,Helvetica,sans-serif">
+    <g transform="translate(70 132)"><rect width="280" height="120" fill="#f4f2e9" stroke="#cbcfc6" stroke-width="3"/><text x="24" y="48" fill="#275a45" font-size="21" font-weight="700" letter-spacing="2">WERVING</text><text x="24" y="91" fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">Vacature</text></g>
+    <g transform="translate(70 278)"><rect width="280" height="120" fill="#f4f2e9" stroke="#cbcfc6" stroke-width="3"/><text x="24" y="48" fill="#275a45" font-size="21" font-weight="700" letter-spacing="2">LEVERANCIER</text><text x="24" y="91" fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">Praktijkcase</text></g>
+    <g transform="translate(70 424)"><rect width="280" height="120" fill="#f4f2e9" stroke="#cbcfc6" stroke-width="3"/><text x="24" y="48" fill="#275a45" font-size="21" font-weight="700" letter-spacing="2">EVENEMENT</text><text x="24" y="91" fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">Beursvideo</text></g>
+    <g transform="translate(70 570)"><rect width="280" height="120" fill="#f4f2e9" stroke="#cbcfc6" stroke-width="3"/><text x="24" y="48" fill="#275a45" font-size="21" font-weight="700" letter-spacing="2">OPENBARE BRON</text><text x="24" y="91" fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">Planningsdocument</text></g>
+  </g>
+  <g fill="none" stroke="#275a45" stroke-width="5" marker-end="url(#arrow)"><path d="M370 192C505 192 485 312 582 333"/><path d="M370 338h196"/><path d="M370 484c135 0 115-105 212-126"/><path d="M370 630c175 0 200-190 212-246"/></g>
+  <g transform="translate(600 240)">
+    <rect width="530" height="300" fill="#173d2d"/>
+    <text x="35" y="55" fill="#d8c95d" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">GEZAMENLIJKE CONTEXT</text>
+    <text x="35" y="120" fill="#fff" font-family="Georgia,serif" font-size="41" font-weight="600"><tspan x="35">Een patroon kan</tspan><tspan x="35" dy="50">informatiever worden</tspan></text>
+    <line x1="35" y1="205" x2="495" y2="205" stroke="#d8c95d" stroke-width="3"/>
+    <text x="35" y="247" fill="#dce5dc" font-family="Arial,Helvetica,sans-serif" font-size="23">Alleen als bronrelaties, timing</text>
+    <text x="35" y="278" fill="#dce5dc" font-family="Arial,Helvetica,sans-serif" font-size="23">en tegenspraak zichtbaar blijven.</text>
+  </g>
+  <rect x="600" y="570" width="530" height="120" fill="#eee9be"/>
+  <text x="630" y="615" fill="#8f4938" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="2">BEWIJSGRENS</text>
+  <text x="630" y="650" fill="#18201d" font-family="Georgia,serif" font-size="25" font-weight="600"><tspan x="630">Context bewijst geen verborgen</tspan><tspan x="630" dy="31">capaciteit of intentie.</tspan></text>
+</svg>

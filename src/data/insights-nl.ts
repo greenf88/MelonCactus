@@ -1,6 +1,7 @@
 import type { Insight } from "@/data/insights";
 import { industrialInsights } from "@/data/industrial-insights";
 import { articleSources } from "@/data/article-sources";
+import { articleVisuals } from "@/data/article-visuals";
 
 const originalInsightsNl: readonly Insight[] = [
   {
@@ -9,8 +10,9 @@ const originalInsightsNl: readonly Insight[] = [
     description: "Een praktische gids voor onderbouwd onderzoek naar concurrenten, bedoeld voor industriële beslissers.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    modifiedDate: "2026-10-07",
-    displayModifiedDate: "7 oktober 2026",
+    modifiedDate: "2026-10-09",
+    displayModifiedDate: "9 oktober 2026",
+    visual: articleVisuals.nl.industrialIntelligence,
     sources: [articleSources.scipEthics, articleSources.espacenet, articleSources.ted, articleSources.phiaStandards],
     sections: [
       {
@@ -62,8 +64,9 @@ const originalInsightsNl: readonly Insight[] = [
     description: "Gebruik openbare foto’s en video’s als technisch bewijs zonder meer te concluderen dan zij toelaten.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    modifiedDate: "2026-10-07",
-    displayModifiedDate: "7 oktober 2026",
+    modifiedDate: "2026-10-09",
+    displayModifiedDate: "9 oktober 2026",
+    visual: articleVisuals.nl.publicImages,
     sources: [articleSources.berkeleyProtocol, articleSources.iptcMetadata, articleSources.npsaCommunications],
     sections: [
       {
@@ -115,8 +118,9 @@ const originalInsightsNl: readonly Insight[] = [
     description: "Een helder kader om conclusies uit openbare bronnen herleidbaar en evenwichtig te houden.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    modifiedDate: "2026-10-07",
-    displayModifiedDate: "7 oktober 2026",
+    modifiedDate: "2026-10-09",
+    displayModifiedDate: "9 oktober 2026",
+    visual: articleVisuals.nl.evidenceAssessmentInference,
     sources: [articleSources.odniStandards, articleSources.phiaStandards, articleSources.phiaUncertainty],
     sections: [
       {
@@ -196,8 +200,9 @@ const originalInsightsNl: readonly Insight[] = [
     description: "Veelvoorkomende openbare informatiesporen en een proportionele manier om ze te beoordelen.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    modifiedDate: "2026-10-07",
-    displayModifiedDate: "7 oktober 2026",
+    modifiedDate: "2026-10-09",
+    displayModifiedDate: "9 oktober 2026",
+    visual: articleVisuals.nl.cumulativeDisclosure,
     sources: [articleSources.npsaCommunications, articleSources.ncscSharing, articleSources.ncscPublishing, articleSources.gdprArticle5],
     sections: [
       {
