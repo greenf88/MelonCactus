@@ -1,5 +1,6 @@
 import { industrialInsights } from "@/data/industrial-insights";
 import { articleSources, type ArticleSource } from "@/data/article-sources";
+import { articleVisuals, type ArticleVisual } from "@/data/article-visuals";
 
 export type InsightParagraph = string | {
   text: string;
@@ -24,6 +25,7 @@ export type Insight = {
   introMarkdown?: string;
   sections: readonly InsightSection[];
   sources?: readonly ArticleSource[];
+  visual?: ArticleVisual;
 };
 
 const originalInsights: readonly Insight[] = [
@@ -33,8 +35,9 @@ const originalInsights: readonly Insight[] = [
     description: "A practical guide to evidence-led competitor research for industrial decision-makers.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    modifiedDate: "2026-10-07",
-    displayModifiedDate: "7 October 2026",
+    modifiedDate: "2026-10-09",
+    displayModifiedDate: "9 October 2026",
+    visual: articleVisuals.en.industrialIntelligence,
     sources: [articleSources.scipEthics, articleSources.espacenet, articleSources.ted, articleSources.phiaStandards],
     sections: [
       {
@@ -86,8 +89,9 @@ const originalInsights: readonly Insight[] = [
     description: "How to use public photographs and video as technical evidence without overstating what they prove.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    modifiedDate: "2026-10-07",
-    displayModifiedDate: "7 October 2026",
+    modifiedDate: "2026-10-09",
+    displayModifiedDate: "9 October 2026",
+    visual: articleVisuals.en.publicImages,
     sources: [articleSources.berkeleyProtocol, articleSources.iptcMetadata, articleSources.npsaCommunications],
     sections: [
       {
@@ -139,8 +143,9 @@ const originalInsights: readonly Insight[] = [
     description: "A clear framework for keeping public-source conclusions traceable and proportionate.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    modifiedDate: "2026-10-07",
-    displayModifiedDate: "7 October 2026",
+    modifiedDate: "2026-10-09",
+    displayModifiedDate: "9 October 2026",
+    visual: articleVisuals.en.evidenceAssessmentInference,
     sources: [articleSources.odniStandards, articleSources.phiaStandards, articleSources.phiaUncertainty],
     sections: [
       {
@@ -220,8 +225,9 @@ const originalInsights: readonly Insight[] = [
     description: "Common public information exposures—and how to review them without resorting to invasive monitoring.",
     date: "2026-09-22",
     displayDate: "22 September 2026",
-    modifiedDate: "2026-10-07",
-    displayModifiedDate: "7 October 2026",
+    modifiedDate: "2026-10-09",
+    displayModifiedDate: "9 October 2026",
+    visual: articleVisuals.en.cumulativeDisclosure,
     sources: [articleSources.npsaCommunications, articleSources.ncscSharing, articleSources.ncscPublishing, articleSources.gdprArticle5],
     sections: [
       {

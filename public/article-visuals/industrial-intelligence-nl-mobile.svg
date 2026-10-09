@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Van openbare bronnen naar een verdedigbare beslisvraag</title>
+  <desc id="desc">Openbare bronnen worden getoetst op herkomst, datum, reikwijdte en bevestiging voordat ze een beslisvraag ondersteunen. Bekend, beoordeeld en onbekend blijven gescheiden.</desc>
+  <defs><marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1 1l9 5-9 5z" fill="#275a45"/></marker></defs>
+  <rect width="760" height="1100" fill="#fbfaf6"/>
+  <text x="50" y="65" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="700" letter-spacing="3">VAN BEWIJS NAAR BESLISSING</text>
+  <g transform="translate(50 105)">
+    <rect width="660" height="220" fill="#f4f2e9" stroke="#cbcfc6" stroke-width="3"/>
+    <text x="30" y="58" fill="#18201d" font-family="Georgia,serif" font-size="40" font-weight="600">Openbare bronnen</text>
+    <g font-family="Arial,Helvetica,sans-serif" font-size="24" fill="#404a44">
+      <rect x="30" y="92" width="280" height="48" fill="#fff" stroke="#cbcfc6"/><text x="48" y="124">Bedrijfsmateriaal</text>
+      <rect x="350" y="92" width="280" height="48" fill="#fff" stroke="#cbcfc6"/><text x="368" y="124">Openbare registers</text>
+      <rect x="30" y="154" width="280" height="48" fill="#fff" stroke="#cbcfc6"/><text x="48" y="186">Technische bronnen</text>
+      <rect x="350" y="154" width="280" height="48" fill="#fff" stroke="#cbcfc6"/><text x="368" y="186">Beeld en video</text>
+    </g>
+  </g>
+  <path d="M380 340v44" stroke="#275a45" stroke-width="6" marker-end="url(#arrow)"/>
+  <g transform="translate(50 398)">
+    <rect width="660" height="260" fill="#dce5dc" stroke="#275a45" stroke-width="3"/>
+    <text x="30" y="58" fill="#18201d" font-family="Georgia,serif" font-size="40" font-weight="600">Toets &amp; vergelijk</text>
+    <line x1="30" y1="80" x2="630" y2="80" stroke="#275a45" stroke-width="3"/>
+    <g font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#173d2d">
+      <circle cx="48" cy="125" r="7" fill="#275a45"/><text x="70" y="135">Herkomst</text>
+      <circle cx="355" cy="125" r="7" fill="#275a45"/><text x="377" y="135">Datum</text>
+      <circle cx="48" cy="181" r="7" fill="#275a45"/><text x="70" y="191">Reikwijdte</text>
+      <circle cx="355" cy="181" r="7" fill="#275a45"/><text x="377" y="191">Bevestiging</text>
+    </g>
+    <text x="30" y="232" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="22">Leg beperkingen en tegenspraak vast.</text>
+  </g>
+  <path d="M380 674v44" stroke="#275a45" stroke-width="6" marker-end="url(#arrow)"/>
+  <g transform="translate(50 732)">
+    <rect width="660" height="250" fill="#173d2d"/>
+    <text x="30" y="53" fill="#d8c95d" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" letter-spacing="3">BESLISVRAAG</text>
+    <text x="30" y="115" fill="#fff" font-family="Georgia,serif" font-size="42" font-weight="600"><tspan x="30">Wat kan dit bewijs</tspan><tspan x="30" dy="52">verantwoord dragen?</tspan></text>
+    <line x1="30" y1="199" x2="630" y2="199" stroke="#d8c95d" stroke-width="3"/>
+    <text x="30" y="231" fill="#dce5dc" font-family="Arial,Helvetica,sans-serif" font-size="22">Beantwoord de beslissing, niet de documentenmap.</text>
+  </g>
+  <rect x="50" y="1004" width="660" height="66" fill="#eee9be"/>
+  <text x="78" y="1046" fill="#18201d" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700">BEKEND · BEOORDEELD · ONBEKEND</text>
+</svg>
