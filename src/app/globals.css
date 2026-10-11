@@ -306,6 +306,17 @@ h3 { font-size: clamp(1.375rem, 2vw, 1.625rem); line-height: 1.28; }
 .article-sources li > a { font-family: var(--font-body); font-weight: 750; }
 .article-sources li > span { display: block; margin-top: .2rem; color: var(--muted); font-size: .9375rem; line-height: 1.55; }
 .article-sources li:target { scroll-margin-top: 7rem; background: var(--lemon-soft); outline: .5rem solid var(--lemon-soft); }
+.article-visual { margin: .5rem 0 4.5rem; border: 1px solid var(--line); background: var(--white); }
+.article-visual-media { border-bottom: 1px solid var(--line); background: var(--surface); }
+.article-visual-image { display: block; width: 100%; height: auto; background: var(--surface); }
+.article-visual-image-mobile { display: none; }
+.article-visual figcaption { padding: 1.35rem 1.5rem 1.5rem; }
+.article-visual figcaption > strong { display: block; color: var(--ink); font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; line-height: 1.3; }
+.article-visual figcaption > p { margin: .55rem 0 1.25rem; color: var(--muted); font-size: 1rem; line-height: 1.6; }
+.article-visual-explanation { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1px; margin: 0; background: var(--line); border: 1px solid var(--line); }
+.article-visual-explanation > div { min-width: 0; padding: 1rem; background: var(--paper); }
+.article-visual-explanation dt { color: var(--green-dark); font-size: .78rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
+.article-visual-explanation dd { margin: .45rem 0 0; color: var(--muted); font-size: .9375rem; line-height: 1.5; }
 .article-intro { margin-bottom: 3rem; }
 .article-cta { margin-top: 5rem; padding: 2rem; background: var(--lemon-soft); border-top: 4px solid var(--green-dark); }
 .article-cta h2 { font-size: 2.25rem; }
@@ -575,6 +586,11 @@ main [id] { scroll-margin-top: 7rem; }
   .finding-list .confidence-badge { grid-column: 2; justify-self: start; }
   .article-layout { grid-template-columns: 1fr; }
   .article-aside { position: static; }
+  .article-visual { margin-inline: -.25rem; }
+  .article-visual-image-desktop { display: none; }
+  .article-visual-image-mobile { display: block; }
+  .article-visual figcaption { padding: 1.1rem; }
+  .article-visual-explanation { grid-template-columns: 1fr; }
   .form-submit-row { align-items: stretch; flex-direction: column; }
   .form-submit-row .button { width: 100%; }
 }

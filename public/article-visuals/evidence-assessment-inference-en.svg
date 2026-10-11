@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Evidence, assessment and inference are different categories</title>
+  <desc id="desc">Evidence records what a source directly supports. Assessment weighs several sources. Inference offers a plausible but unproven explanation that must remain labelled.</desc>
+  <rect width="1200" height="760" fill="#fbfaf6"/>
+  <text x="70" y="78" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" letter-spacing="4">THREE LABELS — THREE EVIDENTIAL BOUNDARIES</text>
+  <g transform="translate(70 132)">
+    <rect width="1060" height="150" fill="#dce5dc" stroke="#275a45" stroke-width="3"/>
+    <rect width="210" height="150" fill="#173d2d"/>
+    <text x="30" y="62" fill="#d8c95d" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">01</text>
+    <text x="30" y="110" fill="#fff" font-family="Georgia,serif" font-size="37" font-weight="600">Evidence</text>
+    <text x="254" y="58" fill="#18201d" font-family="Georgia,serif" font-size="34" font-weight="600">Directly supported</text>
+    <text x="254" y="103" fill="#404a44" font-family="Arial,Helvetica,sans-serif" font-size="23">Traceable statement or observation · provenance retained</text>
+    <rect x="866" y="43" width="154" height="62" fill="#fff" stroke="#275a45" stroke-width="3"/>
+    <text x="894" y="82" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700">DIRECT</text>
+  </g>
+  <g transform="translate(70 309)">
+    <rect width="1060" height="150" fill="#eee9be" stroke="#d8c95d" stroke-width="3"/>
+    <rect width="210" height="150" fill="#275a45"/>
+    <text x="30" y="62" fill="#eee9be" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">02</text>
+    <text x="30" y="110" fill="#fff" font-family="Georgia,serif" font-size="37" font-weight="600">Assessment</text>
+    <text x="254" y="58" fill="#18201d" font-family="Georgia,serif" font-size="34" font-weight="600">Reasoned judgement</text>
+    <text x="254" y="103" fill="#404a44" font-family="Arial,Helvetica,sans-serif" font-size="23">Sources weighed · contradiction and uncertainty stated</text>
+    <rect x="866" y="43" width="154" height="62" fill="#fff" stroke="#d8c95d" stroke-width="3"/>
+    <text x="887" y="82" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700">REASONED</text>
+  </g>
+  <g transform="translate(70 486)">
+    <rect width="1060" height="150" fill="#f4f2e9" stroke="#8f4938" stroke-width="3"/>
+    <rect width="210" height="150" fill="#8f4938"/>
+    <text x="30" y="62" fill="#f4f2e9" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">03</text>
+    <text x="30" y="110" fill="#fff" font-family="Georgia,serif" font-size="37" font-weight="600">Inference</text>
+    <text x="254" y="58" fill="#18201d" font-family="Georgia,serif" font-size="34" font-weight="600">Plausible explanation</text>
+    <text x="254" y="103" fill="#404a44" font-family="Arial,Helvetica,sans-serif" font-size="23">Not directly established · alternatives remain visible</text>
+    <rect x="866" y="43" width="154" height="62" fill="#fff" stroke="#8f4938" stroke-width="3"/>
+    <text x="882" y="82" fill="#8f4938" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700">UNPROVEN</text>
+  </g>
+  <path d="M175 666v32h850v-32" fill="none" stroke="#59635d" stroke-width="3"/>
+  <text x="365" y="730" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="24">Do not let one category silently become another</text>
+</svg>

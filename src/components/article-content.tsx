@@ -1,4 +1,6 @@
+import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
+import { ArticleVisual } from "@/components/article-visual";
 import type { Insight, InsightParagraph } from "@/data/insights";
 import type { Locale } from "@/lib/i18n";
 
@@ -47,15 +49,18 @@ export function ArticleContent({ insight, idPrefix, locale = "en" }: { insight: 
   const sourceIndexes = new Map((insight.sources ?? []).map((source, index) => [source.id, index]));
   return <>
     {insight.introMarkdown ? <div className="article-intro"><ArticleMarkdown text={insight.introMarkdown} /></div> : null}
-    {insight.sections.map((section, index) => <section id={`${idPrefix}-${index + 1}`} key={section.heading}>
-      <h2>{section.heading}</h2>
-      {section.markdown ? <ArticleMarkdown text={section.markdown} /> : <>
-        {section.paragraphs?.map((paragraph) => typeof paragraph === "string"
-          ? <p key={paragraph}>{paragraph}</p>
-          : <p key={paragraph.text}>{paragraph.text} <CitationLinks paragraph={paragraph} insight={insight} sourceIndexes={sourceIndexes} idPrefix={idPrefix} locale={locale} /></p>)}
-        {section.bullets ? <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul> : null}
-      </>}
-    </section>)}
+    {insight.sections.map((section, index) => <Fragment key={section.heading}>
+      <section id={`${idPrefix}-${index + 1}`}>
+        <h2>{section.heading}</h2>
+        {section.markdown ? <ArticleMarkdown text={section.markdown} /> : <>
+          {section.paragraphs?.map((paragraph) => typeof paragraph === "string"
+            ? <p key={paragraph}>{paragraph}</p>
+            : <p key={paragraph.text}>{paragraph.text} <CitationLinks paragraph={paragraph} insight={insight} sourceIndexes={sourceIndexes} idPrefix={idPrefix} locale={locale} /></p>)}
+          {section.bullets ? <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul> : null}
+        </>}
+      </section>
+      {insight.visual?.afterSectionIndex === index ? <ArticleVisual visual={insight.visual} /> : null}
+    </Fragment>)}
     {insight.sources?.length ? <section className="article-sources" id={`${idPrefix}-sources`}>
       <h2>{sourceHeading}</h2>
       <ol>

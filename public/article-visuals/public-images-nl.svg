@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Een waarneming is nog geen bewezen capaciteit</title>
+  <desc id="desc">Een conceptueel zichtbaar detail kan meerdere mogelijke verklaringen ondersteunen, terwijl bedrijfsstatus, capaciteit en datum onbewezen blijven.</desc>
+  <defs><marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1 1l9 5-9 5z" fill="#275a45"/></marker></defs>
+  <rect width="1200" height="760" fill="#fbfaf6"/>
+  <text x="70" y="78" fill="#8f4938" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">CONCEPTUEEL VOORBEELD — GEEN BRONBEWIJS</text>
+  <g transform="translate(70 135)">
+    <rect width="360" height="430" fill="#173d2d"/>
+    <text x="28" y="50" fill="#d8c95d" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" letter-spacing="3">WAARGENOMEN</text>
+    <rect x="28" y="84" width="304" height="230" fill="#dce5dc"/>
+    <path d="M67 258h225v-98h-64v-34h-88v49H67z" fill="#f4f2e9" stroke="#275a45" stroke-width="5"/>
+    <circle cx="112" cy="222" r="18" fill="#d8c95d" stroke="#173d2d" stroke-width="4"/>
+    <circle cx="242" cy="205" r="18" fill="#d8c95d" stroke="#173d2d" stroke-width="4"/>
+    <path d="M112 202V150m130 35v-62" stroke="#8f4938" stroke-width="5"/>
+    <text x="28" y="356" fill="#fff" font-family="Georgia,serif" font-size="34" font-weight="600">Zichtbaar detail</text>
+    <text x="28" y="394" fill="#dce5dc" font-family="Arial,Helvetica,sans-serif" font-size="22">Objecten en ruimtelijke relaties</text>
+  </g>
+  <path d="M452 350h75" stroke="#275a45" stroke-width="6" marker-end="url(#arrow)"/>
+  <g transform="translate(542 135)">
+    <rect width="278" height="430" fill="#f4f2e9" stroke="#cbcfc6" stroke-width="3"/>
+    <text x="28" y="50" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" letter-spacing="3">MOGELIJK</text>
+    <text x="28" y="108" fill="#18201d" font-family="Georgia,serif" font-size="29" font-weight="600">Verklaring A</text>
+    <text x="28" y="146" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="22">Apparatuur in gebruik</text>
+    <line x1="28" y1="183" x2="250" y2="183" stroke="#cbcfc6" stroke-width="3"/>
+    <text x="28" y="235" fill="#18201d" font-family="Georgia,serif" font-size="29" font-weight="600">Verklaring B</text>
+    <text x="28" y="269" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="20"><tspan x="28">Demonstratie- of</tspan><tspan x="28" dy="25">testopstelling</tspan></text>
+    <rect x="28" y="322" width="222" height="72" fill="#eee9be"/>
+    <text x="48" y="354" fill="#18201d" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700">HOUD ALTERNATIEVEN</text>
+    <text x="48" y="380" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="19">open tot context onderscheidt</text>
+  </g>
+  <path d="M842 350h75" stroke="#8f4938" stroke-width="6" stroke-dasharray="12 10" marker-end="url(#arrow)"/>
+  <g transform="translate(932 135)">
+    <rect width="198" height="430" fill="#fff" stroke="#8f4938" stroke-width="3"/>
+    <text x="25" y="50" fill="#8f4938" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">ONBEKEND</text>
+    <g fill="#18201d" font-family="Georgia,serif" font-size="31" font-weight="600">
+      <text x="25" y="125">Bedrijfs-</text><text x="25" y="161">status</text>
+      <text x="25" y="241">Capaciteit</text>
+      <text x="25" y="319" font-size="27"><tspan x="25">Beeld-</tspan><tspan x="25" dy="34">datum</tspan></text>
+    </g>
+    <g stroke="#8f4938" stroke-width="3"><line x1="25" y1="184" x2="173" y2="184"/><line x1="25" y1="271" x2="173" y2="271"/></g>
+    <text x="25" y="392" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="19">Niet bewezen door</text>
+    <text x="25" y="417" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="19">alleen het uiterlijk</text>
+  </g>
+  <rect x="70" y="620" width="1060" height="72" fill="#dce5dc"/>
+  <text x="100" y="665" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="700">EERST WAARNEMEN</text>
+  <text x="390" y="665" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="25">toets daarna context, timing en alternatieve verklaringen</text>
+</svg>

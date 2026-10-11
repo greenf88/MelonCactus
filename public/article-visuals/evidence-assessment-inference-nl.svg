@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Bewijs, beoordeling en gevolgtrekking zijn verschillende categorieën</title>
+  <desc id="desc">Bewijs legt vast wat een bron rechtstreeks ondersteunt. Beoordeling weegt meerdere bronnen. Gevolgtrekking geeft een aannemelijke maar onbewezen uitleg die als zodanig herkenbaar blijft.</desc>
+  <rect width="1200" height="760" fill="#fbfaf6"/>
+  <text x="70" y="78" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" letter-spacing="4">DRIE LABELS — DRIE BEWIJSGRENZEN</text>
+  <g transform="translate(70 132)">
+    <rect width="1060" height="150" fill="#dce5dc" stroke="#275a45" stroke-width="3"/>
+    <rect width="235" height="150" fill="#173d2d"/>
+    <text x="30" y="62" fill="#d8c95d" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">01</text>
+    <text x="30" y="110" fill="#fff" font-family="Georgia,serif" font-size="37" font-weight="600">Bewijs</text>
+    <text x="274" y="58" fill="#18201d" font-family="Georgia,serif" font-size="34" font-weight="600">Rechtstreeks ondersteund</text>
+    <text x="274" y="103" fill="#404a44" font-family="Arial,Helvetica,sans-serif" font-size="22">Herleidbare uitspraak of waarneming · herkomst bewaard</text>
+    <rect x="866" y="43" width="154" height="62" fill="#fff" stroke="#275a45" stroke-width="3"/>
+    <text x="890" y="82" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700">DIRECT</text>
+  </g>
+  <g transform="translate(70 309)">
+    <rect width="1060" height="150" fill="#eee9be" stroke="#d8c95d" stroke-width="3"/>
+    <rect width="235" height="150" fill="#275a45"/>
+    <text x="30" y="62" fill="#eee9be" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">02</text>
+    <text x="30" y="110" fill="#fff" font-family="Georgia,serif" font-size="32" font-weight="600">Beoordeling</text>
+    <text x="274" y="58" fill="#18201d" font-family="Georgia,serif" font-size="34" font-weight="600">Onderbouwd oordeel</text>
+    <text x="274" y="103" fill="#404a44" font-family="Arial,Helvetica,sans-serif" font-size="22">Weegt bronnen · benoemt tegenspraak en onzekerheid</text>
+    <rect x="866" y="43" width="154" height="62" fill="#fff" stroke="#d8c95d" stroke-width="3"/>
+    <text x="885" y="82" fill="#173d2d" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700">BEREDENEERD</text>
+  </g>
+  <g transform="translate(70 486)">
+    <rect width="1060" height="150" fill="#f4f2e9" stroke="#8f4938" stroke-width="3"/>
+    <rect width="235" height="150" fill="#8f4938"/>
+    <text x="30" y="62" fill="#f4f2e9" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="3">03</text>
+    <text x="30" y="92" fill="#fff" font-family="Georgia,serif" font-size="30" font-weight="600"><tspan x="30">Gevolg-</tspan><tspan x="30" dy="34">trekking</tspan></text>
+    <text x="274" y="58" fill="#18201d" font-family="Georgia,serif" font-size="34" font-weight="600">Aannemelijke verklaring</text>
+    <text x="274" y="103" fill="#404a44" font-family="Arial,Helvetica,sans-serif" font-size="22">Niet rechtstreeks vastgesteld · alternatieven zichtbaar</text>
+    <rect x="866" y="43" width="154" height="62" fill="#fff" stroke="#8f4938" stroke-width="3"/>
+    <text x="880" y="82" fill="#8f4938" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700">ONBEWEZEN</text>
+  </g>
+  <path d="M175 666v32h850v-32" fill="none" stroke="#59635d" stroke-width="3"/>
+  <text x="330" y="730" fill="#59635d" font-family="Arial,Helvetica,sans-serif" font-size="24">Laat de ene categorie niet ongemerkt de andere worden</text>
+</svg>

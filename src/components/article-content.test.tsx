@@ -42,4 +42,23 @@ describe("sourced article rendering", () => {
       for (const source of article.sources ?? []) expect(html).toContain(`id="sectie-source-${source.id}"`);
     }
   });
+
+  it("renders localized article visuals with accessible text equivalents", () => {
+    for (const [articles, locale, idPrefix] of [[insights, "en", "section"], [insightsNl, "nl", "sectie"]] as const) {
+      const visualArticles = articles.filter((article) => article.visual);
+      expect(visualArticles).toHaveLength(4);
+
+      for (const article of visualArticles) {
+        const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix={idPrefix} locale={locale} />);
+        expect(html).toContain('class="article-visual"');
+        expect(html).toContain(`alt="${article.visual?.alt.replaceAll("&", "&amp;").replaceAll("\"", "&quot;")}`);
+        expect(html).toContain(article.visual?.title);
+        expect(html).toContain(`aria-label="${article.visual?.explanationLabel}`);
+        for (const detail of article.visual?.details ?? []) {
+          expect(html).toContain(detail.label);
+          expect(html).toContain(detail.text);
+        }
+      }
+    }
+  });
 });

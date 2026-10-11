@@ -17,7 +17,7 @@ describe("evergreen article evidence records", () => {
     expect(dutch).toHaveLength(4);
     for (const article of [...english, ...dutch]) {
       expect(article.date).toBe("2026-09-22");
-      expect(article.modifiedDate).toBe("2026-10-07");
+      expect(article.modifiedDate).toBe("2026-10-09");
       expect(article.sources?.length).toBeGreaterThanOrEqual(3);
     }
   });
