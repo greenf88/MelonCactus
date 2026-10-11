@@ -20,6 +20,7 @@ export function articleWordCount(insight: Insight, locale: Locale = "en"): numbe
         ? paragraph
         : `${paragraph.text} ${paragraph.sourceIds.map(() => "1").join(" ")}`),
       ...(section.bullets ?? []),
+      ...(section.table ? [section.table.caption, ...section.table.headers, ...section.table.rows.flat()] : []),
     ]),
     ...(insight.sources?.length ? [locale === "nl" ? "Bronnen" : "Sources"] : []),
     ...(insight.sources ?? []).flatMap((source) => [

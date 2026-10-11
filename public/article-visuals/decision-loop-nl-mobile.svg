@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">De MelonCactus Industrial Decision Loop</title>
+  <desc id="desc">Een verticale lus met vijf stappen van signaal via context, beslissing en actie naar uitkomst, waarna terugkoppeling naar de eerste stap gaat.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0l10 5-10 5z" fill="#8A5A35"/></marker></defs>
+  <rect width="760" height="1100" fill="#F7F5EE"/>
+  <text x="52" y="70" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="2">BEHEERSTE INDUSTRIËLE AI</text>
+  <text x="52" y="114" fill="#18201D" font-family="Georgia, serif" font-size="27">Signaal → context → beslissing</text>
+  <g font-family="Arial, sans-serif">
+    <path d="M380 258V286M380 430V458M380 602V630M380 774V802" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <g><rect x="52" y="150" width="656" height="108" rx="16" fill="#173D2D"/><text x="82" y="193" fill="#FFFFFF" font-size="15" font-weight="700">01 · SIGNAAL</text><text x="82" y="229" fill="#FFFFFF" font-size="23" font-weight="700">Een bepaalde aanleiding</text></g>
+    <g><rect x="52" y="286" width="656" height="144" rx="16" fill="#DCE5DC"/><text x="82" y="332" fill="#173D2D" font-size="15" font-weight="700">02 · CONTEXT</text><text x="82" y="372" fill="#18201D" font-size="23" font-weight="700">Bewijs en beperkingen</text><text x="82" y="402" fill="#4C5852" font-size="14">Operationele status · historie · toegestane grens</text></g>
+    <g><rect x="52" y="458" width="656" height="144" rx="16" fill="#EEE9BE"/><text x="82" y="504" fill="#173D2D" font-size="15" font-weight="700">03 · BESLISSING</text><text x="82" y="544" fill="#18201D" font-size="23" font-weight="700">Eigenaar en bevoegdheid</text><text x="82" y="574" fill="#4C5852" font-size="14">Keur goed · grijp in · stop</text></g>
+    <g><rect x="52" y="630" width="656" height="144" rx="16" fill="#DCE5DC"/><text x="82" y="676" fill="#173D2D" font-size="15" font-weight="700">04 · ACTIE</text><text x="82" y="716" fill="#18201D" font-size="23" font-weight="700">Begrensde uitvoering</text><text x="82" y="746" fill="#4C5852" font-size="14">Handel · escaleer · val terug</text></g>
+    <g><rect x="52" y="802" width="656" height="144" rx="16" fill="#173D2D"/><text x="82" y="848" fill="#FFFFFF" font-size="15" font-weight="700">05 · UITKOMST</text><text x="82" y="888" fill="#FFFFFF" font-size="23" font-weight="700">Meet wat er gebeurde</text><text x="82" y="918" fill="#DCE5DC" font-size="14">Resultaat · afwijking · leren</text></g>
+    <path d="M680 966v42H80v-42" fill="none" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <text x="52" y="1060" fill="#4C5852" font-size="15">Terugkoppeling toetst de volgende beslissing; onzekerheid blijft.</text>
+  </g>
+</svg>

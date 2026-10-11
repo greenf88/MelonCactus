@@ -57,6 +57,15 @@ export function ArticleContent({ insight, idPrefix, locale = "en" }: { insight: 
             ? <p key={paragraph}>{paragraph}</p>
             : <p key={paragraph.text}>{paragraph.text} <CitationLinks paragraph={paragraph} insight={insight} sourceIndexes={sourceIndexes} idPrefix={idPrefix} locale={locale} /></p>)}
           {section.bullets ? <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul> : null}
+          {section.table ? <div className="article-table-wrap">
+            <table>
+              <caption>{section.table.caption}</caption>
+              <thead><tr>{section.table.headers.map((header) => <th scope="col" key={header}>{header}</th>)}</tr></thead>
+              <tbody>{section.table.rows.map((row) => <tr key={row[0]}>{row.map((cell, cellIndex) => cellIndex === 0
+                ? <th scope="row" key={cell}>{cell}</th>
+                : <td key={cell}>{cell}</td>)}</tr>)}</tbody>
+            </table>
+          </div> : null}
         </>}
       </section>
       {insight.visual?.afterSectionIndex === index ? <ArticleVisual visual={insight.visual} /> : null}

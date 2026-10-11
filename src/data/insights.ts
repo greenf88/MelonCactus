@@ -1,6 +1,7 @@
 import { industrialInsights } from "@/data/industrial-insights";
 import { articleSources, type ArticleSource } from "@/data/article-sources";
 import { articleVisuals, type ArticleVisual } from "@/data/article-visuals";
+import { decisionLoopInsightEn } from "@/data/decision-loop-insights";
 
 export type InsightParagraph = string | {
   text: string;
@@ -11,6 +12,11 @@ export type InsightSection = {
   heading: string;
   paragraphs?: readonly InsightParagraph[];
   bullets?: readonly string[];
+  table?: {
+    caption: string;
+    headers: readonly string[];
+    rows: readonly (readonly string[])[];
+  };
   markdown?: string;
 };
 
@@ -277,6 +283,7 @@ const originalInsights: readonly Insight[] = [
 ] as const;
 
 export const insights: readonly Insight[] = [
+  decisionLoopInsightEn,
   ...industrialInsights.filter((insight) => insight.locale === "en"),
   ...originalInsights,
 ];

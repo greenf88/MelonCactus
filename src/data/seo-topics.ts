@@ -39,7 +39,7 @@ const en: readonly Topic[] = [
     method: "We set comparison criteria from the intended decision, then review technical literature, product specifications, patents, public demonstrations and relevant company statements. Dates, source incentives and differences in terminology matter. We separate observed features from analytical judgement and record what would need direct verification.",
     evidenceLimit: "A patent shows a disclosed concept, not a deployed system. A prototype video shows a demonstration under unknown conditions, not stable serial performance. Public material can narrow options, but it cannot reveal confidential specifications or replace laboratory validation.",
     application: "The technical and competitive intelligence service provides a deeper, scoped assessment. A smaller focused assessment can test one decisive claim first.",
-    articlePaths: ["/insights/what-public-images-can-reveal-about-industrial-capabilities", "/insights/asml-capacity-plans-reading-manufacturing-forecasts", "/insights/separate-evidence-assessment-inference-osint"],
+    articlePaths: ["/insights/industrial-ai-decision-loop-manufacturing", "/insights/what-public-images-can-reveal-about-industrial-capabilities", "/insights/asml-capacity-plans-reading-manufacturing-forecasts", "/insights/separate-evidence-assessment-inference-osint"],
     servicePaths: ["/services/technical-competitive-intelligence", "/services/focused-intelligence-assessment"], examplePath: "/sample-report",
   },
   {
@@ -90,7 +90,7 @@ const nl: readonly Topic[] = [
     method: "Wij maken vergelijkingscriteria vanuit de beslissing en bekijken technische literatuur, productspecificaties, octrooien, openbare demonstraties en relevante bedrijfsuitspraken. Datum, belang van de bron en verschillen in terminologie tellen mee. We scheiden zichtbare kenmerken van analytisch oordeel.",
     evidenceLimit: "Een octrooi toont een beschreven concept, geen toegepast systeem. Een prototypevideo laat een demonstratie onder onbekende voorwaarden zien, geen stabiele serieprestatie. Openbare bronnen kunnen opties inperken, maar onthullen geen vertrouwelijke specificaties en vervangen geen laboratoriumvalidatie.",
     application: "Technische en concurrentie-intelligence biedt een verdiepende beoordeling met afgesproken scope. Een gerichte beoordeling kan eerst één doorslaggevende claim toetsen.",
-    articlePaths: ["/nl/artikelen/wat-publieke-beelden-vertellen-over-industriele-capaciteiten", "/nl/artikelen/asml-capaciteitsprognose-wat-zeggen-de-cijfers", "/nl/artikelen/onderscheid-tussen-bewijs-beoordeling-en-gevolgtrekking"],
+    articlePaths: ["/nl/artikelen/industriele-ai-beslislus-productie", "/nl/artikelen/wat-publieke-beelden-vertellen-over-industriele-capaciteiten", "/nl/artikelen/asml-capaciteitsprognose-wat-zeggen-de-cijfers", "/nl/artikelen/onderscheid-tussen-bewijs-beoordeling-en-gevolgtrekking"],
     servicePaths: ["/nl/diensten/technische-concurrentie-intelligence", "/nl/diensten/gerichte-intelligencebeoordeling"], examplePath: "/nl/voorbeeldrapport",
   },
   {

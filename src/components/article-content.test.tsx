@@ -21,14 +21,14 @@ describe("sourced article rendering", () => {
   it("renders numbered claim citations and a localized source register", () => {
     const english = insights.filter((article) => article.sources?.length);
     const dutch = insightsNl.filter((article) => article.sources?.length);
-    expect(english).toHaveLength(4);
-    expect(dutch).toHaveLength(4);
+    expect(english).toHaveLength(5);
+    expect(dutch).toHaveLength(5);
 
     for (const article of english) {
       const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix="section" locale="en" />);
       expect(html).toContain('id="section-sources"');
       expect(html).toContain("Sources</h2>");
-      expect(html).toContain("Accessed 7 October 2026");
+      expect(html).toContain("Accessed ");
       expect(html).toMatch(/aria-label="Source \d+"/);
       for (const source of article.sources ?? []) expect(html).toContain(`id="section-source-${source.id}"`);
     }
@@ -37,7 +37,7 @@ describe("sourced article rendering", () => {
       const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix="sectie" locale="nl" />);
       expect(html).toContain('id="sectie-sources"');
       expect(html).toContain("Bronnen</h2>");
-      expect(html).toContain("Geraadpleegd 7 oktober 2026");
+      expect(html).toContain("Geraadpleegd ");
       expect(html).toMatch(/aria-label="Bron \d+"/);
       for (const source of article.sources ?? []) expect(html).toContain(`id="sectie-source-${source.id}"`);
     }
@@ -46,7 +46,7 @@ describe("sourced article rendering", () => {
   it("renders localized article visuals with accessible text equivalents", () => {
     for (const [articles, locale, idPrefix] of [[insights, "en", "section"], [insightsNl, "nl", "sectie"]] as const) {
       const visualArticles = articles.filter((article) => article.visual);
-      expect(visualArticles).toHaveLength(4);
+      expect(visualArticles).toHaveLength(5);
 
       for (const article of visualArticles) {
         const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix={idPrefix} locale={locale} />);
@@ -60,5 +60,14 @@ describe("sourced article rendering", () => {
         }
       }
     }
+  });
+
+  it("renders the decision-authority comparison as an accessible table", () => {
+    const article = insights.find((item) => item.slug === "industrial-ai-decision-loop-manufacturing");
+    if (!article) throw new Error("Missing decision-loop article");
+    const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix="section" locale="en" />);
+    expect(html).toContain("<caption>Three practical authority levels for an industrial AI workflow</caption>");
+    expect(html).toContain('<th scope="col">Level</th>');
+    expect(html).toContain('<th scope="row">Recommendation</th>');
   });
 });

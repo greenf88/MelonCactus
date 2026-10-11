@@ -288,6 +288,7 @@ h3 { font-size: clamp(1.375rem, 2vw, 1.625rem); line-height: 1.28; }
 .article-meta { margin-top: 2rem; }
 .article-layout { display: grid; grid-template-columns: 230px minmax(0,70ch); gap: clamp(3rem,7vw,7rem); padding-block: var(--space-section); justify-content: center; align-items: start; }
 .article-aside { position: sticky; top: 120px; padding-top: .8rem; border-top: 1px solid var(--ink); }
+.article-aside, .article-body { min-width: 0; }
 .article-aside > p { margin: 0 0 1rem; font-size: .8125rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
 .article-aside ol { margin: 0; padding-left: 1.2rem; color: var(--muted); font-size: .875rem; }
 .article-aside li { margin-bottom: .7rem; }
@@ -317,6 +318,11 @@ h3 { font-size: clamp(1.375rem, 2vw, 1.625rem); line-height: 1.28; }
 .article-visual-explanation > div { min-width: 0; padding: 1rem; background: var(--paper); }
 .article-visual-explanation dt { color: var(--green-dark); font-size: .78rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
 .article-visual-explanation dd { margin: .45rem 0 0; color: var(--muted); font-size: .9375rem; line-height: 1.5; }
+.article-table-wrap { max-width: 100%; margin: 2rem 0; overflow-x: auto; border: 1px solid var(--line); }
+.article-table-wrap table { width: 100%; min-width: 38rem; border-collapse: collapse; background: var(--white); }
+.article-table-wrap caption { padding: 1rem 1.1rem; color: var(--ink); background: var(--surface); font-family: var(--font-display); font-size: 1.05rem; font-weight: 650; text-align: left; }
+.article-table-wrap th, .article-table-wrap td { padding: .9rem 1rem; border-top: 1px solid var(--line); color: var(--muted); line-height: 1.5; text-align: left; vertical-align: top; }
+.article-table-wrap thead th, .article-table-wrap tbody th { color: var(--green-dark); font-weight: 700; }
 .article-intro { margin-bottom: 3rem; }
 .article-cta { margin-top: 5rem; padding: 2rem; background: var(--lemon-soft); border-top: 4px solid var(--green-dark); }
 .article-cta h2 { font-size: 2.25rem; }
