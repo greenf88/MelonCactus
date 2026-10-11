@@ -299,6 +299,13 @@ h3 { font-size: clamp(1.375rem, 2vw, 1.625rem); line-height: 1.28; }
 .article-body ol { margin: 1.7rem 0; padding-left: 2.5rem; }
 .article-body a { color: var(--green-dark); text-decoration: underline; text-underline-offset: .2em; overflow-wrap: anywhere; }
 .article-body a:hover { text-decoration-thickness: 2px; }
+.article-body .article-citation { display: inline-block; margin-left: .2rem; font-family: var(--font-body); font-size: .78em; font-weight: 750; line-height: 1; text-decoration: none; vertical-align: super; }
+.article-sources { padding-top: 2rem; border-top: 1px solid var(--line); }
+.article-sources ol { padding-left: 1.5rem; }
+.article-sources li { margin-bottom: 1.35rem; padding-left: .35rem; }
+.article-sources li > a { font-family: var(--font-body); font-weight: 750; }
+.article-sources li > span { display: block; margin-top: .2rem; color: var(--muted); font-size: .9375rem; line-height: 1.55; }
+.article-sources li:target { scroll-margin-top: 7rem; background: var(--lemon-soft); outline: .5rem solid var(--lemon-soft); }
 .article-intro { margin-bottom: 3rem; }
 .article-cta { margin-top: 5rem; padding: 2rem; background: var(--lemon-soft); border-top: 4px solid var(--green-dark); }
 .article-cta h2 { font-size: 2.25rem; }

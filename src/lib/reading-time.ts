@@ -10,24 +10,34 @@ function plainText(markdown: string): string {
 
 // Count only the article text that readers see, including its headings and sources.
 // The shared call-to-action and navigation are not part of the article.
-export function articleWordCount(insight: Insight): number {
+export function articleWordCount(insight: Insight, locale: Locale = "en"): number {
   const text = [
     insight.introMarkdown ?? "",
     ...insight.sections.flatMap((section) => [
       section.heading,
       section.markdown ?? "",
-      ...(section.paragraphs ?? []),
+      ...(section.paragraphs ?? []).map((paragraph) => typeof paragraph === "string"
+        ? paragraph
+        : `${paragraph.text} ${paragraph.sourceIds.map(() => "1").join(" ")}`),
       ...(section.bullets ?? []),
+    ]),
+    ...(insight.sources?.length ? [locale === "nl" ? "Bronnen" : "Sources"] : []),
+    ...(insight.sources ?? []).flatMap((source) => [
+      source.organization,
+      source.title,
+      source.date && source.dateKind ? `${source.dateKind} ${source.date}` : "",
+      `accessed ${source.accessed}`,
+      source.note[locale],
     ]),
   ].join("\n");
   return [...plainText(text).matchAll(/[\p{L}\p{N}]+(?:[’'-][\p{L}\p{N}]+)*/gu)].length;
 }
 
-export function articleReadingMinutes(insight: Insight): number {
-  return Math.max(1, Math.ceil(articleWordCount(insight) / 225));
+export function articleReadingMinutes(insight: Insight, locale: Locale = "en"): number {
+  return Math.max(1, Math.ceil(articleWordCount(insight, locale) / 225));
 }
 
 export function articleReadingLabel(insight: Insight, locale: Locale): string {
-  const minutes = articleReadingMinutes(insight);
+  const minutes = articleReadingMinutes(insight, locale);
   return locale === "nl" ? `${minutes} min leestijd` : `${minutes} min read`;
 }

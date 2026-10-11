@@ -10,6 +10,7 @@ describe("article reading time", () => {
       ...insights[0],
       introMarkdown: "A [linked source](https://example.com/a/very/long/path) and **bold** text.",
       sections: [{ heading: "A section", markdown: "1. **First point** and *second point*." }],
+      sources: [],
     };
     expect(articleWordCount(example)).toBe(13);
     expect(articleReadingMinutes(example)).toBe(1);
@@ -19,14 +20,14 @@ describe("article reading time", () => {
     expect(insights).toHaveLength(8);
     expect(insightsNl).toHaveLength(8);
     for (const article of insights) {
-      expect(articleWordCount(article)).toBeGreaterThan(400);
+      expect(articleWordCount(article, "en")).toBeGreaterThan(400);
       expect(articleReadingLabel(article, "en")).toMatch(/^\d+ min read$/);
-      expect(articleReadingMinutes(article)).toBe(Math.ceil(articleWordCount(article) / 225));
+      expect(articleReadingMinutes(article, "en")).toBe(Math.ceil(articleWordCount(article, "en") / 225));
     }
     for (const article of insightsNl) {
-      expect(articleWordCount(article)).toBeGreaterThan(400);
+      expect(articleWordCount(article, "nl")).toBeGreaterThan(400);
       expect(articleReadingLabel(article, "nl")).toMatch(/^\d+ min leestijd$/);
-      expect(articleReadingMinutes(article)).toBe(Math.ceil(articleWordCount(article) / 225));
+      expect(articleReadingMinutes(article, "nl")).toBe(Math.ceil(articleWordCount(article, "nl") / 225));
     }
   });
 
