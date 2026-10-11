@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">The MelonCactus Industrial Decision Loop</title>
+  <desc id="desc">Five connected stages move from signal through context, decision and action to outcome, with measured feedback returning to the first stage.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0l10 5-10 5z" fill="#8A5A35"/></marker></defs>
+  <rect width="1200" height="760" fill="#F7F5EE"/>
+  <text x="70" y="82" fill="#173D2D" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="2">GOVERNED INDUSTRIAL AI</text>
+  <text x="70" y="132" fill="#18201D" font-family="Georgia, serif" font-size="34">From an observable signal to a measured outcome</text>
+  <g font-family="Arial, sans-serif">
+    <path d="M250 330H290M450 330H490M650 330H690M850 330H890" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <g><rect x="70" y="240" width="180" height="180" rx="18" fill="#173D2D"/><text x="100" y="290" fill="#FFFFFF" font-size="15" font-weight="700">01 · SIGNAL</text><text x="100" y="335" fill="#FFFFFF" font-size="24" font-weight="700">A defined</text><text x="100" y="367" fill="#FFFFFF" font-size="24" font-weight="700">trigger</text><text x="100" y="398" fill="#DCE5DC" font-size="14">Quality · asset · supply</text></g>
+    <g><rect x="290" y="240" width="160" height="180" rx="18" fill="#DCE5DC"/><text x="315" y="290" fill="#173D2D" font-size="15" font-weight="700">02 · CONTEXT</text><text x="315" y="335" fill="#18201D" font-size="22" font-weight="700">Evidence and</text><text x="315" y="366" fill="#18201D" font-size="22" font-weight="700">constraints</text><text x="315" y="398" fill="#4C5852" font-size="14">State · history · limits</text></g>
+    <g><rect x="490" y="240" width="160" height="180" rx="18" fill="#EEE9BE"/><text x="515" y="290" fill="#173D2D" font-size="15" font-weight="700">03 · DECISION</text><text x="515" y="335" fill="#18201D" font-size="22" font-weight="700">Owner and</text><text x="515" y="366" fill="#18201D" font-size="22" font-weight="700">authority</text><text x="515" y="398" fill="#4C5852" font-size="14">Approve · override · stop</text></g>
+    <g><rect x="690" y="240" width="160" height="180" rx="18" fill="#DCE5DC"/><text x="715" y="290" fill="#173D2D" font-size="15" font-weight="700">04 · ACTION</text><text x="715" y="335" fill="#18201D" font-size="22" font-weight="700">Bounded</text><text x="715" y="366" fill="#18201D" font-size="22" font-weight="700">execution</text><text x="715" y="398" fill="#4C5852" font-size="14">Act · escalate · fallback</text></g>
+    <g><rect x="890" y="240" width="240" height="180" rx="18" fill="#173D2D"/><text x="920" y="290" fill="#FFFFFF" font-size="15" font-weight="700">05 · OUTCOME</text><text x="920" y="335" fill="#FFFFFF" font-size="22" font-weight="700">Measure what</text><text x="920" y="366" fill="#FFFFFF" font-size="22" font-weight="700">actually happened</text><text x="920" y="398" fill="#DCE5DC" font-size="14">Result · exception · learning</text></g>
+    <path d="M1010 448V535Q1010 570 975 570H230Q190 570 190 530V448" fill="none" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <text x="430" y="620" fill="#173D2D" font-size="18" font-weight="700">Feedback tests the next decision; it does not erase uncertainty.</text>
+    <rect x="70" y="672" width="1060" height="2" fill="#D4CFC2"/><text x="70" y="714" fill="#4C5852" font-size="16">Every transition needs evidence, an accountable owner and an exception path.</text>
+  </g>
+</svg>

@@ -13,12 +13,23 @@ describe("evergreen article evidence records", () => {
   const dutch = insightsNl.filter((article) => article.sources?.length);
 
   it("keeps exactly four bilingual article pairs with the original publication date", () => {
-    expect(english).toHaveLength(4);
-    expect(dutch).toHaveLength(4);
-    for (const article of [...english, ...dutch]) {
+    const evergreenEnglish = english.filter((article) => article.date === "2026-09-22");
+    const evergreenDutch = dutch.filter((article) => article.date === "2026-09-22");
+    expect(evergreenEnglish).toHaveLength(4);
+    expect(evergreenDutch).toHaveLength(4);
+    for (const article of [...evergreenEnglish, ...evergreenDutch]) {
       expect(article.date).toBe("2026-09-22");
       expect(article.modifiedDate).toBe("2026-10-09");
       expect(article.sources?.length).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  it("records the bilingual decision-loop article with supplier evidence limits", () => {
+    const pair = [english[0], dutch[0]];
+    expect(pair.map((article) => article.date)).toEqual(["2026-10-12", "2026-10-12"]);
+    for (const article of pair) {
+      expect(article.sources?.map((source) => source.accessed)).toEqual(["2026-10-11", "2026-10-11", "2026-10-11"]);
+      expect(article.sources?.every((source) => /Vendor|leverancier|product/i.test(`${source.note.en} ${source.note.nl}`))).toBe(true);
     }
   });
 
@@ -29,7 +40,7 @@ describe("evergreen article evidence records", () => {
       expect(new Set(citedSourceIds(article))).toEqual(new Set(ids));
       for (const source of article.sources ?? []) {
         expect(source.url).toMatch(/^https:\/\//);
-        expect(source.accessed).toBe("2026-10-07");
+        expect(source.accessed).toMatch(/^2026-10-(?:07|11)$/);
         expect(source.note.en).toBeTruthy();
         expect(source.note.nl).toBeTruthy();
       }

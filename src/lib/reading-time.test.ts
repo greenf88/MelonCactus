@@ -11,14 +11,15 @@ describe("article reading time", () => {
       introMarkdown: "A [linked source](https://example.com/a/very/long/path) and **bold** text.",
       sections: [{ heading: "A section", markdown: "1. **First point** and *second point*." }],
       sources: [],
+      visual: undefined,
     };
     expect(articleWordCount(example)).toBe(13);
     expect(articleReadingMinutes(example)).toBe(1);
   });
 
   it("calculates localized times for every existing and new article", () => {
-    expect(insights).toHaveLength(8);
-    expect(insightsNl).toHaveLength(8);
+    expect(insights).toHaveLength(9);
+    expect(insightsNl).toHaveLength(9);
     for (const article of insights) {
       expect(articleWordCount(article, "en")).toBeGreaterThan(400);
       expect(articleReadingLabel(article, "en")).toMatch(/^\d+ min read$/);

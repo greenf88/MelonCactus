@@ -30,6 +30,7 @@ export const routePairs = [
   ["/insights/factory-opening-versus-full-production-infineon", "/nl/artikelen/nieuwe-fabriek-openen-versus-volledig-produceren"],
   ["/insights/battery-factory-from-pilot-to-commercial-scale", "/nl/artikelen/batterijfabriek-van-proefproductie-naar-commerciele-schaal"],
   ["/insights/asml-capacity-plans-reading-manufacturing-forecasts", "/nl/artikelen/asml-capaciteitsprognose-wat-zeggen-de-cijfers"],
+  ["/insights/industrial-ai-decision-loop-manufacturing", "/nl/artikelen/industriele-ai-beslislus-productie"],
 ] as const;
 
 const enToNl = new Map<string, string>(routePairs);

@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = articleMetadataTitle("en", slug, insight.title);
   const description = articleMetadataDescription("en", slug, insight.description);
   const social = socialImageMetadata("en", "article", insight.title, slug);
-  return { title, description, alternates: languageAlternates(url, "en"), openGraph: { type: "article", title, description, url, publishedTime: insight.date, modifiedTime: insight.modifiedDate ?? "2026-10-01", ...social.openGraph }, twitter: { title, description, ...social.twitter } };
+  return { title, description, alternates: languageAlternates(url, "en"), openGraph: { type: "article", title, description, url, publishedTime: insight.date, modifiedTime: insight.modifiedDate ?? insight.date, ...social.openGraph }, twitter: { title, description, ...social.twitter } };
 }
 
 export default async function InsightPage({ params }: Props) {
@@ -56,6 +56,6 @@ export default async function InsightPage({ params }: Props) {
       </div>
     </Container>
     <StructuredData data={breadcrumbSchema("en", [{ name: "Insights", path: "/insights" }, { name: insight.title, path }])} />
-    <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`, headline: insight.title, description: insight.description, inLanguage: "en", datePublished: insight.date, dateModified: insight.modifiedDate ?? "2026-10-01", mainEntityOfPage: url, image: socialImageMetadata("en", "article", insight.title, insight.slug).openGraph.images[0].url, author: { "@id": entityIds.organization }, publisher: { "@id": entityIds.organization }, ...(insight.sources?.length ? { citation: insight.sources.map((source) => source.url) } : {}) }} />
+    <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`, headline: insight.title, description: insight.description, inLanguage: "en", datePublished: insight.date, dateModified: insight.modifiedDate ?? insight.date, mainEntityOfPage: url, image: socialImageMetadata("en", "article", insight.title, insight.slug).openGraph.images[0].url, author: { "@id": entityIds.organization }, publisher: { "@id": entityIds.organization }, ...(insight.sources?.length ? { citation: insight.sources.map((source) => source.url) } : {}) }} />
   </article>;
 }

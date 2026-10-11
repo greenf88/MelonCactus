@@ -21,6 +21,22 @@ const mobileDimensions = { mobileWidth: 760, mobileHeight: 1100 } as const;
 
 export const articleVisuals = {
   en: {
+    decisionLoop: {
+      ...dimensions,
+      ...mobileDimensions,
+      src: "/article-visuals/decision-loop-en.svg",
+      mobileSrc: "/article-visuals/decision-loop-en-mobile.svg",
+      alt: "Five-stage industrial AI decision loop showing a signal moving through operational context, a governed decision and bounded action before the measured outcome feeds the next cycle.",
+      title: "The MelonCactus Industrial Decision Loop",
+      caption: "A useful loop connects a defined trigger to context, decision rights, bounded action and measured feedback; it does not treat an alert or recommendation as the finished result.",
+      explanationLabel: "Decision loop explained in text",
+      details: [
+        { label: "Understand", text: "A signal gains meaning only after relevant operational context and evidence limits are added." },
+        { label: "Decide and act", text: "Named owners, approval rules and safe boundaries determine what may happen next." },
+        { label: "Learn", text: "The observed outcome returns to the loop so assumptions and rules can be reviewed." },
+      ],
+      afterSectionIndex: 2,
+    },
     industrialIntelligence: {
       ...dimensions,
       ...mobileDimensions,
@@ -87,6 +103,22 @@ export const articleVisuals = {
     },
   },
   nl: {
+    decisionLoop: {
+      ...dimensions,
+      ...mobileDimensions,
+      src: "/article-visuals/decision-loop-nl.svg",
+      mobileSrc: "/article-visuals/decision-loop-nl-mobile.svg",
+      alt: "Vijfstaps beslislus voor industriële AI waarin een signaal via operationele context, een beheerste beslissing en begrensde actie leidt tot een gemeten uitkomst die de volgende cyclus voedt.",
+      title: "De MelonCactus Industrial Decision Loop",
+      caption: "Een bruikbare lus verbindt een afgebakende aanleiding met context, beslisrechten, begrensde actie en gemeten terugkoppeling; een waarschuwing of advies is nog niet het eindresultaat.",
+      explanationLabel: "Uitleg van de beslislus in tekst",
+      details: [
+        { label: "Begrijpen", text: "Een signaal krijgt pas betekenis met relevante operationele context en zichtbare bewijsgrenzen." },
+        { label: "Beslissen en handelen", text: "Een eigenaar, goedkeuringsregels en veilige grenzen bepalen wat daarna mag gebeuren." },
+        { label: "Leren", text: "De gemeten uitkomst keert terug in de lus, zodat aannames en regels kunnen worden beoordeeld." },
+      ],
+      afterSectionIndex: 2,
+    },
     industrialIntelligence: {
       ...dimensions,
       ...mobileDimensions,

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: languageAlternates(enPath, "nl"),
-    openGraph: { type: "article", title, description, url: path, locale: "nl_NL", publishedTime: insight.date, modifiedTime: insight.modifiedDate ?? "2026-10-01", ...social.openGraph },
+    openGraph: { type: "article", title, description, url: path, locale: "nl_NL", publishedTime: insight.date, modifiedTime: insight.modifiedDate ?? insight.date, ...social.openGraph },
     twitter: { title, description, ...social.twitter },
   };
 }
@@ -60,6 +60,6 @@ export default async function DutchInsightPage({ params }: Props) {
       </div>
     </Container>
     <StructuredData data={breadcrumbSchema("nl", [{ name: "Artikelen", path: "/nl/artikelen" }, { name: insight.title, path }])} />
-    <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`, headline: insight.title, description: insight.description, inLanguage: "nl-NL", datePublished: insight.date, dateModified: insight.modifiedDate ?? "2026-10-01", mainEntityOfPage: url, image: socialImageMetadata("nl", "article", insight.title, insight.slug).openGraph.images[0].url, author: { "@id": entityIds.organization }, publisher: { "@id": entityIds.organization }, ...(insight.sources?.length ? { citation: insight.sources.map((source) => source.url) } : {}) }} />
+    <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`, headline: insight.title, description: insight.description, inLanguage: "nl-NL", datePublished: insight.date, dateModified: insight.modifiedDate ?? insight.date, mainEntityOfPage: url, image: socialImageMetadata("nl", "article", insight.title, insight.slug).openGraph.images[0].url, author: { "@id": entityIds.organization }, publisher: { "@id": entityIds.organization }, ...(insight.sources?.length ? { citation: insight.sources.map((source) => source.url) } : {}) }} />
   </article>;
 }

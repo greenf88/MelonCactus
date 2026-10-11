@@ -2,6 +2,7 @@ import type { Locale } from "@/lib/i18n";
 
 const summaries: Record<Locale, Record<string, string>> = {
   en: {
+    "industrial-ai-decision-loop-manufacturing": "Industrial AI becomes operationally useful when a signal leads through context and accountable decision rights to bounded action. A governed decision loop defines evidence, ownership, approval, fallback and feedback before automation scales. The objective is a traceable decision, not maximum autonomy.",
     "what-is-industrial-competitive-intelligence": "This article explains how public-source research can inform a defined industrial decision. It shows why source quality, timing and competing interpretations matter more than the volume of collected material. Public evidence can narrow uncertainty, but it cannot reveal every private plan or operating fact.",
     "what-public-images-can-reveal-about-industrial-capabilities": "This article examines what public photographs and videos can reveal about industrial facilities and equipment. Visual clues become useful only when their origin, date and context can be tested against other sources. An image cannot by itself establish throughput, utilisation or current production.",
     "separate-evidence-assessment-inference-osint": "This article separates direct evidence from assessment and inference in open-source research. It offers a way to record sources, alternative explanations and confidence before making a business decision. An inference remains uncertain even when it sounds plausible.",
@@ -12,6 +13,7 @@ const summaries: Record<Locale, Record<string, string>> = {
     "asml-capacity-plans-reading-manufacturing-forecasts": "This article reads ASML's capacity outlook as a forecast with assumptions rather than a completed result. Public figures can clarify intended manufacturing scale and timing. They do not prove that a future production or delivery target has already been achieved.",
   },
   nl: {
+    "industriele-ai-beslislus-productie": "Industriële AI wordt operationeel bruikbaar wanneer een signaal via context en verantwoordelijke beslisrechten tot begrensde actie leidt. Een beheerste beslislus legt bewijs, eigenaarschap, goedkeuring, terugval en terugkoppeling vast vóór opschaling. Het doel is een herleidbare beslissing, niet maximale autonomie.",
     "wat-is-industriele-concurrentie-intelligentie": "Dit artikel laat zien hoe onderzoek met openbare bronnen een afgebakende industriële beslissing kan ondersteunen. Bronkwaliteit, datering en alternatieve verklaringen zijn belangrijker dan de hoeveelheid verzameld materiaal. Openbaar bewijs kan onzekerheid verkleinen, maar onthult niet elk besloten plan of operationeel feit.",
     "wat-publieke-beelden-vertellen-over-industriele-capaciteiten": "Dit artikel onderzoekt wat openbare foto's en video's over industriële locaties en apparatuur kunnen laten zien. Beeldsignalen worden pas bruikbaar als herkomst, datum en context tegen andere bronnen zijn getoetst. Een beeld bewijst op zichzelf geen productievolume, bezettingsgraad of actuele output.",
     "onderscheid-tussen-bewijs-beoordeling-en-gevolgtrekking": "Dit artikel onderscheidt directe waarnemingen, beoordelingen en gevolgtrekkingen in onderzoek met openbare bronnen. Het biedt een manier om bronnen, alternatieve verklaringen en zekerheid vast te leggen vóór een zakelijke beslissing. Een aannemelijke gevolgtrekking blijft onzeker zolang aanvullend bewijs ontbreekt.",
@@ -31,6 +33,7 @@ export function articleSummary(locale: Locale, slug: string) {
 
 const seoDescriptions: Record<Locale, Record<string, string>> = {
   en: {
+    "industrial-ai-decision-loop-manufacturing": "Learn how manufacturers connect signals, operational context, decision ownership and feedback to move industrial AI from insight to governed action.",
     "what-is-industrial-competitive-intelligence": "A practical guide to industrial competitive intelligence: define a decision, test public sources and separate supported findings from assumptions.",
     "what-public-images-can-reveal-about-industrial-capabilities": "How to assess public facility photographs and videos as industrial evidence while respecting uncertainty about timing, capacity and output.",
     "separate-evidence-assessment-inference-osint": "Learn to separate direct evidence, analyst assessment and inference in public-source research, with traceable sources and visible uncertainty.",
@@ -39,6 +42,7 @@ const seoDescriptions: Record<Locale, Record<string, string>> = {
     "asml-capacity-plans-reading-manufacturing-forecasts": "ASML's EUV and DUV capacity plans are forecasts, not delivered output. Learn to distinguish capability, orders, deliveries and scenarios.",
   },
   nl: {
+    "industriele-ai-beslislus-productie": "Zo verbindt u signalen, operationele context, besliseigenaarschap en feedback om industriële AI van inzicht naar beheerst handelen te brengen.",
     "wat-is-industriele-concurrentie-intelligentie": "Wat is industrieel concurrentieonderzoek? Bepaal de beslisvraag, toets openbare bronnen en onderscheid onderbouwde conclusies van aannames.",
     "wat-publieke-beelden-vertellen-over-industriele-capaciteiten": "Zo beoordeelt u openbare foto's en video's als industrieel bewijs zonder meer te concluderen over planning, capaciteit of productie dan de bron toelaat.",
     "onderscheid-tussen-bewijs-beoordeling-en-gevolgtrekking": "Leer waarneming, beoordeling en gevolgtrekking te scheiden in openbaar bronnenonderzoek, met herleidbare bronnen en zichtbare onzekerheid.",
@@ -54,6 +58,7 @@ export function articleMetadataDescription(locale: Locale, slug: string, fallbac
 export function articleMetadataTitle(locale: Locale, slug: string, fallback: string) {
   const conciseTitles: Record<Locale, Record<string, string>> = {
     en: {
+      "industrial-ai-decision-loop-manufacturing": "Industrial AI Decision Loops in Manufacturing",
       "what-public-images-can-reveal-about-industrial-capabilities": "Public Images as Evidence of Industrial Capabilities",
       "separate-evidence-assessment-inference-osint": "Evidence, Assessment and Inference in OSINT",
       "how-industrial-companies-expose-competitive-information": "How Industrial Firms Expose Competitive Information",
@@ -62,6 +67,7 @@ export function articleMetadataTitle(locale: Locale, slug: string, fallback: str
       "battery-factory-from-pilot-to-commercial-scale": "Battery Factory: Pilot to Commercial Scale",
     },
     nl: {
+      "industriele-ai-beslislus-productie": "Beslislussen voor industriële AI in productie",
       "wat-publieke-beelden-vertellen-over-industriele-capaciteiten": "Openbare beelden en industriële capaciteit",
       "onderscheid-tussen-bewijs-beoordeling-en-gevolgtrekking": "Bewijs en gevolgtrekking in bronnenonderzoek",
       "hoe-industriele-bedrijven-concurrentie-informatie-prijsgeven": "Onbedoelde blootstelling van bedrijfsinformatie",
