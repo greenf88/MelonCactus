@@ -48,7 +48,8 @@ export function counterpartPath(pathname: string): string | null {
 }
 
 export function languageAlternates(englishPath: string, locale: Locale) {
-  const en = `${siteConfig.siteUrl}${englishPath}`;
+  const base = siteConfig.siteUrl.replace(/\/$/, "");
+  const en = englishPath === "/" ? base : `${base}${englishPath}`;
   const nl = `${siteConfig.siteUrl}${pathForLocale(englishPath, "nl")}`;
   return {
     canonical: locale === "en" ? en : nl,

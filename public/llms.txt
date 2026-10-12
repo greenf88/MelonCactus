@@ -2,7 +2,7 @@
 
 MelonCactus is an industrial intelligence practice operated by GFNI in Enschede, Netherlands. It supports defined technical, commercial and strategic decisions using lawfully accessible public sources. Findings distinguish direct observations, company claims, assessment, inference and unknowns. The published example cases are fictional.
 
-English: https://meloncactus.com/
+English: https://meloncactus.com
 Nederlands: https://meloncactus.com/nl
 About and operator: https://meloncactus.com/about | https://meloncactus.com/nl/over-ons
 Services: https://meloncactus.com/services | https://meloncactus.com/nl/diensten
@@ -19,4 +19,7 @@ Competitor analysis: https://meloncactus.com/topics/industrial-competitor-analys
 Technology scouting: https://meloncactus.com/topics/technology-scouting | https://meloncactus.com/nl/themas/technologieverkenning
 Supplier research: https://meloncactus.com/topics/supplier-research | https://meloncactus.com/nl/themas/leveranciersonderzoek
 Public company profile: https://meloncactus.com/topics/public-company-profile | https://meloncactus.com/nl/themas/openbaar-bedrijfsprofiel
+Industrial competitive intelligence: https://meloncactus.com/insights/what-is-industrial-competitive-intelligence | https://meloncactus.com/nl/artikelen/wat-is-industriele-concurrentie-intelligentie
+Evidence, assessment and inference: https://meloncactus.com/insights/separate-evidence-assessment-inference-osint | https://meloncactus.com/nl/artikelen/onderscheid-tussen-bewijs-beoordeling-en-gevolgtrekking
+Industrial AI decision loop: https://meloncactus.com/insights/industrial-ai-decision-loop-manufacturing | https://meloncactus.com/nl/artikelen/industriele-ai-beslislus-productie
 Contact: https://meloncactus.com/contact | https://meloncactus.com/nl/contact | contact@meloncactus.com
