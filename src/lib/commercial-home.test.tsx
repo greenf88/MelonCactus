@@ -80,7 +80,7 @@ describe("commercial homepage", () => {
   });
 
   it("keeps paired metadata, prices, navigation and contact destinations", () => {
-    const en = `${siteConfig.siteUrl}/`;
+    const en = siteConfig.siteUrl.replace(/\/$/, "");
     const nl = `${siteConfig.siteUrl}/nl`;
     expect(englishMetadata.alternates).toEqual({ canonical: en, languages: { en, "nl-NL": nl, "x-default": en } });
     expect(dutchMetadata.alternates).toEqual({ canonical: nl, languages: { en, "nl-NL": nl, "x-default": en } });

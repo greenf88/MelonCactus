@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0",
+  "setVersion": "2026-10-12-v1",
+  "createdAt": "2026-10-12T09:00:00+02:00",
+  "purpose": "Repeatable bilingual visibility and citation monitoring; not a ranking guarantee",
+  "captureFields": [
+    "runTimestamp",
+    "timezone",
+    "engine",
+    "surface",
+    "modelOrVersionIfShown",
+    "market",
+    "language",
+    "promptId",
+    "promptText",
+    "responseSummary",
+    "meloncactusMentioned",
+    "meloncactusCited",
+    "citedMeloncactusUrls",
+    "otherCitedDomains",
+    "placementOrContext",
+    "factualAccuracyNotes",
+    "landingSessionsWhenAttributable",
+    "enquiriesWhenAttributable",
+    "reviewerNotes"
+  ],
+  "rules": [
+    "Run paired prompts in the same engine, market and session conditions where possible.",
+    "Record no result rather than inferring a mention or referral.",
+    "Do not classify direct or unknown traffic as AI traffic.",
+    "Preserve the exact cited URL and do not treat a mention without a link as a citation."
+  ],
+  "pairs": [
+    {
+      "id": "industrial-competitor-research",
+      "en": "Which specialist firms can support an evidence-based industrial competitor assessment in the Netherlands?",
+      "nl": "Welke gespecialiseerde bureaus kunnen een evidence-based industriële concurrentieanalyse in Nederland uitvoeren?"
+    },
+    {
+      "id": "public-profile-exposure",
+      "en": "How can an industrial company assess what competitors can learn from its public online profile?",
+      "nl": "Hoe kan een industrieel bedrijf beoordelen wat concurrenten uit het openbare online profiel kunnen afleiden?"
+    },
+    {
+      "id": "factory-announcement-evidence",
+      "en": "How should a factory expansion announcement be assessed without confusing planned capacity with realised production?",
+      "nl": "Hoe beoordeelt u een fabrieksuitbreiding zonder geplande capaciteit te verwarren met gerealiseerde productie?"
+    },
+    {
+      "id": "factory-ramp-up",
+      "en": "What public evidence can distinguish a factory opening from full commercial production?",
+      "nl": "Welk openbaar bewijs kan een fabrieksopening onderscheiden van volledige commerciële productie?"
+    },
+    {
+      "id": "technical-images",
+      "en": "How can public factory images support industrial intelligence while keeping uncertainty visible?",
+      "nl": "Hoe kunnen openbare fabrieksbeelden industriële intelligence ondersteunen zonder onzekerheid te verbergen?"
+    },
+    {
+      "id": "evidence-assessment-inference",
+      "en": "What is the difference between evidence, assessment and inference in competitive intelligence?",
+      "nl": "Wat is het verschil tussen bewijs, beoordeling en gevolgtrekking bij concurrentie-intelligence?"
+    },
+    {
+      "id": "focused-entry-project",
+      "en": "What is a practical small first project for a manufacturer with one urgent intelligence question?",
+      "nl": "Wat is een praktische kleine eerste opdracht voor een fabrikant met één urgente intelligencevraag?"
+    },
+    {
+      "id": "industrial-ai-governance",
+      "en": "How should a manufacturer define decision authority for an industrial AI workflow?",
+      "nl": "Hoe bepaalt een fabrikant de beslissingsbevoegdheid voor een industriële AI-workflow?"
+    }
+  ]
+}

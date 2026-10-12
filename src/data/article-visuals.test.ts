@@ -10,8 +10,8 @@ describe("localized article visuals", () => {
     nl: insightsNl.filter((item) => item.visual)[index],
   }));
 
-  it("provides five English and Dutch visual pairs", () => {
-    expect(pairs).toHaveLength(5);
+  it("provides nine English and Dutch visual pairs", () => {
+    expect(pairs).toHaveLength(9);
     for (const { en, nl } of pairs) {
       expect(en.visual?.src).toMatch(/-en\.svg$/);
       expect(nl.visual?.src).toMatch(/-nl\.svg$/);

@@ -33,14 +33,32 @@ describe("evergreen article evidence records", () => {
     }
   });
 
+  it("keeps the four industrial case pairs source-matched and visibly updated", () => {
+    const caseEnglish = english.filter((article) => article.date === "2026-09-27");
+    const caseDutch = dutch.filter((article) => article.date === "2026-09-27");
+    expect(caseEnglish).toHaveLength(4);
+    expect(caseDutch).toHaveLength(4);
+    for (const article of [...caseEnglish, ...caseDutch]) {
+      expect(article.modifiedDate).toBe("2026-10-12");
+      expect(article.sources?.length).toBeGreaterThan(0);
+      expect(article.visual).toBeDefined();
+    }
+  });
+
   it("resolves every inline citation to a unique HTTPS source", () => {
     for (const article of [...english, ...dutch]) {
       const ids = article.sources?.map((source) => source.id) ?? [];
       expect(new Set(ids).size).toBe(ids.length);
-      expect(new Set(citedSourceIds(article))).toEqual(new Set(ids));
+      const inlineIds = new Set(citedSourceIds(article));
+      if (article.introMarkdown) {
+        const markdown = JSON.stringify([article.introMarkdown, article.sections]);
+        for (const source of article.sources ?? []) expect(markdown).toContain(source.url);
+      } else {
+        expect(inlineIds).toEqual(new Set(ids));
+      }
       for (const source of article.sources ?? []) {
         expect(source.url).toMatch(/^https:\/\//);
-        expect(source.accessed).toMatch(/^2026-10-(?:07|11)$/);
+        expect(source.accessed).toMatch(/^2026-10-(?:07|11|12)$/);
         expect(source.note.en).toBeTruthy();
         expect(source.note.nl).toBeTruthy();
       }

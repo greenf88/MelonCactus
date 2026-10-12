@@ -1,10 +1,52 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Insight } from "@/data/insights";
+import { articleSources, type ArticleSource } from "@/data/article-sources";
+import { articleVisuals, type ArticleVisual } from "@/data/article-visuals";
 
 // Keeping the supplied articles in Markdown makes the source links and emphasis
 // reviewable alongside the published copy. Only these eight known entries are parsed.
 const source = readFileSync(join(process.cwd(), "src/data/industrial-insights.md"), "utf8").replace(/\r\n/g, "\n");
+
+type ArticleEnhancement = {
+  sources: readonly ArticleSource[];
+  visual: ArticleVisual;
+};
+
+const enhancements: Readonly<Record<string, ArticleEnhancement>> = {
+  "what-a-factory-expansion-announcement-proves": {
+    sources: [articleSources.asmlCampus],
+    visual: articleVisuals.en.factoryExpansion,
+  },
+  "wat-bewijst-een-aangekondigde-fabrieksuitbreiding": {
+    sources: [articleSources.asmlCampus],
+    visual: articleVisuals.nl.factoryExpansion,
+  },
+  "factory-opening-versus-full-production-infineon": {
+    sources: [articleSources.infineonFabOpening, articleSources.infineonQuarterly2026],
+    visual: articleVisuals.en.factoryRampUp,
+  },
+  "nieuwe-fabriek-openen-versus-volledig-produceren": {
+    sources: [articleSources.infineonFabOpening, articleSources.infineonQuarterly2026],
+    visual: articleVisuals.nl.factoryRampUp,
+  },
+  "battery-factory-from-pilot-to-commercial-scale": {
+    sources: [articleSources.europeanCommissionBatteryBooster],
+    visual: articleVisuals.en.batteryScale,
+  },
+  "batterijfabriek-van-proefproductie-naar-commerciele-schaal": {
+    sources: [articleSources.europeanCommissionBatteryBooster],
+    visual: articleVisuals.nl.batteryScale,
+  },
+  "asml-capacity-plans-reading-manufacturing-forecasts": {
+    sources: [articleSources.asmlQ2Results2026, articleSources.asmlCampus],
+    visual: articleVisuals.en.capacityForecast,
+  },
+  "asml-capaciteitsprognose-wat-zeggen-de-cijfers": {
+    sources: [articleSources.asmlQ2Results2026, articleSources.asmlCampus],
+    visual: articleVisuals.nl.capacityForecast,
+  },
+};
 
 function requiredMatch(text: string, expression: RegExp, field: string): string {
   const value = text.match(expression)?.[1];
@@ -19,7 +61,10 @@ function parseArticle(chunk: string): Insight & { locale: "en" | "nl" } {
   const description = requiredMatch(chunk, /^\*\*Meta description:\*\* (.+)$/m, "description");
   const dateLine = /^\*\*(?:Publication date|Publicatiedatum):\*\* (\d{4}-\d{2}-\d{2})$/m.exec(chunk);
   if (!dateLine) throw new Error(`Missing publication date for ${path}`);
-  const body = chunk.slice(dateLine.index + dateLine[0].length).trim();
+  const body = chunk
+    .slice(dateLine.index + dateLine[0].length)
+    .trim()
+    .replace(/\n\n\*\*(?:Source|Sources|Bron|Bronnen):\*\*[^\n]*(?=\n\n\*\*(?:Internal link|Interne link):\*\*)/g, "");
   const [introMarkdown, ...sectionBlocks] = body.split(/\n(?=### )/);
   if (!introMarkdown || sectionBlocks.length === 0) throw new Error(`Missing article body for ${path}`);
   const sections = sectionBlocks.map((block) => {
@@ -28,6 +73,8 @@ function parseArticle(chunk: string): Insight & { locale: "en" | "nl" } {
   });
   const slug = path.split("/").at(-1);
   if (!slug) throw new Error(`Missing slug for ${path}`);
+  const enhancement = enhancements[slug];
+  if (!enhancement) throw new Error(`Missing evidence enhancement for ${path}`);
   const date = dateLine[1];
   if (new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) {
     throw new Error(`Invalid publication date for ${path}`);
@@ -41,8 +88,11 @@ function parseArticle(chunk: string): Insight & { locale: "en" | "nl" } {
     displayDate: new Intl.DateTimeFormat(locale === "nl" ? "nl-NL" : "en-GB", {
       day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
     }).format(new Date(`${date}T00:00:00Z`)),
+    modifiedDate: "2026-10-12",
+    displayModifiedDate: locale === "nl" ? "12 oktober 2026" : "12 October 2026",
     introMarkdown: introMarkdown.trim(),
     sections,
+    ...enhancement,
   };
 }
 
