@@ -1,0 +1,80 @@
+# MelonCactus Intelligence Engine — prioritised master to-do
+
+Status date: 16 October 2026. Scope: MelonCactus only.
+
+Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated, `[ ]` remaining, `OWNER` requires Rick or another authorised human.
+
+## P0 — security and isolation
+
+- [x] Audit the current GitHub repository, open pull requests, project documents and deployment shape.
+- [x] Confirm that the GitHub repository is public and keep all customer data and restricted evidence out of it.
+- [x] Audit Vercel read-only: project, latest deployments, protection posture, environment-variable names and custom environments.
+- [x] Audit Supabase read-only and confirm that no dedicated MelonCactus project exists.
+- [x] Leave LumiScore projects and data unchanged.
+- [x] Create feature branch `feat/intelligence-engine-phase-1`.
+- [x] Patch Next.js from 16.3.6 to 16.4.2 after the dependency audit identified affected releases.
+- [x] Pin the patched `source-map-js` transitive dependency.
+- [~] Create a dedicated MelonCactus Supabase project in an EU region. `OWNER`: select the organisation and explicitly accept any quoted recurring cost.
+- [ ] Create a Supabase development branch or other isolated staging database after the project exists. `OWNER`: approve non-zero branch cost if quoted.
+- [ ] Add a separate, access-controlled Vercel Control Room project or custom staging environment; do not expose it on the public custom domains.
+- [ ] Configure operator authentication, short sessions and MFA before any private interface is enabled.
+- [ ] Add secrets only to server-side staging variables; never use `NEXT_PUBLIC_` for database secrets.
+- [ ] Run Supabase security and performance advisors after applying the migration; resolve or explicitly document every notice.
+
+## P0 — governed operational core
+
+- [x] Implement atomic `YYMMNNN` dossier allocation using Europe/Amsterdam time.
+- [x] Preserve one sequence for enquiries and assignments; numbers are never recycled.
+- [x] Model dossiers, sources, evidence, research jobs, dependencies, agent runs, findings, reviews, report drafts and approvals.
+- [x] Keep the operational schema private and outside the configured Data API schemas.
+- [x] Revoke access from `public`, `anon` and `authenticated`; allow only server-side `service_role` access for the first private implementation.
+- [x] Enable and force RLS as defence in depth on all operational tables.
+- [x] Add source and evidence checks, SHA-256 fields, timestamps, restricted storage pointers and indexes.
+- [x] Add append-only, per-dossier hash-linked audit metadata without raw prompts, report text, client identity or source content.
+- [x] Add deterministic report-readiness rules: supporting evidence, independent red team, contradiction treatment and two-source triangulation for high confidence.
+- [x] Require a recorded human approval before a draft can become approved.
+- [x] Generate an internal Markdown draft with evidence IDs, source register, gaps and an explicit non-delivery warning.
+- [x] Generate red-team briefs without dossier or client identity.
+- [x] Build a deterministic research-job DAG ending in human approval.
+- [~] Apply the migration to isolated staging and run transactional verification. Blocked only by the absence of a dedicated MelonCactus Supabase project.
+- [ ] Before live allocation, privately register the already reserved October 2026 dossier `2610001`; do not store its client identity or case content in Git. `OWNER`: verify its restricted pointer and receipt date.
+
+## P1 — private Control Room
+
+- [ ] Implement a server-only database adapter against the private schema after staging exists.
+- [ ] Build operator screens for dossier registration, scope approval, job status, evidence entry, findings, red-team review and report review.
+- [ ] Make the UI read-only by default; require an explicit edit mode for mutations.
+- [ ] Add optimistic-concurrency or version checks to prevent analysts overwriting each other.
+- [ ] Add a visible audit timeline containing metadata only.
+- [ ] Add export to a restricted working file; do not add email or client-delivery buttons in Phase 1.
+- [ ] Verify browser → authenticated server → database → rendered response end to end on protected staging.
+- [ ] Add backup, restore and deletion tests aligned with `docs/legal/retention-schedule.md`.
+
+## P1 — first agent execution
+
+- [ ] Select one runtime only after staging and the deterministic gates pass.
+- [ ] Implement the source-discovery agent with a strict tool and domain allowlist.
+- [ ] Implement evidence normalisation with schema validation and source-ID enforcement.
+- [ ] Run red team in a separate context from the originating analyst agent.
+- [ ] Store hashes and restricted pointers for prompts/outputs; keep raw content out of audit events.
+- [ ] Add token, model and estimated-cost accounting per run.
+- [ ] Create a small eval set with fictitious or public-only cases and expected blockers.
+- [ ] Require human approval for scope changes, model-produced findings and final report status.
+
+## P2 — evidence capture and search
+
+- [ ] Pilot Bellingcat Auto Archiver as an isolated capture sidecar for supported public URLs; do not place its credentials or archive data in this repository.
+- [ ] Validate robots, terms, copyright, personal-data minimisation and source-specific lawful access before enabling a connector.
+- [ ] Add encrypted private object storage with retention tags and malware/content-type checks.
+- [ ] Add embeddings only after the access boundary and deletion workflow are proven.
+- [ ] Keep embeddings in the same dossier access boundary as the source text; deletion must remove both.
+- [ ] Add entity resolution and a knowledge graph only after evidence provenance remains queryable and reversible.
+
+## Explicitly prohibited
+
+- [x] No LinkedIn access, scraping, posting, reacting or messaging.
+- [x] No email, outreach, acknowledgement, proposal, invoice or client delivery by an agent.
+- [x] No production database migration or destructive database operation.
+- [x] No publication or production promotion.
+- [x] No customer names, emails, enquiry contents, source captures, prompts or reports in GitHub.
+- [x] No model may approve its own material finding or report.
