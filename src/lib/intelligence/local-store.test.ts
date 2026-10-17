@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { ensureFictionalDemo } from "./local-demo";
 import { writeLocalDashboard } from "./local-dashboard";
-import { LocalIntelligenceStore } from "./local-store";
+import { LocalIntelligenceStore, restoreBackupToIsolatedHome } from "./local-store";
 
 describe("LocalIntelligenceStore", () => {
   const stores: LocalIntelligenceStore[] = [];
@@ -147,5 +147,11 @@ describe("LocalIntelligenceStore", () => {
     expect(store.verifyAuditChain(result.dossier.id).valid).toBe(true);
     expect(store.verifyDatabase()).toEqual({ valid: true, message: "ok" });
     expect(existsSync(backupPath)).toBe(true);
+
+    const restoreHome = path.join(directories[directories.length - 1], "isolated-restore");
+    const restored = restoreBackupToIsolatedHome(backupPath, restoreHome);
+    expect(restored).toMatchObject({ dossiers: 1, auditEvents: 33 });
+    expect(existsSync(restored.databasePath)).toBe(true);
+    expect(() => restoreBackupToIsolatedHome(backupPath, restoreHome)).toThrow(/new or empty directory/);
   });
 });

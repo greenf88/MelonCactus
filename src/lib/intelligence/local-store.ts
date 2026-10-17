@@ -1,5 +1,14 @@
 import { randomUUID } from "node:crypto";
-import { chmodSync, mkdirSync, writeFileSync } from "node:fs";
+import {
+  chmodSync,
+  constants as fsConstants,
+  copyFileSync,
+  existsSync,
+  lstatSync,
+  mkdirSync,
+  readdirSync,
+  writeFileSync,
+} from "node:fs";
 import path from "node:path";
 import { backup, DatabaseSync } from "node:sqlite";
 
@@ -71,6 +80,25 @@ export interface LocalStatus {
   evidence: number;
   findings: number;
   pendingHumanApprovals: number;
+  auditEvents: number;
+}
+
+export interface LocalAuditEvent {
+  sequence: number;
+  occurredAt: string;
+  actorType: ActorType;
+  actorRef: string;
+  action: string;
+  objectType: string;
+  objectId: string;
+  metadata: AuditEvent["metadata"];
+  eventHash: string;
+}
+
+export interface IsolatedRestoreResult {
+  restoredHome: string;
+  databasePath: string;
+  dossiers: number;
   auditEvents: number;
 }
 
@@ -831,6 +859,27 @@ export class LocalIntelligenceStore {
     return { valid: true, events: rows.length };
   }
 
+  listAuditEvents(dossierId: string, limit = 100): LocalAuditEvent[] {
+    if (!Number.isInteger(limit) || limit < 1 || limit > 500) {
+      throw new RangeError("Audit event limit must be an integer from 1 through 500.");
+    }
+    return this.all<AuditRow>(
+      `select * from audit_events where dossier_id = ? order by sequence desc limit ?`,
+      dossierId,
+      limit,
+    ).map((row) => ({
+      sequence: row.sequence,
+      occurredAt: row.occurred_at,
+      actorType: row.actor_type,
+      actorRef: row.actor_ref,
+      action: row.action,
+      objectType: row.object_type,
+      objectId: row.object_id,
+      metadata: JSON.parse(row.metadata_json) as AuditEvent["metadata"],
+      eventHash: row.event_hash,
+    }));
+  }
+
   verifyDatabase(): { valid: boolean; message: string } {
     const row = this.get<{ integrity_check: string }>("pragma integrity_check");
     const message = row?.integrity_check ?? "No integrity result returned.";
@@ -938,6 +987,47 @@ export class LocalIntelligenceStore {
 
   private all<T>(sql: string, ...parameters: unknown[]): T[] {
     return this.database.prepare(sql).all(...parameters) as T[];
+  }
+}
+
+export function restoreBackupToIsolatedHome(
+  backupPath: string,
+  targetHome: string,
+): IsolatedRestoreResult {
+  const source = path.resolve(backupPath);
+  const target = path.resolve(targetHome);
+  if (!existsSync(source) || !lstatSync(source).isFile()) {
+    throw new Error(`Backup file not found: ${source}`);
+  }
+  if (existsSync(target) && readdirSync(target).length > 0) {
+    throw new Error("Restore target must be a new or empty directory.");
+  }
+  mkdirPrivate(target);
+  const restoredDatabase = path.join(target, LOCAL_DATABASE_NAME);
+  copyFileSync(source, restoredDatabase, fsConstants.COPYFILE_EXCL);
+  chmodPrivate(restoredDatabase, 0o600);
+
+  const restored = new LocalIntelligenceStore(target);
+  try {
+    const integrity = restored.verifyDatabase();
+    if (!integrity.valid) throw new Error(`Restored database failed integrity check: ${integrity.message}`);
+    let auditEvents = 0;
+    for (const dossier of restored.listDossiers()) {
+      const audit = restored.verifyAuditChain(dossier.id);
+      if (!audit.valid) {
+        throw new Error(`Restored audit chain failed for ${dossier.dossierNumber}: ${audit.error}`);
+      }
+      auditEvents += audit.events;
+    }
+    const status = restored.getStatus();
+    return {
+      restoredHome: target,
+      databasePath: restored.databasePath,
+      dossiers: status.dossiers,
+      auditEvents,
+    };
+  } finally {
+    restored.close();
   }
 }
 

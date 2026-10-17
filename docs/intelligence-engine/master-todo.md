@@ -49,10 +49,10 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 - [ ] Build operator screens for dossier registration, scope approval, job status, evidence entry, findings, red-team review and report review.
 - [~] Make the UI read-only by default; the generated local overview is read-only, while protected data-entry forms remain.
 - [ ] Add optimistic-concurrency or version checks to prevent analysts overwriting each other.
-- [~] Add a visible audit timeline containing metadata only; hash status and event count are visible, event-level display remains.
+- [x] Add a visible, collapsed audit timeline containing metadata only.
 - [x] Add export to a restricted working file; no email or client-delivery buttons exist in Phase 1.
 - [ ] Verify browser → authenticated server → database → rendered response end to end on protected staging.
-- [~] Add backup, restore and deletion tests aligned with `docs/legal/retention-schedule.md`; consistent backup is tested, restore and deletion approval flows remain.
+- [~] Add backup, restore and deletion tests aligned with `docs/legal/retention-schedule.md`; consistent backup and isolated restore verification are tested, deletion approval flows remain.
 
 ## P1 — first agent execution
 

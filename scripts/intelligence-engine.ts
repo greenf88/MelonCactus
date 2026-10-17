@@ -2,7 +2,11 @@ import path from "node:path";
 
 import { writeLocalDashboard } from "../src/lib/intelligence/local-dashboard";
 import { ensureFictionalDemo } from "../src/lib/intelligence/local-demo";
-import { DEFAULT_LOCAL_HOME, LocalIntelligenceStore } from "../src/lib/intelligence/local-store";
+import {
+  DEFAULT_LOCAL_HOME,
+  LocalIntelligenceStore,
+  restoreBackupToIsolatedHome,
+} from "../src/lib/intelligence/local-store";
 
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
@@ -71,6 +75,19 @@ async function main(): Promise<void> {
       return;
     }
 
+    if (command === "restore-check") {
+      const backupPath = args[1];
+      const target = option(args, "--target");
+      if (!backupPath || !target) {
+        throw new Error("Usage: restore-check <backup-file> --target <new-empty-directory>");
+      }
+      const result = restoreBackupToIsolatedHome(backupPath, target);
+      console.log(`Isolated restore: ${result.databasePath}`);
+      console.log(`Dossiers ${result.dossiers} | verified audit events ${result.auditEvents}`);
+      console.log("The active Control Room database was not replaced.");
+      return;
+    }
+
     if (command === "export") {
       const dossier = args[1];
       if (!dossier) throw new Error("Usage: export <dossier-number>");
@@ -112,6 +129,7 @@ Commands:
   verify                Verify SQLite integrity and every audit hash chain
   backup                Create a point-in-time database backup
   dashboard             Regenerate the private read-only HTML overview
+  restore-check <file>  Restore into a new isolated directory and verify it
   export <number>       Export the latest internal Markdown draft
 
 Options:

@@ -41,7 +41,7 @@ npm run intelligence:verify
 npm run intelligence:backup
 ```
 
-`verify` checks SQLite integrity and recalculates every audit-event hash from the previous event. A failed check blocks reliance on the dossier until the cause is understood. It must not be fixed by deleting audit records.
+`verify` checks SQLite integrity and recalculates every audit-event hash from the previous event. A failed check blocks reliance on the dossier until the cause is understood. It must not be fixed by deleting audit records. The local HTML overview contains a collapsed metadata-only timeline with actor, action, object type and hash prefix; it never includes source or report bodies.
 
 ## Explicit human boundaries
 
@@ -53,7 +53,13 @@ npm run intelligence:backup
 
 ## Recovery
 
-Backups are created through SQLite's online backup API so the source database remains internally consistent. Restoring is deliberately not automated yet: choose the exact backup, preserve the current database, restore into an isolated path, then run `verify` before replacing anything. This avoids an accidental rollback over newer evidence.
+Backups are created through SQLite's online backup API so the source database remains internally consistent. A restore check always requires a new or empty directory and never replaces the active database:
+
+```powershell
+node .intelligence-build/scripts/intelligence-engine.js restore-check <backup-file> --target <new-empty-directory>
+```
+
+The command opens the restored copy, runs SQLite integrity verification and recalculates every dossier audit chain. Promotion of a restored copy over the active database remains deliberately manual and requires explicit approval; this prevents an accidental rollback over newer evidence.
 
 ## Current limitations
 

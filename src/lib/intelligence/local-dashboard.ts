@@ -9,6 +9,18 @@ export function writeLocalDashboard(store: LocalIntelligenceStore): string {
     const jobs = store.listResearchJobs(dossier.id);
     const draft = store.getLatestDraft(dossier.id);
     const audit = store.verifyAuditChain(dossier.id);
+    const auditRows = store
+      .listAuditEvents(dossier.id, 12)
+      .map(
+        (event) => `
+          <li>
+            <time datetime="${escapeHtml(event.occurredAt)}">${escapeHtml(formatDate(event.occurredAt))}</time>
+            <span>${escapeHtml(event.actorType)} · ${escapeHtml(event.actorRef)}</span>
+            <strong>${escapeHtml(event.action)} ${escapeHtml(event.objectType)}</strong>
+            <code>${escapeHtml(event.eventHash.slice(0, 12))}</code>
+          </li>`,
+      )
+      .join("");
     const jobRows = jobs
       .map(
         (job) => `
@@ -37,6 +49,10 @@ export function writeLocalDashboard(store: LocalIntelligenceStore): string {
         </dl>
         <h3>Onderzoeksworkflow</h3>
         <ol class="jobs">${jobRows || "<li>Nog geen onderzoeksplan.</li>"}</ol>
+        <details>
+          <summary>Laatste metadata-auditgebeurtenissen</summary>
+          <ol class="timeline">${auditRows}</ol>
+        </details>
       </article>`;
   });
 
@@ -76,8 +92,14 @@ export function writeLocalDashboard(store: LocalIntelligenceStore): string {
     .pill { flex: 0 0 auto; padding: 4px 9px; border-radius: 999px; background: #273532; color: var(--muted); font-size: .75rem; }
     .pill.completed { background: #29422d; color: var(--lime); }
     .pill.waiting_for_approval, .pill.blocked { background: #4b3b21; color: var(--amber); }
+    details { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 18px; }
+    summary { color: var(--muted); cursor: pointer; font-weight: 700; }
+    .timeline { list-style: none; padding: 14px 0 0; margin: 0; display: grid; gap: 8px; }
+    .timeline li { display: grid; grid-template-columns: 150px minmax(150px, 1fr) minmax(160px, 1fr) auto; gap: 10px; align-items: center; color: var(--muted); font-size: .76rem; }
+    .timeline strong { color: var(--ink); font-weight: 650; }
+    code { color: var(--lime); }
     footer { margin-top: 28px; color: var(--muted); font-size: .8rem; }
-    @media (max-width: 680px) { .dossier-heading { display: grid; } .audit { justify-self: start; } .jobs li { align-items: flex-start; } }
+    @media (max-width: 680px) { .dossier-heading { display: grid; } .audit { justify-self: start; } .jobs li { align-items: flex-start; } .timeline li { grid-template-columns: 1fr; gap: 2px; } }
   </style>
 </head>
 <body>
