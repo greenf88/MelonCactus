@@ -292,6 +292,10 @@ create index if not exists sources_dossier_retrieved_idx
   on sources (dossier_id, retrieved_at desc);
 create index if not exists jobs_dossier_status_idx
   on research_jobs (dossier_id, status, created_at);
+create index if not exists agent_runs_job_status_idx
+  on agent_runs (research_job_id, status, completed_at desc);
+create unique index if not exists agent_runs_one_started_job_idx
+  on agent_runs (research_job_id) where status = 'started';
 create index if not exists evidence_dossier_source_idx
   on evidence (dossier_id, source_id);
 create index if not exists findings_dossier_status_idx

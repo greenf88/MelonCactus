@@ -33,6 +33,7 @@ describe("intelligence engine migration security posture", () => {
     expect(migration).toContain("review.reviewer_ref <> finding.created_by");
     expect(migration).toContain("finding_evidence_evidence_same_dossier");
     expect(migration).toContain("verification_reviews_finding_same_dossier");
+    expect(migration).toContain("create unique index agent_runs_one_started_job_idx");
   });
 
   it("keeps audit events append-only for the application role", () => {

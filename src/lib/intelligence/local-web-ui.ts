@@ -1,4 +1,5 @@
 import type {
+  LocalAgentRun,
   LocalDeletionRequest,
   LocalIntelligenceStore,
   LocalResearchJob,
@@ -24,6 +25,7 @@ export function renderLocalControlRoomPage(
     .map((dossier) => {
       const bundle = store.getBundle(dossier.id);
       const jobs = store.listResearchJobs(dossier.id);
+      const agentRuns = store.listAgentRuns(dossier.id);
       const draft = store.getLatestDraft(dossier.id);
       const audit = store.verifyAuditChain(dossier.id);
       const auditRows = store.listAuditEvents(dossier.id, 20);
@@ -74,6 +76,12 @@ export function renderLocalControlRoomPage(
               : ""
           }
         </section>
+
+        <details class="section-block">
+          <summary>Agentuitvoeringen</summary>
+          ${renderAgentRuns(agentRuns)}
+          <p class="hint">Deze metadata bevat hashes en verbruiksgegevens, geen zoekopdrachten, broninhoud of modeloutput.</p>
+        </details>
 
         <details class="section-block" open>
           <summary>Bronnen en bewijs</summary>
@@ -232,6 +240,7 @@ export function renderLocalControlRoomPage(
       <div class="metric"><strong>${status.sources}</strong><span>bronnen</span></div>
       <div class="metric"><strong>${status.evidence}</strong><span>bewijsstukken</span></div>
       <div class="metric"><strong>${status.findings}</strong><span>bevindingen</span></div>
+      <div class="metric"><strong>${status.agentRuns}</strong><span>agentuitvoeringen</span></div>
       <div class="metric"><strong>${status.pendingHumanApprovals}</strong><span>menselijke besluiten open</span></div>
     </section>
     ${canEdit ? newDossierForm(options.csrfToken) : ""}
@@ -252,7 +261,7 @@ function renderJob(
   canEdit: boolean,
 ): string {
   const action =
-    canEdit && job.execution === "agent" && job.status !== "completed"
+    canEdit && job.execution === "agent" && job.key !== "discover" && job.status !== "completed"
       ? form(
           `/dossiers/${encodeURIComponent(dossierId)}/jobs/${encodeURIComponent(job.key)}/complete`,
           options.csrfToken,
@@ -267,6 +276,19 @@ function renderJob(
       job.status.replaceAll("_", " "),
     )}</span>${action}</span>
   </li>`;
+}
+
+function renderAgentRuns(runs: LocalAgentRun[]): string {
+  if (!runs.length) return "<p>Nog geen agentuitvoeringen geregistreerd.</p>";
+  return `<div class="records">${runs
+    .map(
+      (run) => `<div>
+        <strong>${escapeHtml(run.agentRole)}</strong>
+        <span>${escapeHtml(run.modelProvider ?? "geen model")} · ${escapeHtml(run.modelName ?? "tool-only")}</span>
+        <small>${escapeHtml(run.status)} · input ${escapeHtml(run.inputHash?.slice(0, 12) ?? "—")} · output ${escapeHtml(run.outputHash?.slice(0, 12) ?? "—")} · kosten €${((run.estimatedCostMicros ?? 0) / 1_000_000).toFixed(6)}</small>
+      </div>`,
+    )
+    .join("")}</div>`;
 }
 
 function newDossierForm(csrfToken: string): string {

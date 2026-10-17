@@ -20,6 +20,7 @@ From the repository root:
 
 ```powershell
 npm run intelligence:demo
+npm run intelligence:discovery-demo
 npm run intelligence:verify
 npm run intelligence:status
 ```
@@ -27,6 +28,8 @@ npm run intelligence:status
 The demo is idempotent. It creates or resumes one entirely fictional dossier in the intentionally remote `9912` test period, so it cannot consume the reserved October 2026 number `2610001`. It records two fictional independent sources, two evidence records, a verified high-confidence assessment, an independent red-team review, a review-ready draft, a valid hash-linked audit chain and a SQLite backup.
 
 The final approval remains open. The demo never sends, publishes, emails, deploys or calls an external service.
+
+`intelligence:discovery-demo` creates or resumes a separate fictional dossier and executes the bounded source-discovery runner against an in-process fixture. It accepts two `example.invalid` candidates, rejects a lookalike domain, records input/output hashes and records zero model tokens/cost. It performs no DNS lookup, HTTP request, model call or account action.
 
 Open `.meloncactus-intelligence/control-room.html` locally to inspect the generated overview. Regenerate it after changes with:
 
@@ -97,6 +100,14 @@ This operation is not a claim of forensic secure erase. SQLite pages, operating-
 - Report approval is a separate, explicit human operation.
 - Approval never means automatic delivery. Phase 1 has no delivery command.
 
+## Bounded source discovery
+
+The current runner is a tested adapter boundary, not live web research. It can call only a typed `public_search` tool supplied by trusted application code. Before the call it requires an approved scope and a dossier classified as `fictional-test-data` or `public-only-test`. The caller supplies one to five explicit queries and an exact domain allowlist; the runner never constructs a query from confidential dossier text.
+
+Candidate results remain untrusted. The runner saves only title, optional publisher/date and a canonical HTTPS URL when the host is the allowed domain or a real subdomain. It refuses HTTP, embedded credentials, custom ports, IP literals, localhost/local hosts and suffix-lookalike domains. Search snippets are discarded, so instructions embedded in result text cannot become tool instructions. Accepted candidates are not evidence and do not satisfy later evidence or report gates.
+
+Agent-run rows store status, SHA-256 input/output hashes, provider/model labels and token/cost counters. The shipped runner uses `modelProvider=none`, zero tokens and zero cost. Raw queries, snippets, provider error payloads and outputs are not stored in the audit timeline. A dossier-revision check rejects the whole result if another operator changes the dossier while search is running.
+
 ## Recovery
 
 Backups are created through SQLite's online backup API so the source database remains internally consistent. A restore check always requires a new or empty directory and never replaces the active database:
@@ -114,5 +125,5 @@ The command opens the restored copy, reapplies every valid entry from the active
 - The local access cookie protects against accidental browser access on the same account, but it is not a substitute for a locked Windows session or full operator authentication in a future online deployment.
 - Phase 1 records source and evidence metadata and text through forms; it does not ingest file uploads, crawl sites or archive external content.
 - The deletion workflow controls the local Control Room and its generated exports only. Mailboxes, synced folders, archives and provider-held copies must be checked separately against the recorded storage locations.
-- No live source discovery, browsing or model runtime is connected yet.
+- No live search provider, arbitrary browser/fetch tool or model is connected. Source discovery currently runs only with the offline fictional fixture or a separately injected, reviewed tool implementation.
 - The prepared Supabase migration remains an optional later synchronisation/deployment path and has not been applied.

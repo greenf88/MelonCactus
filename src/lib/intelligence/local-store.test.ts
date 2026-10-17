@@ -36,7 +36,7 @@ describe("LocalIntelligenceStore", () => {
     expect(result.dossier.dossierNumber).toBe("9912001");
     expect(result.draftStatus).toBe("review_ready");
     expect(result.auditValid).toBe(true);
-    expect(result.auditEvents).toBe(31);
+    expect(result.auditEvents).toBe(34);
     expect(existsSync(result.draftPath)).toBe(true);
     expect(jobs.filter((job) => job.execution === "agent").every((job) => job.status === "completed")).toBe(
       true,
@@ -48,7 +48,7 @@ describe("LocalIntelligenceStore", () => {
       evidence: 2,
       findings: 1,
       pendingHumanApprovals: 1,
-      auditEvents: 31,
+      auditEvents: 34,
     });
   });
 
@@ -359,14 +359,15 @@ describe("LocalIntelligenceStore", () => {
       decidedBy: "test-human",
       rationale: "Synthetic public-only test scope.",
     });
-    for (const jobKey of ["discover", "technical", "corporate"]) {
-      store.updateResearchJobStatus({
-        dossierId: dossier.id,
-        jobKey,
-        status: "completed",
-        actor: { type: "agent", ref: `test-${jobKey}` },
-      });
-    }
+    const discoveryRun = store.beginAgentRun({
+      dossierId: dossier.id,
+      jobKey: "discover",
+      agentRole: "source_discovery",
+      runnerRef: "test-discovery-agent",
+      inputHash: "a".repeat(64),
+      modelProvider: "none",
+      modelName: "synthetic-test-fixture",
+    });
     const source = store.addSource(
       dossier.id,
       {
@@ -377,6 +378,23 @@ describe("LocalIntelligenceStore", () => {
       },
       { type: "human", ref: "test-human" },
     );
+    store.completeAgentRun({
+      dossierId: dossier.id,
+      runId: discoveryRun.id,
+      outputHash: "b".repeat(64),
+      inputTokens: 0,
+      outputTokens: 0,
+      estimatedCostMicros: 0,
+      actor: { type: "agent", ref: "test-discovery-agent" },
+    });
+    for (const jobKey of ["discover", "technical", "corporate"]) {
+      store.updateResearchJobStatus({
+        dossierId: dossier.id,
+        jobKey,
+        status: "completed",
+        actor: { type: "agent", ref: `test-${jobKey}` },
+      });
+    }
     const evidence = store.addEvidence(
       dossier.id,
       { sourceId: source.id, code: "EV-1", observation: "Synthetic observation." },
@@ -473,7 +491,7 @@ describe("LocalIntelligenceStore", () => {
 
     const restoreHome = path.join(directories[directories.length - 1], "isolated-restore");
     const restored = restoreBackupToIsolatedHome(backupPath, restoreHome);
-    expect(restored).toMatchObject({ dossiers: 1, auditEvents: 33 });
+    expect(restored).toMatchObject({ dossiers: 1, auditEvents: 36 });
     expect(existsSync(restored.databasePath)).toBe(true);
     expect(() => restoreBackupToIsolatedHome(backupPath, restoreHome)).toThrow(/new or empty directory/);
   });

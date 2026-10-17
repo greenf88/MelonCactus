@@ -2,6 +2,7 @@ import path from "node:path";
 
 import { writeLocalDashboard } from "../src/lib/intelligence/local-dashboard";
 import { ensureFictionalDemo } from "../src/lib/intelligence/local-demo";
+import { ensureFictionalDiscoveryDemo } from "../src/lib/intelligence/local-discovery-demo";
 import { startLocalControlRoomServer } from "../src/lib/intelligence/local-server";
 import {
   DEFAULT_LOCAL_HOME,
@@ -47,6 +48,17 @@ async function main(): Promise<void> {
       console.log(`Audit chain: ${result.auditValid ? "valid" : "invalid"} (${result.auditEvents} events)`);
       console.log(`Backup: ${backupPath}`);
       console.log("Human approval is still pending; nothing was sent or published.");
+      return;
+    }
+
+    if (command === "discovery-demo") {
+      const result = await ensureFictionalDiscoveryDemo(store);
+      console.log(result.reused ? "Fictional discovery run reused." : "Fictional discovery run completed.");
+      console.log(`Dossier: ${result.dossier.dossierNumber}`);
+      console.log(`Accepted source candidates: ${result.acceptedSources}`);
+      console.log(`Rejected candidates: ${result.rejectedCandidates}`);
+      console.log("Model use: none | Estimated model cost: EUR 0.000000");
+      console.log("The search tool was an offline fixture; no network, message or publication action occurred.");
       return;
     }
 
@@ -149,7 +161,7 @@ function printStatus(store: LocalIntelligenceStore): void {
   const status = store.getStatus();
   console.log(`Database: ${status.databasePath}`);
   console.log(
-    `Dossiers ${status.dossiers} | sources ${status.sources} | evidence ${status.evidence} | findings ${status.findings}`,
+    `Dossiers ${status.dossiers} | sources ${status.sources} | evidence ${status.evidence} | findings ${status.findings} | agent runs ${status.agentRuns}`,
   );
   console.log(
     `Pending human approvals ${status.pendingHumanApprovals} | audit events ${status.auditEvents}`,
@@ -185,6 +197,7 @@ function printHelp(): void {
 Commands:
   init                  Create the private local database
   demo                  Create/reuse one entirely fictional dossier and draft
+  discovery-demo        Run the bounded source-discovery agent on an offline fictional fixture
   status                Show local dossiers and workflow state
   serve                 Start the token-protected loopback Control Room
   verify                Verify SQLite integrity and every audit hash chain

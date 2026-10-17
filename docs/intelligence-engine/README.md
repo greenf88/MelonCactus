@@ -12,6 +12,7 @@ This directory describes the private, evidence-led operating core prepared for M
 - No private Control Room route is exposed by the public Next.js application.
 - Browser writes require an explicitly confirmed private storage path outside the repository and a session-local edit-mode action.
 - Controlled local deletion requires due retention categories, no legal hold, a different human approver and exact dossier-number confirmation; a hash-linked register reapplies deletions after backup restore.
+- A first bounded source-discovery runner records agent-run hashes/accounting and accepts only allowlisted HTTPS candidates for fictional or public-only test dossiers. Its shipped demo is an offline fixture: no model or live search provider is connected.
 - No agent has email, LinkedIn, publication, contract, invoice or client-delivery authority.
 - No client names, correspondence, source files, report content or credentials are stored in Git.
 

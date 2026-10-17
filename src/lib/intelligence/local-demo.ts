@@ -42,25 +42,30 @@ export function ensureFictionalDemo(store: LocalIntelligenceStore): DemoResult {
     decidedBy: "fictional-fixture-human",
     rationale: "Fictional fixture scope approved only to verify the local workflow.",
   });
-  store.updateResearchJobStatus({
-    dossierId: dossier.id,
-    jobKey: "discover",
-    status: "completed",
-    actor: analystActor,
-  });
-  store.updateResearchJobStatus({
-    dossierId: dossier.id,
-    jobKey: "technical",
-    status: "completed",
-    actor: analystActor,
-  });
-  store.updateResearchJobStatus({
-    dossierId: dossier.id,
-    jobKey: "corporate",
-    status: "completed",
-    actor: analystActor,
-  });
-
+  let discoveryRun = store.listAgentRuns(dossier.id).find(
+    (run) => run.agentRole === "source_discovery" && run.status === "completed",
+  );
+  if (!discoveryRun) {
+    const discoveryJob = store.listResearchJobs(dossier.id).find((job) => job.key === "discover");
+    if (discoveryJob?.status === "completed") {
+      // Upgrade only this known fictional fixture from the pre-agent-run demo format.
+      store.updateResearchJobStatus({
+        dossierId: dossier.id,
+        jobKey: "discover",
+        status: "pending",
+        actor: systemActor,
+      });
+    }
+    discoveryRun = store.beginAgentRun({
+      dossierId: dossier.id,
+      jobKey: "discover",
+      agentRole: "source_discovery",
+      runnerRef: analystActor.ref,
+      inputHash: sha("fictional demo source-discovery input v1"),
+      modelProvider: "none",
+      modelName: "offline-fictional-fixture-v1",
+    });
+  }
   const sourceOne = store.addSource(
     dossier.id,
     {
@@ -89,6 +94,35 @@ export function ensureFictionalDemo(store: LocalIntelligenceStore): DemoResult {
     },
     analystActor,
   );
+  if (discoveryRun.status === "started") {
+    store.completeAgentRun({
+      dossierId: dossier.id,
+      runId: discoveryRun.id,
+      outputHash: sha("fictional demo source-discovery output v1"),
+      inputTokens: 0,
+      outputTokens: 0,
+      estimatedCostMicros: 0,
+      actor: analystActor,
+    });
+  }
+  store.updateResearchJobStatus({
+    dossierId: dossier.id,
+    jobKey: "discover",
+    status: "completed",
+    actor: analystActor,
+  });
+  store.updateResearchJobStatus({
+    dossierId: dossier.id,
+    jobKey: "technical",
+    status: "completed",
+    actor: analystActor,
+  });
+  store.updateResearchJobStatus({
+    dossierId: dossier.id,
+    jobKey: "corporate",
+    status: "completed",
+    actor: analystActor,
+  });
 
   const evidenceOne = store.addEvidence(
     dossier.id,

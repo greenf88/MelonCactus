@@ -93,8 +93,12 @@ Agents may propose and structure work. They may not:
 
 Prompt injection is treated as untrusted source content. A source document cannot change tool permissions, system rules, scope, approval requirements or output destinations.
 
-## Why no agent framework is installed yet
+## First bounded agent runtime
 
-The current repository is a small Next.js public site. Adding a durable framework before the private database, authentication and approval rules exist would widen the attack surface while making later migration harder. The Phase 1 core therefore exposes plain TypeScript contracts and Postgres invariants. A future runtime adapter can map a framework's steps and traces onto `research_jobs` and `agent_runs` without changing the evidence model.
+The first source-discovery runner is deliberately framework-independent and local. It maps directly onto `research_jobs` and `agent_runs`, calls exactly one injected `public_search` capability and cannot send, publish, fetch arbitrary URLs or invoke another tool. It runs only for `fictional-test-data` or `public-only-test` dossiers after human scope approval. Queries are supplied explicitly rather than derived from confidential dossier content.
 
-The likely next evaluation is a narrowly scoped source-discovery runner after the local evidence gates and real-data storage boundary are approved. LangGraph 1.x LTS and Mastra core remain candidates; Eve can be reconsidered when an online durable runtime is actually needed. Bellingcat Auto Archiver remains a separate capture-worker candidate rather than the orchestration core.
+Every candidate is treated as untrusted data. Only HTTPS URLs on an explicit exact/subdomain allowlist survive; credentials, custom ports, IP literals, localhost/local hosts and lookalike suffixes are rejected. Snippets are never persisted or interpreted. Accepted items are source candidates, not evidence. If the dossier changes while the tool is running, the entire agent output is rejected as stale. Agent-run records retain only hashes, status and accounting metadata; raw provider failures and content stay out of the audit chain.
+
+The current executable demonstration uses an in-process fictional fixture and no network or model. This proves the control boundary without introducing a provider credential or framework dependency. A future runtime adapter can retain these same contracts if durable orchestration becomes necessary.
+
+The next evaluation is evidence normalisation of already captured public material, with schema validation and source-ID enforcement. LangGraph 1.x LTS and Mastra core remain candidates only if durable orchestration becomes necessary; Eve can be reconsidered after GA/security review. Bellingcat Auto Archiver remains a separate capture-worker candidate rather than the orchestration core.

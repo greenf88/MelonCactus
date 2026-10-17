@@ -397,6 +397,8 @@ create index research_job_dependencies_depends_on_idx
   on mc_intel.research_job_dependencies (depends_on_job_id);
 create index agent_runs_dossier_job_idx
   on mc_intel.agent_runs (dossier_id, research_job_id, started_at desc);
+create unique index agent_runs_one_started_job_idx
+  on mc_intel.agent_runs (research_job_id) where status = 'started';
 create index evidence_dossier_source_idx
   on mc_intel.evidence (dossier_id, source_id);
 create index findings_dossier_status_idx

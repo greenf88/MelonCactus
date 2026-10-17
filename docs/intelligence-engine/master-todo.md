@@ -58,14 +58,14 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 
 ## P1 — first agent execution
 
-- [ ] Select one runtime only after staging and the deterministic gates pass.
-- [ ] Implement the source-discovery agent with a strict tool and domain allowlist.
+- [x] Select a minimal runtime after the deterministic gates: a framework-independent local TypeScript runner that uses the existing SQLite jobs/audit contracts and adds no live provider dependency.
+- [x] Implement the source-discovery agent with exactly one typed `public_search` capability, an explicit HTTPS domain allowlist, public/synthetic dossier restriction, time/result limits, URL/SSRF guards and stale-output rejection. The current demonstration tool is offline and fictional; no live search provider is connected.
 - [ ] Implement evidence normalisation with schema validation and source-ID enforcement.
 - [ ] Run red team in a separate context from the originating analyst agent.
-- [ ] Store hashes and restricted pointers for prompts/outputs; keep raw content out of audit events.
-- [ ] Add token, model and estimated-cost accounting per run.
-- [ ] Create a small eval set with fictitious or public-only cases and expected blockers.
-- [ ] Require human approval for scope changes, model-produced findings and final report status.
+- [x] Store input/output hashes and optional restricted pointers for agent runs; raw queries, provider errors, snippets and outputs stay out of audit events.
+- [x] Add token, model/provider and estimated-cost accounting per run; the tool-only runner records no model, zero tokens and zero model cost.
+- [x] Create a small eval set with fictitious/public-only cases covering scope approval, lookalike domains, HTTP/credential/loopback URLs, prompt-injection snippets, empty allowlisted results, provider failure/timeout and stale output.
+- [~] Require human approval for scope changes, model-produced findings and final report status. Scope and final-report approval are enforced; no model-produced finding path exists yet.
 - [x] Enforce human approval methods for approved scope and final report status in the local adapter.
 
 ## P2 — evidence capture and search

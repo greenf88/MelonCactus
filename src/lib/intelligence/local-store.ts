@@ -66,6 +66,25 @@ export interface LocalResearchJob {
   approvalRequired: boolean;
 }
 
+export interface LocalAgentRun {
+  id: string;
+  dossierId: string;
+  researchJobId: string;
+  agentRole: string;
+  modelProvider?: string;
+  modelName?: string;
+  status: "started" | "completed" | "failed" | "cancelled";
+  inputHash?: string;
+  outputHash?: string;
+  inputPointer?: string;
+  outputPointer?: string;
+  inputTokens?: number;
+  outputTokens?: number;
+  estimatedCostMicros?: number;
+  startedAt: string;
+  completedAt?: string;
+}
+
 export interface StoredDraft {
   id: string;
   dossierId: string;
@@ -84,6 +103,7 @@ export interface LocalStatus {
   sources: number;
   evidence: number;
   findings: number;
+  agentRuns: number;
   pendingHumanApprovals: number;
   auditEvents: number;
 }
@@ -769,6 +789,185 @@ export class LocalIntelligenceStore {
     ).map(mapJob);
   }
 
+  beginAgentRun(input: {
+    dossierId: string;
+    jobKey: string;
+    agentRole: string;
+    runnerRef: string;
+    inputHash: string;
+    modelProvider?: string;
+    modelName?: string;
+  }): LocalAgentRun {
+    const runnerRef = requireText(input.runnerRef, "agentRun.runnerRef");
+    const agentRole = requireText(input.agentRole, "agentRun.agentRole");
+    const inputHash = requireSha256(input.inputHash, "agentRun.inputHash");
+    const modelProvider = optionalText(input.modelProvider, "agentRun.modelProvider");
+    const modelName = optionalText(input.modelName, "agentRun.modelName");
+    const runId = randomUUID();
+    const timestamp = now();
+
+    this.transaction(() => {
+      this.requireMutableDossier(input.dossierId);
+      const job = this.get<JobRow>(
+        "select * from research_jobs where dossier_id = ? and job_key = ?",
+        input.dossierId,
+        input.jobKey,
+      );
+      if (!job) throw new Error(`Unknown research job: ${input.jobKey}`);
+      if (job.execution !== "agent") throw new Error("Only an agent job can start an agent run.");
+      if (job.role !== agentRole) throw new Error("Agent role does not match the research job.");
+      if (job.status === "completed") throw new Error("A completed research job cannot start another run.");
+      const active = this.get<{ id: string }>(
+        "select id from agent_runs where research_job_id = ? and status = 'started' limit 1",
+        job.id,
+      );
+      if (active) throw new Error("This research job already has an active agent run.");
+      const blocker = this.get<{ job_key: string }>(
+        `select dependency.job_key
+         from research_job_dependencies as relation
+         join research_jobs as dependency on dependency.id = relation.depends_on_job_id
+         where relation.job_id = ? and dependency.status <> 'completed'
+         limit 1`,
+        job.id,
+      );
+      if (blocker) throw new Error(`Agent run is blocked by incomplete dependency: ${blocker.job_key}`);
+
+      this.run(
+        `insert into agent_runs (
+           id, dossier_id, research_job_id, agent_role, model_provider, model_name,
+           status, input_hash, started_at
+         ) values (?, ?, ?, ?, ?, ?, 'started', ?, ?)`,
+        runId,
+        input.dossierId,
+        job.id,
+        agentRole,
+        modelProvider ?? null,
+        modelName ?? null,
+        inputHash,
+        timestamp,
+      );
+      this.run(
+        "update research_jobs set status = 'running', updated_at = ? where id = ?",
+        timestamp,
+        job.id,
+      );
+      this.appendAudit(
+        input.dossierId,
+        { type: "agent", ref: runnerRef },
+        "start",
+        "agent_run",
+        runId,
+        agentAuditMetadata(agentRole, modelProvider, modelName, "started"),
+      );
+      this.appendAudit(
+        input.dossierId,
+        { type: "agent", ref: runnerRef },
+        "update_status",
+        "research_job",
+        job.id,
+        { jobKind: job.role, statusFrom: job.status, statusTo: "running" },
+      );
+    });
+    return this.requireAgentRun(input.dossierId, runId);
+  }
+
+  completeAgentRun(input: {
+    dossierId: string;
+    runId: string;
+    outputHash: string;
+    inputTokens: number;
+    outputTokens: number;
+    estimatedCostMicros: number;
+    actor: LocalActor;
+  }): LocalAgentRun {
+    const outputHash = requireSha256(input.outputHash, "agentRun.outputHash");
+    const inputTokens = requireNonnegativeInteger(input.inputTokens, "agentRun.inputTokens");
+    const outputTokens = requireNonnegativeInteger(input.outputTokens, "agentRun.outputTokens");
+    const estimatedCostMicros = requireNonnegativeInteger(
+      input.estimatedCostMicros,
+      "agentRun.estimatedCostMicros",
+    );
+    this.transaction(() => {
+      this.requireMutableDossier(input.dossierId);
+      const run = this.requireAgentRun(input.dossierId, input.runId);
+      if (run.status !== "started") throw new Error("Only a started agent run can complete.");
+      const timestamp = now();
+      this.run(
+        `update agent_runs
+         set status = 'completed', output_hash = ?, input_tokens = ?, output_tokens = ?,
+             estimated_cost_micros = ?, completed_at = ?
+         where id = ? and dossier_id = ?`,
+        outputHash,
+        inputTokens,
+        outputTokens,
+        estimatedCostMicros,
+        timestamp,
+        run.id,
+        input.dossierId,
+      );
+      this.appendAudit(
+        input.dossierId,
+        input.actor,
+        "complete",
+        "agent_run",
+        run.id,
+        agentAuditMetadata(run.agentRole, run.modelProvider, run.modelName, "completed"),
+      );
+    });
+    return this.requireAgentRun(input.dossierId, input.runId);
+  }
+
+  failAgentRun(input: {
+    dossierId: string;
+    runId: string;
+    reasonCode: "tool_failure" | "policy_failure" | "stale_output" | "no_allowed_sources";
+    actor: LocalActor;
+  }): LocalAgentRun {
+    this.transaction(() => {
+      this.requireNotDeletedDossier(input.dossierId);
+      const run = this.requireAgentRun(input.dossierId, input.runId);
+      if (run.status !== "started") throw new Error("Only a started agent run can fail.");
+      const job = this.get<JobRow>(
+        "select * from research_jobs where id = ? and dossier_id = ?",
+        run.researchJobId,
+        input.dossierId,
+      );
+      if (!job) throw new Error("Research job for the agent run was not found.");
+      const timestamp = now();
+      this.run(
+        "update agent_runs set status = 'failed', completed_at = ? where id = ? and dossier_id = ?",
+        timestamp,
+        run.id,
+        input.dossierId,
+      );
+      this.run(
+        "update research_jobs set status = 'blocked', updated_at = ? where id = ?",
+        timestamp,
+        job.id,
+      );
+      this.appendAudit(input.dossierId, input.actor, "fail", "agent_run", run.id, {
+        jobKind: run.agentRole,
+        reasonCode: input.reasonCode,
+        statusFrom: "started",
+        statusTo: "failed",
+      });
+      this.appendAudit(input.dossierId, input.actor, "update_status", "research_job", job.id, {
+        jobKind: job.role,
+        statusFrom: job.status,
+        statusTo: "blocked",
+      });
+    });
+    return this.requireAgentRun(input.dossierId, input.runId);
+  }
+
+  listAgentRuns(dossierId: string): LocalAgentRun[] {
+    this.requireDossier(dossierId);
+    return this.all<AgentRunRow>(
+      "select * from agent_runs where dossier_id = ? order by started_at, id",
+      dossierId,
+    ).map(mapAgentRun);
+  }
+
   updateResearchJobStatus(input: {
     dossierId: string;
     jobKey: string;
@@ -807,6 +1006,21 @@ export class LocalIntelligenceStore {
             input.dossierId,
           );
           if (!approval) throw new Error("This research job requires a recorded human approval.");
+        }
+        if (row.job_key === "discover") {
+          const completedRun = this.get<{ id: string }>(
+            `select id from agent_runs
+             where dossier_id = ? and research_job_id = ? and agent_role = 'source_discovery'
+               and status = 'completed' and output_hash is not null
+             order by completed_at desc limit 1`,
+            input.dossierId,
+            row.id,
+          );
+          if (!completedRun || this.countForDossier("sources", input.dossierId) === 0) {
+            throw new Error(
+              "Source discovery cannot complete without a completed hashed agent run and a source candidate.",
+            );
+          }
         }
         if (row.job_key === "evidence" && this.countForDossier("evidence", input.dossierId) === 0) {
           throw new Error("Evidence normalisation cannot complete without an evidence record.");
@@ -1375,6 +1589,7 @@ export class LocalIntelligenceStore {
       sources: this.count("sources"),
       evidence: this.count("evidence"),
       findings: this.count("findings"),
+      agentRuns: this.count("agent_runs"),
       pendingHumanApprovals:
         this.count(
           "research_jobs",
@@ -1414,6 +1629,16 @@ export class LocalIntelligenceStore {
     );
     if (!row) throw new Error("Retention item not found.");
     return mapRetentionItem(row);
+  }
+
+  private requireAgentRun(dossierId: string, runId: string): LocalAgentRun {
+    const row = this.get<AgentRunRow>(
+      "select * from agent_runs where id = ? and dossier_id = ?",
+      runId,
+      dossierId,
+    );
+    if (!row) throw new Error("Agent run not found.");
+    return mapAgentRun(row);
   }
 
   private requireDeletionRequest(dossierId: string, requestId: string): LocalDeletionRequest {
@@ -1589,6 +1814,7 @@ export class LocalIntelligenceStore {
       "evidence",
       "findings",
       "research_jobs",
+      "agent_runs",
       "deletion_requests",
       "audit_events",
     ]);
@@ -1597,7 +1823,7 @@ export class LocalIntelligenceStore {
     return row?.count ?? 0;
   }
 
-  private countForDossier(table: "evidence" | "findings", dossierId: string): number {
+  private countForDossier(table: "sources" | "evidence" | "findings", dossierId: string): number {
     const row = this.get<{ count: number }>(
       `select count(*) as count from ${table} where dossier_id = ?`,
       dossierId,
@@ -1754,6 +1980,25 @@ interface JobRow {
   approval_required: number;
 }
 
+interface AgentRunRow {
+  id: string;
+  dossier_id: string;
+  research_job_id: string;
+  agent_role: string;
+  model_provider: string | null;
+  model_name: string | null;
+  status: LocalAgentRun["status"];
+  input_hash: string | null;
+  output_hash: string | null;
+  input_pointer: string | null;
+  output_pointer: string | null;
+  input_tokens: number | null;
+  output_tokens: number | null;
+  estimated_cost_micros: number | null;
+  started_at: string;
+  completed_at: string | null;
+}
+
 interface DraftRow {
   id: string;
   dossier_id: string;
@@ -1907,6 +2152,27 @@ function mapJob(row: JobRow): LocalResearchJob {
   };
 }
 
+function mapAgentRun(row: AgentRunRow): LocalAgentRun {
+  return {
+    id: row.id,
+    dossierId: row.dossier_id,
+    researchJobId: row.research_job_id,
+    agentRole: row.agent_role,
+    modelProvider: row.model_provider ?? undefined,
+    modelName: row.model_name ?? undefined,
+    status: row.status,
+    inputHash: row.input_hash ?? undefined,
+    outputHash: row.output_hash ?? undefined,
+    inputPointer: row.input_pointer ?? undefined,
+    outputPointer: row.output_pointer ?? undefined,
+    inputTokens: row.input_tokens ?? undefined,
+    outputTokens: row.output_tokens ?? undefined,
+    estimatedCostMicros: row.estimated_cost_micros ?? undefined,
+    startedAt: row.started_at,
+    completedAt: row.completed_at ?? undefined,
+  };
+}
+
 function mapDraft(row: DraftRow): StoredDraft {
   return {
     id: row.id,
@@ -1977,6 +2243,42 @@ function requireText(value: string, label: string): string {
   const result = value.trim();
   if (!result) throw new TypeError(`${label} must not be empty.`);
   return result;
+}
+
+function optionalText(value: string | undefined, label: string): string | undefined {
+  if (value === undefined) return undefined;
+  const result = value.trim();
+  if (!result) throw new TypeError(`${label} must not be empty when provided.`);
+  if (result.length > 200) throw new TypeError(`${label} is too long.`);
+  return result;
+}
+
+function requireSha256(value: string, label: string): string {
+  const result = value.trim().toLowerCase();
+  if (!/^[a-f0-9]{64}$/.test(result)) throw new TypeError(`${label} must be a SHA-256 hex digest.`);
+  return result;
+}
+
+function requireNonnegativeInteger(value: number, label: string): number {
+  if (!Number.isSafeInteger(value) || value < 0) {
+    throw new TypeError(`${label} must be a non-negative safe integer.`);
+  }
+  return value;
+}
+
+function agentAuditMetadata(
+  role: string,
+  modelProvider: string | undefined,
+  modelName: string | undefined,
+  statusTo: string,
+): AuditEvent["metadata"] {
+  const metadata: AuditEvent["metadata"] = {
+    jobKind: role,
+    statusTo,
+  };
+  if (modelProvider) metadata.modelProvider = modelProvider;
+  if (modelName) metadata.modelName = modelName;
+  return metadata;
 }
 
 function requireIsoDate(value: string, label: string): string {
