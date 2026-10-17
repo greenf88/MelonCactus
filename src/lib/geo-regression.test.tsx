@@ -38,20 +38,25 @@ function articlePairs() {
 }
 
 describe("GEO content regression", () => {
-  it("keeps every article dated, sourced, illustrated and paired without future dates", () => {
+  it("keeps every article dated and paired without future dates, with evidence assets only where appropriate", () => {
     const today = new Date().toISOString().slice(0, 10);
     for (const { en, nl } of articlePairs()) {
       for (const article of [en, nl]) {
         expect(article.date, article.slug).toMatch(/^\d{4}-\d{2}-\d{2}$/);
         expect(article.date <= today, article.slug).toBe(true);
         expect((article.modifiedDate ?? article.date) <= today, article.slug).toBe(true);
-        expect(article.sources?.length, article.slug).toBeGreaterThan(0);
-        expect(article.visual, article.slug).toBeDefined();
-        expect(article.visual?.alt.length, article.slug).toBeGreaterThan(80);
-        expect(article.visual?.width, article.slug).toBe(1200);
-        expect(article.visual?.height, article.slug).toBe(760);
-        expect(article.visual?.mobileWidth, article.slug).toBe(760);
-        expect(article.visual?.mobileHeight, article.slug).toBe(1100);
+        if (article.kind === "fictional-ai-case") {
+          expect(article.sources, article.slug).toBeUndefined();
+          expect(article.visual, article.slug).toBeUndefined();
+        } else {
+          expect(article.sources?.length, article.slug).toBeGreaterThan(0);
+          expect(article.visual, article.slug).toBeDefined();
+          expect(article.visual?.alt.length, article.slug).toBeGreaterThan(80);
+          expect(article.visual?.width, article.slug).toBe(1200);
+          expect(article.visual?.height, article.slug).toBe(760);
+          expect(article.visual?.mobileWidth, article.slug).toBe(760);
+          expect(article.visual?.mobileHeight, article.slug).toBe(1100);
+        }
       }
       expect(nl.sources?.map((source) => source.id)).toEqual(en.sources?.map((source) => source.id));
     }
@@ -78,7 +83,7 @@ describe("GEO content regression", () => {
     }
   });
 
-  it("renders primary article content, sources, images and parseable matching Article JSON-LD in source HTML", async () => {
+  it("renders primary article content, honest case labels and matching Article JSON-LD in source HTML", async () => {
     for (const { en, nl } of articlePairs()) {
       const variants = [
         { article: en, locale: "en", html: renderToStaticMarkup(await EnglishArticlePage({ params: Promise.resolve({ slug: en.slug }) })) },
@@ -87,8 +92,13 @@ describe("GEO content regression", () => {
       for (const { article, locale, html } of variants) {
         expect(html, article.slug).toContain(`<h1>${escapeHtmlText(article.title)}</h1>`);
         expect(html, article.slug).toContain("article-summary");
-        expect(html, article.slug).toContain("article-sources");
-        expect(html, article.slug).toContain(article.visual?.src);
+        if (article.kind === "fictional-ai-case") {
+          expect(html, article.slug).toContain("fictional-case-notice");
+          expect(html, article.slug).not.toContain("article-sources");
+        } else {
+          expect(html, article.slug).toContain("article-sources");
+          expect(html, article.slug).toContain(article.visual?.src);
+        }
         const schemas = jsonLd(html);
         expect(schemas.length, article.slug).toBeGreaterThanOrEqual(2);
         const schema = schemas.find((item) => item["@type"] === "Article");

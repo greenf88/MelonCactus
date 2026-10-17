@@ -7,6 +7,7 @@ import { PracticalAiPage, practicalAiMetadata } from "@/components/practical-ai-
 import { enquiryTopics } from "@/config/enquiry-topics";
 import { practicalAiNetherlands } from "@/config/practical-ai-netherlands";
 import { aiPaths, nationalAiPaths, practicalAi } from "@/config/practical-ai";
+import { practicalAiCasesEn, practicalAiCasesNl } from "@/data/practical-ai-cases";
 import { languageAlternates } from "@/lib/i18n";
 
 describe("practical AI service", () => {
@@ -70,6 +71,24 @@ describe("practical AI service", () => {
     expect(practicalAiNetherlands.en.intro).not.toBe(practicalAi.en.intro);
     expect(practicalAiNetherlands.nl.intro).not.toBe(practicalAi.nl.intro);
     expect(dutchNational).not.toMatch(/\bje\b|\bjouw\b/i);
+  });
+
+  it("publishes four paired fictional cases without presenting them as client results", () => {
+    expect(practicalAiCasesEn).toHaveLength(4);
+    expect(practicalAiCasesNl).toHaveLength(4);
+    for (const [articles, html, pathPrefix] of [
+      [practicalAiCasesEn, englishNational, "/insights/"],
+      [practicalAiCasesNl, dutchNational, "/nl/artikelen/"],
+    ] as const) {
+      for (const article of articles) {
+        expect(article.kind).toBe("fictional-ai-case");
+        expect(article.sections.length).toBeGreaterThanOrEqual(5);
+        expect(html).toContain(`href="${pathPrefix}${article.slug}"`);
+        expect(article.sources).toBeUndefined();
+      }
+    }
+    expect(englishNational).toContain("not customer assignments or measured results");
+    expect(dutchNational).toContain("geen klantopdrachten of gemeten resultaten");
   });
 
   it("defaults the contact form to research and respects valid AI preselection", () => {

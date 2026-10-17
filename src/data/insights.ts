@@ -2,6 +2,7 @@ import { industrialInsights } from "@/data/industrial-insights";
 import { articleSources, type ArticleSource } from "@/data/article-sources";
 import { articleVisuals, type ArticleVisual } from "@/data/article-visuals";
 import { decisionLoopInsightEn } from "@/data/decision-loop-insights";
+import { practicalAiCasesEn } from "@/data/practical-ai-cases";
 
 export type InsightParagraph = string | {
   text: string;
@@ -32,6 +33,7 @@ export type Insight = {
   sections: readonly InsightSection[];
   sources?: readonly ArticleSource[];
   visual?: ArticleVisual;
+  kind?: "research" | "fictional-ai-case";
 };
 
 const originalInsights: readonly Insight[] = [
@@ -283,6 +285,7 @@ const originalInsights: readonly Insight[] = [
 ] as const;
 
 export const insights: readonly Insight[] = [
+  ...practicalAiCasesEn,
   decisionLoopInsightEn,
   ...industrialInsights.filter((insight) => insight.locale === "en"),
   ...originalInsights,

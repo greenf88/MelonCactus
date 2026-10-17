@@ -9,6 +9,7 @@ import { StructuredData } from "@/components/structured-data";
 import { enquiryHref } from "@/config/enquiry-topics";
 import { practicalAiNetherlands } from "@/config/practical-ai-netherlands";
 import { aiPaths, nationalAiPaths, practicalAi } from "@/config/practical-ai";
+import { practicalAiCases } from "@/data/practical-ai-cases";
 import { languageAlternates, type Locale } from "@/lib/i18n";
 import { breadcrumbSchema, serviceSchema, socialImageMetadata } from "@/lib/seo";
 
@@ -35,6 +36,7 @@ export function PracticalAiPage({ locale, area = "twente" }: { locale: Locale; a
   const paths = area === "netherlands" ? nationalAiPaths : aiPaths;
   const relatedPath = area === "netherlands" ? aiPaths[locale] : nationalAiPaths[locale];
   const c = content[locale], nl = locale === "nl";
+  const caseStudies = area === "netherlands" ? practicalAiCases(locale) : [];
   return <>
     <PageHeader locale={locale} eyebrow={c.eyebrow} title={c.h1} intro={c.intro}
       breadcrumbs={[{ label: nl ? "Diensten" : "Services", href: nl ? "/nl/diensten" : "/services" }, { label: c.title }]} />
@@ -46,6 +48,13 @@ export function PracticalAiPage({ locale, area = "twente" }: { locale: Locale; a
       <SectionHeading eyebrow={nl ? "Mogelijkheden" : "Possibilities"} title={c.examplesTitle} intro={c.examplesIntro} />
       <div className="ai-example-grid">{c.examples.map(([title, text]) => <article className="service-entrance" key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>
     </Container></section>
+    {caseStudies.length ? <section className="section"><Container>
+      <SectionHeading eyebrow={nl ? "Fictieve praktijkcases" : "Fictional practical cases"} title={nl ? "Bekijk hoe een kleine AI-proef kan worden afgebakend." : "See how a small AI trial can be bounded."} intro={nl ? "Deze oorspronkelijke scenario’s zijn geen klantopdrachten of gemeten resultaten. Ze laten zien welke beslissingen, controles en grenzen bij praktische AI voor het mkb horen." : "These original scenarios are not customer assignments or measured results. They show the decisions, controls and boundaries involved in practical AI for SMEs."} />
+      <div className="seo-link-grid">{caseStudies.map((insight) => {
+        const href = nl ? `/nl/artikelen/${insight.slug}` : `/insights/${insight.slug}`;
+        return <article key={insight.slug}><h3><Link href={href}>{insight.title}</Link></h3><p>{insight.description}</p></article>;
+      })}</div>
+    </Container></section> : null}
     <section className="section" id={nl ? "beginnen" : "get-started"}><Container>
       <SectionHeading eyebrow={nl ? "Samen aan de slag" : "Working together"} title={c.startTitle} />
       <div className="ai-offer-grid">{c.offers.map(offer => <article className="service-card ai-offer" key={offer.topic}>
