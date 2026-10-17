@@ -9,6 +9,8 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".intelligence-build/**",
+    ".meloncactus-intelligence/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

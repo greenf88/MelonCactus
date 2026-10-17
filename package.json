@@ -9,11 +9,21 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:client-bundle": "node scripts/check-client-bundle.mjs"
+    "test:intelligence": "vitest run src/lib/intelligence",
+    "test:client-bundle": "node scripts/check-client-bundle.mjs",
+    "intelligence:build": "tsc -p tsconfig.intelligence.json",
+    "intelligence:init": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js init",
+    "intelligence:demo": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js demo",
+    "intelligence:discovery-demo": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js discovery-demo",
+    "intelligence:status": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js status",
+    "intelligence:serve": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js serve",
+    "intelligence:verify": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js verify",
+    "intelligence:backup": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js backup",
+    "intelligence:dashboard": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js dashboard"
   },
   "dependencies": {
     "@vercel/analytics": "2.0.1",
-    "next": "16.3.6",
+    "next": "16.4.2",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-markdown": "^10.1.0",
@@ -25,9 +35,12 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.6",
+    "eslint-config-next": "16.4.2",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "source-map-js": "1.2.2"
   }
 }
