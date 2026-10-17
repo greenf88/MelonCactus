@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 const allowedMetadataKeys = new Set([
   "approvalDecision",
   "dossierNumber",
+  "evidenceCode",
   "findingCode",
   "jobKind",
   "modelName",

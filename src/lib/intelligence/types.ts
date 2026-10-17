@@ -18,6 +18,15 @@ export interface SourceRecord {
   sha256?: string;
 }
 
+export const evidenceClasses = [
+  "observation",
+  "measurement",
+  "statement",
+  "document_excerpt",
+  "image_frame",
+] as const;
+export type EvidenceClass = (typeof evidenceClasses)[number];
+
 export interface EvidenceRecord {
   id: string;
   code: string;
@@ -25,6 +34,10 @@ export interface EvidenceRecord {
   observation: string;
   locator?: string;
   observedAt?: string;
+  evidenceClass?: EvidenceClass;
+  contentSha256?: string;
+  normalisationRunId?: string;
+  normalisationSchemaVersion?: string;
 }
 
 export interface EvidenceLink {

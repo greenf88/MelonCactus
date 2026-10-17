@@ -57,8 +57,11 @@ async function main(): Promise<void> {
       console.log(`Dossier: ${result.dossier.dossierNumber}`);
       console.log(`Accepted source candidates: ${result.acceptedSources}`);
       console.log(`Rejected candidates: ${result.rejectedCandidates}`);
+      console.log(`Normalised evidence records: ${result.normalisedEvidence}`);
+      console.log(`Independent red-team reviews: ${result.redTeamReviews}`);
       console.log("Model use: none | Estimated model cost: EUR 0.000000");
-      console.log("The search tool was an offline fixture; no network, message or publication action occurred.");
+      console.log("Discovery, normalisation and red team used offline fixtures in separated contexts.");
+      console.log("No network, message or publication action occurred.");
       return;
     }
 
@@ -161,7 +164,7 @@ function printStatus(store: LocalIntelligenceStore): void {
   const status = store.getStatus();
   console.log(`Database: ${status.databasePath}`);
   console.log(
-    `Dossiers ${status.dossiers} | sources ${status.sources} | evidence ${status.evidence} | findings ${status.findings} | agent runs ${status.agentRuns}`,
+    `Dossiers ${status.dossiers} | sources ${status.sources} | evidence ${status.evidence} (${status.normalisedEvidence} normalised) | findings ${status.findings} | agent runs ${status.agentRuns}`,
   );
   console.log(
     `Pending human approvals ${status.pendingHumanApprovals} | audit events ${status.auditEvents}`,

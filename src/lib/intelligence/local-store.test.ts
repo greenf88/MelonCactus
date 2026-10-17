@@ -6,6 +6,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { ensureFictionalDemo } from "./local-demo";
 import { writeLocalDashboard } from "./local-dashboard";
 import { LocalIntelligenceStore, restoreBackupToIsolatedHome } from "./local-store";
+import { runEvidenceNormalisationAgent } from "./evidence-normalisation";
 
 describe("LocalIntelligenceStore", () => {
   const stores: LocalIntelligenceStore[] = [];
@@ -36,7 +37,7 @@ describe("LocalIntelligenceStore", () => {
     expect(result.dossier.dossierNumber).toBe("9912001");
     expect(result.draftStatus).toBe("review_ready");
     expect(result.auditValid).toBe(true);
-    expect(result.auditEvents).toBe(34);
+    expect(result.auditEvents).toBe(37);
     expect(existsSync(result.draftPath)).toBe(true);
     expect(jobs.filter((job) => job.execution === "agent").every((job) => job.status === "completed")).toBe(
       true,
@@ -48,7 +49,7 @@ describe("LocalIntelligenceStore", () => {
       evidence: 2,
       findings: 1,
       pendingHumanApprovals: 1,
-      auditEvents: 34,
+      auditEvents: 37,
     });
   });
 
@@ -333,7 +334,7 @@ describe("LocalIntelligenceStore", () => {
     expect(restoredStore.verifyDeletionRegister()).toMatchObject({ valid: false, entries: 0 });
   });
 
-  it("upgrades the additive local schema from version 1 to version 2", () => {
+  it("upgrades the additive local schema from version 1 to version 3", () => {
     const store = createStore();
     const homePath = store.homePath;
     store.setMeta("schema_version", "1");
@@ -341,7 +342,7 @@ describe("LocalIntelligenceStore", () => {
 
     const reopened = new LocalIntelligenceStore(homePath);
     stores.push(reopened);
-    expect(reopened.getMeta("schema_version")).toBe("2");
+    expect(reopened.getMeta("schema_version")).toBe("3");
     expect(reopened.listDeletionRegister()).toEqual([]);
     expect(reopened.verifyDatabase()).toEqual({ valid: true, message: "ok" });
   });
@@ -351,6 +352,7 @@ describe("LocalIntelligenceStore", () => {
     const dossier = store.registerDossier({
       receivedAt: "2026-11-04T10:00:00.000Z",
       decisionQuestion: "Can a finding author satisfy their own red-team gate?",
+      scope: { classification: "public-only-test", synthetic: true },
       actor: { type: "human", ref: "test-operator" },
     });
     store.ensureResearchPlan(dossier.id, { type: "system", ref: "test-system" });
@@ -395,17 +397,19 @@ describe("LocalIntelligenceStore", () => {
         actor: { type: "agent", ref: `test-${jobKey}` },
       });
     }
-    const evidence = store.addEvidence(
-      dossier.id,
-      { sourceId: source.id, code: "EV-1", observation: "Synthetic observation." },
-      { type: "human", ref: "test-human" },
-    );
-    store.updateResearchJobStatus({
+    const evidence = runEvidenceNormalisationAgent(store, {
       dossierId: dossier.id,
-      jobKey: "evidence",
-      status: "completed",
-      actor: { type: "agent", ref: "test-evidence" },
-    });
+      runnerRef: "test-evidence-agent",
+      items: [
+        {
+          sourceId: source.id,
+          code: "E-01",
+          evidenceClass: "observation",
+          observation: "Synthetic observation.",
+          locator: "synthetic fixture",
+        },
+      ],
+    }).evidence[0];
     const finding = store.addFinding(
       dossier.id,
       {
@@ -491,7 +495,7 @@ describe("LocalIntelligenceStore", () => {
 
     const restoreHome = path.join(directories[directories.length - 1], "isolated-restore");
     const restored = restoreBackupToIsolatedHome(backupPath, restoreHome);
-    expect(restored).toMatchObject({ dossiers: 1, auditEvents: 36 });
+    expect(restored).toMatchObject({ dossiers: 1, auditEvents: 39 });
     expect(existsSync(restored.databasePath)).toBe(true);
     expect(() => restoreBackupToIsolatedHome(backupPath, restoreHome)).toThrow(/new or empty directory/);
   });

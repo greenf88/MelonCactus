@@ -29,7 +29,7 @@ The demo is idempotent. It creates or resumes one entirely fictional dossier in 
 
 The final approval remains open. The demo never sends, publishes, emails, deploys or calls an external service.
 
-`intelligence:discovery-demo` creates or resumes a separate fictional dossier and executes the bounded source-discovery runner against an in-process fixture. It accepts two `example.invalid` candidates, rejects a lookalike domain, records input/output hashes and records zero model tokens/cost. It performs no DNS lookup, HTTP request, model call or account action.
+`intelligence:discovery-demo` creates or resumes a separate fictional dossier and executes the complete bounded agent proof against in-process fixtures. It accepts two `example.invalid` candidates, rejects a lookalike domain, creates two schema-validated and source-bound evidence records, and performs one independent red-team review in an identity-minimised context. All three runs record input/output hashes and zero model tokens/cost. The demonstration performs no DNS lookup, HTTP request, model call or account action.
 
 Open `.meloncactus-intelligence/control-room.html` locally to inspect the generated overview. Regenerate it after changes with:
 
@@ -108,6 +108,14 @@ Candidate results remain untrusted. The runner saves only title, optional publis
 
 Agent-run rows store status, SHA-256 input/output hashes, provider/model labels and token/cost counters. The shipped runner uses `modelProvider=none`, zero tokens and zero cost. Raw queries, snippets, provider error payloads and outputs are not stored in the audit timeline. A dossier-revision check rejects the whole result if another operator changes the dossier while search is running.
 
+## Evidence normalisation and separated red team
+
+The evidence normaliser consumes structured observations only after both research branches are complete. Each input object must contain only the documented fields: an `E-` code, an exact source ID already present in the dossier, one allowed evidence class, a direct observation, a locator and an optional observation timestamp. The runner computes its own SHA-256 content hash. Evidence and provenance are written in one transaction and linked to the specific normalisation run. A duplicate, unknown field, malformed code, foreign source ID or conflicting record rolls back the complete batch.
+
+Source content remains untrusted data. It can be stored as an observation but cannot add fields, tools or permissions. Raw observation text does not enter audit metadata. The Control Room labels normalised records with their class and hash prefix; manually entered records remain visibly distinct and cannot satisfy the automated normalisation job gate.
+
+The red-team runner starts only after the evidence job completes. It builds a new brief for each material finding and passes only that brief into one typed evaluator. Dossier identifiers, source titles and source URLs are excluded. The reviewer reference must not match the originating analyst, and the store requires an independent review for every material finding before the job completes. Evaluator output is schema-checked, token/cost totals are recorded and raw notes/errors stay out of audit metadata. A timeout, unknown output field or dossier change rejects the complete review batch.
+
 ## Recovery
 
 Backups are created through SQLite's online backup API so the source database remains internally consistent. A restore check always requires a new or empty directory and never replaces the active database:
@@ -125,5 +133,5 @@ The command opens the restored copy, reapplies every valid entry from the active
 - The local access cookie protects against accidental browser access on the same account, but it is not a substitute for a locked Windows session or full operator authentication in a future online deployment.
 - Phase 1 records source and evidence metadata and text through forms; it does not ingest file uploads, crawl sites or archive external content.
 - The deletion workflow controls the local Control Room and its generated exports only. Mailboxes, synced folders, archives and provider-held copies must be checked separately against the recorded storage locations.
-- No live search provider, arbitrary browser/fetch tool or model is connected. Source discovery currently runs only with the offline fictional fixture or a separately injected, reviewed tool implementation.
+- No live search provider, arbitrary browser/fetch tool or model is connected. Discovery, evidence normalisation and separated red team currently run only with offline fictional fixtures or separately injected, reviewed typed implementations.
 - The prepared Supabase migration remains an optional later synchronisation/deployment path and has not been applied.

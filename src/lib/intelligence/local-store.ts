@@ -21,6 +21,7 @@ import { formatDossierNumber } from "./dossier-number";
 import { LOCAL_SCHEMA_VERSION, localSchemaSql } from "./local-schema";
 import { buildDraftReport, type DraftReport } from "./report";
 import type {
+  EvidenceClass,
   EvidenceDirection,
   EvidenceLink,
   EvidenceRecord,
@@ -102,6 +103,7 @@ export interface LocalStatus {
   dossiers: number;
   sources: number;
   evidence: number;
+  normalisedEvidence: number;
   findings: number;
   agentRuns: number;
   pendingHumanApprovals: number;
@@ -219,7 +221,7 @@ export class LocalIntelligenceStore {
     this.database = new DatabaseSync(this.databasePath);
     this.database.exec(localSchemaSql);
     const existingVersion = this.getMeta("schema_version");
-    if (existingVersion === "1" && LOCAL_SCHEMA_VERSION === 2) {
+    if ((existingVersion === "1" || existingVersion === "2") && LOCAL_SCHEMA_VERSION === 3) {
       this.setMeta("schema_version", String(LOCAL_SCHEMA_VERSION));
     } else if (existingVersion && existingVersion !== String(LOCAL_SCHEMA_VERSION)) {
       this.database.close();
@@ -920,7 +922,12 @@ export class LocalIntelligenceStore {
   failAgentRun(input: {
     dossierId: string;
     runId: string;
-    reasonCode: "tool_failure" | "policy_failure" | "stale_output" | "no_allowed_sources";
+    reasonCode:
+      | "tool_failure"
+      | "policy_failure"
+      | "validation_failure"
+      | "stale_output"
+      | "no_allowed_sources";
     actor: LocalActor;
   }): LocalAgentRun {
     this.transaction(() => {
@@ -1022,21 +1029,48 @@ export class LocalIntelligenceStore {
             );
           }
         }
-        if (row.job_key === "evidence" && this.countForDossier("evidence", input.dossierId) === 0) {
-          throw new Error("Evidence normalisation cannot complete without an evidence record.");
+        if (row.job_key === "evidence") {
+          const completedRun = this.get<{ id: string }>(
+            `select id from agent_runs
+             where dossier_id = ? and research_job_id = ? and agent_role = 'evidence_normalisation'
+               and status = 'completed' and output_hash is not null
+             order by completed_at desc limit 1`,
+            input.dossierId,
+            row.id,
+          );
+          const provenance = completedRun
+            ? this.get<{ count: number }>(
+                `select count(*) as count from evidence_provenance
+                 where dossier_id = ? and normalisation_run_id = ?`,
+                input.dossierId,
+                completedRun.id,
+              )
+            : undefined;
+          if (!completedRun || !provenance?.count) {
+            throw new Error(
+              "Evidence normalisation cannot complete without a completed hashed agent run and source-bound provenance.",
+            );
+          }
         }
         if (row.job_key === "red-team") {
-          const review = this.get<{ id: string }>(
-            `select review.id
-             from verification_reviews as review
-             join findings as finding on finding.id = review.finding_id
-             where review.dossier_id = ? and review.review_type = 'red_team'
-               and review.reviewer_ref <> finding.created_by
+          const blocker = this.get<{ code: string }>(
+            `select finding.code
+             from findings as finding
+             where finding.dossier_id = ? and finding.material = 1
+               and not exists (
+                 select 1 from verification_reviews as review
+                 where review.dossier_id = finding.dossier_id
+                   and review.finding_id = finding.id
+                   and review.review_type = 'red_team'
+                   and lower(review.reviewer_ref) <> lower(finding.created_by)
+               )
              limit 1`,
             input.dossierId,
           );
-          if (!review) {
-            throw new Error("Red-team work cannot complete without an independent red-team review.");
+          if (blocker) {
+            throw new Error(
+              `Red-team work cannot complete without an independent red-team review for ${blocker.code}.`,
+            );
           }
         }
         if (row.job_key === "analysis" && this.countForDossier("findings", input.dossierId) === 0) {
@@ -1185,9 +1219,88 @@ export class LocalIntelligenceStore {
         input.observedAt ?? null,
         timestamp,
       );
-      this.appendAudit(dossierId, actor, "create", "evidence", id, { sourceCode: input.code });
+      this.appendAudit(dossierId, actor, "create", "evidence", id, { evidenceCode: input.code });
     });
     return { ...input, id };
+  }
+
+  addNormalisedEvidence(
+    dossierId: string,
+    input: Omit<EvidenceRecord, "id" | "normalisationRunId" | "normalisationSchemaVersion"> & {
+      id?: string;
+      evidenceClass: EvidenceClass;
+      contentSha256: string;
+      normalisationRunId: string;
+      normalisationSchemaVersion: string;
+    },
+    actor: LocalActor,
+  ): EvidenceRecord {
+    const contentSha256 = requireSha256(input.contentSha256, "evidence.contentSha256");
+    const schemaVersion = requireText(
+      input.normalisationSchemaVersion,
+      "evidence.normalisationSchemaVersion",
+    );
+    const id = input.id ?? randomUUID();
+    this.transaction(() => {
+      this.requireMutableDossier(dossierId);
+      const source = this.get<SourceRow>(
+        "select * from sources where dossier_id = ? and id = ?",
+        dossierId,
+        input.sourceId,
+      );
+      if (!source) throw new Error("Evidence source ID does not belong to this dossier.");
+      const run = this.requireAgentRun(dossierId, input.normalisationRunId);
+      if (run.agentRole !== "evidence_normalisation" || run.status !== "started") {
+        throw new Error("Evidence provenance requires the active evidence-normalisation run.");
+      }
+      const existing = this.get<EvidenceRow>(
+        "select * from evidence where dossier_id = ? and code = ?",
+        dossierId,
+        input.code,
+      );
+      if (existing) throw new Error(`Evidence code already exists: ${input.code}`);
+      const timestamp = now();
+      this.run(
+        `insert into evidence (
+           id, dossier_id, source_id, code, observation, locator, observed_at, created_at
+         ) values (?, ?, ?, ?, ?, ?, ?, ?)`,
+        id,
+        dossierId,
+        input.sourceId,
+        requireText(input.code, "evidence.code"),
+        requireText(input.observation, "evidence.observation"),
+        input.locator ?? null,
+        input.observedAt ?? null,
+        timestamp,
+      );
+      this.run(
+        `insert into evidence_provenance (
+           evidence_id, dossier_id, source_id, normalisation_run_id, evidence_class,
+           content_sha256, schema_version, created_at
+         ) values (?, ?, ?, ?, ?, ?, ?, ?)`,
+        id,
+        dossierId,
+        input.sourceId,
+        input.normalisationRunId,
+        input.evidenceClass,
+        contentSha256,
+        schemaVersion,
+        timestamp,
+      );
+      this.appendAudit(dossierId, actor, "create", "evidence", id, { evidenceCode: input.code });
+    });
+    return {
+      id,
+      code: input.code,
+      sourceId: input.sourceId,
+      observation: input.observation,
+      locator: input.locator,
+      observedAt: input.observedAt,
+      evidenceClass: input.evidenceClass,
+      contentSha256,
+      normalisationRunId: input.normalisationRunId,
+      normalisationSchemaVersion: schemaVersion,
+    };
   }
 
   addFinding(
@@ -1325,7 +1438,11 @@ export class LocalIntelligenceStore {
         mapSource,
       ),
       evidence: this.all<EvidenceRow>(
-        "select * from evidence where dossier_id = ? order by code",
+        `select evidence.*, provenance.evidence_class, provenance.content_sha256,
+                provenance.normalisation_run_id, provenance.schema_version
+         from evidence
+         left join evidence_provenance as provenance on provenance.evidence_id = evidence.id
+         where evidence.dossier_id = ? order by evidence.code`,
         dossierId,
       ).map(mapEvidence),
       findings: this.all<FindingRow>(
@@ -1588,6 +1705,7 @@ export class LocalIntelligenceStore {
       dossiers: this.count("dossiers"),
       sources: this.count("sources"),
       evidence: this.count("evidence"),
+      normalisedEvidence: this.count("evidence_provenance"),
       findings: this.count("findings"),
       agentRuns: this.count("agent_runs"),
       pendingHumanApprovals:
@@ -1695,6 +1813,7 @@ export class LocalIntelligenceStore {
     this.requireDossier(dossierId);
     this.run("delete from finding_evidence where dossier_id = ?", dossierId);
     this.run("delete from verification_reviews where dossier_id = ?", dossierId);
+    this.run("delete from evidence_provenance where dossier_id = ?", dossierId);
     this.run("delete from evidence where dossier_id = ?", dossierId);
     this.run("delete from findings where dossier_id = ?", dossierId);
     this.run("delete from agent_runs where dossier_id = ?", dossierId);
@@ -1812,6 +1931,7 @@ export class LocalIntelligenceStore {
       "dossiers",
       "sources",
       "evidence",
+      "evidence_provenance",
       "findings",
       "research_jobs",
       "agent_runs",
@@ -1935,6 +2055,10 @@ interface EvidenceRow {
   observation: string;
   locator: string | null;
   observed_at: string | null;
+  evidence_class?: EvidenceClass | null;
+  content_sha256?: string | null;
+  normalisation_run_id?: string | null;
+  schema_version?: string | null;
 }
 
 interface FindingRow {
@@ -2106,6 +2230,10 @@ function mapEvidence(row: EvidenceRow): EvidenceRecord {
     observation: row.observation,
     locator: row.locator ?? undefined,
     observedAt: row.observed_at ?? undefined,
+    evidenceClass: row.evidence_class ?? undefined,
+    contentSha256: row.content_sha256 ?? undefined,
+    normalisationRunId: row.normalisation_run_id ?? undefined,
+    normalisationSchemaVersion: row.schema_version ?? undefined,
   };
 }
 

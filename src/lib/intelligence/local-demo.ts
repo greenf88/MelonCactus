@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 
+import { runEvidenceNormalisationAgent } from "./evidence-normalisation";
 import { LocalIntelligenceStore, type LocalDossier } from "./local-store";
 
 export const DEMO_DECISION_QUESTION =
@@ -124,29 +125,54 @@ export function ensureFictionalDemo(store: LocalIntelligenceStore): DemoResult {
     actor: analystActor,
   });
 
-  const evidenceOne = store.addEvidence(
-    dossier.id,
-    {
-      code: "EV-001",
-      sourceId: sourceOne.id,
-      observation: "The fictional register records a limited pilot approval with three explicit conditions.",
-      locator: "entry J-17, conditions 1-3",
-      observedAt: "2026-09-18T00:00:00.000Z",
-    },
-    analystActor,
+  let evidenceRun = store.listAgentRuns(dossier.id).find(
+    (run) => run.agentRole === "evidence_normalisation" && run.status === "completed",
   );
-  const evidenceTwo = store.addEvidence(
-    dossier.id,
-    {
-      code: "EV-002",
-      sourceId: sourceTwo.id,
-      observation:
-        "The fictional independent assessment reports that all three stated conditions passed controlled testing.",
-      locator: "section 4.2",
-      observedAt: "2026-10-02T00:00:00.000Z",
-    },
-    analystActor,
-  );
+  if (!evidenceRun) {
+    const evidenceJob = store.listResearchJobs(dossier.id).find((job) => job.key === "evidence");
+    if (evidenceJob?.status === "completed") {
+      // Upgrade only this known fictional fixture from the pre-normalisation-run demo format.
+      store.updateResearchJobStatus({
+        dossierId: dossier.id,
+        jobKey: "evidence",
+        status: "pending",
+        actor: systemActor,
+      });
+    }
+    const result = runEvidenceNormalisationAgent(store, {
+      dossierId: dossier.id,
+      runnerRef: "fictional-evidence-normalisation-agent",
+      items: [
+        {
+          code: "E-001",
+          sourceId: sourceOne.id,
+          evidenceClass: "statement",
+          observation:
+            "The fictional register records a limited pilot approval with three explicit conditions.",
+          locator: "entry J-17, conditions 1-3",
+          observedAt: "2026-09-18T00:00:00.000Z",
+        },
+        {
+          code: "E-002",
+          sourceId: sourceTwo.id,
+          evidenceClass: "measurement",
+          observation:
+            "The fictional independent assessment reports that all three stated conditions passed controlled testing.",
+          locator: "section 4.2",
+          observedAt: "2026-10-02T00:00:00.000Z",
+        },
+      ],
+    });
+    evidenceRun = result.run;
+  }
+  const normalisedEvidence = store
+    .getBundle(dossier.id)
+    .evidence.filter((item) => item.normalisationRunId === evidenceRun.id);
+  const evidenceOne = normalisedEvidence.find((item) => item.code === "E-001");
+  const evidenceTwo = normalisedEvidence.find((item) => item.code === "E-002");
+  if (!evidenceOne || !evidenceTwo) {
+    throw new Error("The fictional evidence-normalisation fixture is incomplete.");
+  }
 
   const finding = store.addFinding(
     dossier.id,
@@ -166,12 +192,6 @@ export function ensureFictionalDemo(store: LocalIntelligenceStore): DemoResult {
   );
   store.linkEvidence(dossier.id, finding.id, evidenceOne.id, "supports", analystActor);
   store.linkEvidence(dossier.id, finding.id, evidenceTwo.id, "supports", analystActor);
-  store.updateResearchJobStatus({
-    dossierId: dossier.id,
-    jobKey: "evidence",
-    status: "completed",
-    actor: analystActor,
-  });
   store.addVerificationReview(
     dossier.id,
     {

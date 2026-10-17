@@ -21,6 +21,7 @@ describe("intelligence engine migration security posture", () => {
       "research_jobs",
       "agent_runs",
       "evidence",
+      "evidence_provenance",
       "findings",
       "verification_reviews",
       "report_drafts",
@@ -32,8 +33,11 @@ describe("intelligence engine migration security posture", () => {
     expect(migration).toContain("reviewer_kind = 'human'");
     expect(migration).toContain("review.reviewer_ref <> finding.created_by");
     expect(migration).toContain("finding_evidence_evidence_same_dossier");
+    expect(migration).toContain("evidence_provenance_source_same_dossier");
+    expect(migration).toContain("evidence_provenance_run_same_dossier");
     expect(migration).toContain("verification_reviews_finding_same_dossier");
-    expect(migration).toContain("create unique index agent_runs_one_started_job_idx");
+    expect(migration).toContain("create unique index agent_runs_one_running_job_idx");
+    expect(migration).toContain("where status = 'running'");
   });
 
   it("keeps audit events append-only for the application role", () => {

@@ -239,6 +239,7 @@ export function renderLocalControlRoomPage(
       <div class="metric"><strong>${status.dossiers}</strong><span>dossiers</span></div>
       <div class="metric"><strong>${status.sources}</strong><span>bronnen</span></div>
       <div class="metric"><strong>${status.evidence}</strong><span>bewijsstukken</span></div>
+      <div class="metric"><strong>${status.normalisedEvidence}</strong><span>genormaliseerd</span></div>
       <div class="metric"><strong>${status.findings}</strong><span>bevindingen</span></div>
       <div class="metric"><strong>${status.agentRuns}</strong><span>agentuitvoeringen</span></div>
       <div class="metric"><strong>${status.pendingHumanApprovals}</strong><span>menselijke besluiten open</span></div>
@@ -261,7 +262,10 @@ function renderJob(
   canEdit: boolean,
 ): string {
   const action =
-    canEdit && job.execution === "agent" && job.key !== "discover" && job.status !== "completed"
+    canEdit &&
+    job.execution === "agent" &&
+    !["discover", "evidence"].includes(job.key) &&
+    job.status !== "completed"
       ? form(
           `/dossiers/${encodeURIComponent(dossierId)}/jobs/${encodeURIComponent(job.key)}/complete`,
           options.csrfToken,
@@ -339,7 +343,7 @@ function evidenceForm(
   return form(
     `/dossiers/${encodeURIComponent(dossierId)}/evidence`,
     csrfToken,
-    `<fieldset><legend>Bewijsstuk registreren</legend><div class="form-grid">
+    `<fieldset><legend>Handmatig bewijsstuk registreren</legend><div class="form-grid">
       ${selectFromRecords("sourceId", "Bron", sources.map((source) => [source.id, `${source.code} — ${source.title}`]))}
       ${input("code", "Bewijscode", "text", "", true, 60)}
       <label class="wide">Directe observatie<textarea name="observation" maxlength="8000" required></textarea></label>
@@ -596,7 +600,9 @@ function renderEvidence(
     .map(
       (item) => `<div><strong>${escapeHtml(item.code)}</strong><span>${escapeHtml(item.observation)}</span><small>${escapeHtml(
         sourceCodes.get(item.sourceId) ?? "onbekende bron",
-      )}</small></div>`,
+      )}${item.evidenceClass ? ` · ${escapeHtml(item.evidenceClass)}` : " · handmatig"}${
+        item.contentSha256 ? ` · SHA-256 ${escapeHtml(item.contentSha256.slice(0, 12))}…` : ""
+      }</small></div>`,
     )
     .join("")}</div>`;
 }

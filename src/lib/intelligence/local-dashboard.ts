@@ -113,6 +113,7 @@ export function writeLocalDashboard(store: LocalIntelligenceStore): string {
       <div class="metric"><strong>${status.dossiers}</strong><span>dossiers</span></div>
       <div class="metric"><strong>${status.sources}</strong><span>bronnen</span></div>
       <div class="metric"><strong>${status.evidence}</strong><span>bewijsstukken</span></div>
+      <div class="metric"><strong>${status.normalisedEvidence}</strong><span>genormaliseerd</span></div>
       <div class="metric"><strong>${status.findings}</strong><span>bevindingen</span></div>
       <div class="metric"><strong>${status.agentRuns}</strong><span>agentuitvoeringen</span></div>
       <div class="metric"><strong>${status.pendingHumanApprovals}</strong><span>menselijke besluiten open</span></div>

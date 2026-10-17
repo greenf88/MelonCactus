@@ -1,4 +1,4 @@
-export const LOCAL_SCHEMA_VERSION = 2;
+export const LOCAL_SCHEMA_VERSION = 3;
 
 export const localSchemaSql = `
 pragma foreign_keys = on;
@@ -108,6 +108,24 @@ create table if not exists evidence (
   foreign key (dossier_id, source_id) references sources(dossier_id, id) on delete restrict,
   unique (dossier_id, code),
   unique (dossier_id, id)
+) strict;
+
+create table if not exists evidence_provenance (
+  evidence_id text primary key,
+  dossier_id text not null,
+  source_id text not null,
+  normalisation_run_id text not null,
+  evidence_class text not null
+    check (evidence_class in ('observation', 'measurement', 'statement', 'document_excerpt', 'image_frame')),
+  content_sha256 text not null check (length(content_sha256) = 64),
+  schema_version text not null check (length(trim(schema_version)) > 0),
+  created_at text not null,
+  foreign key (dossier_id, evidence_id) references evidence(dossier_id, id) on delete restrict,
+  foreign key (dossier_id, source_id) references sources(dossier_id, id) on delete restrict,
+  foreign key (dossier_id, normalisation_run_id)
+    references agent_runs(dossier_id, id) on delete restrict,
+  unique (dossier_id, evidence_id),
+  unique (dossier_id, content_sha256)
 ) strict;
 
 create table if not exists findings (
@@ -298,6 +316,10 @@ create unique index if not exists agent_runs_one_started_job_idx
   on agent_runs (research_job_id) where status = 'started';
 create index if not exists evidence_dossier_source_idx
   on evidence (dossier_id, source_id);
+create index if not exists evidence_provenance_dossier_run_idx
+  on evidence_provenance (dossier_id, normalisation_run_id);
+create unique index if not exists evidence_provenance_dossier_content_idx
+  on evidence_provenance (dossier_id, content_sha256);
 create index if not exists findings_dossier_status_idx
   on findings (dossier_id, status, material);
 create index if not exists reviews_dossier_finding_idx

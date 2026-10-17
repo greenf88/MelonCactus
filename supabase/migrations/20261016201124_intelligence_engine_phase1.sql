@@ -176,6 +176,7 @@ create table mc_intel.agent_runs (
   started_at timestamptz not null default now(),
   completed_at timestamptz,
   created_at timestamptz not null default now(),
+  constraint agent_runs_dossier_id_unique unique (dossier_id, id),
   constraint agent_runs_job_same_dossier
     foreign key (dossier_id, research_job_id)
     references mc_intel.research_jobs(dossier_id, id) on delete restrict,
@@ -227,6 +228,32 @@ create table mc_intel.evidence (
   constraint evidence_hash_is_sha256 check (
     content_sha256 is null or octet_length(content_sha256) = 32
   )
+);
+
+create table mc_intel.evidence_provenance (
+  evidence_id bigint primary key,
+  dossier_id bigint not null references mc_intel.dossiers(id) on delete restrict,
+  source_id bigint not null,
+  normalisation_run_id bigint not null,
+  evidence_class text not null,
+  content_sha256 bytea not null,
+  schema_version text not null,
+  created_at timestamptz not null default now(),
+  constraint evidence_provenance_evidence_same_dossier
+    foreign key (dossier_id, evidence_id)
+    references mc_intel.evidence(dossier_id, id) on delete restrict,
+  constraint evidence_provenance_source_same_dossier
+    foreign key (dossier_id, source_id)
+    references mc_intel.sources(dossier_id, id) on delete restrict,
+  constraint evidence_provenance_run_same_dossier
+    foreign key (dossier_id, normalisation_run_id)
+    references mc_intel.agent_runs(dossier_id, id) on delete restrict,
+  constraint evidence_provenance_class_valid check (
+    evidence_class in ('observation', 'measurement', 'statement', 'document_excerpt', 'image_frame')
+  ),
+  constraint evidence_provenance_hash_is_sha256 check (octet_length(content_sha256) = 32),
+  constraint evidence_provenance_schema_not_blank check (btrim(schema_version) <> ''),
+  constraint evidence_provenance_content_unique unique (dossier_id, content_sha256)
 );
 
 create table mc_intel.findings (
@@ -397,10 +424,12 @@ create index research_job_dependencies_depends_on_idx
   on mc_intel.research_job_dependencies (depends_on_job_id);
 create index agent_runs_dossier_job_idx
   on mc_intel.agent_runs (dossier_id, research_job_id, started_at desc);
-create unique index agent_runs_one_started_job_idx
-  on mc_intel.agent_runs (research_job_id) where status = 'started';
+create unique index agent_runs_one_running_job_idx
+  on mc_intel.agent_runs (research_job_id) where status = 'running';
 create index evidence_dossier_source_idx
   on mc_intel.evidence (dossier_id, source_id);
+create index evidence_provenance_dossier_run_idx
+  on mc_intel.evidence_provenance (dossier_id, normalisation_run_id);
 create index findings_dossier_status_idx
   on mc_intel.findings (dossier_id, status, material);
 create index finding_evidence_dossier_idx
@@ -453,6 +482,8 @@ begin
   v_object_id := case
     when tg_table_name = 'finding_evidence'
       then (v_row ->> 'finding_id') || ':' || (v_row ->> 'evidence_id')
+    when tg_table_name = 'evidence_provenance'
+      then v_row ->> 'evidence_id'
     when tg_table_name = 'research_job_dependencies'
       then (v_row ->> 'job_id') || ':' || (v_row ->> 'depends_on_job_id')
     else coalesce(v_row ->> 'id', v_row ->> 'dossier_number', 'unknown')
@@ -711,6 +742,9 @@ for each row execute function mc_intel.write_audit_event();
 create trigger evidence_audit
 after insert or update or delete on mc_intel.evidence
 for each row execute function mc_intel.write_audit_event();
+create trigger evidence_provenance_audit
+after insert or update or delete on mc_intel.evidence_provenance
+for each row execute function mc_intel.write_audit_event();
 create trigger findings_audit
 after insert or update or delete on mc_intel.findings
 for each row execute function mc_intel.write_audit_event();
@@ -741,6 +775,8 @@ alter table mc_intel.agent_runs enable row level security;
 alter table mc_intel.agent_runs force row level security;
 alter table mc_intel.evidence enable row level security;
 alter table mc_intel.evidence force row level security;
+alter table mc_intel.evidence_provenance enable row level security;
+alter table mc_intel.evidence_provenance force row level security;
 alter table mc_intel.findings enable row level security;
 alter table mc_intel.findings force row level security;
 alter table mc_intel.finding_evidence enable row level security;
@@ -766,6 +802,7 @@ grant select, insert, update on table
   mc_intel.research_job_dependencies,
   mc_intel.agent_runs,
   mc_intel.evidence,
+  mc_intel.evidence_provenance,
   mc_intel.findings,
   mc_intel.finding_evidence,
   mc_intel.verification_reviews,
