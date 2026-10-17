@@ -46,6 +46,7 @@ The database schema accepts restricted pointers so large or sensitive artefacts 
 - The local schema uses strict tables, foreign keys, full synchronous writes and WAL journaling.
 - Audit rows are append-only and linked with SHA-256 hashes recalculated by the verifier.
 - SQLite's online backup API creates consistent snapshots without copying a live database file.
+- Retention deletion is human-only and gated by due dates, legal holds, a distinct second approver and exact dossier-number confirmation. A separate hash-linked register causes an older restored backup to reapply recorded deletions before verification.
 - Generated HTML has no scripts, remote assets or network calls and escapes dossier content.
 - The default local directory is for fictional verification only. Real client use requires an encrypted, access-controlled path outside the repository.
 - The runtime has no command for email, LinkedIn, publication, deployment or client delivery.

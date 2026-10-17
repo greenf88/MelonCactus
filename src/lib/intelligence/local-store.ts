@@ -1,12 +1,16 @@
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import {
+  appendFileSync,
   chmodSync,
   constants as fsConstants,
   copyFileSync,
   existsSync,
   lstatSync,
   mkdirSync,
+  readFileSync,
   readdirSync,
+  rmSync,
+  unlinkSync,
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
@@ -29,6 +33,7 @@ import { buildPhaseOneResearchPlan, evaluateDraftReadiness } from "./workflow";
 
 export const DEFAULT_LOCAL_HOME = ".meloncactus-intelligence";
 export const LOCAL_DATABASE_NAME = "control-room.sqlite";
+export const DELETION_REGISTER_NAME = "deletion-register.jsonl";
 
 type ActorType = "human" | "agent" | "system";
 type JobStatus = "pending" | "ready" | "running" | "blocked" | "completed" | "waiting_for_approval";
@@ -100,6 +105,70 @@ export interface IsolatedRestoreResult {
   databasePath: string;
   dossiers: number;
   auditEvents: number;
+  reappliedDeletions: number;
+}
+
+export type RetentionCategory =
+  | "enquiry_not_converted"
+  | "non_fiscal_correspondence"
+  | "research_working_files"
+  | "final_report"
+  | "fiscal_record"
+  | "legal_claim";
+
+const RETENTION_CATEGORIES = new Set<RetentionCategory>([
+  "enquiry_not_converted",
+  "non_fiscal_correspondence",
+  "research_working_files",
+  "final_report",
+  "fiscal_record",
+  "legal_claim",
+]);
+
+export interface LocalRetentionItem {
+  id: string;
+  dossierId: string;
+  category: RetentionCategory;
+  triggerAt: string;
+  deadlineAt: string;
+  storageLocations: string[];
+  status: "active" | "held" | "deletion_proposed";
+  holdReason?: string;
+  holdReviewAt?: string;
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LocalDeletionRequest {
+  id: string;
+  dossierId: string;
+  status: "proposed" | "approved" | "executed" | "rejected";
+  categories: RetentionCategory[];
+  reviewedAt: string;
+  requestedBy: string;
+  requestedAt: string;
+  rationale: string;
+  decidedBy?: string;
+  decidedAt?: string;
+  decisionRationale?: string;
+  executedBy?: string;
+  executedAt?: string;
+}
+
+export interface DeletionRegisterEntry {
+  id: string;
+  dossierNumber: string;
+  categories: RetentionCategory[];
+  action: "deleted" | "anonymised";
+  locations: string[];
+  deadlineAt: string;
+  reviewedAt: string;
+  approvedBy: string;
+  executedBy: string;
+  completedAt: string;
+  previousHash?: string;
+  entryHash: string;
 }
 
 export class DossierRevisionConflictError extends Error {
@@ -130,7 +199,9 @@ export class LocalIntelligenceStore {
     this.database = new DatabaseSync(this.databasePath);
     this.database.exec(localSchemaSql);
     const existingVersion = this.getMeta("schema_version");
-    if (existingVersion && existingVersion !== String(LOCAL_SCHEMA_VERSION)) {
+    if (existingVersion === "1" && LOCAL_SCHEMA_VERSION === 2) {
+      this.setMeta("schema_version", String(LOCAL_SCHEMA_VERSION));
+    } else if (existingVersion && existingVersion !== String(LOCAL_SCHEMA_VERSION)) {
       this.database.close();
       this.closed = true;
       throw new Error(
@@ -151,6 +222,10 @@ export class LocalIntelligenceStore {
   getMeta(key: string): string | undefined {
     const row = this.get<{ value: string }>("select value from local_meta where key = ?", key);
     return row?.value;
+  }
+
+  get deletionRegisterPath(): string {
+    return path.join(this.homePath, DELETION_REGISTER_NAME);
   }
 
   setMeta(key: string, value: string): void {
@@ -258,13 +333,347 @@ export class LocalIntelligenceStore {
     });
   }
 
+  addRetentionItem(
+    dossierId: string,
+    input: {
+      category: RetentionCategory;
+      triggerAt: string;
+      deadlineAt: string;
+      storageLocations: string[];
+      createdBy: string;
+    },
+    actor: LocalActor,
+  ): LocalRetentionItem {
+    this.requireNotDeletedDossier(dossierId);
+    const category = requireRetentionCategory(input.category);
+    const triggerAt = requireIsoDate(input.triggerAt, "retention.triggerAt");
+    const deadlineAt = requireIsoDate(input.deadlineAt, "retention.deadlineAt");
+    if (new Date(deadlineAt) < new Date(triggerAt)) {
+      throw new Error("Retention deadline cannot be earlier than its trigger date.");
+    }
+    const storageLocations = requireStringList(input.storageLocations, "retention.storageLocations");
+    const createdBy = requireText(input.createdBy, "retention.createdBy");
+    const id = randomUUID();
+    const timestamp = now();
+
+    this.transaction(() => {
+      const existing = this.get<{ id: string }>(
+        "select id from retention_items where dossier_id = ? and category = ?",
+        dossierId,
+        category,
+      );
+      if (existing) throw new Error(`Retention category already exists for this dossier: ${category}`);
+      this.run(
+        `insert into retention_items (
+           id, dossier_id, category, trigger_at, deadline_at, storage_locations_json,
+           status, created_by, created_at, updated_at
+         ) values (?, ?, ?, ?, ?, ?, 'active', ?, ?, ?)`,
+        id,
+        dossierId,
+        category,
+        triggerAt,
+        deadlineAt,
+        JSON.stringify(storageLocations),
+        createdBy,
+        timestamp,
+        timestamp,
+      );
+      this.appendAudit(dossierId, actor, "create", "retention_item", id, {
+        retentionCategory: category,
+      });
+    });
+    return this.requireRetentionItem(dossierId, id);
+  }
+
+  listRetentionItems(dossierId: string): LocalRetentionItem[] {
+    this.requireDossier(dossierId);
+    return this.all<RetentionItemRow>(
+      "select * from retention_items where dossier_id = ? order by deadline_at, category",
+      dossierId,
+    ).map(mapRetentionItem);
+  }
+
+  placeRetentionHold(input: {
+    dossierId: string;
+    retentionItemId: string;
+    reason: string;
+    nextReviewAt: string;
+    placedBy: string;
+  }): LocalRetentionItem {
+    const reason = requireText(input.reason, "retentionHold.reason");
+    const nextReviewAt = requireIsoDate(input.nextReviewAt, "retentionHold.nextReviewAt");
+    const placedBy = requireText(input.placedBy, "retentionHold.placedBy");
+    this.transaction(() => {
+      const item = this.requireRetentionItem(input.dossierId, input.retentionItemId);
+      this.run(
+        `update retention_items
+         set status = 'held', hold_reason = ?, hold_review_at = ?, updated_at = ?
+         where id = ? and dossier_id = ?`,
+        reason,
+        nextReviewAt,
+        now(),
+        item.id,
+        input.dossierId,
+      );
+      this.appendAudit(
+        input.dossierId,
+        { type: "human", ref: placedBy },
+        "place_hold",
+        "retention_item",
+        item.id,
+        { reasonCode: "legal_hold", retentionCategory: item.category },
+      );
+    });
+    return this.requireRetentionItem(input.dossierId, input.retentionItemId);
+  }
+
+  releaseRetentionHold(input: {
+    dossierId: string;
+    retentionItemId: string;
+    rationale: string;
+    releasedBy: string;
+  }): LocalRetentionItem {
+    requireText(input.rationale, "retentionHold.rationale");
+    const releasedBy = requireText(input.releasedBy, "retentionHold.releasedBy");
+    this.transaction(() => {
+      const item = this.requireRetentionItem(input.dossierId, input.retentionItemId);
+      if (item.status !== "held") throw new Error("Only a held retention item can be released.");
+      this.run(
+        `update retention_items
+         set status = 'active', hold_reason = null, hold_review_at = null, updated_at = ?
+         where id = ? and dossier_id = ?`,
+        now(),
+        item.id,
+        input.dossierId,
+      );
+      this.appendAudit(
+        input.dossierId,
+        { type: "human", ref: releasedBy },
+        "release_hold",
+        "retention_item",
+        item.id,
+        { reasonCode: "hold_released", retentionCategory: item.category },
+      );
+    });
+    return this.requireRetentionItem(input.dossierId, input.retentionItemId);
+  }
+
+  proposeDossierDeletion(input: {
+    dossierId: string;
+    reviewedAt: string;
+    requestedBy: string;
+    rationale: string;
+  }): LocalDeletionRequest {
+    const reviewedAt = requireIsoDate(input.reviewedAt, "deletion.reviewedAt");
+    if (new Date(reviewedAt).getTime() > Date.now() + 5 * 60_000) {
+      throw new Error("Deletion review time cannot be in the future.");
+    }
+    const requestedBy = requireText(input.requestedBy, "deletion.requestedBy");
+    const rationale = requireText(input.rationale, "deletion.rationale");
+    const requestId = randomUUID();
+    const timestamp = now();
+
+    this.transaction(() => {
+      this.requireDossier(input.dossierId);
+      const existing = this.get<{ id: string }>(
+        `select id from deletion_requests
+         where dossier_id = ? and status in ('proposed', 'approved') limit 1`,
+        input.dossierId,
+      );
+      if (existing) throw new Error("This dossier already has an open deletion request.");
+      const items = this.listRetentionItems(input.dossierId);
+      if (items.length === 0) throw new Error("Deletion requires at least one retention item.");
+      const held = items.find((item) => item.status === "held");
+      if (held) throw new Error(`Deletion is blocked by a legal hold: ${held.category}`);
+      const notDue = items.find((item) => new Date(item.deadlineAt) > new Date(reviewedAt));
+      if (notDue) throw new Error(`Retention deadline has not passed: ${notDue.category}`);
+      const categories = items.map((item) => item.category);
+      this.run(
+        `insert into deletion_requests (
+           id, dossier_id, status, categories_json, reviewed_at, requested_by,
+           requested_at, rationale, created_at, updated_at
+         ) values (?, ?, 'proposed', ?, ?, ?, ?, ?, ?, ?)`,
+        requestId,
+        input.dossierId,
+        JSON.stringify(categories),
+        reviewedAt,
+        requestedBy,
+        timestamp,
+        rationale,
+        timestamp,
+        timestamp,
+      );
+      this.run(
+        "update retention_items set status = 'deletion_proposed', updated_at = ? where dossier_id = ?",
+        timestamp,
+        input.dossierId,
+      );
+      this.appendAudit(
+        input.dossierId,
+        { type: "human", ref: requestedBy },
+        "propose",
+        "deletion_request",
+        requestId,
+        { reasonCode: "retention_due", retentionCategoryCount: categories.length },
+      );
+    });
+    return this.requireDeletionRequest(input.dossierId, requestId);
+  }
+
+  approveDossierDeletion(input: {
+    dossierId: string;
+    requestId: string;
+    decidedBy: string;
+    rationale: string;
+  }): LocalDeletionRequest {
+    const decidedBy = requireText(input.decidedBy, "deletion.decidedBy");
+    const rationale = requireText(input.rationale, "deletion.decisionRationale");
+    this.transaction(() => {
+      const request = this.requireDeletionRequest(input.dossierId, input.requestId);
+      if (request.status !== "proposed") throw new Error("Only a proposed deletion can be approved.");
+      if (sameOperatorReference(request.requestedBy, decidedBy)) {
+        throw new Error("Deletion must be approved by a different human reviewer.");
+      }
+      const held = this.listRetentionItems(input.dossierId).find((item) => item.status === "held");
+      if (held) throw new Error(`Deletion is blocked by a legal hold: ${held.category}`);
+      const timestamp = now();
+      this.run(
+        `update deletion_requests
+         set status = 'approved', decided_by = ?, decided_at = ?,
+             decision_rationale = ?, updated_at = ?
+         where id = ? and dossier_id = ?`,
+        decidedBy,
+        timestamp,
+        rationale,
+        timestamp,
+        request.id,
+        input.dossierId,
+      );
+      this.appendAudit(
+        input.dossierId,
+        { type: "human", ref: decidedBy },
+        "approve",
+        "deletion_request",
+        request.id,
+        {
+          approvalDecision: "approved",
+          reasonCode: "retention_deletion",
+          retentionCategoryCount: request.categories.length,
+        },
+      );
+    });
+    return this.requireDeletionRequest(input.dossierId, input.requestId);
+  }
+
+  executeApprovedDeletion(input: {
+    dossierId: string;
+    requestId: string;
+    executedBy: string;
+    confirmation: string;
+  }): DeletionRegisterEntry {
+    const dossier = this.requireDossier(input.dossierId);
+    if (input.confirmation.trim() !== dossier.dossierNumber) {
+      throw new Error("Deletion confirmation must exactly match the dossier number.");
+    }
+    const request = this.requireDeletionRequest(input.dossierId, input.requestId);
+    if (request.status !== "approved") throw new Error("Deletion request is not approved.");
+    const executedBy = requireText(input.executedBy, "deletion.executedBy");
+    const items = this.listRetentionItems(input.dossierId);
+    if (items.length === 0) throw new Error("Approved deletion has no retention items.");
+    const held = items.find((item) => item.status === "held");
+    if (held) throw new Error(`Deletion is blocked by a legal hold: ${held.category}`);
+    const approvedBy = request.decidedBy;
+    if (!approvedBy) throw new Error("Deletion approval is incomplete.");
+    const completedAt = now();
+    const entry = this.getOrAppendDeletionRegisterEntry({
+      id: request.id,
+      dossierNumber: dossier.dossierNumber,
+      categories: request.categories,
+      action: "deleted",
+      locations: [...new Set(items.flatMap((item) => item.storageLocations))].sort(),
+      deadlineAt: latestDate(items.map((item) => item.deadlineAt)),
+      reviewedAt: request.reviewedAt,
+      approvedBy,
+      executedBy,
+      completedAt,
+    });
+
+    this.removeGeneratedDossierFiles(dossier.dossierNumber);
+    this.transaction(() => {
+      const current = this.requireDeletionRequest(input.dossierId, input.requestId);
+      if (current.status !== "approved") throw new Error("Deletion request changed before execution.");
+      this.applyDeletionEntry(input.dossierId, entry, { type: "human", ref: executedBy }, false);
+    });
+    return entry;
+  }
+
+  listDeletionRequests(dossierId: string): LocalDeletionRequest[] {
+    this.requireDossier(dossierId);
+    return this.all<DeletionRequestRow>(
+      "select * from deletion_requests where dossier_id = ? order by requested_at desc",
+      dossierId,
+    ).map(mapDeletionRequest);
+  }
+
+  listDeletionRegister(): DeletionRegisterEntry[] {
+    return this.all<DeletionRegisterRow>(
+      "select * from deletion_register order by completed_at, id",
+    ).map(mapDeletionRegisterEntry);
+  }
+
+  verifyDeletionRegister(registerPath = this.deletionRegisterPath): {
+    valid: boolean;
+    entries: number;
+    error?: string;
+  } {
+    const verification = verifyDeletionRegisterFile(registerPath);
+    if (!verification.valid || path.resolve(registerPath) !== path.resolve(this.deletionRegisterPath)) {
+      return verification;
+    }
+    const fileEntries = readDeletionRegisterFile(registerPath);
+    const databaseEntries = this.listDeletionRegister();
+    if (fileEntries.length !== databaseEntries.length) {
+      return {
+        valid: false,
+        entries: fileEntries.length,
+        error: "Deletion register file and database contain a different number of entries.",
+      };
+    }
+    const databaseHashes = new Map(databaseEntries.map((entry) => [entry.id, entry.entryHash]));
+    const mismatch = fileEntries.find((entry) => databaseHashes.get(entry.id) !== entry.entryHash);
+    if (mismatch) {
+      return {
+        valid: false,
+        entries: fileEntries.length,
+        error: `Deletion register entry is missing or inconsistent in the database: ${mismatch.id}.`,
+      };
+    }
+    return verification;
+  }
+
+  reapplyDeletionRegister(registerPath = this.deletionRegisterPath): number {
+    const verification = verifyDeletionRegisterFile(registerPath);
+    if (!verification.valid) throw new Error(`Deletion register is invalid: ${verification.error}`);
+    let applied = 0;
+    for (const entry of readDeletionRegisterFile(registerPath)) {
+      const dossier = this.getDossier(entry.dossierNumber);
+      if (!dossier || dossier.scope.retentionStatus === "deleted") continue;
+      this.removeGeneratedDossierFiles(dossier.dossierNumber);
+      this.transaction(() => {
+        this.applyDeletionEntry(dossier.id, entry, { type: "system", ref: "restore-deletion-replay" }, true);
+      });
+      applied += 1;
+    }
+    return applied;
+  }
+
   updateDossierStatus(
     dossierId: string,
     status: LocalDossier["status"],
     actor: LocalActor,
   ): void {
     this.transaction(() => {
-      const dossier = this.requireDossier(dossierId);
+      const dossier = this.requireMutableDossier(dossierId);
       if (dossier.status === status) return;
       const order: LocalDossier["status"][] = [
         "registered",
@@ -296,7 +705,7 @@ export class LocalIntelligenceStore {
   }
 
   ensureResearchPlan(dossierId: string, actor: LocalActor): ResearchPlan {
-    const dossier = this.requireDossier(dossierId);
+    const dossier = this.requireMutableDossier(dossierId);
     const plan = buildPhaseOneResearchPlan({
       dossierId: dossier.id,
       decisionQuestion: dossier.decisionQuestion,
@@ -367,6 +776,7 @@ export class LocalIntelligenceStore {
     actor: LocalActor;
   }): void {
     this.transaction(() => {
+      this.requireMutableDossier(input.dossierId);
       const row = this.get<JobRow>(
         "select * from research_jobs where dossier_id = ? and job_key = ?",
         input.dossierId,
@@ -437,7 +847,7 @@ export class LocalIntelligenceStore {
   }
 
   approveScope(input: { dossierId: string; decidedBy: string; rationale: string }): void {
-    const dossier = this.requireDossier(input.dossierId);
+    const dossier = this.requireMutableDossier(input.dossierId);
     const decidedBy = requireText(input.decidedBy, "approval.decidedBy");
     const rationale = requireText(input.rationale, "approval.rationale");
     const actor: LocalActor = { type: "human", ref: decidedBy };
@@ -501,7 +911,7 @@ export class LocalIntelligenceStore {
     input: Omit<SourceRecord, "id"> & { id?: string },
     actor: LocalActor,
   ): SourceRecord {
-    this.requireDossier(dossierId);
+    this.requireMutableDossier(dossierId);
     const existing = this.get<SourceRow>(
       "select * from sources where dossier_id = ? and code = ?",
       dossierId,
@@ -538,7 +948,7 @@ export class LocalIntelligenceStore {
     input: Omit<EvidenceRecord, "id"> & { id?: string },
     actor: LocalActor,
   ): EvidenceRecord {
-    this.requireDossier(dossierId);
+    this.requireMutableDossier(dossierId);
     const existing = this.get<EvidenceRow>(
       "select * from evidence where dossier_id = ? and code = ?",
       dossierId,
@@ -571,7 +981,7 @@ export class LocalIntelligenceStore {
     input: Omit<FindingRecord, "id"> & { id?: string },
     actor: LocalActor,
   ): FindingRecord {
-    this.requireDossier(dossierId);
+    this.requireMutableDossier(dossierId);
     const existing = this.get<FindingRow>(
       "select * from findings where dossier_id = ? and code = ?",
       dossierId,
@@ -615,6 +1025,7 @@ export class LocalIntelligenceStore {
     actor: LocalActor,
   ): void {
     this.transaction(() => {
+      this.requireMutableDossier(dossierId);
       const result = this.run(
         `insert or ignore into finding_evidence
          (dossier_id, finding_id, evidence_id, direction) values (?, ?, ?, ?)`,
@@ -645,6 +1056,7 @@ export class LocalIntelligenceStore {
     },
     actor: LocalActor,
   ): VerificationReview {
+    this.requireMutableDossier(dossierId);
     const existing = this.get<ReviewRow>(
       `select * from verification_reviews
        where dossier_id = ? and finding_id = ? and review_type = ? and reviewer_ref = ?`,
@@ -727,6 +1139,7 @@ export class LocalIntelligenceStore {
     createdBy: string;
     actor: LocalActor;
   }): StoredDraft {
+    this.requireMutableDossier(input.dossierId);
     const bundle = this.getBundle(input.dossierId);
     if (bundle.dossier.status === "closed") throw new Error("A closed dossier cannot receive a new draft.");
     const reportJob = this.get<JobRow>(
@@ -810,6 +1223,7 @@ export class LocalIntelligenceStore {
     decidedBy: string;
     rationale: string;
   }): void {
+    this.requireMutableDossier(input.dossierId);
     const bundle = this.getBundle(input.dossierId);
     const readiness = evaluateDraftReadiness(bundle);
     if (!readiness.ready) {
@@ -891,6 +1305,11 @@ export class LocalIntelligenceStore {
     const target = path.join(directory, LOCAL_DATABASE_NAME);
     await backup(this.database, target);
     chmodPrivate(target, 0o600);
+    if (existsSync(this.deletionRegisterPath)) {
+      const registerTarget = path.join(directory, DELETION_REGISTER_NAME);
+      copyFileSync(this.deletionRegisterPath, registerTarget);
+      chmodPrivate(registerTarget, 0o600);
+    }
     return target;
   }
 
@@ -956,10 +1375,11 @@ export class LocalIntelligenceStore {
       sources: this.count("sources"),
       evidence: this.count("evidence"),
       findings: this.count("findings"),
-      pendingHumanApprovals: this.count(
-        "research_jobs",
-        "where execution = 'human' and status = 'waiting_for_approval'",
-      ),
+      pendingHumanApprovals:
+        this.count(
+          "research_jobs",
+          "where execution = 'human' and status = 'waiting_for_approval'",
+        ) + this.count("deletion_requests", "where status = 'proposed'"),
       auditEvents: this.count("audit_events"),
     };
   }
@@ -968,6 +1388,138 @@ export class LocalIntelligenceStore {
     const dossier = this.getDossier(idOrNumber);
     if (!dossier) throw new Error(`Dossier not found: ${idOrNumber}`);
     return dossier;
+  }
+
+  private requireMutableDossier(idOrNumber: string): LocalDossier {
+    const dossier = this.requireDossier(idOrNumber);
+    if (dossier.status === "closed" || dossier.scope.retentionStatus === "deleted") {
+      throw new Error("A closed or retention-deleted dossier cannot receive new content.");
+    }
+    return dossier;
+  }
+
+  private requireNotDeletedDossier(idOrNumber: string): LocalDossier {
+    const dossier = this.requireDossier(idOrNumber);
+    if (dossier.scope.retentionStatus === "deleted") {
+      throw new Error("A retention-deleted dossier cannot receive new records.");
+    }
+    return dossier;
+  }
+
+  private requireRetentionItem(dossierId: string, itemId: string): LocalRetentionItem {
+    const row = this.get<RetentionItemRow>(
+      "select * from retention_items where id = ? and dossier_id = ?",
+      itemId,
+      dossierId,
+    );
+    if (!row) throw new Error("Retention item not found.");
+    return mapRetentionItem(row);
+  }
+
+  private requireDeletionRequest(dossierId: string, requestId: string): LocalDeletionRequest {
+    const row = this.get<DeletionRequestRow>(
+      "select * from deletion_requests where id = ? and dossier_id = ?",
+      requestId,
+      dossierId,
+    );
+    if (!row) throw new Error("Deletion request not found.");
+    return mapDeletionRequest(row);
+  }
+
+  private getOrAppendDeletionRegisterEntry(
+    input: Omit<DeletionRegisterEntry, "previousHash" | "entryHash">,
+  ): DeletionRegisterEntry {
+    const verification = verifyDeletionRegisterFile(this.deletionRegisterPath);
+    if (!verification.valid) {
+      throw new Error(`Deletion register is invalid: ${verification.error}`);
+    }
+    const entries = readDeletionRegisterFile(this.deletionRegisterPath);
+    const existing = entries.find((entry) => entry.id === input.id);
+    if (existing) {
+      if (existing.dossierNumber !== input.dossierNumber || existing.action !== input.action) {
+        throw new Error("Deletion register request ID conflicts with an existing entry.");
+      }
+      return existing;
+    }
+    const entry = buildDeletionRegisterEntry(input, entries.at(-1)?.entryHash);
+    appendFileSync(this.deletionRegisterPath, `${JSON.stringify(entry)}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+    chmodPrivate(this.deletionRegisterPath, 0o600);
+    return entry;
+  }
+
+  private removeGeneratedDossierFiles(dossierNumber: string): void {
+    const exportRoot = path.resolve(this.homePath, "exports");
+    const dossierExport = path.resolve(exportRoot, dossierNumber);
+    if (!dossierExport.startsWith(`${exportRoot}${path.sep}`)) {
+      throw new Error("Refusing to remove an export path outside the local export directory.");
+    }
+    rmSync(dossierExport, { recursive: true, force: true });
+    const dashboard = path.join(this.homePath, "control-room.html");
+    if (existsSync(dashboard)) unlinkSync(dashboard);
+  }
+
+  private applyDeletionEntry(
+    dossierId: string,
+    entry: DeletionRegisterEntry,
+    actor: LocalActor,
+    replay: boolean,
+  ): void {
+    this.requireDossier(dossierId);
+    this.run("delete from finding_evidence where dossier_id = ?", dossierId);
+    this.run("delete from verification_reviews where dossier_id = ?", dossierId);
+    this.run("delete from evidence where dossier_id = ?", dossierId);
+    this.run("delete from findings where dossier_id = ?", dossierId);
+    this.run("delete from agent_runs where dossier_id = ?", dossierId);
+    this.run("delete from research_job_dependencies where dossier_id = ?", dossierId);
+    this.run("delete from research_jobs where dossier_id = ?", dossierId);
+    this.run("delete from sources where dossier_id = ?", dossierId);
+    this.run("delete from report_drafts where dossier_id = ?", dossierId);
+    this.run("delete from approvals where dossier_id = ?", dossierId);
+    this.run("delete from retention_items where dossier_id = ?", dossierId);
+    this.run("delete from deletion_requests where dossier_id = ?", dossierId);
+    this.run(
+      `insert or ignore into deletion_register (
+         id, dossier_number, categories_json, action, locations_json,
+         deadline_at, reviewed_at, approved_by, executed_by, completed_at,
+         previous_hash, entry_hash
+       ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      entry.id,
+      entry.dossierNumber,
+      JSON.stringify(entry.categories),
+      entry.action,
+      JSON.stringify(entry.locations),
+      entry.deadlineAt,
+      entry.reviewedAt,
+      entry.approvedBy,
+      entry.executedBy,
+      entry.completedAt,
+      entry.previousHash ?? null,
+      entry.entryHash,
+    );
+    this.run(
+      `update dossiers
+       set decision_question = '[deleted under approved retention request]',
+           scope_json = ?, status = 'closed', created_by = 'retention-deleted',
+           updated_at = ?, version = version + 1
+       where id = ?`,
+      JSON.stringify({ retentionStatus: "deleted", deletionRequestId: entry.id }),
+      now(),
+      dossierId,
+    );
+    this.appendAudit(
+      dossierId,
+      actor,
+      replay ? "reapply_deletion" : "execute_deletion",
+      "deletion_register",
+      entry.id,
+      {
+        retentionAction: replay ? "reapplied" : entry.action,
+        retentionCategoryCount: entry.categories.length,
+      },
+    );
   }
 
   private appendAudit(
@@ -1037,6 +1589,7 @@ export class LocalIntelligenceStore {
       "evidence",
       "findings",
       "research_jobs",
+      "deletion_requests",
       "audit_events",
     ]);
     if (!allowed.has(table)) throw new TypeError("Unsupported count table.");
@@ -1068,6 +1621,7 @@ export class LocalIntelligenceStore {
 export function restoreBackupToIsolatedHome(
   backupPath: string,
   targetHome: string,
+  deletionRegisterPath?: string,
 ): IsolatedRestoreResult {
   const source = path.resolve(backupPath);
   const target = path.resolve(targetHome);
@@ -1084,8 +1638,25 @@ export function restoreBackupToIsolatedHome(
 
   const restored = new LocalIntelligenceStore(target);
   try {
+    const adjacentRegister = path.join(path.dirname(source), DELETION_REGISTER_NAME);
+    const requestedRegister = deletionRegisterPath ? path.resolve(deletionRegisterPath) : undefined;
+    const register = requestedRegister && existsSync(requestedRegister)
+      ? requestedRegister
+      : existsSync(adjacentRegister)
+        ? adjacentRegister
+        : undefined;
+    let reappliedDeletions = 0;
+    if (register) {
+      copyFileSync(register, restored.deletionRegisterPath, fsConstants.COPYFILE_EXCL);
+      chmodPrivate(restored.deletionRegisterPath, 0o600);
+      reappliedDeletions = restored.reapplyDeletionRegister();
+    }
     const integrity = restored.verifyDatabase();
     if (!integrity.valid) throw new Error(`Restored database failed integrity check: ${integrity.message}`);
+    const deletionIntegrity = restored.verifyDeletionRegister();
+    if (!deletionIntegrity.valid) {
+      throw new Error(`Restored deletion register failed verification: ${deletionIntegrity.error}`);
+    }
     let auditEvents = 0;
     for (const dossier of restored.listDossiers()) {
       const audit = restored.verifyAuditChain(dossier.id);
@@ -1100,6 +1671,7 @@ export function restoreBackupToIsolatedHome(
       databasePath: restored.databasePath,
       dossiers: status.dossiers,
       auditEvents,
+      reappliedDeletions,
     };
   } finally {
     restored.close();
@@ -1207,6 +1779,52 @@ interface AuditRow {
   event_hash: string;
 }
 
+interface RetentionItemRow {
+  id: string;
+  dossier_id: string;
+  category: RetentionCategory;
+  trigger_at: string;
+  deadline_at: string;
+  storage_locations_json: string;
+  status: LocalRetentionItem["status"];
+  hold_reason: string | null;
+  hold_review_at: string | null;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface DeletionRequestRow {
+  id: string;
+  dossier_id: string;
+  status: LocalDeletionRequest["status"];
+  categories_json: string;
+  reviewed_at: string;
+  requested_by: string;
+  requested_at: string;
+  rationale: string;
+  decided_by: string | null;
+  decided_at: string | null;
+  decision_rationale: string | null;
+  executed_by: string | null;
+  executed_at: string | null;
+}
+
+interface DeletionRegisterRow {
+  id: string;
+  dossier_number: string;
+  categories_json: string;
+  action: DeletionRegisterEntry["action"];
+  locations_json: string;
+  deadline_at: string;
+  reviewed_at: string;
+  approved_by: string;
+  executed_by: string;
+  completed_at: string;
+  previous_hash: string | null;
+  entry_hash: string;
+}
+
 function mapDossier(row: DossierRow): LocalDossier {
   return {
     id: row.id,
@@ -1303,6 +1921,58 @@ function mapDraft(row: DraftRow): StoredDraft {
   };
 }
 
+function mapRetentionItem(row: RetentionItemRow): LocalRetentionItem {
+  return {
+    id: row.id,
+    dossierId: row.dossier_id,
+    category: row.category,
+    triggerAt: row.trigger_at,
+    deadlineAt: row.deadline_at,
+    storageLocations: parseStringArray(row.storage_locations_json, "retention storage locations"),
+    status: row.status,
+    holdReason: row.hold_reason ?? undefined,
+    holdReviewAt: row.hold_review_at ?? undefined,
+    createdBy: row.created_by,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
+
+function mapDeletionRequest(row: DeletionRequestRow): LocalDeletionRequest {
+  return {
+    id: row.id,
+    dossierId: row.dossier_id,
+    status: row.status,
+    categories: parseRetentionCategories(row.categories_json),
+    reviewedAt: row.reviewed_at,
+    requestedBy: row.requested_by,
+    requestedAt: row.requested_at,
+    rationale: row.rationale,
+    decidedBy: row.decided_by ?? undefined,
+    decidedAt: row.decided_at ?? undefined,
+    decisionRationale: row.decision_rationale ?? undefined,
+    executedBy: row.executed_by ?? undefined,
+    executedAt: row.executed_at ?? undefined,
+  };
+}
+
+function mapDeletionRegisterEntry(row: DeletionRegisterRow): DeletionRegisterEntry {
+  return {
+    id: row.id,
+    dossierNumber: row.dossier_number,
+    categories: parseRetentionCategories(row.categories_json),
+    action: row.action,
+    locations: parseStringArray(row.locations_json, "deletion locations"),
+    deadlineAt: row.deadline_at,
+    reviewedAt: row.reviewed_at,
+    approvedBy: row.approved_by,
+    executedBy: row.executed_by,
+    completedAt: row.completed_at,
+    previousHash: row.previous_hash ?? undefined,
+    entryHash: row.entry_hash,
+  };
+}
+
 function requireText(value: string, label: string): string {
   const result = value.trim();
   if (!result) throw new TypeError(`${label} must not be empty.`);
@@ -1313,6 +1983,143 @@ function requireIsoDate(value: string, label: string): string {
   const result = new Date(value);
   if (Number.isNaN(result.getTime())) throw new TypeError(`${label} must be a valid timestamp.`);
   return result.toISOString();
+}
+
+function requireRetentionCategory(value: string): RetentionCategory {
+  if (!RETENTION_CATEGORIES.has(value as RetentionCategory)) {
+    throw new TypeError(`Unsupported retention category: ${value}`);
+  }
+  return value as RetentionCategory;
+}
+
+function sameOperatorReference(left: string, right: string): boolean {
+  return left.trim().toLocaleLowerCase("en-US") === right.trim().toLocaleLowerCase("en-US");
+}
+
+function requireStringList(values: string[], label: string): string[] {
+  const result = [...new Set(values.map((value) => value.trim()).filter(Boolean))];
+  if (result.length === 0) throw new TypeError(`${label} must contain at least one item.`);
+  if (result.length > 100) throw new TypeError(`${label} contains too many items.`);
+  if (result.some((value) => value.length > 500)) throw new TypeError(`${label} contains an item that is too long.`);
+  return result;
+}
+
+function parseStringArray(value: string, label: string): string[] {
+  const parsed = JSON.parse(value) as unknown;
+  if (!Array.isArray(parsed) || !parsed.every((item) => typeof item === "string")) {
+    throw new Error(`Invalid ${label}.`);
+  }
+  return parsed;
+}
+
+function parseRetentionCategories(value: string): RetentionCategory[] {
+  return parseStringArray(value, "retention categories").map(requireRetentionCategory);
+}
+
+function latestDate(values: string[]): string {
+  if (values.length === 0) throw new Error("At least one retention deadline is required.");
+  return values.map((value) => requireIsoDate(value, "retention.deadlineAt")).sort().at(-1)!;
+}
+
+function buildDeletionRegisterEntry(
+  input: Omit<DeletionRegisterEntry, "previousHash" | "entryHash">,
+  previousHash?: string,
+): DeletionRegisterEntry {
+  const payload = {
+    id: requireText(input.id, "deletionRegister.id"),
+    dossierNumber: requireText(input.dossierNumber, "deletionRegister.dossierNumber"),
+    categories: input.categories.map(requireRetentionCategory),
+    action: input.action,
+    locations: requireStringList(input.locations, "deletionRegister.locations"),
+    deadlineAt: requireIsoDate(input.deadlineAt, "deletionRegister.deadlineAt"),
+    reviewedAt: requireIsoDate(input.reviewedAt, "deletionRegister.reviewedAt"),
+    approvedBy: requireText(input.approvedBy, "deletionRegister.approvedBy"),
+    executedBy: requireText(input.executedBy, "deletionRegister.executedBy"),
+    completedAt: requireIsoDate(input.completedAt, "deletionRegister.completedAt"),
+    previousHash: previousHash ?? null,
+  };
+  if (!/^[0-9]{7}$/.test(payload.dossierNumber)) {
+    throw new TypeError("Deletion register dossier number must contain seven digits.");
+  }
+  if (!new Set(["deleted", "anonymised"]).has(payload.action)) {
+    throw new TypeError("Deletion register action is invalid.");
+  }
+  if (previousHash && !/^[a-f0-9]{64}$/.test(previousHash)) {
+    throw new TypeError("Deletion register previous hash is invalid.");
+  }
+  const entryHash = createHash("sha256").update(JSON.stringify(payload)).digest("hex");
+  return {
+    ...input,
+    ...payload,
+    previousHash: previousHash ?? undefined,
+    entryHash,
+  };
+}
+
+function readDeletionRegisterFile(registerPath: string): DeletionRegisterEntry[] {
+  if (!existsSync(registerPath)) return [];
+  const content = readFileSync(registerPath, "utf8");
+  if (!content.trim()) return [];
+  return content
+    .split(/\r?\n/)
+    .filter((line) => line.trim())
+    .map((line, index) => {
+      try {
+        return JSON.parse(line) as DeletionRegisterEntry;
+      } catch {
+        throw new Error(`Deletion register contains invalid JSON on line ${index + 1}.`);
+      }
+    });
+}
+
+function verifyDeletionRegisterFile(registerPath: string): {
+  valid: boolean;
+  entries: number;
+  error?: string;
+} {
+  let entries: DeletionRegisterEntry[];
+  try {
+    entries = readDeletionRegisterFile(registerPath);
+  } catch (error) {
+    return { valid: false, entries: 0, error: error instanceof Error ? error.message : String(error) };
+  }
+  let previousHash: string | undefined;
+  const ids = new Set<string>();
+  for (const [index, entry] of entries.entries()) {
+    try {
+      if (ids.has(entry.id)) throw new Error(`Duplicate request ID at line ${index + 1}.`);
+      ids.add(entry.id);
+      const rebuilt = buildDeletionRegisterEntry(
+        {
+          id: entry.id,
+          dossierNumber: entry.dossierNumber,
+          categories: entry.categories,
+          action: entry.action,
+          locations: entry.locations,
+          deadlineAt: entry.deadlineAt,
+          reviewedAt: entry.reviewedAt,
+          approvedBy: entry.approvedBy,
+          executedBy: entry.executedBy,
+          completedAt: entry.completedAt,
+        },
+        previousHash,
+      );
+      if ((entry.previousHash ?? undefined) !== previousHash) {
+        throw new Error(`Broken previous hash at line ${index + 1}.`);
+      }
+      if (entry.entryHash !== rebuilt.entryHash) {
+        throw new Error(`Hash mismatch at line ${index + 1}.`);
+      }
+      previousHash = entry.entryHash;
+    } catch (error) {
+      return {
+        valid: false,
+        entries: entries.length,
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
+  }
+  return { valid: true, entries: entries.length };
 }
 
 function now(): string {

@@ -54,7 +54,7 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 - [x] Add export to a restricted working file; no email or client-delivery buttons exist in Phase 1.
 - [ ] Verify browser → authenticated server → database → rendered response end to end on protected staging.
 - [x] Verify token → local server → SQLite mutation → rendered response end to end with automated integration tests.
-- [~] Add backup, restore and deletion tests aligned with `docs/legal/retention-schedule.md`; consistent backup and isolated restore verification are tested, deletion approval flows remain.
+- [x] Add backup, restore and deletion tests aligned with `docs/legal/retention-schedule.md`: due-date checks, a legal hold (including a late hold after approval), separate requester/reviewer identities, exact dossier-number confirmation, minimal redaction, hash-linked deletion register and deletion replay after restoring an older backup.
 
 ## P1 — first agent execution
 

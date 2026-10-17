@@ -183,4 +183,136 @@ describe("local Control Room server", () => {
     expect(blocked.status).toBe(403);
     expect(store.getStatus().dossiers).toBe(0);
   });
+
+  it("enforces the hold, second-person approval, and exact confirmation in the browser flow", async () => {
+    const store = createStore();
+    const dossier = store.registerDossier({
+      receivedAt: "2026-10-17T10:00:00.000Z",
+      decisionQuestion: "Mag dit fictieve HTTP-testdossier volgens beleid worden verwijderd?",
+      scope: { classification: "public-only-test", synthetic: true },
+      actor: { type: "human", ref: "test-registrar" },
+    });
+    store.addSource(
+      dossier.id,
+      {
+        code: "SRC-DELETE-HTTP",
+        title: "Uitsluitend synthetische verwijdertest",
+        sourceType: "synthetic_test",
+        retrievedAt: "2026-10-17T10:05:00.000Z",
+      },
+      { type: "human", ref: "test-source-operator" },
+    );
+
+    const server = await startLocalControlRoomServer(store, { mutationsEnabled: true, port: 0 });
+    servers.push(server);
+    const cookie = await authenticate(server);
+    const page = await fetch(server.url, { headers: { cookie } });
+    const html = await page.text();
+    const csrf = html.match(/name="_csrf" value="([a-f0-9]+)"/)?.[1];
+    expect(csrf).toBeTruthy();
+    const headers = {
+      cookie,
+      origin: server.url,
+      "content-type": "application/x-www-form-urlencoded",
+    };
+    await fetch(`${server.url}/edit-mode`, {
+      method: "POST",
+      headers,
+      body: new URLSearchParams({ _csrf: csrf!, state: "on" }),
+      redirect: "manual",
+    });
+
+    const post = (action: string, values: Record<string, string>) =>
+      fetch(`${server.url}/dossiers/${dossier.id}/${action}`, {
+        method: "POST",
+        headers,
+        body: new URLSearchParams({
+          _csrf: csrf!,
+          _revision: String(store.getDossierRevision(dossier.id)),
+          ...values,
+        }),
+        redirect: "manual",
+      });
+
+    expect(
+      (await post("retention-items", {
+        category: "research_working_files",
+        triggerAt: "2020-01-01T00:00",
+        deadlineAt: "2021-01-01T00:00",
+        storageLocations: "synthetic-local-test-only",
+        createdBy: "retention-owner",
+      })).status,
+    ).toBe(303);
+    const retentionItem = store.listRetentionItems(dossier.id)[0];
+
+    expect(
+      (await post("retention-hold", {
+        retentionItemId: retentionItem.id,
+        reason: "Fictieve juridische controle",
+        nextReviewAt: "2027-01-01T00:00",
+        placedBy: "legal-reviewer",
+      })).status,
+    ).toBe(303);
+    const heldProposal = await post("deletion-propose", {
+      reviewedAt: "2026-10-17T12:00",
+      requestedBy: "retention-owner",
+      rationale: "Deadline verstreken in synthetische test",
+    });
+    expect(heldProposal.status).toBe(400);
+    expect(await heldProposal.text()).toContain("geblokkeerd door een legal hold");
+
+    expect(
+      (await post("retention-release", {
+        retentionItemId: retentionItem.id,
+        rationale: "Fictieve controle afgerond",
+        releasedBy: "legal-reviewer",
+      })).status,
+    ).toBe(303);
+    expect(
+      (await post("deletion-propose", {
+        reviewedAt: "2026-10-17T12:00",
+        requestedBy: "retention-owner",
+        rationale: "Deadline verstreken in synthetische test",
+      })).status,
+    ).toBe(303);
+    const request = store.listDeletionRequests(dossier.id)[0];
+
+    const selfApproval = await post("deletion-approve", {
+      requestId: request.id,
+      decidedBy: "retention-owner",
+      rationale: "Dit moet worden geweigerd",
+    });
+    expect(selfApproval.status).toBe(400);
+    expect(await selfApproval.text()).toContain("andere menselijke beoordelaar");
+    expect(
+      (await post("deletion-approve", {
+        requestId: request.id,
+        decidedBy: "independent-reviewer",
+        rationale: "Bewaartermijn en hold onafhankelijk gecontroleerd",
+      })).status,
+    ).toBe(303);
+
+    const wrongConfirmation = await post("deletion-execute", {
+      requestId: request.id,
+      executedBy: "retention-executor",
+      confirmation: "verkeerd nummer",
+    });
+    expect(wrongConfirmation.status).toBe(400);
+    expect(await wrongConfirmation.text()).toContain("exact overeenkomen met het dossiernummer");
+    expect(
+      (await post("deletion-execute", {
+        requestId: request.id,
+        executedBy: "retention-executor",
+        confirmation: dossier.dossierNumber,
+      })).status,
+    ).toBe(303);
+
+    expect(store.getBundle(dossier.id).sources).toHaveLength(0);
+    expect(store.getDossier(dossier.id)?.scope.retentionStatus).toBe("deleted");
+    expect(store.verifyDeletionRegister()).toMatchObject({ valid: true, entries: 1 });
+    const deletedPage = await fetch(server.url, { headers: { cookie } });
+    const deletedHtml = await deletedPage.text();
+    expect(deletedHtml).toContain("Alleen minimale metadata en de auditketen blijven bestaan");
+    expect(deletedHtml).not.toContain(`/dossiers/${dossier.id}/sources`);
+  });
 });

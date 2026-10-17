@@ -185,6 +185,167 @@ describe("LocalIntelligenceStore", () => {
     ]);
   });
 
+  it("requires a released hold and separate human approval before deletion, then reapplies it after restore", async () => {
+    const store = createStore();
+    const result = ensureFictionalDemo(store);
+    const item = store.addRetentionItem(
+      result.dossier.id,
+      {
+        category: "research_working_files",
+        triggerAt: "2024-09-01T00:00:00.000Z",
+        deadlineAt: "2026-09-01T00:00:00.000Z",
+        storageLocations: ["local-control-room", "restricted-export"],
+        createdBy: "retention-owner",
+      },
+      { type: "human", ref: "retention-owner" },
+    );
+    expect(() =>
+      store.proposeDossierDeletion({
+        dossierId: result.dossier.id,
+        reviewedAt: "2099-10-17T00:00:00.000Z",
+        requestedBy: "retention-owner",
+        rationale: "A future review timestamp must not make a deadline appear due.",
+      }),
+    ).toThrow(/cannot be in the future/);
+    store.placeRetentionHold({
+      dossierId: result.dossier.id,
+      retentionItemId: item.id,
+      reason: "Synthetic claim hold for a deletion-gate test.",
+      nextReviewAt: "2026-11-01T00:00:00.000Z",
+      placedBy: "legal-reviewer",
+    });
+
+    expect(() =>
+      store.proposeDossierDeletion({
+        dossierId: result.dossier.id,
+        reviewedAt: "2026-10-17T00:00:00.000Z",
+        requestedBy: "retention-owner",
+        rationale: "Synthetic deletion request while a hold is active.",
+      }),
+    ).toThrow(/legal hold/);
+
+    store.releaseRetentionHold({
+      dossierId: result.dossier.id,
+      retentionItemId: item.id,
+      rationale: "Synthetic hold is resolved.",
+      releasedBy: "legal-reviewer",
+    });
+    const request = store.proposeDossierDeletion({
+      dossierId: result.dossier.id,
+      reviewedAt: "2026-10-17T00:00:00.000Z",
+      requestedBy: "retention-owner",
+      rationale: "The synthetic retention deadline has passed.",
+    });
+    expect(() =>
+      store.approveDossierDeletion({
+        dossierId: result.dossier.id,
+        requestId: request.id,
+        decidedBy: "RETENTION-OWNER",
+        rationale: "Self-approval must remain blocked.",
+      }),
+    ).toThrow(/different human reviewer/);
+    store.approveDossierDeletion({
+      dossierId: result.dossier.id,
+      requestId: request.id,
+      decidedBy: "independent-retention-reviewer",
+      rationale: "Synthetic independent approval after deadline and hold checks.",
+    });
+    store.placeRetentionHold({
+      dossierId: result.dossier.id,
+      retentionItemId: item.id,
+      reason: "A late synthetic legal hold must still stop execution.",
+      nextReviewAt: "2026-12-01T00:00:00.000Z",
+      placedBy: "legal-reviewer",
+    });
+    expect(() =>
+      store.executeApprovedDeletion({
+        dossierId: result.dossier.id,
+        requestId: request.id,
+        executedBy: "retention-operator",
+        confirmation: result.dossier.dossierNumber,
+      }),
+    ).toThrow(/legal hold/);
+    store.releaseRetentionHold({
+      dossierId: result.dossier.id,
+      retentionItemId: item.id,
+      rationale: "Late synthetic hold resolved after review.",
+      releasedBy: "legal-reviewer",
+    });
+    const backupPath = await store.createBackup("before-approved-deletion");
+
+    const entry = store.executeApprovedDeletion({
+      dossierId: result.dossier.id,
+      requestId: request.id,
+      executedBy: "retention-operator",
+      confirmation: result.dossier.dossierNumber,
+    });
+
+    expect(entry.dossierNumber).toBe("9912001");
+    expect(store.verifyDeletionRegister()).toEqual({ valid: true, entries: 1 });
+    expect(store.listDeletionRegister()).toHaveLength(1);
+    expect(store.getBundle(result.dossier.id)).toMatchObject({
+      sources: [],
+      evidence: [],
+      findings: [],
+      links: [],
+      reviews: [],
+    });
+    expect(store.listResearchJobs(result.dossier.id)).toHaveLength(0);
+    expect(store.getLatestDraft(result.dossier.id)).toBeUndefined();
+    expect(store.listRetentionItems(result.dossier.id)).toHaveLength(0);
+    expect(store.listDeletionRequests(result.dossier.id)).toHaveLength(0);
+    expect(store.getDossier(result.dossier.id)).toMatchObject({
+      status: "closed",
+      decisionQuestion: "[deleted under approved retention request]",
+      createdBy: "retention-deleted",
+    });
+    expect(() =>
+      store.addSource(
+        result.dossier.id,
+        {
+          code: "SRC-REPOPULATE",
+          title: "Deleted dossiers must not accept replacement content",
+          sourceType: "synthetic_test",
+          retrievedAt: "2026-10-17T01:00:00.000Z",
+        },
+        { type: "human", ref: "test-operator" },
+      ),
+    ).toThrow(/cannot receive new content/);
+    expect(store.verifyAuditChain(result.dossier.id).valid).toBe(true);
+    expect(existsSync(path.dirname(result.draftPath))).toBe(false);
+
+    const restoreHome = path.join(directories[directories.length - 1], "deletion-replay-restore");
+    const restored = restoreBackupToIsolatedHome(
+      backupPath,
+      restoreHome,
+      store.deletionRegisterPath,
+    );
+    expect(restored.reappliedDeletions).toBe(1);
+    const restoredStore = new LocalIntelligenceStore(restoreHome);
+    stores.push(restoredStore);
+    expect(restoredStore.getStatus()).toMatchObject({ sources: 0, evidence: 0, findings: 0 });
+    expect(restoredStore.getDossier("9912001")?.decisionQuestion).toBe(
+      "[deleted under approved retention request]",
+    );
+    expect(restoredStore.verifyDeletionRegister()).toEqual({ valid: true, entries: 1 });
+    expect(restoredStore.verifyAuditChain(result.dossier.id).valid).toBe(true);
+    rmSync(restoredStore.deletionRegisterPath);
+    expect(restoredStore.verifyDeletionRegister()).toMatchObject({ valid: false, entries: 0 });
+  });
+
+  it("upgrades the additive local schema from version 1 to version 2", () => {
+    const store = createStore();
+    const homePath = store.homePath;
+    store.setMeta("schema_version", "1");
+    store.close();
+
+    const reopened = new LocalIntelligenceStore(homePath);
+    stores.push(reopened);
+    expect(reopened.getMeta("schema_version")).toBe("2");
+    expect(reopened.listDeletionRegister()).toEqual([]);
+    expect(reopened.verifyDatabase()).toEqual({ valid: true, message: "ok" });
+  });
+
   it("does not complete red-team work without a reviewer independent from the finding author", () => {
     const store = createStore();
     const dossier = store.registerDossier({

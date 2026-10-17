@@ -90,7 +90,11 @@ async function main(): Promise<void> {
     if (command === "verify") {
       const integrity = store.verifyDatabase();
       console.log(`Database integrity: ${integrity.valid ? "valid" : "invalid"} (${integrity.message})`);
-      let invalid = !integrity.valid;
+      const deletionRegister = store.verifyDeletionRegister();
+      console.log(
+        `Deletion register: ${deletionRegister.valid ? "valid" : "invalid"} (${deletionRegister.entries} entries)${deletionRegister.error ? ` — ${deletionRegister.error}` : ""}`,
+      );
+      let invalid = !integrity.valid || !deletionRegister.valid;
       for (const dossier of store.listDossiers()) {
         const audit = store.verifyAuditChain(dossier.id);
         console.log(
@@ -118,9 +122,10 @@ async function main(): Promise<void> {
       if (!backupPath || !target) {
         throw new Error("Usage: restore-check <backup-file> --target <new-empty-directory>");
       }
-      const result = restoreBackupToIsolatedHome(backupPath, target);
+      const result = restoreBackupToIsolatedHome(backupPath, target, store.deletionRegisterPath);
       console.log(`Isolated restore: ${result.databasePath}`);
       console.log(`Dossiers ${result.dossiers} | verified audit events ${result.auditEvents}`);
+      console.log(`Reapplied deletion-register entries: ${result.reappliedDeletions}`);
       console.log("The active Control Room database was not replaced.");
       return;
     }

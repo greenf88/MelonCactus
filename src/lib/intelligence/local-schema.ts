@@ -1,4 +1,4 @@
-export const LOCAL_SCHEMA_VERSION = 1;
+export const LOCAL_SCHEMA_VERSION = 2;
 
 export const localSchemaSql = `
 pragma foreign_keys = on;
@@ -191,6 +191,77 @@ create table if not exists approvals (
   unique (dossier_id, id)
 ) strict;
 
+create table if not exists retention_items (
+  id text primary key,
+  dossier_id text not null references dossiers(id) on delete restrict,
+  category text not null check (category in (
+    'enquiry_not_converted',
+    'non_fiscal_correspondence',
+    'research_working_files',
+    'final_report',
+    'fiscal_record',
+    'legal_claim'
+  )),
+  trigger_at text not null,
+  deadline_at text not null,
+  storage_locations_json text not null check (json_valid(storage_locations_json)),
+  status text not null check (status in ('active', 'held', 'deletion_proposed')),
+  hold_reason text,
+  hold_review_at text,
+  created_by text not null,
+  created_at text not null,
+  updated_at text not null,
+  unique (dossier_id, category),
+  unique (dossier_id, id),
+  check (
+    (status = 'held' and hold_reason is not null and hold_review_at is not null)
+    or (status <> 'held' and hold_reason is null and hold_review_at is null)
+  )
+) strict;
+
+create table if not exists deletion_requests (
+  id text primary key,
+  dossier_id text not null references dossiers(id) on delete restrict,
+  status text not null check (status in ('proposed', 'approved', 'executed', 'rejected')),
+  categories_json text not null check (json_valid(categories_json)),
+  reviewed_at text not null,
+  requested_by text not null,
+  requested_at text not null,
+  rationale text not null check (length(trim(rationale)) > 0),
+  decided_by text,
+  decided_at text,
+  decision_rationale text,
+  executed_by text,
+  executed_at text,
+  created_at text not null,
+  updated_at text not null,
+  unique (dossier_id, id),
+  check (decided_by is null or lower(decided_by) <> lower(requested_by)),
+  check (
+    (status = 'proposed' and decided_by is null and decided_at is null)
+    or (status in ('approved', 'executed', 'rejected') and decided_by is not null and decided_at is not null)
+  ),
+  check (
+    (status = 'executed' and executed_by is not null and executed_at is not null)
+    or (status <> 'executed' and executed_by is null and executed_at is null)
+  )
+) strict;
+
+create table if not exists deletion_register (
+  id text primary key,
+  dossier_number text not null,
+  categories_json text not null check (json_valid(categories_json)),
+  action text not null check (action in ('deleted', 'anonymised')),
+  locations_json text not null check (json_valid(locations_json)),
+  deadline_at text not null,
+  reviewed_at text not null,
+  approved_by text not null,
+  executed_by text not null,
+  completed_at text not null,
+  previous_hash text check (previous_hash is null or length(previous_hash) = 64),
+  entry_hash text not null unique check (length(entry_hash) = 64)
+) strict;
+
 create table if not exists audit_events (
   sequence integer primary key autoincrement,
   dossier_id text not null references dossiers(id) on delete restrict,
@@ -231,6 +302,10 @@ create index if not exists drafts_dossier_status_idx
   on report_drafts (dossier_id, status, version desc);
 create index if not exists approvals_dossier_object_idx
   on approvals (dossier_id, object_type, object_id, decided_at desc);
+create index if not exists retention_items_dossier_deadline_idx
+  on retention_items (dossier_id, status, deadline_at);
+create index if not exists deletion_requests_dossier_status_idx
+  on deletion_requests (dossier_id, status, requested_at desc);
 create index if not exists audit_events_dossier_sequence_idx
   on audit_events (dossier_id, sequence);
 `;

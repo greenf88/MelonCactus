@@ -1,4 +1,9 @@
-import type { LocalIntelligenceStore, LocalResearchJob } from "./local-store";
+import type {
+  LocalDeletionRequest,
+  LocalIntelligenceStore,
+  LocalResearchJob,
+  LocalRetentionItem,
+} from "./local-store";
 
 export interface LocalControlRoomPageOptions {
   csrfToken: string;
@@ -23,6 +28,10 @@ export function renderLocalControlRoomPage(
       const audit = store.verifyAuditChain(dossier.id);
       const auditRows = store.listAuditEvents(dossier.id, 20);
       const revision = store.getDossierRevision(dossier.id);
+      const retentionItems = store.listRetentionItems(dossier.id);
+      const deletionRequests = store.listDeletionRequests(dossier.id);
+      const deleted = dossier.scope.retentionStatus === "deleted";
+      const canEditDossier = canEdit && !deleted;
       const scopeJob = jobs.find((job) => job.key === "scope");
       const qaJob = jobs.find((job) => job.key === "qa");
 
@@ -48,9 +57,9 @@ export function renderLocalControlRoomPage(
 
         <section class="section-block">
           <h3>Onderzoeksworkflow</h3>
-          <ol class="jobs">${jobs.map((job) => renderJob(job, dossier.id, revision, options, canEdit)).join("")}</ol>
+          <ol class="jobs">${jobs.map((job) => renderJob(job, dossier.id, revision, options, canEditDossier)).join("")}</ol>
           ${
-            canEdit && scopeJob?.status === "waiting_for_approval"
+            canEditDossier && scopeJob?.status === "waiting_for_approval"
               ? form(
                   `/dossiers/${encodeURIComponent(dossier.id)}/scope-approve`,
                   options.csrfToken,
@@ -71,7 +80,7 @@ export function renderLocalControlRoomPage(
           ${renderSources(bundle.sources)}
           ${renderEvidence(bundle.evidence, bundle.sources)}
           ${
-            canEdit
+            canEditDossier
               ? `${sourceForm(dossier.id, revision, options.csrfToken)}${evidenceForm(
                   dossier.id,
                   revision,
@@ -86,7 +95,7 @@ export function renderLocalControlRoomPage(
           <summary>Bevindingen en verificatie</summary>
           ${renderFindings(bundle.findings, bundle.links, bundle.evidence, bundle.reviews)}
           ${
-            canEdit
+            canEditDossier
               ? `${findingForm(dossier.id, revision, options.csrfToken)}${linkForm(
                   dossier.id,
                    revision,
@@ -108,7 +117,7 @@ export function renderLocalControlRoomPage(
               : "<p>Nog geen concept beschikbaar.</p>"
           }
           ${
-            canEdit
+            canEditDossier
               ? form(
                   `/dossiers/${encodeURIComponent(dossier.id)}/drafts`,
                   options.csrfToken,
@@ -123,7 +132,7 @@ export function renderLocalControlRoomPage(
               : ""
           }
           ${
-            canEdit && draft?.status === "review_ready" && qaJob?.status === "completed"
+            canEditDossier && draft?.status === "review_ready" && qaJob?.status === "completed"
               ? form(
                   `/dossiers/${encodeURIComponent(dossier.id)}/report-approve`,
                   options.csrfToken,
@@ -138,6 +147,26 @@ export function renderLocalControlRoomPage(
                   revision,
                 )
               : ""
+          }
+        </details>
+
+        <details class="section-block" open>
+          <summary>Retentie en gecontroleerde verwijdering</summary>
+          ${deleted ? "" : renderRetentionItems(retentionItems)}
+          ${deleted ? "" : renderDeletionRequests(deletionRequests)}
+          ${
+            canEditDossier
+              ? `${retentionItemForm(dossier.id, revision, options.csrfToken)}${retentionActionForms(
+                  dossier.id,
+                  dossier.dossierNumber,
+                  revision,
+                  options.csrfToken,
+                  retentionItems,
+                  deletionRequests,
+                )}`
+              : deleted
+                ? '<p class="flash success">De dossierinhoud is verwijderd volgens een goedgekeurd retentieverzoek. Alleen minimale metadata en de auditketen blijven bestaan.</p>'
+                : ""
           }
         </details>
 
@@ -366,6 +395,162 @@ function reviewForm(
     "data-form",
     dossierRevision,
   );
+}
+
+const retentionCategoryLabels: Record<LocalRetentionItem["category"], string> = {
+  enquiry_not_converted: "Niet-geconverteerde aanvraag",
+  non_fiscal_correspondence: "Niet-fiscale correspondentie",
+  research_working_files: "Onderzoekswerkbestanden",
+  final_report: "Definitief rapport",
+  fiscal_record: "Fiscale administratie",
+  legal_claim: "Juridische claim",
+};
+
+function renderRetentionItems(items: LocalRetentionItem[]): string {
+  if (!items.length) {
+    return '<p>Nog geen bewaarcategorieën vastgelegd. Verwijderen is daardoor geblokkeerd.</p>';
+  }
+  return `<div class="records">${items
+    .map(
+      (item) => `<div>
+        <strong>${escapeHtml(retentionCategoryLabels[item.category])}</strong>
+        <span>Deadline ${escapeHtml(formatDate(item.deadlineAt))} · ${escapeHtml(item.storageLocations.join(", "))}</span>
+        <small>${escapeHtml(item.status)}${
+          item.holdReason ? ` · hold: ${escapeHtml(item.holdReason)}` : ""
+        }</small>
+      </div>`,
+    )
+    .join("")}</div>`;
+}
+
+function renderDeletionRequests(requests: LocalDeletionRequest[]): string {
+  if (!requests.length) return '<p class="hint">Geen open of historische verwijderverzoeken.</p>';
+  return `<div class="records">${requests
+    .map(
+      (request) => `<div>
+        <strong>Verwijderverzoek</strong>
+        <span>${escapeHtml(request.categories.map((category) => retentionCategoryLabels[category]).join(", "))}</span>
+        <small>${escapeHtml(request.status)} · aangevraagd door ${escapeHtml(request.requestedBy)}${
+          request.decidedBy ? ` · beoordeeld door ${escapeHtml(request.decidedBy)}` : ""
+        }</small>
+      </div>`,
+    )
+    .join("")}</div>`;
+}
+
+function retentionItemForm(dossierId: string, dossierRevision: number, csrfToken: string): string {
+  return form(
+    `/dossiers/${encodeURIComponent(dossierId)}/retention-items`,
+    csrfToken,
+    `<fieldset><legend>Bewaarcategorie vastleggen</legend><div class="form-grid">
+      ${selectFromRecords(
+        "category",
+        "Categorie",
+        Object.entries(retentionCategoryLabels),
+      )}
+      ${input("createdBy", "Operatorreferentie (geen naam)", "text", "local-retention-operator", true, 200)}
+      ${input("triggerAt", "Start bewaartermijn", "datetime-local", localDateTimeValue(), true)}
+      ${input("deadlineAt", "Verwijderdeadline", "datetime-local", "", true)}
+      <label class="wide">Opslaglocaties (één per regel)<textarea name="storageLocations" maxlength="8000" required>lokale-control-room</textarea></label>
+    </div>
+    <button type="submit">Bewaarcategorie opslaan</button>
+    <p class="hint">Dit legt beleid vast en verwijdert niets.</p></fieldset>`,
+    "data-form",
+    dossierRevision,
+  );
+}
+
+function retentionActionForms(
+  dossierId: string,
+  dossierNumber: string,
+  dossierRevision: number,
+  csrfToken: string,
+  items: LocalRetentionItem[],
+  requests: LocalDeletionRequest[],
+): string {
+  const holdableItems = items.filter((item) => item.status !== "held");
+  const heldItems = items.filter((item) => item.status === "held");
+  const proposedRequest = requests.find((request) => request.status === "proposed");
+  const approvedRequest = requests.find((request) => request.status === "approved");
+  const hasOpenRequest = Boolean(proposedRequest || approvedRequest);
+  const itemOptions = (values: LocalRetentionItem[]): string[][] =>
+    values.map((item) => [item.id, retentionCategoryLabels[item.category]]);
+
+  const holdForm = holdableItems.length
+    ? form(
+        `/dossiers/${encodeURIComponent(dossierId)}/retention-hold`,
+        csrfToken,
+        `<fieldset><legend>Juridische hold plaatsen</legend><div class="form-grid compact">
+          ${selectFromRecords("retentionItemId", "Bewaarcategorie", itemOptions(holdableItems))}
+          ${input("placedBy", "Operatorreferentie (geen naam)", "text", "", true, 200)}
+          ${input("nextReviewAt", "Volgende beoordeling", "datetime-local", "", true)}
+          ${input("reason", "Reden", "text", "", true, 1000)}
+        </div><button class="danger" type="submit">Hold plaatsen</button></fieldset>`,
+        "data-form",
+        dossierRevision,
+      )
+    : "";
+
+  const releaseForm = heldItems.length
+    ? form(
+        `/dossiers/${encodeURIComponent(dossierId)}/retention-release`,
+        csrfToken,
+        `<fieldset><legend>Juridische hold vrijgeven</legend><div class="form-grid compact">
+          ${selectFromRecords("retentionItemId", "Bewaarcategorie", itemOptions(heldItems))}
+          ${input("releasedBy", "Operatorreferentie (geen naam)", "text", "", true, 200)}
+          ${input("rationale", "Onderbouwing", "text", "", true, 1000)}
+        </div><button type="submit">Hold vrijgeven</button></fieldset>`,
+        "data-form",
+        dossierRevision,
+      )
+    : "";
+
+  const proposalForm = items.length && !hasOpenRequest
+    ? form(
+        `/dossiers/${encodeURIComponent(dossierId)}/deletion-propose`,
+        csrfToken,
+        `<fieldset><legend>Verwijdering voorstellen</legend><div class="form-grid compact">
+          ${input("reviewedAt", "Peilmoment", "datetime-local", localDateTimeValue(), true)}
+          ${input("requestedBy", "Aanvragerreferentie (geen naam)", "text", "", true, 200)}
+          ${input("rationale", "Onderbouwing", "text", "", true, 1000)}
+        </div><button class="danger" type="submit">Alleen voorstel vastleggen</button>
+        <p class="hint">Dit is een controle vooraf. Er wordt nog niets verwijderd. Een hold of niet-verstreken deadline blokkeert het voorstel.</p></fieldset>`,
+        "data-form",
+        dossierRevision,
+      )
+    : "";
+
+  const approvalForm = proposedRequest
+    ? form(
+        `/dossiers/${encodeURIComponent(dossierId)}/deletion-approve`,
+        csrfToken,
+        `<input type="hidden" name="requestId" value="${escapeHtml(proposedRequest.id)}">
+        <fieldset><legend>Verwijdering onafhankelijk goedkeuren</legend><div class="form-grid compact">
+          ${input("decidedBy", "Referentie tweede beoordelaar (geen naam)", "text", "", true, 200)}
+          ${input("rationale", "Goedkeuringsreden", "text", "", true, 1000)}
+        </div><button class="danger" type="submit">Verwijdering goedkeuren</button>
+        <p class="hint">De beoordelaar moet een andere persoon zijn dan de aanvrager. Goedkeuren verwijdert nog niets.</p></fieldset>`,
+        "approval-form",
+        dossierRevision,
+      )
+    : "";
+
+  const executionForm = approvedRequest
+    ? form(
+        `/dossiers/${encodeURIComponent(dossierId)}/deletion-execute`,
+        csrfToken,
+        `<input type="hidden" name="requestId" value="${escapeHtml(approvedRequest.id)}">
+        <fieldset><legend>Goedgekeurde verwijdering uitvoeren</legend><div class="form-grid compact">
+          ${input("executedBy", "Uitvoerderreferentie (geen naam)", "text", "", true, 200)}
+          ${input("confirmation", `Typ exact ${dossierNumber}`, "text", "", true, 40)}
+        </div><button class="danger" type="submit">Dossierinhoud definitief verwijderen</button>
+        <p class="flash error">Deze lokale actie verwijdert bronnen, bewijs, analyses, concepten en exports. Alleen minimale dossiermetadata, de auditketen en het externe verwijderregister blijven bestaan.</p></fieldset>`,
+        "approval-form",
+        dossierRevision,
+      )
+    : "";
+
+  return `${holdForm}${releaseForm}${proposalForm}${approvalForm}${executionForm}`;
 }
 
 function renderSources(sources: ReturnType<LocalIntelligenceStore["getBundle"]>["sources"]): string {

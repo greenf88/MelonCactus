@@ -10,6 +10,7 @@ The default working directory is `.meloncactus-intelligence/`. It is ignored by 
 - `control-room.html` — a generated read-only overview;
 - `exports/<dossier-number>/` — internal Markdown drafts;
 - `backups/<timestamp>/control-room.sqlite` — point-in-time database backups.
+- `deletion-register.jsonl` — a minimal, hash-linked record used to prevent restored backups from reviving deleted dossier content.
 
 The code repository may contain only source code, fictional fixtures and documentation. Never force-add the local working directory to Git. Before real client use, point `--home` to an access-controlled, encrypted folder outside the repository and verify the device's full-disk encryption and backup policy.
 
@@ -58,7 +59,7 @@ node .intelligence-build/scripts/intelligence-engine.js serve --home E:\MelonCac
 
 Replace the example path with the verified, access-controlled location. Do not use the edit flag merely to bypass the guard: verify Windows full-disk or folder encryption and the backup destination first. Edit mode is held in memory and closes automatically when the server stops.
 
-Every mutation is a local form post protected by the session cookie, an origin check and a per-process CSRF token. The input screen covers dossier registration, scope approval, workflow status, source and evidence registration, findings, evidence links, independent review, internal draft creation and final human report approval. Workflow prerequisites remain enforced in the store; the screen cannot mark evidence, analysis, red-team or report jobs complete without the required records. Approval never sends or publishes anything.
+Every mutation is a local form post protected by the session cookie, an origin check and a per-process CSRF token. The input screen covers dossier registration, scope approval, workflow status, source and evidence registration, findings, evidence links, independent review, internal draft creation, final human report approval and controlled retention. Workflow prerequisites remain enforced in the store; the screen cannot mark evidence, analysis, red-team or report jobs complete without the required records. Approval never sends or publishes anything.
 
 Every dossier form also carries the latest audit-event sequence as its dossier revision. The server acquires a SQLite write transaction and compares that revision before making any change. If another browser tab or operator session changed the dossier first, the complete stale operation is rolled back and the screen returns a conflict message. Review the newly rendered dossier and submit again; do not bypass the conflict by editing the hidden revision field.
 
@@ -71,6 +72,22 @@ npm run intelligence:backup
 ```
 
 `verify` checks SQLite integrity and recalculates every audit-event hash from the previous event. A failed check blocks reliance on the dossier until the cause is understood. It must not be fixed by deleting audit records. The local HTML overview contains a collapsed metadata-only timeline with actor, action, object type and hash prefix; it never includes source or report bodies.
+
+`verify` also verifies the external deletion register from its first entry to its last. A missing register is valid only when there have been no controlled deletions. A present register with a broken hash chain blocks reliance on restore or deletion state and must be investigated rather than rewritten.
+
+## Retention and controlled deletion
+
+Deletion is never automatic. For each dossier, first register every applicable category, start date, deadline and known storage location. Use role-based operator references rather than personal data. The Control Room then enforces this sequence:
+
+1. every registered deadline must have passed at the stated review time;
+2. a legal hold blocks a proposal, approval or execution; a new hold can still stop an already approved deletion;
+3. one human proposes deletion and a different human approves it;
+4. approval alone removes nothing;
+5. execution requires a separate action and the exact seven-digit dossier number.
+
+Execution removes the dossier's sources, evidence, findings, reviews, jobs, drafts, approvals, retention rows and generated dossier exports from the active local Control Room. It replaces the decision question and scope with a minimal deletion marker, closes the dossier and retains the hash-linked audit metadata plus the minimal deletion register. Deleted dossiers reject new content.
+
+This operation is not a claim of forensic secure erase. SQLite pages, operating-system snapshots, provider backups and copies in mailboxes or other listed locations need their own controls. Before executing a real deletion, inspect every recorded location and the applicable fiscal or legal exception. The public repository must never contain the live deletion register.
 
 ## Explicit human boundaries
 
@@ -88,7 +105,7 @@ Backups are created through SQLite's online backup API so the source database re
 node .intelligence-build/scripts/intelligence-engine.js restore-check <backup-file> --target <new-empty-directory>
 ```
 
-The command opens the restored copy, runs SQLite integrity verification and recalculates every dossier audit chain. Promotion of a restored copy over the active database remains deliberately manual and requires explicit approval; this prevents an accidental rollback over newer evidence.
+The command opens the restored copy, reapplies every valid entry from the active deletion register (or the register next to the backup), runs SQLite integrity verification and recalculates every dossier audit chain. This prevents an older backup from silently reviving content that was deleted later. Promotion of a restored copy over the active database remains deliberately manual and requires explicit approval; this prevents an accidental rollback over newer evidence.
 
 ## Current limitations
 
@@ -96,5 +113,6 @@ The command opens the restored copy, runs SQLite integrity verification and reca
 - The local database is single-operator Phase 1 infrastructure; multi-user access and synchronisation are not implemented.
 - The local access cookie protects against accidental browser access on the same account, but it is not a substitute for a locked Windows session or full operator authentication in a future online deployment.
 - Phase 1 records source and evidence metadata and text through forms; it does not ingest file uploads, crawl sites or archive external content.
+- The deletion workflow controls the local Control Room and its generated exports only. Mailboxes, synced folders, archives and provider-held copies must be checked separately against the recorded storage locations.
 - No live source discovery, browsing or model runtime is connected yet.
 - The prepared Supabase migration remains an optional later synchronisation/deployment path and has not been applied.

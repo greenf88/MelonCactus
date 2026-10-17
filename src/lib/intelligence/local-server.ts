@@ -309,6 +309,80 @@ export async function startLocalControlRoomServer(
           rationale: field(fields, "rationale", 1_000),
         });
         notice = `Rapport van ${dossier.dossierNumber} is lokaal goedgekeurd; niets is verzonden.`;
+      } else if (route.action === "retention-items") {
+        const createdBy = field(fields, "createdBy", 200);
+        asRetentionUserInput(() =>
+          store.addRetentionItem(
+            dossier.id,
+            {
+              category: oneOf(fields, "category", [
+                "enquiry_not_converted",
+                "non_fiscal_correspondence",
+                "research_working_files",
+                "final_report",
+                "fiscal_record",
+                "legal_claim",
+              ]),
+              triggerAt: dateTimeField(fields, "triggerAt", true)!,
+              deadlineAt: dateTimeField(fields, "deadlineAt", true)!,
+              storageLocations: lines(fields, "storageLocations", 100, 8_000),
+              createdBy,
+            },
+            { type: "human", ref: createdBy },
+          ),
+        );
+        notice = `Bewaarcategorie is voor ${dossier.dossierNumber} vastgelegd; niets is verwijderd.`;
+      } else if (route.action === "retention-hold") {
+        asRetentionUserInput(() =>
+          store.placeRetentionHold({
+            dossierId: dossier.id,
+            retentionItemId: field(fields, "retentionItemId", 100),
+            reason: field(fields, "reason", 1_000),
+            nextReviewAt: dateTimeField(fields, "nextReviewAt", true)!,
+            placedBy: field(fields, "placedBy", 200),
+          }),
+        );
+        notice = `Juridische hold is voor ${dossier.dossierNumber} geplaatst; verwijdering is geblokkeerd.`;
+      } else if (route.action === "retention-release") {
+        asRetentionUserInput(() =>
+          store.releaseRetentionHold({
+            dossierId: dossier.id,
+            retentionItemId: field(fields, "retentionItemId", 100),
+            rationale: field(fields, "rationale", 1_000),
+            releasedBy: field(fields, "releasedBy", 200),
+          }),
+        );
+        notice = `Juridische hold is voor ${dossier.dossierNumber} vrijgegeven.`;
+      } else if (route.action === "deletion-propose") {
+        asRetentionUserInput(() =>
+          store.proposeDossierDeletion({
+            dossierId: dossier.id,
+            reviewedAt: dateTimeField(fields, "reviewedAt", true)!,
+            requestedBy: field(fields, "requestedBy", 200),
+            rationale: field(fields, "rationale", 1_000),
+          }),
+        );
+        notice = `Verwijdervoorstel voor ${dossier.dossierNumber} is vastgelegd; er is nog niets verwijderd.`;
+      } else if (route.action === "deletion-approve") {
+        asRetentionUserInput(() =>
+          store.approveDossierDeletion({
+            dossierId: dossier.id,
+            requestId: field(fields, "requestId", 100),
+            decidedBy: field(fields, "decidedBy", 200),
+            rationale: field(fields, "rationale", 1_000),
+          }),
+        );
+        notice = `Verwijdervoorstel voor ${dossier.dossierNumber} is onafhankelijk goedgekeurd; er is nog niets verwijderd.`;
+      } else if (route.action === "deletion-execute") {
+        asRetentionUserInput(() =>
+          store.executeApprovedDeletion({
+            dossierId: dossier.id,
+            requestId: field(fields, "requestId", 100),
+            executedBy: field(fields, "executedBy", 200),
+            confirmation: field(fields, "confirmation", 40),
+          }),
+        );
+        notice = `Dossierinhoud van ${dossier.dossierNumber} is lokaal verwijderd. Minimale metadata, auditgegevens en het verwijderregister zijn behouden; niets is extern verzonden.`;
       }
     });
     redirectHome(response);
@@ -333,7 +407,7 @@ function parseDossierRoute(pathname: string):
   | undefined {
   const job = /^\/dossiers\/([^/]+)\/jobs\/([^/]+)\/complete$/.exec(pathname);
   if (job) return { dossierId: decodeURIComponent(job[1]), action: "complete-job", jobKey: decodeURIComponent(job[2]) };
-  const standard = /^\/dossiers\/([^/]+)\/(scope-approve|sources|evidence|findings|links|reviews|drafts|report-approve)$/.exec(
+  const standard = /^\/dossiers\/([^/]+)\/(scope-approve|sources|evidence|findings|links|reviews|drafts|report-approve|retention-items|retention-hold|retention-release|deletion-propose|deletion-approve|deletion-execute)$/.exec(
     pathname,
   );
   return standard ? { dossierId: decodeURIComponent(standard[1]), action: standard[2] } : undefined;
@@ -437,6 +511,32 @@ function optionalHttpUrl(fields: URLSearchParams, name: string): string | undefi
 function requireEditMode(editMode: boolean, mutationsEnabled: boolean): void {
   if (!mutationsEnabled) throw new UserInputError("Schrijfbewerkingen zijn niet vrijgegeven.", 403);
   if (!editMode) throw new UserInputError("Open eerst expliciet de lokale edit-modus.", 403);
+}
+
+function asRetentionUserInput<T>(work: () => T): T {
+  try {
+    return work();
+  } catch (error) {
+    if (error instanceof UserInputError || error instanceof DossierRevisionConflictError) throw error;
+    if (error instanceof Error) throw new UserInputError(translateRetentionError(error.message));
+    throw error;
+  }
+}
+
+function translateRetentionError(message: string): string {
+  if (message.includes("blocked by a legal hold")) {
+    return "Verwijdering is geblokkeerd door een legal hold.";
+  }
+  if (message.includes("different human reviewer")) {
+    return "Verwijdering moet door een andere menselijke beoordelaar worden goedgekeurd.";
+  }
+  if (message.includes("exactly match the dossier number")) {
+    return "De bevestiging moet exact overeenkomen met het dossiernummer.";
+  }
+  if (message.includes("deadline has not passed")) {
+    return "De bewaartermijn is nog niet verstreken.";
+  }
+  return message;
 }
 
 function redirectHome(response: ServerResponse): void {
