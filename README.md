@@ -34,11 +34,19 @@ npm run test:client-bundle
 
 The contact endpoint validates and limits inputs, treats visitor content as text, uses an invisible honeypot, and returns a generic failure if delivery is unavailable. It does not store enquiries in a database.
 
-No database, authentication, CMS or advertising trackers are included. Vercel Web Analytics is included in both language layouts; the privacy pages describe this measurement. Search Console and Bing Webmaster Tools require separate owner-controlled verification and are not silently configured by this repository.
+The public website uses no database, authentication or CMS and includes no advertising trackers. Vercel Web Analytics is included in both language layouts; the privacy pages describe this measurement. Search Console and Bing Webmaster Tools require separate owner-controlled verification and are not silently configured by this repository.
 
 ## Intelligence Engine Phase 1
 
-The repository contains a prepared, non-deployed private intelligence-engine core and Supabase migration. It is not connected to the public site or to a live database. Start with [the Phase 1 overview](docs/intelligence-engine/README.md). Never commit client data, source captures, prompts, report content or credentials.
+The repository contains an offline-first private intelligence-engine core and an optional, non-deployed Supabase migration. It is not connected to the public site or to a live cloud database. Run the entirely fictional local proof with:
+
+```bash
+npm run intelligence:demo
+npm run intelligence:verify
+npm run intelligence:status
+```
+
+The generated SQLite database, read-only HTML Control Room, internal draft and backups stay in an ignored local directory. Start with [the Phase 1 overview](docs/intelligence-engine/README.md) and [the local runbook](docs/intelligence-engine/local-runbook.md). Never commit client data, source captures, prompts, report content or credentials.
 
 ## Combined SEO/legal review branch
 

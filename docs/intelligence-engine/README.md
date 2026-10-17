@@ -5,6 +5,8 @@ This directory describes the private, evidence-led operating core prepared for M
 ## Current state
 
 - The domain rules and tests are implemented in `src/lib/intelligence/`.
+- An offline-first SQLite adapter, resumable fictional demonstration, Markdown export,
+  backup command and generated read-only HTML Control Room are implemented locally.
 - The private Postgres design is in `supabase/migrations/20261016201124_intelligence_engine_phase1.sql`.
 - The migration has **not** been applied to any database.
 - No private Control Room route is exposed by the public Next.js application.
@@ -18,5 +20,6 @@ This directory describes the private, evidence-led operating core prepared for M
 - [Open-source framework assessment](framework-assessment.md)
 - [Repository and cloud audit](audit-2026-10-16.md)
 - [Staging activation runbook](staging-runbook.md)
+- [Local Control Room runbook](local-runbook.md)
 
-The Phase 1 implementation is framework-independent on purpose. A durable agent runtime can be added later without changing the dossier, evidence, finding, verification, approval or audit contracts.
+The Phase 1 implementation is framework-independent on purpose. The local SQLite store is the active Phase 1 path; the Postgres design is an optional later online adapter. A durable agent runtime can be added later without changing the dossier, evidence, finding, verification, approval or audit contracts.

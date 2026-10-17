@@ -2,11 +2,11 @@
 
 ## Outcome
 
-Phase 1 establishes a private evidence system before it introduces a general-purpose agent runtime. The public website remains a stateless acquisition surface. The future Control Room becomes a separate protected runtime that talks to a dedicated MelonCactus Supabase project from server-only code.
+Phase 1 establishes a private evidence system before it introduces a general-purpose agent runtime. The public website remains a stateless acquisition surface. The active Phase 1 Control Room is offline-first and uses a local SQLite file plus restricted local exports. A dedicated MelonCactus Supabase project is now an optional later synchronisation or multi-user layer, not a prerequisite.
 
 ```text
-Public website                 Private Control Room (future staging)
-no database access             authenticated operator only
+Public website                 Local private Control Room (Phase 1)
+no database access             operating-system user boundary
         │                                 │
         │ no automatic intake             ▼
         │                        deterministic workflow core
@@ -21,7 +21,7 @@ no database access             authenticated operator only
         │                                 │
         └──────────────────── no automatic delivery ────┘
 
-                  Dedicated private `mc_intel` schema
+               Local SQLite database and restricted files
        dossiers · sources · evidence · jobs · findings · reviews
               approvals · report drafts · hash-linked audit
 ```
@@ -40,7 +40,17 @@ The Git repository contains only code, migrations, fictional test fixtures and o
 
 The database schema accepts restricted pointers so large or sensitive artefacts can later live in encrypted object storage. Audit events contain only table/action/object metadata. Agent-run records contain hashes, accounting data and restricted pointers, not prompt or output bodies.
 
-## Database security
+## Local database security
+
+- `.meloncactus-intelligence/` and compiled runner output are ignored by Git.
+- The local schema uses strict tables, foreign keys, full synchronous writes and WAL journaling.
+- Audit rows are append-only and linked with SHA-256 hashes recalculated by the verifier.
+- SQLite's online backup API creates consistent snapshots without copying a live database file.
+- Generated HTML has no scripts, remote assets or network calls and escapes dossier content.
+- The default local directory is for fictional verification only. Real client use requires an encrypted, access-controlled path outside the repository.
+- The runtime has no command for email, LinkedIn, publication, deployment or client delivery.
+
+## Optional online database security
 
 - `mc_intel` is absent from `supabase/config.toml` Data API schemas.
 - Schema, table, sequence and function privileges are revoked from `public`, `anon` and `authenticated`.
@@ -86,4 +96,4 @@ Prompt injection is treated as untrusted source content. A source document canno
 
 The current repository is a small Next.js public site. Adding a durable framework before the private database, authentication and approval rules exist would widen the attack surface while making later migration harder. The Phase 1 core therefore exposes plain TypeScript contracts and Postgres invariants. A future runtime adapter can map a framework's steps and traces onto `research_jobs` and `agent_runs` without changing the evidence model.
 
-The likely next evaluation is LangGraph 1.x LTS versus Mastra core for production, with Eve reconsidered after general availability. Bellingcat Auto Archiver is a better candidate for a separate capture worker than for the orchestration core.
+The likely next evaluation is a narrowly scoped source-discovery runner after the local evidence gates and real-data storage boundary are approved. LangGraph 1.x LTS and Mastra core remain candidates; Eve can be reconsidered when an online durable runtime is actually needed. Bellingcat Auto Archiver remains a separate capture-worker candidate rather than the orchestration core.

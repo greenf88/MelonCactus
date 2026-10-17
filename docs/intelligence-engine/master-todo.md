@@ -1,6 +1,6 @@
 # MelonCactus Intelligence Engine — prioritised master to-do
 
-Status date: 16 October 2026. Scope: MelonCactus only.
+Status date: 17 October 2026. Scope: MelonCactus only.
 
 Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated, `[ ]` remaining, `OWNER` requires Rick or another authorised human.
 
@@ -41,14 +41,18 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 
 ## P1 — private Control Room
 
-- [ ] Implement a server-only database adapter against the private schema after staging exists.
+- [x] Implement an offline-first SQLite adapter using the same evidence and approval contracts.
+- [x] Keep all generated databases, exports, dashboards and backups outside Git tracking.
+- [x] Add a resumable fictional dossier that reaches a review-ready draft without external calls.
+- [x] Add a read-only local HTML overview, Markdown export, integrity verification and consistent backups.
+- [~] Implement a server-only Postgres adapter only if online or multi-user operation becomes necessary.
 - [ ] Build operator screens for dossier registration, scope approval, job status, evidence entry, findings, red-team review and report review.
-- [ ] Make the UI read-only by default; require an explicit edit mode for mutations.
+- [~] Make the UI read-only by default; the generated local overview is read-only, while protected data-entry forms remain.
 - [ ] Add optimistic-concurrency or version checks to prevent analysts overwriting each other.
-- [ ] Add a visible audit timeline containing metadata only.
-- [ ] Add export to a restricted working file; do not add email or client-delivery buttons in Phase 1.
+- [~] Add a visible audit timeline containing metadata only; hash status and event count are visible, event-level display remains.
+- [x] Add export to a restricted working file; no email or client-delivery buttons exist in Phase 1.
 - [ ] Verify browser → authenticated server → database → rendered response end to end on protected staging.
-- [ ] Add backup, restore and deletion tests aligned with `docs/legal/retention-schedule.md`.
+- [~] Add backup, restore and deletion tests aligned with `docs/legal/retention-schedule.md`; consistent backup is tested, restore and deletion approval flows remain.
 
 ## P1 — first agent execution
 
@@ -60,6 +64,7 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 - [ ] Add token, model and estimated-cost accounting per run.
 - [ ] Create a small eval set with fictitious or public-only cases and expected blockers.
 - [ ] Require human approval for scope changes, model-produced findings and final report status.
+- [x] Enforce human approval methods for approved scope and final report status in the local adapter.
 
 ## P2 — evidence capture and search
 

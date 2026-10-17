@@ -1,0 +1,126 @@
+import path from "node:path";
+
+import { writeLocalDashboard } from "../src/lib/intelligence/local-dashboard";
+import { ensureFictionalDemo } from "../src/lib/intelligence/local-demo";
+import { DEFAULT_LOCAL_HOME, LocalIntelligenceStore } from "../src/lib/intelligence/local-store";
+
+async function main(): Promise<void> {
+  const args = process.argv.slice(2);
+  const command = args[0] ?? "help";
+  const homeArgument = option(args, "--home");
+  const home = path.resolve(homeArgument ?? DEFAULT_LOCAL_HOME);
+  const store = new LocalIntelligenceStore(home);
+
+  try {
+    if (command === "init") {
+      printStatus(store);
+      console.log("Local Control Room initialized. No network or cloud database was used.");
+      return;
+    }
+
+    if (command === "demo") {
+      const result = ensureFictionalDemo(store);
+      const dashboardPath = writeLocalDashboard(store);
+      const backupPath = await store.createBackup(
+        `fictional-demo-${new Date().toISOString().replaceAll(":", "-").replaceAll(".", "-")}`,
+      );
+      console.log(result.reused ? "Fictional dossier reused." : "Fictional dossier created.");
+      console.log(`Dossier: ${result.dossier.dossierNumber}`);
+      console.log(`Draft status: ${result.draftStatus}`);
+      console.log(`Draft: ${result.draftPath}`);
+      console.log(`Control Room: ${dashboardPath}`);
+      console.log(`Audit chain: ${result.auditValid ? "valid" : "invalid"} (${result.auditEvents} events)`);
+      console.log(`Backup: ${backupPath}`);
+      console.log("Human approval is still pending; nothing was sent or published.");
+      return;
+    }
+
+    if (command === "status") {
+      printStatus(store);
+      for (const dossier of store.listDossiers()) {
+        const draft = store.getLatestDraft(dossier.id);
+        console.log(
+          `${dossier.dossierNumber} | ${dossier.status} | draft ${draft?.status ?? "none"} | ${dossier.decisionQuestion}`,
+        );
+      }
+      return;
+    }
+
+    if (command === "verify") {
+      const integrity = store.verifyDatabase();
+      console.log(`Database integrity: ${integrity.valid ? "valid" : "invalid"} (${integrity.message})`);
+      let invalid = !integrity.valid;
+      for (const dossier of store.listDossiers()) {
+        const audit = store.verifyAuditChain(dossier.id);
+        console.log(
+          `${dossier.dossierNumber} audit: ${audit.valid ? "valid" : "invalid"} (${audit.events} events)${audit.error ? ` — ${audit.error}` : ""}`,
+        );
+        invalid ||= !audit.valid;
+      }
+      if (invalid) process.exitCode = 1;
+      return;
+    }
+
+    if (command === "backup") {
+      console.log(`Backup: ${await store.createBackup()}`);
+      return;
+    }
+
+    if (command === "dashboard") {
+      console.log(`Control Room: ${writeLocalDashboard(store)}`);
+      return;
+    }
+
+    if (command === "export") {
+      const dossier = args[1];
+      if (!dossier) throw new Error("Usage: export <dossier-number>");
+      const record = store.getDossier(dossier);
+      if (!record) throw new Error(`Dossier not found: ${dossier}`);
+      console.log(`Export: ${store.exportLatestDraft(record.id)}`);
+      return;
+    }
+
+    printHelp();
+  } finally {
+    store.close();
+  }
+}
+
+function printStatus(store: LocalIntelligenceStore): void {
+  const status = store.getStatus();
+  console.log(`Database: ${status.databasePath}`);
+  console.log(
+    `Dossiers ${status.dossiers} | sources ${status.sources} | evidence ${status.evidence} | findings ${status.findings}`,
+  );
+  console.log(
+    `Pending human approvals ${status.pendingHumanApprovals} | audit events ${status.auditEvents}`,
+  );
+}
+
+function option(args: string[], name: string): string | undefined {
+  const index = args.indexOf(name);
+  return index >= 0 ? args[index + 1] : undefined;
+}
+
+function printHelp(): void {
+  console.log(`MelonCactus local Intelligence Engine
+
+Commands:
+  init                  Create the private local database
+  demo                  Create/reuse one entirely fictional dossier and draft
+  status                Show local dossiers and workflow state
+  verify                Verify SQLite integrity and every audit hash chain
+  backup                Create a point-in-time database backup
+  dashboard             Regenerate the private read-only HTML overview
+  export <number>       Export the latest internal Markdown draft
+
+Options:
+  --home <path>         Override the default .meloncactus-intelligence directory
+
+No command sends, publishes, deploys, emails or changes a cloud database.`);
+}
+
+main().catch((error: unknown) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exitCode = 1;
+});
