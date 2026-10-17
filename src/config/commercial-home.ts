@@ -41,16 +41,16 @@ type HomeContent = {
 export const commercialHome: Record<HomeLocale, HomeContent> = {
   en: {
     hero: {
-      eyebrow: "Industrial Intelligence",
-      title: "Public evidence for decisions about competitors, technology and markets.",
-      intro: "MelonCactus examines what public sources substantiate—and what remains uncertain or unknown—so industrial and technology leaders can make better-informed decisions.",
-      primary: "Discuss your research question",
-      secondary: "View an example",
+      eyebrow: "Industrial research · Practical AI",
+      title: "Understand information. Make better decisions. Work smarter.",
+      intro: "MelonCactus combines evidence-led market and competitor research with practical AI and automation support for everyday business work.",
+      primary: "Discuss your question",
+      secondary: "Explore both services",
     },
     applications: [
-      "Assess competitors and technology",
-      "Map markets, suppliers and projects",
-      "Review your company's public information profile",
+      "Research competitors, markets and technology",
+      "Apply AI to recurring business tasks",
+      "Start with one defined question and a fixed fee",
     ],
     decisions: {
       eyebrow: "When to engage us",
@@ -168,27 +168,27 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       ],
     },
     identity: {
-      eyebrow: "Business identity", title: "Independent research with explicit boundaries.",
-      body: "MelonCactus is an industrial-intelligence practice operated by GFNI. We structure lawful public evidence around a defined business decision and make the limits of that evidence visible.",
-      operator: "Operated by GFNI", boundary: "Public sources only · no unauthorised access", emailLabel: "Contact by email",
+      eyebrow: "Business identity", title: "One practice for research and practical improvement.",
+      body: "MelonCactus is operated by GFNI. We support defined business questions through evidence-led industrial research and carefully scoped practical AI work, with clear boundaries, human review and written agreements.",
+      operator: "Operated by GFNI", boundary: "Defined scope · fixed fee agreed upfront", emailLabel: "Contact by email",
     },
     closing: {
-      eyebrow: "Begin with the decision", title: "What do you need to decide?",
-      body: "Describe the question and the timing that matters. We will discuss whether public evidence can support a responsible, clearly scoped assessment.",
-      primary: "Discuss your research question", secondary: "View the sample report",
+      eyebrow: "Begin with the question", title: "What do you need to understand or improve?",
+      body: "Describe the decision, task or recurring work that matters. We will discuss a responsible, clearly scoped first step.",
+      primary: "Discuss your question", secondary: "Explore practical AI help",
     },
   },
   nl: {
     hero: {
-      eyebrow: "Industrial Intelligence",
-      title: "Openbaar bewijs voor beslissingen over concurrenten, technologie en markten.",
-      intro: "MelonCactus onderzoekt wat openbare bronnen aantoonbaar zeggen — en wat onzeker of onbekend blijft — zodat technische en commerciële beslissers beter onderbouwde keuzes kunnen maken.",
-      primary: "Bespreek uw onderzoeksvraag", secondary: "Bekijk een voorbeeld",
+      eyebrow: "Industrieel onderzoek · Praktische AI",
+      title: "Informatie begrijpen. Beter beslissen. Slimmer werken.",
+      intro: "MelonCactus combineert onderbouwd markt- en concurrentieonderzoek met praktische AI- en automatiseringshulp voor het dagelijkse werk.",
+      primary: "Bespreek uw vraag", secondary: "Bekijk beide diensten",
     },
     applications: [
-      "Concurrenten en technologie beoordelen",
-      "Markten, leveranciers en projecten in kaart brengen",
-      "Het openbare informatieprofiel van uw bedrijf onderzoeken",
+      "Concurrenten, markten en technologie onderzoeken",
+      "AI toepassen op terugkerende bedrijfstaken",
+      "Beginnen met één afgebakende vraag en een vaste prijs",
     ],
     decisions: {
       eyebrow: "Wanneer schakelt u ons in?", title: "Begin bij de beslissing, niet bij de zoektermen.",
@@ -295,14 +295,14 @@ export const commercialHome: Record<HomeLocale, HomeContent> = {
       ],
     },
     identity: {
-      eyebrow: "Bedrijfsidentiteit", title: "Onafhankelijk onderzoek met duidelijke grenzen.",
-      body: "MelonCactus is een onafhankelijk onderzoeksbureau voor industriële intelligence, geëxploiteerd door GFNI. Wij ordenen rechtmatig toegankelijk openbaar bewijs rond een afgebakende zakelijke beslissing en maken de beperkingen daarvan zichtbaar.",
-      operator: "Geëxploiteerd door GFNI", boundary: "Alleen openbare bronnen · geen ongeautoriseerde toegang", emailLabel: "Contact per e-mail",
+      eyebrow: "Bedrijfsidentiteit", title: "Eén bureau voor onderzoek en praktische verbetering.",
+      body: "MelonCactus wordt geëxploiteerd door GFNI. Wij ondersteunen afgebakende bedrijfsvragen met onderbouwd industrieel onderzoek en zorgvuldig begrensde praktische AI-hulp, met menselijke controle en schriftelijke afspraken.",
+      operator: "Geëxploiteerd door GFNI", boundary: "Heldere opdracht · vaste prijs vooraf", emailLabel: "Contact per e-mail",
     },
     closing: {
-      eyebrow: "Begin bij de beslissing", title: "Welke beslissing wilt u nemen?",
-      body: "Beschrijf uw vraag en de termijn die voor u telt. Wij bespreken of openbaar bewijs een verantwoorde, helder afgebakende beoordeling mogelijk maakt.",
-      primary: "Bespreek uw onderzoeksvraag", secondary: "Bekijk het voorbeeldrapport",
+      eyebrow: "Begin bij de vraag", title: "Wat wilt u beter begrijpen of verbeteren?",
+      body: "Beschrijf de beslissing, taak of het terugkerende werk dat voor u telt. Wij bespreken een verantwoorde, helder afgebakende eerste stap.",
+      primary: "Bespreek uw vraag", secondary: "Bekijk praktische AI-hulp",
     },
   },
 };

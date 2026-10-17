@@ -9,11 +9,11 @@ const businessPhoneE164 = "+31622328034";
 
 export const siteConfig = {
   name: "MelonCactus",
-  descriptor: "Industrial Intelligence",
+  descriptor: "Research & practical AI",
   description:
-    "Discreet, evidence-based competitive and technical intelligence for industrial and technology companies.",
+    "Market and competitor research, practical AI guidance and automation for businesses. Operated by GFNI in Enschede.",
   coreStatement:
-    "Evidence from public sources. Intelligence for technology leaders.",
+    "Understand information. Make better decisions. Work smarter.",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://meloncactus.com",
   businessEmail: "contact@meloncactus.com",
   businessPhoneDisplay: "0622328034",
@@ -29,7 +29,7 @@ export const siteConfig = {
   linkedInCompanyUrl: "https://www.linkedin.com/company/meloncactus/",
   nav: [
     { href: "/services", label: "Services" },
-    { href: "/#examples", label: "Examples" },
+    { href: "/ai-help-twente", label: "AI & automation" },
     { href: "/methodology", label: "Methodology" },
     { href: "/#pricing", label: "Pricing" },
     { href: "/insights", label: "Insights" },

@@ -1,13 +1,13 @@
 import type { ReportOption } from "@/config/site";
 
 export const siteNl = {
-  descriptor: "Industrieel onderzoek",
-  description: "Discreet, onderbouwd onderzoek naar concurrenten en technologie voor bedrijven in industrie en technologie.",
-  coreStatement: "Inzicht uit openbare bronnen. Houvast voor technische beslissers.",
+  descriptor: "Onderzoek & praktische AI",
+  description: "Markt- en concurrentieonderzoek, praktische AI-hulp en automatisering voor bedrijven. MelonCactus wordt geëxploiteerd door GFNI in Enschede.",
+  coreStatement: "Informatie begrijpen. Beter beslissen. Slimmer werken.",
   operatorStatement: "MelonCactus wordt geëxploiteerd door GFNI.",
   nav: [
     { href: "/nl/diensten", label: "Diensten" },
-    { href: "/nl#voorbeelden", label: "Voorbeelden" },
+    { href: "/nl/ai-hulp-twente", label: "AI & automatisering" },
     { href: "/nl/werkwijze", label: "Werkwijze" },
     { href: "/nl#prijzen", label: "Prijzen" },
     { href: "/nl/artikelen", label: "Artikelen" },

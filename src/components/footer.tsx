@@ -31,7 +31,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
               {siteConfig.businessEmail}
             </a>
             <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>
-            <Link href={isNl ? "/nl/contact" : "/contact"}>{isNl ? "Bespreek uw onderzoeksvraag" : "Request an assessment"}</Link>
+            <Link href={isNl ? "/nl/contact" : "/contact"}>{isNl ? "Bespreek uw vraag" : "Discuss your question"}</Link>
           </div>
           <div>
             <p className="footer-label">{isNl ? "Informatie" : "Information"}</p>

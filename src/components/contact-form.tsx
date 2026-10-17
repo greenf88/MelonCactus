@@ -5,6 +5,7 @@ import Link from "next/link";
 import { publicProfileScan, reportOptions, siteConfig } from "@/config/site";
 import { publicProfileScanNl, reportOptionsNl } from "@/config/site-nl";
 import { DEFAULT_DELIVERY_PRIORITY, deliveryOptions } from "@/config/delivery";
+import { enquiryTopic, enquiryTopics, type EnquiryTopic } from "@/config/enquiry-topics";
 import type { Locale } from "@/lib/i18n";
 
 const priorityLabelsNl: Record<(typeof deliveryOptions)[number]["value"], string> = {
@@ -30,8 +31,17 @@ function initialAssessment(value: string) {
 
 type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
-export function ContactForm({ initialReport = "", callRequested = false, locale = "en" }: { initialReport?: string; callRequested?: boolean; locale?: Locale }) {
+type ContactFormProps = {
+  initialReport?: string;
+  initialTopic?: string;
+  callRequested?: boolean;
+  locale?: Locale;
+};
+
+export function ContactForm({ initialReport = "", initialTopic = "research", callRequested = false, locale = "en" }: ContactFormProps) {
   const nl = locale === "nl";
+  const startingTopic: EnquiryTopic = initialReport ? "research" : enquiryTopic(initialTopic);
+  const [topic, setTopic] = useState<EnquiryTopic>(startingTopic);
   const [message, setMessage] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
 
@@ -66,6 +76,7 @@ export function ContactForm({ initialReport = "", callRequested = false, locale 
       setState("sent");
       setMessage(nl ? "Uw aanvraag is verzonden. Wij reageren per e-mail." : "Your enquiry has been sent. We will respond by email.");
       form.reset();
+      setTopic(startingTopic);
     } catch {
       setState("failed");
       setMessage(nl ? "Het formulier is tijdelijk niet beschikbaar. Stuur ons in plaats daarvan een e-mail." : "The form is temporarily unavailable. Please email us instead.");
@@ -85,27 +96,39 @@ export function ContactForm({ initialReport = "", callRequested = false, locale 
         <label>{nl ? "Functie of rol" : "Role"} <span aria-hidden="true">*</span><input name="role" autoComplete="organization-title" maxLength={120} required /></label>
       </div>
       <label>
-        {nl ? "Welke beslissing probeert u te nemen?" : "What decision are you trying to make?"} <span aria-hidden="true">*</span>
-        <textarea name="decision" rows={3} required minLength={20} maxLength={2000} placeholder={nl ? "Welke keuze moet het onderzoek helpen onderbouwen?" : "What choice should the research help you assess?"} />
-      </label>
-      <label>
-        {nl ? "Te onderzoeken onderneming, markt of technologie" : "Company, market or technology to examine"} <span aria-hidden="true">*</span>
-        <input name="target" required minLength={3} maxLength={1000} placeholder={nl ? "Omschrijf het onderzoeksobject kort" : "Briefly identify the subject"} />
-      </label>
-      <label>
-        {nl ? "Gewenste termijn" : "Requested timing"} <span aria-hidden="true">*</span>
-        <select name="deliveryPriority" required defaultValue={DEFAULT_DELIVERY_PRIORITY}>
-          {deliveryOptions.map((option) => <option key={option.value} value={option.value}>{nl ? priorityLabelsNl[option.value] : option.formLabel}</option>)}
+        {nl ? "Waar gaat uw vraag over?" : "What is your enquiry about?"} <span aria-hidden="true">*</span>
+        <select name="topic" required value={topic} onChange={(event) => setTopic(event.target.value as EnquiryTopic)}>
+          {enquiryTopics.map((option) => <option key={option.value} value={option.value}>{nl ? option.nl : option.en}</option>)}
         </select>
       </label>
-      <p className="form-field-note">{nl ? "Een versnelde termijn is een verzoek, geen automatische aanvaarding. De opdracht, vaste prijs en opleverdatum worden eerst schriftelijk bevestigd. De benodigde informatie moet zijn ontvangen voordat een afgesproken termijn ingaat." : "An accelerated timeframe is a request, not automatic acceptance. Scope, fixed fee and delivery date are confirmed in writing first. Any agreed period starts after required information has been received."}</p>
       <label>
-        {nl ? "Indicatief opdrachtniveau (optioneel)" : "Indicative assessment level (optional)"}
-        <select name="report" defaultValue={initialAssessment(initialReport)}>
-          <option value="">{nl ? "Nog te bepalen" : "To be discussed"}</option>
-          {assessmentOptions.map((option, index) => <option key={option.name} value={option.name}>{nl ? assessmentOptionsNl[index].name : option.name}</option>)}
-        </select>
+        {nl ? "Wat wilt u beslissen of verbeteren?" : "What would you like to decide or improve?"} <span aria-hidden="true">*</span>
+        <textarea name="decision" rows={3} required minLength={20} maxLength={2000} placeholder={nl ? "Beschrijf de beslissing, taak of gewenste verbetering." : "Describe the decision, task or improvement you have in mind."} />
       </label>
+      <label>
+        {nl ? "Taak, proces, bedrijf, markt of technologie" : "Task, process, company, market or technology"} <span aria-hidden="true">*</span>
+        <input name="target" required minLength={3} maxLength={1000} placeholder={nl ? "Omschrijf het onderwerp kort" : "Briefly identify the subject"} />
+      </label>
+      {topic === "research" ? <>
+        <label>
+          {nl ? "Gewenste termijn" : "Requested timing"} <span aria-hidden="true">*</span>
+          <select name="deliveryPriority" required defaultValue={DEFAULT_DELIVERY_PRIORITY}>
+            {deliveryOptions.map((option) => <option key={option.value} value={option.value}>{nl ? priorityLabelsNl[option.value] : option.formLabel}</option>)}
+          </select>
+        </label>
+        <p className="form-field-note">{nl ? "Een versnelde termijn is een verzoek, geen automatische aanvaarding. De opdracht, vaste prijs en opleverdatum worden eerst schriftelijk bevestigd. De benodigde informatie moet zijn ontvangen voordat een afgesproken termijn ingaat." : "An accelerated timeframe is a request, not automatic acceptance. Scope, fixed fee and delivery date are confirmed in writing first. Any agreed period starts after required information has been received."}</p>
+        <label>
+          {nl ? "Indicatief opdrachtniveau (optioneel)" : "Indicative assessment level (optional)"}
+          <select name="report" defaultValue={initialAssessment(initialReport)}>
+            <option value="">{nl ? "Nog te bepalen" : "To be discussed"}</option>
+            {assessmentOptions.map((option, index) => <option key={option.name} value={option.name}>{nl ? assessmentOptionsNl[index].name : option.name}</option>)}
+          </select>
+        </label>
+      </> : <>
+        <input type="hidden" name="deliveryPriority" value={DEFAULT_DELIVERY_PRIORITY} />
+        <input type="hidden" name="report" value="" />
+        <p className="form-field-note">{nl ? "Uw keuze is een startpunt. Wij spreken de opdracht, vaste prijs, op te leveren onderdelen en planning schriftelijk af voordat het werk begint." : "Your selection is a starting point. We agree the scope, fixed fee, deliverables and schedule in writing before work begins."}</p>
+      </>}
       <div className="form-grid two-columns">
         <label>{nl ? "Geografisch gebied (optioneel)" : "Geography (optional)"}<input name="geography" maxLength={160} /></label>
         <label>{nl ? "Indicatief budget (optioneel)" : "Indicative budget (optional)"}<input name="budget" maxLength={100} /></label>
@@ -123,7 +146,7 @@ export function ContactForm({ initialReport = "", callRequested = false, locale 
       <p className="form-warning">{nl ? "Stuur in dit formulier geen vertrouwelijke documenten, toegangsgegevens of onrechtmatig verkregen materiaal." : "Do not submit confidential documents, credentials or unlawfully obtained material in this form."}</p>
       <p className="form-field-note">{nl ? <>Wij gebruiken uw gegevens om uw vraag te beoordelen en te beantwoorden. Lees vóór verzending onze <Link href="/nl/privacy">privacyverklaring</Link>. Een aanvraag is geen opdracht en het verzoek om een geheimhoudingsovereenkomst vormt nog geen overeenkomst.</> : <>We use your details to review and respond to your question. Please read our <Link href="/privacy">privacy statement</Link> before sending. An enquiry is not an accepted assignment, and an NDA request does not create an agreement.</>}</p>
       <div className="form-submit-row">
-        <button className="button button-primary" type="submit" disabled={state === "sending"}>{state === "sending" ? (nl ? "Verzenden…" : "Sending…") : (nl ? "Onderzoeksvraag versturen" : "Send assessment request")}</button>
+        <button className="button button-primary" type="submit" disabled={state === "sending"}>{state === "sending" ? (nl ? "Verzenden…" : "Sending…") : (nl ? "Aanvraag versturen" : "Send enquiry")}</button>
         <p>{nl ? "Wij gebruiken uw gegevens om uw vraag te beoordelen en te beantwoorden." : "We use your details to review and respond to your question."}</p>
       </div>
       <div className={`form-status form-status-${state}`} role="status" aria-live="polite">{message}{state === "failed" && <> <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a></>}</div>
