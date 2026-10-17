@@ -11,13 +11,15 @@ no database access             operating-system user boundary
         │ no automatic intake             ▼
         │                        deterministic workflow core
         │                                 │
-        │                   ┌─────────────┼─────────────┐
-        │                   ▼             ▼             ▼
-        │                research      red team      report draft
-        │                   │             │             │
-        │                   └──── evidence gates ───────┘
+        │                   research → finding proposal
         │                                 │
-        │                           human approval
+        │                          independent red team
+        │                                 │
+        │                     human finding approval
+        │                                 │
+        │                    analysis → report draft → QA
+        │                                 │
+        │                       human report approval
         │                                 │
         └──────────────────── no automatic delivery ────┘
 
@@ -74,7 +76,8 @@ A material assessment or inference cannot reach `review_ready` unless:
 3. the red team did not reject it;
 4. contradicting evidence has an explicit treatment;
 5. a high-confidence label has at least two independent supporting sources; and
-6. the finding is marked verified.
+6. an agent-produced finding has a recorded human `approved` decision; and
+7. the finding is marked verified only through that human decision.
 
 An approved report additionally requires a recorded human approval. An agent is never an approval authority.
 
@@ -101,8 +104,12 @@ Every candidate is treated as untrusted data. Only HTTPS URLs on an explicit exa
 
 Evidence normalisation accepts only a strict, closed schema. Every record must use an `E-` code, a registered source ID from the same dossier, an allowed evidence class, a direct observation and a locator. The runtime computes the content hash itself and stores provenance linking evidence, source and the completed normalisation run. Unknown fields, duplicate content, foreign source IDs and partial batches are rejected. Evidence-job completion requires a completed hashed normalisation run with source-bound provenance.
 
+Finding proposal uses one injected, typed `finding_proposal` capability. Its identity-minimised brief contains only evidence/source codes, evidence class, observation and locator; it omits dossier identifiers, the decision question, source titles and URLs. The closed response schema cannot express a lifecycle status, approval, delivery target or external action. The runtime resolves evidence codes locally, writes the proposal and all evidence links atomically, records run-linked provenance and always forces status `proposed`. Unknown fields (including an attempted `status`), unknown evidence, missing support, duplicate links, timeouts and stale output fail the whole run closed.
+
+A proposal cannot become `verified` through an agent method. A distinct human identity must make an explicit finding decision. Approval is refused until supporting evidence and an independent non-rejecting red-team review exist. The analysis job remains blocked while a material agent proposal lacks that human approval. Rejection is terminal; a changes-requested decision returns the item to `proposed`. Neither decision sends or publishes anything.
+
 The red-team runner receives a purpose-built brief containing the finding, source/evidence codes, observations and challenge questions. It never receives the dossier ID, dossier number, source title or URL. Its reviewer identity must differ case-insensitively from every originating material-finding author. It has exactly one typed evaluation capability, validates the complete response schema, aggregates token/cost accounting and rejects the whole result if the dossier changed while evaluation was running. Red-team job completion requires an independent review for every material finding.
 
-The current executable demonstration uses in-process fictional fixtures and no network or model. It proves discovery → normalisation → separated red team without introducing a provider credential or framework dependency. A future runtime adapter can retain these same contracts if durable orchestration becomes necessary.
+The current executable demonstration uses in-process fictional fixtures and no network or paid model. It proves discovery → normalisation → proposal → separated red team → human finding approval without introducing a provider credential or framework dependency. A future runtime adapter can retain these same contracts if durable orchestration becomes necessary.
 
-The next agent gate is a model-produced finding proposal path with an explicit human finding-approval decision; no model currently creates or approves a finding. LangGraph 1.x LTS and Mastra core remain candidates only if durable orchestration becomes necessary; Eve can be reconsidered after GA/security review. Bellingcat Auto Archiver remains a separate capture-worker candidate rather than the orchestration core.
+No live model provider is connected. LangGraph 1.x LTS and Mastra core remain candidates only if durable orchestration becomes necessary; Eve can be reconsidered after GA/security review. Bellingcat Auto Archiver remains a separate capture-worker candidate rather than the orchestration core.

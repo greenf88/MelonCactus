@@ -23,6 +23,7 @@ describe("intelligence engine migration security posture", () => {
       "evidence",
       "evidence_provenance",
       "findings",
+      "finding_provenance",
       "verification_reviews",
       "report_drafts",
       "audit_events",
@@ -35,6 +36,8 @@ describe("intelligence engine migration security posture", () => {
     expect(migration).toContain("finding_evidence_evidence_same_dossier");
     expect(migration).toContain("evidence_provenance_source_same_dossier");
     expect(migration).toContain("evidence_provenance_run_same_dossier");
+    expect(migration).toContain("finding_provenance_run_same_dossier");
+    expect(migration).toContain("approval.object_type = 'finding'");
     expect(migration).toContain("verification_reviews_finding_same_dossier");
     expect(migration).toContain("create unique index agent_runs_one_running_job_idx");
     expect(migration).toContain("where status = 'running'");

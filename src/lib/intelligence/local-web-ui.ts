@@ -110,7 +110,17 @@ export function renderLocalControlRoomPage(
                   options.csrfToken,
                   bundle.findings,
                   bundle.evidence,
-                )}${reviewForm(dossier.id, revision, options.csrfToken, bundle.findings)}`
+                )}${reviewForm(
+                  dossier.id,
+                  revision,
+                  options.csrfToken,
+                  bundle.findings,
+                )}${findingApprovalForm(
+                  dossier.id,
+                  revision,
+                  options.csrfToken,
+                  bundle.findings,
+                )}`
               : ""
           }
         </details>
@@ -363,14 +373,14 @@ function findingForm(dossierId: string, dossierRevision: number, csrfToken: stri
       ${input("code", "Bevindingscode", "text", "", true, 60)}
       ${select("type", "Type", ["observation", "assessment", "inference", "unknown"])}
       ${select("confidence", "Confidence", ["unknown", "low", "moderate", "high"])}
-      ${select("status", "Status", ["proposed", "evidence_linked", "red_teamed", "verified", "rejected"])}
       ${input("createdBy", "Opsteller", "text", "local-analyst", true, 200)}
       ${select("material", "Materieel", ["yes", "no"])}
       <label class="wide">Stelling<textarea name="statement" maxlength="8000" required></textarea></label>
       <label class="wide">Onderbouwing<textarea name="rationale" maxlength="12000" required></textarea></label>
       <label class="wide">Informatiegaten (één per regel)<textarea name="informationGaps" maxlength="8000"></textarea></label>
       <label class="wide">Behandeling tegenbewijs<textarea name="contradictionResolution" maxlength="8000"></textarea></label>
-    </div><button type="submit">Bevinding opslaan</button></fieldset>`,
+    </div><button type="submit">Conceptbevinding opslaan</button>
+    <p class="hint">Nieuwe bevindingen krijgen altijd de status proposed. Verificatie vereist een afzonderlijke menselijke beslissing.</p></fieldset>`,
     "data-form",
     dossierRevision,
   );
@@ -419,6 +429,31 @@ function reviewForm(
       <label class="wide">Reviewnotitie<textarea name="notes" maxlength="12000"></textarea></label>
     </div><button type="submit">Review opslaan</button></fieldset>`,
     "data-form",
+    dossierRevision,
+  );
+}
+
+function findingApprovalForm(
+  dossierId: string,
+  dossierRevision: number,
+  csrfToken: string,
+  findings: ReturnType<LocalIntelligenceStore["getBundle"]>["findings"],
+): string {
+  const pending = findings.filter(
+    (finding) => finding.status !== "verified" && finding.status !== "rejected",
+  );
+  if (!pending.length) return "";
+  return form(
+    `/dossiers/${encodeURIComponent(dossierId)}/finding-decision`,
+    csrfToken,
+    `<fieldset><legend>Menselijke beslissing over conceptbevinding</legend><div class="form-grid">
+      ${selectFromRecords("findingId", "Conceptbevinding", pending.map((item) => [item.id, `${item.code} — ${item.statement}`]))}
+      ${input("decidedBy", "Menselijke beoordelaar", "text", "", true, 200)}
+      ${select("decision", "Beslissing", ["approved", "changes_requested", "rejected"])}
+      <label class="wide">Motivering<textarea name="rationale" maxlength="4000" required></textarea></label>
+    </div><button class="danger" type="submit">Menselijke beslissing vastleggen</button>
+    <p class="hint">Goedkeuring vereist ondersteunend bewijs en een onafhankelijke niet-afwijzende red-teamreview. Er wordt niets verzonden of gepubliceerd.</p></fieldset>`,
+    "approval-form",
     dossierRevision,
   );
 }
@@ -625,6 +660,14 @@ function renderFindings(
         <p>${escapeHtml(finding.rationale)}</p>
         <p class="hint">Confidence ${escapeHtml(finding.confidence)} · status ${escapeHtml(finding.status)} · ${
           finding.material ? "materieel" : "niet-materieel"
+        }${
+          finding.proposalRunId
+            ? finding.status === "verified"
+              ? " · agentvoorstel · menselijk goedgekeurd"
+              : finding.status === "rejected"
+                ? " · agentvoorstel · menselijk afgewezen"
+                : " · agentvoorstel · menselijke beslissing vereist"
+            : ""
         }</p>
         <ul>${findingLinks
           .map(

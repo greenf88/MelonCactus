@@ -249,19 +249,13 @@ export async function startLocalControlRoomServer(
             rationale: field(fields, "rationale", 12_000),
             material: oneOf(fields, "material", ["yes", "no"]) === "yes",
             createdBy,
-            status: oneOf(fields, "status", [
-              "proposed",
-              "evidence_linked",
-              "red_teamed",
-              "verified",
-              "rejected",
-            ]),
+            status: "proposed",
             contradictionResolution: optionalField(fields, "contradictionResolution", 8_000),
             informationGaps: lines(fields, "informationGaps", 100, 8_000),
           },
           { type: "human", ref: createdBy },
         );
-        notice = `Bevinding is aan ${dossier.dossierNumber} toegevoegd.`;
+        notice = `Conceptbevinding is aan ${dossier.dossierNumber} toegevoegd; menselijke goedkeuring blijft vereist.`;
       } else if (route.action === "links") {
         store.linkEvidence(
           dossier.id,
@@ -291,6 +285,20 @@ export async function startLocalControlRoomServer(
           { type: "human", ref: reviewerRef },
         );
         notice = `Onafhankelijke review is in ${dossier.dossierNumber} opgeslagen.`;
+      } else if (route.action === "finding-decision") {
+        const decision = oneOf(fields, "decision", [
+          "approved",
+          "rejected",
+          "changes_requested",
+        ]);
+        store.approveFinding({
+          dossierId: dossier.id,
+          findingId: field(fields, "findingId", 100),
+          decidedBy: field(fields, "decidedBy", 200),
+          decision,
+          rationale: field(fields, "rationale", 4_000),
+        });
+        notice = `Menselijke beslissing ${decision} is voor ${dossier.dossierNumber} vastgelegd; niets is verzonden.`;
       } else if (route.action === "drafts") {
         const createdBy = field(fields, "createdBy", 200);
         const draft = store.createDraft({
@@ -407,7 +415,7 @@ function parseDossierRoute(pathname: string):
   | undefined {
   const job = /^\/dossiers\/([^/]+)\/jobs\/([^/]+)\/complete$/.exec(pathname);
   if (job) return { dossierId: decodeURIComponent(job[1]), action: "complete-job", jobKey: decodeURIComponent(job[2]) };
-  const standard = /^\/dossiers\/([^/]+)\/(scope-approve|sources|evidence|findings|links|reviews|drafts|report-approve|retention-items|retention-hold|retention-release|deletion-propose|deletion-approve|deletion-execute)$/.exec(
+  const standard = /^\/dossiers\/([^/]+)\/(scope-approve|sources|evidence|findings|links|reviews|finding-decision|drafts|report-approve|retention-items|retention-hold|retention-release|deletion-propose|deletion-approve|deletion-execute)$/.exec(
     pathname,
   );
   return standard ? { dossierId: decodeURIComponent(standard[1]), action: standard[2] } : undefined;

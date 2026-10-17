@@ -65,6 +65,15 @@ describe("Phase 1 research workflow", () => {
       dependsOn: ["qa"],
     });
     expect(plan.jobs.map((item) => item.role)).not.toContain("outreach");
+    expect(plan.jobs.find((item) => item.key === "propose-findings")).toMatchObject({
+      role: "analyst",
+      execution: "agent",
+      dependsOn: ["evidence"],
+    });
+    expect(plan.jobs.find((item) => item.key === "analysis")?.dependsOn).toEqual([
+      "propose-findings",
+      "red-team",
+    ]);
   });
 
   it("accepts a verified, triangulated and red-teamed finding", () => {

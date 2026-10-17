@@ -174,24 +174,72 @@ export function ensureFictionalDemo(store: LocalIntelligenceStore): DemoResult {
     throw new Error("The fictional evidence-normalisation fixture is incomplete.");
   }
 
-  const finding = store.addFinding(
-    dossier.id,
-    {
-      code: "F-001",
-      statement: "Project Juniper appears ready for a limited, monitored pilot.",
-      type: "assessment",
-      confidence: "high",
-      rationale:
-        "Two independent fictional sources align on the approval conditions and their controlled verification.",
-      material: true,
-      createdBy: analystActor.ref,
-      status: "verified",
-      informationGaps: ["Live operational performance remains outside this fictional evidence set."],
-    },
-    analystActor,
+  let finding = store.getBundle(dossier.id).findings.find((item) => item.code === "F-001");
+  let proposalRun = store.listAgentRuns(dossier.id).find(
+    (run) => run.agentRole === "analyst" && run.status === "completed",
   );
-  store.linkEvidence(dossier.id, finding.id, evidenceOne.id, "supports", analystActor);
-  store.linkEvidence(dossier.id, finding.id, evidenceTwo.id, "supports", analystActor);
+  if (!proposalRun) {
+    proposalRun = store.beginAgentRun({
+      dossierId: dossier.id,
+      jobKey: "propose-findings",
+      agentRole: "analyst",
+      runnerRef: analystActor.ref,
+      inputHash: sha("fictional demo finding-proposal input v1"),
+      modelProvider: "none",
+      modelName: "offline-fictional-finding-proposal-v1",
+    });
+    if (!finding) {
+      finding = store.addProposedFinding(
+        dossier.id,
+        {
+          code: "F-001",
+          statement: "Project Juniper appears ready for a limited, monitored pilot.",
+          type: "assessment",
+          confidence: "high",
+          rationale:
+            "Two independent fictional sources align on the approval conditions and their controlled verification.",
+          material: true,
+          createdBy: analystActor.ref,
+          informationGaps: ["Live operational performance remains outside this fictional evidence set."],
+          proposalRunId: proposalRun.id,
+          proposalSchemaVersion: "finding-proposal-v1",
+          contentSha256: sha("fictional demo F-001 proposal v1"),
+          evidenceLinks: [
+            { evidenceId: evidenceOne.id, direction: "supports" },
+            { evidenceId: evidenceTwo.id, direction: "supports" },
+          ],
+        },
+        analystActor,
+      );
+    } else if (!finding.proposalRunId) {
+      store.backfillFictionalFindingProvenance(
+        dossier.id,
+        {
+          findingId: finding.id,
+          proposalRunId: proposalRun.id,
+          proposalSchemaVersion: "finding-proposal-v1-legacy-fixture-backfill",
+          contentSha256: sha("fictional demo F-001 legacy proposal backfill v1"),
+        },
+        analystActor,
+      );
+    }
+    store.completeAgentRun({
+      dossierId: dossier.id,
+      runId: proposalRun.id,
+      outputHash: sha("fictional demo finding-proposal output v1"),
+      inputTokens: 0,
+      outputTokens: 0,
+      estimatedCostMicros: 0,
+      actor: analystActor,
+    });
+    store.updateResearchJobStatus({
+      dossierId: dossier.id,
+      jobKey: "propose-findings",
+      status: "completed",
+      actor: analystActor,
+    });
+  }
+  if (!finding) throw new Error("The fictional finding-proposal fixture is incomplete.");
   store.addVerificationReview(
     dossier.id,
     {
@@ -216,6 +264,13 @@ export function ensureFictionalDemo(store: LocalIntelligenceStore): DemoResult {
     jobKey: "red-team",
     status: "completed",
     actor: redTeamActor,
+  });
+  store.approveFinding({
+    dossierId: dossier.id,
+    findingId: finding.id,
+    decidedBy: "fictional-fixture-human-approver",
+    decision: "approved",
+    rationale: "Fictional human approval after evidence linkage and independent red-team review.",
   });
   store.updateResearchJobStatus({
     dossierId: dossier.id,

@@ -65,8 +65,10 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 - [x] Store input/output hashes and optional restricted pointers for agent runs; raw queries, provider errors, snippets and outputs stay out of audit events.
 - [x] Add token, model/provider and estimated-cost accounting per run; the tool-only runner records no model, zero tokens and zero model cost.
 - [x] Create a small eval set with fictitious/public-only cases covering scope approval, lookalike domains, HTTP/credential/loopback URLs, prompt-injection snippets, empty allowlisted results, provider failure/timeout, stale output, strict evidence schemas, foreign source IDs, atomic normalisation rollback, reviewer independence and identity-minimised red-team context.
-- [~] Require human approval for scope changes, model-produced findings and final report status. Scope and final-report approval are enforced; no model-produced finding path exists yet.
-- [x] Enforce human approval methods for approved scope and final report status in the local adapter.
+- [x] Require human approval for scope changes, model-produced findings and final report status. The finding-proposal runner can only create `proposed` records; verification requires a separate human decision after independent red team.
+- [x] Enforce human approval methods for approved scope, agent-produced findings and final report status in the local adapter.
+- [x] Keep finding-proposal model context identity-minimised: only evidence/source codes, evidence class, observation and locator are supplied; dossier IDs/numbers, decision question, source titles and URLs are excluded.
+- [x] Fail finding proposals closed on unknown output fields, unknown evidence codes, duplicate links, missing support, timeouts and stale dossier revisions; persist only hashes, accounting metadata and validated records.
 
 ## P2 — evidence capture and search
 

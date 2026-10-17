@@ -25,11 +25,13 @@ npm run intelligence:verify
 npm run intelligence:status
 ```
 
-The demo is idempotent. It creates or resumes one entirely fictional dossier in the intentionally remote `9912` test period, so it cannot consume the reserved October 2026 number `2610001`. It records two fictional independent sources, two evidence records, a verified high-confidence assessment, an independent red-team review, a review-ready draft, a valid hash-linked audit chain and a SQLite backup.
+The demo is idempotent. It creates or resumes one entirely fictional dossier in the intentionally remote `9912` test period, so it cannot consume the reserved October 2026 number `2610001`. It records two fictional independent sources, two evidence records, an agent-proposed high-confidence assessment with run provenance, an independent red-team review, an explicit fictional human finding approval, a review-ready draft, a valid hash-linked audit chain and a SQLite backup.
 
 The final approval remains open. The demo never sends, publishes, emails, deploys or calls an external service.
 
-`intelligence:discovery-demo` creates or resumes a separate fictional dossier and executes the complete bounded agent proof against in-process fixtures. It accepts two `example.invalid` candidates, rejects a lookalike domain, creates two schema-validated and source-bound evidence records, and performs one independent red-team review in an identity-minimised context. All three runs record input/output hashes and zero model tokens/cost. The demonstration performs no DNS lookup, HTTP request, model call or account action.
+`intelligence:discovery-demo` creates or resumes a separate fictional dossier and executes the complete bounded agent proof against in-process fixtures. It accepts two `example.invalid` candidates, rejects a lookalike domain, creates two schema-validated and source-bound evidence records, produces one evidence-linked `proposed` finding from an identity-minimised brief, performs one independent red-team review and records a fictional human approval before analysis can complete. All four runs record input/output hashes and zero model tokens/cost. The demonstration performs no DNS lookup, HTTP request, model call or account action.
+
+The proposal evaluator is an injected interface, not a configured live provider. Its response cannot set `verified`, approve itself or request delivery. In the edit-capable Control Room, an operator can record `approved`, `changes_requested` or `rejected`; approval is blocked until evidence and independent red team are present.
 
 Open `.meloncactus-intelligence/control-room.html` locally to inspect the generated overview. Regenerate it after changes with:
 

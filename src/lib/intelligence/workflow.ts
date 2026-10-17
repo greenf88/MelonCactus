@@ -25,8 +25,14 @@ export function buildPhaseOneResearchPlan(input: {
       "technical",
       "corporate",
     ]),
+    job("propose-findings", "analyst", "Propose evidence-backed findings for human review", [
+      "evidence",
+    ]),
     job("red-team", "red_team", "Challenge material findings and alternatives", ["evidence"]),
-    job("analysis", "analyst", "Synthesize evidence-backed findings", ["red-team"]),
+    job("analysis", "analyst", "Synthesize approved evidence-backed findings", [
+      "propose-findings",
+      "red-team",
+    ]),
     job("report", "report_draft", "Assemble internal draft report", ["analysis"]),
     job("qa", "qa", "Verify citations, contradictions and missing evidence", ["report"]),
     {

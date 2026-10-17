@@ -58,9 +58,11 @@ async function main(): Promise<void> {
       console.log(`Accepted source candidates: ${result.acceptedSources}`);
       console.log(`Rejected candidates: ${result.rejectedCandidates}`);
       console.log(`Normalised evidence records: ${result.normalisedEvidence}`);
+      console.log(`Agent-proposed findings: ${result.proposedFindings}`);
+      console.log(`Human-approved findings: ${result.humanApprovedFindings}`);
       console.log(`Independent red-team reviews: ${result.redTeamReviews}`);
       console.log("Model use: none | Estimated model cost: EUR 0.000000");
-      console.log("Discovery, normalisation and red team used offline fixtures in separated contexts.");
+      console.log("Discovery, normalisation, finding proposal and red team used offline fixtures in separated contexts.");
       console.log("No network, message or publication action occurred.");
       return;
     }

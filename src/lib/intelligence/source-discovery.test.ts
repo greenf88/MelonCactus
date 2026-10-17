@@ -299,6 +299,8 @@ describe("bounded source-discovery agent", () => {
       acceptedSources: 2,
       rejectedCandidates: 1,
       normalisedEvidence: 2,
+      proposedFindings: 1,
+      humanApprovedFindings: 1,
       redTeamReviews: 1,
       runStatus: "completed",
     });
@@ -306,11 +308,13 @@ describe("bounded source-discovery agent", () => {
       reused: true,
       acceptedSources: 2,
       normalisedEvidence: 2,
+      proposedFindings: 1,
+      humanApprovedFindings: 1,
       redTeamReviews: 1,
       runStatus: "completed",
     });
     expect(second.dossier.id).toBe(first.dossier.id);
-    expect(store.listAgentRuns(first.dossier.id)).toHaveLength(3);
+    expect(store.listAgentRuns(first.dossier.id)).toHaveLength(4);
     expect(store.getBundle(first.dossier.id).sources).toHaveLength(2);
     expect(store.getBundle(first.dossier.id).evidence).toHaveLength(2);
   });

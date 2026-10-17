@@ -1,4 +1,7 @@
+import { createHash } from "node:crypto";
+
 import { runEvidenceNormalisationAgent } from "./evidence-normalisation";
+import { runFindingProposalAgent } from "./finding-proposal-runner";
 import { type LocalDossier, LocalIntelligenceStore } from "./local-store";
 import { runRedTeamAgent } from "./red-team-runner";
 import { runSourceDiscoveryAgent, type SourceDiscoveryResult } from "./source-discovery";
@@ -12,6 +15,8 @@ export interface DiscoveryDemoResult {
   acceptedSources: number;
   rejectedCandidates: number;
   normalisedEvidence: number;
+  proposedFindings: number;
+  humanApprovedFindings: number;
   redTeamReviews: number;
   runStatus: "completed";
 }
@@ -131,29 +136,87 @@ export async function ensureFictionalDiscoveryDemo(
     throw new Error("The fictional evidence-normalisation fixture requires two provenance records.");
   }
   let finding = bundle.findings.find((item) => item.code === "F-101");
-  if (!finding) {
-    finding = store.addFinding(
-      dossier.id,
-      {
-        code: "F-101",
-        statement: "The fictional public records consistently describe a bounded Tamarind test.",
-        type: "assessment",
-        confidence: "moderate",
-        rationale: "Two fictional records describe the same bounded test and its conditions.",
-        material: true,
-        createdBy: "fictional-tamarind-analyst",
-        status: "evidence_linked",
-        informationGaps: ["No live implementation evidence exists in this fictional fixture."],
-      },
-      { type: "agent", ref: "fictional-tamarind-analyst" },
-    );
+  const existingProposal = store
+    .listAgentRuns(dossier.id)
+    .find((run) => run.agentRole === "analyst" && run.status === "completed");
+  if (!existingProposal) {
+    if (finding && !finding.proposalRunId) {
+      const actor = { type: "agent" as const, ref: "fictional-tamarind-analyst" };
+      const run = store.beginAgentRun({
+        dossierId: dossier.id,
+        jobKey: "propose-findings",
+        agentRole: "analyst",
+        runnerRef: actor.ref,
+        inputHash: sha("fictional Tamarind legacy proposal input v1"),
+        modelProvider: "none",
+        modelName: "offline-fictional-finding-proposal-v1",
+      });
+      store.backfillFictionalFindingProvenance(
+        dossier.id,
+        {
+          findingId: finding.id,
+          proposalRunId: run.id,
+          proposalSchemaVersion: "finding-proposal-v1-legacy-fixture-backfill",
+          contentSha256: sha("fictional Tamarind F-101 legacy proposal backfill v1"),
+        },
+        actor,
+      );
+      store.completeAgentRun({
+        dossierId: dossier.id,
+        runId: run.id,
+        outputHash: sha("fictional Tamarind legacy proposal output v1"),
+        inputTokens: 0,
+        outputTokens: 0,
+        estimatedCostMicros: 0,
+        actor,
+      });
+      store.updateResearchJobStatus({
+        dossierId: dossier.id,
+        jobKey: "propose-findings",
+        status: "completed",
+        actor,
+      });
+    } else {
+      await runFindingProposalAgent(
+        store,
+        {
+          dossierId: dossier.id,
+          proposerRef: "fictional-tamarind-analyst",
+          timeoutMs: 1_000,
+        },
+        {
+        kind: "finding_proposal",
+        name: "offline-fictional-finding-proposal-fixture",
+        modelProvider: "none",
+        modelName: "deterministic-finding-proposal-fixture-v1",
+        async propose({ brief }) {
+          if ("dossierId" in brief || "dossierNumber" in brief) {
+            throw new Error("The fictional evaluator received dossier identity.");
+          }
+          return {
+            findings: [
+              {
+                code: "F-101",
+                statement: "The fictional public records consistently describe a bounded Tamarind test.",
+                type: "assessment",
+                confidence: "moderate",
+                rationale: "Two fictional records describe the same bounded test and its conditions.",
+                material: true,
+                supportingEvidenceCodes: ["E-101", "E-102"],
+                contradictingEvidenceCodes: [],
+                contextEvidenceCodes: [],
+                informationGaps: ["No live implementation evidence exists in this fictional fixture."],
+              },
+            ],
+            usage: { inputTokens: 0, outputTokens: 0, estimatedCostMicros: 0 },
+          };
+        },
+        },
+      );
+    }
   }
-  for (const item of evidence) {
-    store.linkEvidence(dossier.id, finding.id, item.id, "supports", {
-      type: "agent",
-      ref: "fictional-tamarind-analyst",
-    });
-  }
+  finding = store.getBundle(dossier.id).findings.find((item) => item.code === "F-101");
+  if (!finding) throw new Error("The fictional finding-proposal fixture is incomplete.");
   const existingRedTeam = store
     .listAgentRuns(dossier.id)
     .find((run) => run.agentRole === "red_team" && run.status === "completed");
@@ -184,6 +247,19 @@ export async function ensureFictionalDiscoveryDemo(
       },
     );
   }
+  store.approveFinding({
+    dossierId: dossier.id,
+    findingId: finding.id,
+    decidedBy: "fictional-tamarind-human-approver",
+    decision: "approved",
+    rationale: "Fictional human approval after an independent red-team review.",
+  });
+  store.updateResearchJobStatus({
+    dossierId: dossier.id,
+    jobKey: "analysis",
+    status: "completed",
+    actor: { type: "human", ref: "fictional-tamarind-human-approver" },
+  });
   const finalBundle = store.getBundle(dossier.id);
   return {
     dossier,
@@ -191,7 +267,15 @@ export async function ensureFictionalDiscoveryDemo(
     acceptedSources: finalBundle.sources.length,
     rejectedCandidates,
     normalisedEvidence: finalBundle.evidence.filter((item) => item.normalisationRunId).length,
+    proposedFindings: finalBundle.findings.filter((item) => item.proposalRunId).length,
+    humanApprovedFindings: store
+      .listFindingApprovals(dossier.id)
+      .filter((approval) => approval.decision === "approved").length,
     redTeamReviews: finalBundle.reviews.filter((review) => review.reviewType === "red_team").length,
     runStatus: "completed",
   };
+}
+
+function sha(value: string): string {
+  return createHash("sha256").update(value).digest("hex");
 }

@@ -93,7 +93,7 @@ describe("isolated red-team agent", () => {
         rationale: "The fictional record contains an explicit approval statement.",
         material: true,
         createdBy: "originating-analyst-agent",
-        status: "evidence_linked",
+        status: "proposed",
         informationGaps: ["Implementation was not observed."],
       },
       { type: "agent", ref: "originating-analyst-agent" },

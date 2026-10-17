@@ -58,6 +58,9 @@ export interface FindingRecord {
   status: "proposed" | "evidence_linked" | "red_teamed" | "verified" | "rejected";
   contradictionResolution?: string;
   informationGaps?: string[];
+  proposalRunId?: string;
+  proposalSchemaVersion?: string;
+  contentSha256?: string;
 }
 
 export interface VerificationReview {

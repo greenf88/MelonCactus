@@ -97,7 +97,7 @@ describe("local Control Room server", () => {
     expect(createDossier.status).toBe(303);
     expect(store.getStatus().dossiers).toBe(1);
     const dossier = store.listDossiers()[0];
-    expect(store.listResearchJobs(dossier.id)).toHaveLength(10);
+    expect(store.listResearchJobs(dossier.id)).toHaveLength(11);
 
     const currentPage = await fetch(server.url, { headers: { cookie } });
     const currentHtml = await currentPage.text();
@@ -182,6 +182,104 @@ describe("local Control Room server", () => {
     });
     expect(blocked.status).toBe(403);
     expect(store.getStatus().dossiers).toBe(0);
+  });
+
+  it("records a human finding decision through the private browser flow without delivery", async () => {
+    const store = createStore();
+    const dossier = store.registerDossier({
+      receivedAt: "2099-10-17T10:00:00.000Z",
+      decisionQuestion: "Can a fictional proposed finding pass the explicit browser approval gate?",
+      scope: { classification: "fictional-test-data", externalActionsAllowed: false },
+      actor: { type: "human", ref: "fixture-owner" },
+    });
+    const source = store.addSource(
+      dossier.id,
+      {
+        code: "S-HTTP-APPROVAL",
+        title: "Fictional approval source",
+        sourceType: "synthetic_test",
+        retrievedAt: "2099-10-17T10:05:00.000Z",
+      },
+      { type: "human", ref: "fixture-source-owner" },
+    );
+    const evidence = store.addEvidence(
+      dossier.id,
+      {
+        sourceId: source.id,
+        code: "E-HTTP-APPROVAL",
+        observation: "A fictional observation supports the browser approval test.",
+      },
+      { type: "human", ref: "fixture-evidence-owner" },
+    );
+    const finding = store.addFinding(
+      dossier.id,
+      {
+        code: "F-HTTP-APPROVAL",
+        statement: "The fictional browser approval path is evidence-linked.",
+        type: "assessment",
+        confidence: "moderate",
+        rationale: "This is a synthetic browser-flow fixture.",
+        material: true,
+        createdBy: "fixture-analyst",
+        status: "proposed",
+      },
+      { type: "human", ref: "fixture-analyst" },
+    );
+    store.linkEvidence(dossier.id, finding.id, evidence.id, "supports", {
+      type: "human",
+      ref: "fixture-evidence-owner",
+    });
+    store.addVerificationReview(
+      dossier.id,
+      {
+        findingId: finding.id,
+        reviewType: "red_team",
+        reviewerKind: "human",
+        reviewerRef: "fixture-red-team",
+        verdict: "qualified",
+        confidenceBefore: "moderate",
+        confidenceAfter: "moderate",
+        alternativeExplanations: ["The fixture may cover only one browser path."],
+        unresolvedGaps: [],
+        completedAt: "2099-10-17T10:30:00.000Z",
+      },
+      { type: "human", ref: "fixture-red-team" },
+    );
+
+    const server = await startLocalControlRoomServer(store, { mutationsEnabled: true, port: 0 });
+    servers.push(server);
+    const cookie = await authenticate(server);
+    const initialPage = await fetch(server.url, { headers: { cookie } });
+    const initialHtml = await initialPage.text();
+    const csrf = initialHtml.match(/name="_csrf" value="([a-f0-9]+)"/)?.[1];
+    const headers = {
+      cookie,
+      origin: server.url,
+      "content-type": "application/x-www-form-urlencoded",
+    };
+    await fetch(`${server.url}/edit-mode`, {
+      method: "POST",
+      headers,
+      body: new URLSearchParams({ _csrf: csrf!, state: "on" }),
+      redirect: "manual",
+    });
+    const decision = await fetch(`${server.url}/dossiers/${dossier.id}/finding-decision`, {
+      method: "POST",
+      headers,
+      body: new URLSearchParams({
+        _csrf: csrf!,
+        _revision: String(store.getDossierRevision(dossier.id)),
+        findingId: finding.id,
+        decidedBy: "fixture-human-approver",
+        decision: "approved",
+        rationale: "Independent fictional human decision through the local Control Room.",
+      }),
+      redirect: "manual",
+    });
+
+    expect(decision.status).toBe(303);
+    expect(store.getBundle(dossier.id).findings[0].status).toBe("verified");
+    expect(store.listFindingApprovals(dossier.id)).toHaveLength(1);
   });
 
   it("enforces the hold, second-person approval, and exact confirmation in the browser flow", async () => {

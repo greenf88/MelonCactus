@@ -47,7 +47,7 @@ npm run intelligence:status
 npm run intelligence:serve
 ```
 
-The generated SQLite database, local Control Room, internal draft and backups stay in an ignored local directory. `intelligence:serve` starts a token-protected, loopback-only read view; browser editing requires a separately confirmed private storage path outside the repository. Start with [the Phase 1 overview](docs/intelligence-engine/README.md) and [the local runbook](docs/intelligence-engine/local-runbook.md). Never commit client data, source captures, prompts, report content or credentials.
+The generated SQLite database, local Control Room, internal draft and backups stay in an ignored local directory. `intelligence:serve` starts a token-protected, loopback-only read view; browser editing requires a separately confirmed private storage path outside the repository. The bounded agent proof now covers source discovery, evidence normalisation, concept finding proposal, independent red team and explicit human finding approval; it still makes no network or model call. Start with [the Phase 1 overview](docs/intelligence-engine/README.md) and [the local runbook](docs/intelligence-engine/local-runbook.md). Never commit client data, source captures, prompts, report content or credentials.
 
 ## Combined SEO/legal review branch
 

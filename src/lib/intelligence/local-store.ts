@@ -86,6 +86,16 @@ export interface LocalAgentRun {
   completedAt?: string;
 }
 
+export interface LocalFindingApproval {
+  id: string;
+  dossierId: string;
+  findingId: string;
+  decidedBy: string;
+  decision: "approved" | "rejected" | "changes_requested";
+  rationale: string;
+  decidedAt: string;
+}
+
 export interface StoredDraft {
   id: string;
   dossierId: string;
@@ -221,7 +231,10 @@ export class LocalIntelligenceStore {
     this.database = new DatabaseSync(this.databasePath);
     this.database.exec(localSchemaSql);
     const existingVersion = this.getMeta("schema_version");
-    if ((existingVersion === "1" || existingVersion === "2") && LOCAL_SCHEMA_VERSION === 3) {
+    if (
+      (existingVersion === "1" || existingVersion === "2" || existingVersion === "3") &&
+      LOCAL_SCHEMA_VERSION === 4
+    ) {
       this.setMeta("schema_version", String(LOCAL_SCHEMA_VERSION));
     } else if (existingVersion && existingVersion !== String(LOCAL_SCHEMA_VERSION)) {
       this.database.close();
@@ -1052,6 +1065,36 @@ export class LocalIntelligenceStore {
             );
           }
         }
+        if (row.job_key === "propose-findings") {
+          const completedRun = this.get<{ id: string }>(
+            `select id from agent_runs
+             where dossier_id = ? and research_job_id = ? and agent_role = 'analyst'
+               and status = 'completed' and output_hash is not null
+             order by completed_at desc limit 1`,
+            input.dossierId,
+            row.id,
+          );
+          const proposed = completedRun
+            ? this.get<{ count: number }>(
+                `select count(*) as count
+                 from finding_provenance as provenance
+                 where provenance.dossier_id = ? and provenance.proposal_run_id = ?
+                   and exists (
+                     select 1 from finding_evidence as link
+                     where link.dossier_id = provenance.dossier_id
+                       and link.finding_id = provenance.finding_id
+                       and link.direction = 'supports'
+                   )`,
+                input.dossierId,
+                completedRun.id,
+              )
+            : undefined;
+          if (!completedRun || !proposed?.count) {
+            throw new Error(
+              "Finding proposal cannot complete without a completed hashed analyst run and evidence-linked proposal provenance.",
+            );
+          }
+        }
         if (row.job_key === "red-team") {
           const blocker = this.get<{ code: string }>(
             `select finding.code
@@ -1073,8 +1116,34 @@ export class LocalIntelligenceStore {
             );
           }
         }
-        if (row.job_key === "analysis" && this.countForDossier("findings", input.dossierId) === 0) {
-          throw new Error("Analysis cannot complete without a finding.");
+        if (row.job_key === "analysis") {
+          if (this.countForDossier("findings", input.dossierId) === 0) {
+            throw new Error("Analysis cannot complete without a finding.");
+          }
+          const unapproved = this.get<{ code: string }>(
+            `select finding.code
+             from findings as finding
+             join finding_provenance as provenance on provenance.finding_id = finding.id
+             where finding.dossier_id = ? and finding.material = 1
+               and (
+                 finding.status <> 'verified'
+                 or not exists (
+                   select 1 from approvals as approval
+                   where approval.dossier_id = finding.dossier_id
+                     and approval.object_type = 'finding'
+                     and approval.object_id = finding.id
+                     and approval.reviewer_kind = 'human'
+                     and approval.decision = 'approved'
+                 )
+               )
+             limit 1`,
+            input.dossierId,
+          );
+          if (unapproved) {
+            throw new Error(
+              `Analysis cannot complete until ${unapproved.code} has explicit human approval.`,
+            );
+          }
         }
         if (row.job_key === "report" && !this.getLatestDraft(input.dossierId)) {
           throw new Error("Report work cannot complete without a stored draft.");
@@ -1308,6 +1377,9 @@ export class LocalIntelligenceStore {
     input: Omit<FindingRecord, "id"> & { id?: string },
     actor: LocalActor,
   ): FindingRecord {
+    if (actor.type === "agent" && input.status !== "proposed") {
+      throw new Error("Agents may only create proposed findings.");
+    }
     this.requireMutableDossier(dossierId);
     const existing = this.get<FindingRow>(
       "select * from findings where dossier_id = ? and code = ?",
@@ -1342,6 +1414,342 @@ export class LocalIntelligenceStore {
       this.appendAudit(dossierId, actor, "create", "finding", id, { findingCode: input.code });
     });
     return { ...input, id };
+  }
+
+  addProposedFinding(
+    dossierId: string,
+    input: Omit<
+      FindingRecord,
+      "id" | "status" | "proposalRunId" | "proposalSchemaVersion" | "contentSha256"
+    > & {
+      id?: string;
+      proposalRunId: string;
+      proposalSchemaVersion: string;
+      contentSha256: string;
+      evidenceLinks: Array<{ evidenceId: string; direction: EvidenceDirection }>;
+    },
+    actor: LocalActor,
+  ): FindingRecord {
+    if (actor.type !== "agent") throw new Error("Only an agent run can create an agent proposal.");
+    const createdBy = requireText(input.createdBy, "finding.createdBy");
+    const code = requireText(input.code, "finding.code").toUpperCase();
+    if (!/^F-[0-9]{2,6}$/.test(code)) {
+      throw new Error("Agent-proposed finding codes must match F-[0-9]{2,6}.");
+    }
+    if (createdBy.toLowerCase() !== requireText(actor.ref, "actor.ref").toLowerCase()) {
+      throw new Error("The finding author must match the proposing agent.");
+    }
+    const schemaVersion = requireText(input.proposalSchemaVersion, "finding.proposalSchemaVersion");
+    const contentSha256 = requireSha256(input.contentSha256, "finding.contentSha256");
+    if (input.evidenceLinks.length === 0 || input.evidenceLinks.length > 100) {
+      throw new Error("A proposed finding requires 1 to 100 evidence links.");
+    }
+    if (!input.evidenceLinks.some((link) => link.direction === "supports")) {
+      throw new Error("A proposed finding requires supporting evidence.");
+    }
+    const uniqueEvidence = new Set(input.evidenceLinks.map((link) => link.evidenceId));
+    if (uniqueEvidence.size !== input.evidenceLinks.length) {
+      throw new Error("A proposed finding cannot link the same evidence record twice.");
+    }
+    const id = input.id ?? randomUUID();
+    this.transaction(() => {
+      this.requireMutableDossier(dossierId);
+      const run = this.requireAgentRun(dossierId, input.proposalRunId);
+      if (run.agentRole !== "analyst" || run.status !== "started") {
+        throw new Error("Finding provenance requires the active analyst proposal run.");
+      }
+      const proposalJob = this.get<{ job_key: string }>(
+        `select job.job_key from research_jobs as job
+         join agent_runs as run on run.research_job_id = job.id
+         where run.id = ? and run.dossier_id = ?`,
+        run.id,
+        dossierId,
+      );
+      if (proposalJob?.job_key !== "propose-findings") {
+        throw new Error("Finding provenance requires the propose-findings research job.");
+      }
+      const existing = this.get<FindingRow>(
+        "select * from findings where dossier_id = ? and code = ?",
+        dossierId,
+        code,
+      );
+      if (existing) throw new Error(`Finding code already exists: ${code}`);
+      for (const link of input.evidenceLinks) {
+        const evidence = this.get<{ id: string }>(
+          "select id from evidence where dossier_id = ? and id = ?",
+          dossierId,
+          link.evidenceId,
+        );
+        if (!evidence) throw new Error("Finding evidence ID does not belong to this dossier.");
+      }
+      const timestamp = now();
+      this.run(
+        `insert into findings (
+           id, dossier_id, code, statement, finding_type, confidence, rationale,
+           material, created_by, status, contradiction_resolution,
+           information_gaps_json, created_at, updated_at
+         ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, 'proposed', ?, ?, ?, ?)`,
+        id,
+        dossierId,
+        code,
+        requireText(input.statement, "finding.statement"),
+        input.type,
+        input.confidence,
+        requireText(input.rationale, "finding.rationale"),
+        input.material ? 1 : 0,
+        createdBy,
+        input.contradictionResolution ?? null,
+        JSON.stringify(input.informationGaps ?? []),
+        timestamp,
+        timestamp,
+      );
+      this.run(
+        `insert into finding_provenance (
+           finding_id, dossier_id, proposal_run_id, schema_version, content_sha256, created_at
+         ) values (?, ?, ?, ?, ?, ?)`,
+        id,
+        dossierId,
+        run.id,
+        schemaVersion,
+        contentSha256,
+        timestamp,
+      );
+      this.appendAudit(dossierId, actor, "propose", "finding", id, {
+        findingCode: code,
+      });
+      for (const link of input.evidenceLinks) {
+        this.run(
+          `insert into finding_evidence
+           (dossier_id, finding_id, evidence_id, direction) values (?, ?, ?, ?)`,
+          dossierId,
+          id,
+          link.evidenceId,
+          link.direction,
+        );
+        this.appendAudit(
+          dossierId,
+          actor,
+          "link",
+          "finding_evidence",
+          `${id}:${link.evidenceId}`,
+        );
+      }
+    });
+    return {
+      id,
+      code,
+      statement: input.statement,
+      type: input.type,
+      confidence: input.confidence,
+      rationale: input.rationale,
+      material: input.material,
+      createdBy,
+      status: "proposed",
+      contradictionResolution: input.contradictionResolution,
+      informationGaps: input.informationGaps,
+      proposalRunId: input.proposalRunId,
+      proposalSchemaVersion: schemaVersion,
+      contentSha256,
+    };
+  }
+
+  backfillFictionalFindingProvenance(
+    dossierId: string,
+    input: {
+      findingId: string;
+      proposalRunId: string;
+      proposalSchemaVersion: string;
+      contentSha256: string;
+    },
+    actor: LocalActor,
+  ): void {
+    const dossier = this.requireMutableDossier(dossierId);
+    if (String(dossier.scope.classification ?? "") !== "fictional-test-data") {
+      throw new Error("Legacy finding-provenance backfill is limited to fictional test fixtures.");
+    }
+    if (actor.type !== "agent") throw new Error("A fictional proposal backfill requires an agent actor.");
+    const schemaVersion = requireText(input.proposalSchemaVersion, "finding.proposalSchemaVersion");
+    const contentSha256 = requireSha256(input.contentSha256, "finding.contentSha256");
+    this.transaction(() => {
+      const existing = this.get<{ finding_id: string }>(
+        "select finding_id from finding_provenance where dossier_id = ? and finding_id = ?",
+        dossierId,
+        input.findingId,
+      );
+      if (existing) return;
+      const finding = this.get<FindingRow>(
+        "select * from findings where dossier_id = ? and id = ?",
+        dossierId,
+        input.findingId,
+      );
+      if (!finding) throw new Error("Finding not found.");
+      if (finding.created_by.toLowerCase() !== requireText(actor.ref, "actor.ref").toLowerCase()) {
+        throw new Error("The fictional finding author must match the backfill agent.");
+      }
+      const supporting = this.get<{ count: number }>(
+        `select count(*) as count from finding_evidence
+         where dossier_id = ? and finding_id = ? and direction = 'supports'`,
+        dossierId,
+        finding.id,
+      );
+      if (!supporting?.count) throw new Error("A fictional proposal backfill requires supporting evidence.");
+      const run = this.requireAgentRun(dossierId, input.proposalRunId);
+      if (run.agentRole !== "analyst" || run.status !== "started") {
+        throw new Error("A fictional proposal backfill requires the active analyst run.");
+      }
+      const job = this.get<{ job_key: string }>(
+        `select job.job_key from research_jobs as job
+         join agent_runs as run on run.research_job_id = job.id
+         where run.id = ? and run.dossier_id = ?`,
+        run.id,
+        dossierId,
+      );
+      if (job?.job_key !== "propose-findings") {
+        throw new Error("A fictional proposal backfill requires the propose-findings job.");
+      }
+      this.run(
+        `insert into finding_provenance (
+           finding_id, dossier_id, proposal_run_id, schema_version, content_sha256, created_at
+         ) values (?, ?, ?, ?, ?, ?)`,
+        finding.id,
+        dossierId,
+        run.id,
+        schemaVersion,
+        contentSha256,
+        now(),
+      );
+      this.appendAudit(dossierId, actor, "backfill_provenance", "finding", finding.id, {
+        findingCode: finding.code,
+      });
+    });
+  }
+
+  approveFinding(input: {
+    dossierId: string;
+    findingId: string;
+    decidedBy: string;
+    decision: LocalFindingApproval["decision"];
+    rationale: string;
+  }): LocalFindingApproval {
+    const decidedBy = requireText(input.decidedBy, "approval.decidedBy");
+    const rationale = requireText(input.rationale, "approval.rationale");
+    const actor: LocalActor = { type: "human", ref: decidedBy };
+    let result: LocalFindingApproval | undefined;
+    this.transaction(() => {
+      this.requireMutableDossier(input.dossierId);
+      const finding = this.get<FindingRow>(
+        "select * from findings where dossier_id = ? and id = ?",
+        input.dossierId,
+        input.findingId,
+      );
+      if (!finding) throw new Error("Finding not found.");
+      if (finding.created_by.trim().toLowerCase() === decidedBy.toLowerCase()) {
+        throw new Error("A finding author cannot approve or reject their own finding.");
+      }
+      const terminal = this.get<ApprovalRow>(
+        `select * from approvals
+         where dossier_id = ? and object_type = 'finding' and object_id = ?
+           and decision in ('approved', 'rejected')
+         order by decided_at desc limit 1`,
+        input.dossierId,
+        finding.id,
+      );
+      if (terminal) {
+        if (terminal.decision !== input.decision) {
+          throw new Error("This finding already has a terminal human decision.");
+        }
+        result = mapFindingApproval(terminal);
+        return;
+      }
+      if (input.decision === "approved") {
+        const supporting = this.get<{ count: number }>(
+          `select count(*) as count from finding_evidence
+           where dossier_id = ? and finding_id = ? and direction = 'supports'`,
+          input.dossierId,
+          finding.id,
+        );
+        if (!supporting?.count) throw new Error("A finding cannot be approved without supporting evidence.");
+        const review = this.get<{ verdict: VerificationReview["verdict"] }>(
+          `select verdict from verification_reviews
+           where dossier_id = ? and finding_id = ? and review_type = 'red_team'
+             and lower(reviewer_ref) <> lower(?)
+           order by completed_at desc limit 1`,
+          input.dossierId,
+          finding.id,
+          finding.created_by,
+        );
+        if (!review || review.verdict === "reject") {
+          throw new Error("Human approval requires an independent non-rejecting red-team review.");
+        }
+        const rejected = this.get<{ id: string }>(
+          `select id from verification_reviews
+           where dossier_id = ? and finding_id = ? and review_type = 'red_team'
+             and verdict = 'reject'
+           limit 1`,
+          input.dossierId,
+          finding.id,
+        );
+        if (rejected) {
+          throw new Error("A finding rejected by red team cannot receive human approval.");
+        }
+      }
+      const timestamp = now();
+      const approvalId = randomUUID();
+      this.run(
+        `insert into approvals (
+           id, dossier_id, object_type, object_id, reviewer_kind, decided_by,
+           decision, rationale, decided_at, created_at
+         ) values (?, ?, 'finding', ?, 'human', ?, ?, ?, ?, ?)`,
+        approvalId,
+        input.dossierId,
+        finding.id,
+        decidedBy,
+        input.decision,
+        rationale,
+        timestamp,
+        timestamp,
+      );
+      const nextStatus = input.decision === "approved"
+        ? "verified"
+        : input.decision === "rejected"
+          ? "rejected"
+          : "proposed";
+      this.run(
+        "update findings set status = ?, updated_at = ? where id = ? and dossier_id = ?",
+        nextStatus,
+        timestamp,
+        finding.id,
+        input.dossierId,
+      );
+      this.appendAudit(
+        input.dossierId,
+        actor,
+        input.decision === "approved" ? "approve" : input.decision === "rejected" ? "reject" : "request_changes",
+        "finding",
+        finding.id,
+        { approvalDecision: input.decision, findingCode: finding.code },
+      );
+      result = {
+        id: approvalId,
+        dossierId: input.dossierId,
+        findingId: finding.id,
+        decidedBy,
+        decision: input.decision,
+        rationale,
+        decidedAt: timestamp,
+      };
+    });
+    return result!;
+  }
+
+  listFindingApprovals(dossierId: string): LocalFindingApproval[] {
+    this.requireDossier(dossierId);
+    return this.all<ApprovalRow>(
+      `select * from approvals
+       where dossier_id = ? and object_type = 'finding'
+       order by decided_at, id`,
+      dossierId,
+    ).map(mapFindingApproval);
   }
 
   linkEvidence(
@@ -1446,7 +1854,11 @@ export class LocalIntelligenceStore {
         dossierId,
       ).map(mapEvidence),
       findings: this.all<FindingRow>(
-        "select * from findings where dossier_id = ? order by code",
+        `select finding.*, provenance.proposal_run_id, provenance.schema_version,
+                provenance.content_sha256
+         from findings as finding
+         left join finding_provenance as provenance on provenance.finding_id = finding.id
+         where finding.dossier_id = ? order by finding.code`,
         dossierId,
       ).map(mapFinding),
       links: this.all<LinkRow>(
@@ -1712,7 +2124,14 @@ export class LocalIntelligenceStore {
         this.count(
           "research_jobs",
           "where execution = 'human' and status = 'waiting_for_approval'",
-        ) + this.count("deletion_requests", "where status = 'proposed'"),
+        ) +
+        this.count("deletion_requests", "where status = 'proposed'") +
+        (this.get<{ count: number }>(
+          `select count(*) as count
+           from findings as finding
+           join finding_provenance as provenance on provenance.finding_id = finding.id
+           where finding.status not in ('verified', 'rejected')`,
+        )?.count ?? 0),
       auditEvents: this.count("audit_events"),
     };
   }
@@ -1813,6 +2232,7 @@ export class LocalIntelligenceStore {
     this.requireDossier(dossierId);
     this.run("delete from finding_evidence where dossier_id = ?", dossierId);
     this.run("delete from verification_reviews where dossier_id = ?", dossierId);
+    this.run("delete from finding_provenance where dossier_id = ?", dossierId);
     this.run("delete from evidence_provenance where dossier_id = ?", dossierId);
     this.run("delete from evidence where dossier_id = ?", dossierId);
     this.run("delete from findings where dossier_id = ?", dossierId);
@@ -2073,6 +2493,21 @@ interface FindingRow {
   status: FindingRecord["status"];
   contradiction_resolution: string | null;
   information_gaps_json: string;
+  proposal_run_id?: string | null;
+  schema_version?: string | null;
+  content_sha256?: string | null;
+}
+
+interface ApprovalRow {
+  id: string;
+  dossier_id: string;
+  object_type: "scope" | "finding" | "report_draft";
+  object_id: string;
+  reviewer_kind: "human";
+  decided_by: string;
+  decision: LocalFindingApproval["decision"];
+  rationale: string;
+  decided_at: string;
 }
 
 interface LinkRow {
@@ -2250,6 +2685,21 @@ function mapFinding(row: FindingRow): FindingRecord {
     status: row.status,
     contradictionResolution: row.contradiction_resolution ?? undefined,
     informationGaps: JSON.parse(row.information_gaps_json) as string[],
+    proposalRunId: row.proposal_run_id ?? undefined,
+    proposalSchemaVersion: row.schema_version ?? undefined,
+    contentSha256: row.content_sha256 ?? undefined,
+  };
+}
+
+function mapFindingApproval(row: ApprovalRow): LocalFindingApproval {
+  return {
+    id: row.id,
+    dossierId: row.dossier_id,
+    findingId: row.object_id,
+    decidedBy: row.decided_by,
+    decision: row.decision,
+    rationale: row.rationale,
+    decidedAt: row.decided_at,
   };
 }
 

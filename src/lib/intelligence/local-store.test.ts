@@ -37,7 +37,7 @@ describe("LocalIntelligenceStore", () => {
     expect(result.dossier.dossierNumber).toBe("9912001");
     expect(result.draftStatus).toBe("review_ready");
     expect(result.auditValid).toBe(true);
-    expect(result.auditEvents).toBe(37);
+    expect(result.auditEvents).toBe(43);
     expect(existsSync(result.draftPath)).toBe(true);
     expect(jobs.filter((job) => job.execution === "agent").every((job) => job.status === "completed")).toBe(
       true,
@@ -49,7 +49,7 @@ describe("LocalIntelligenceStore", () => {
       evidence: 2,
       findings: 1,
       pendingHumanApprovals: 1,
-      auditEvents: 37,
+      auditEvents: 43,
     });
   });
 
@@ -334,7 +334,7 @@ describe("LocalIntelligenceStore", () => {
     expect(restoredStore.verifyDeletionRegister()).toMatchObject({ valid: false, entries: 0 });
   });
 
-  it("upgrades the additive local schema from version 1 to version 3", () => {
+  it("upgrades the additive local schema from version 1 to version 4", () => {
     const store = createStore();
     const homePath = store.homePath;
     store.setMeta("schema_version", "1");
@@ -342,7 +342,7 @@ describe("LocalIntelligenceStore", () => {
 
     const reopened = new LocalIntelligenceStore(homePath);
     stores.push(reopened);
-    expect(reopened.getMeta("schema_version")).toBe("3");
+    expect(reopened.getMeta("schema_version")).toBe("4");
     expect(reopened.listDeletionRegister()).toEqual([]);
     expect(reopened.verifyDatabase()).toEqual({ valid: true, message: "ok" });
   });
@@ -420,7 +420,7 @@ describe("LocalIntelligenceStore", () => {
         rationale: "Synthetic rationale.",
         material: true,
         createdBy: "finding-author",
-        status: "evidence_linked",
+        status: "proposed",
         informationGaps: [],
       },
       { type: "agent", ref: "finding-author" },
@@ -495,7 +495,7 @@ describe("LocalIntelligenceStore", () => {
 
     const restoreHome = path.join(directories[directories.length - 1], "isolated-restore");
     const restored = restoreBackupToIsolatedHome(backupPath, restoreHome);
-    expect(restored).toMatchObject({ dossiers: 1, auditEvents: 39 });
+    expect(restored).toMatchObject({ dossiers: 1, auditEvents: 45 });
     expect(existsSync(restored.databasePath)).toBe(true);
     expect(() => restoreBackupToIsolatedHome(backupPath, restoreHome)).toThrow(/new or empty directory/);
   });

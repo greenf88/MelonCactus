@@ -287,6 +287,24 @@ create table mc_intel.findings (
   )
 );
 
+create table mc_intel.finding_provenance (
+  finding_id bigint primary key,
+  dossier_id bigint not null references mc_intel.dossiers(id) on delete restrict,
+  proposal_run_id bigint not null,
+  schema_version text not null,
+  content_sha256 bytea not null,
+  created_at timestamptz not null default now(),
+  constraint finding_provenance_finding_same_dossier
+    foreign key (dossier_id, finding_id)
+    references mc_intel.findings(dossier_id, id) on delete restrict,
+  constraint finding_provenance_run_same_dossier
+    foreign key (dossier_id, proposal_run_id)
+    references mc_intel.agent_runs(dossier_id, id) on delete restrict,
+  constraint finding_provenance_schema_not_blank check (btrim(schema_version) <> ''),
+  constraint finding_provenance_hash_is_sha256 check (octet_length(content_sha256) = 32),
+  constraint finding_provenance_content_unique unique (dossier_id, content_sha256)
+);
+
 create table mc_intel.finding_evidence (
   dossier_id bigint not null references mc_intel.dossiers(id) on delete restrict,
   finding_id bigint not null,
@@ -384,7 +402,7 @@ create table mc_intel.approvals (
     object_type in ('scope', 'finding', 'report_draft')
   ),
   constraint approvals_reviewer_kind_valid check (
-    reviewer_kind in ('agent', 'human')
+    reviewer_kind = 'human'
   ),
   constraint approvals_decision_valid check (
     decision in ('approved', 'rejected', 'changes_requested')
@@ -432,6 +450,8 @@ create index evidence_provenance_dossier_run_idx
   on mc_intel.evidence_provenance (dossier_id, normalisation_run_id);
 create index findings_dossier_status_idx
   on mc_intel.findings (dossier_id, status, material);
+create index finding_provenance_dossier_run_idx
+  on mc_intel.finding_provenance (dossier_id, proposal_run_id);
 create index finding_evidence_dossier_idx
   on mc_intel.finding_evidence (dossier_id);
 create index finding_evidence_evidence_idx
@@ -637,6 +657,22 @@ begin
     and (
       finding.status <> 'verified'
       or (
+        exists (
+          select 1
+          from mc_intel.finding_provenance as provenance
+          where provenance.finding_id = finding.id
+        )
+        and not exists (
+          select 1
+          from mc_intel.approvals as approval
+          where approval.dossier_id = finding.dossier_id
+            and approval.object_type = 'finding'
+            and approval.object_id = finding.id::text
+            and approval.reviewer_kind = 'human'
+            and approval.decision = 'approved'
+        )
+      )
+      or (
         finding.finding_type <> 'unknown'
         and not exists (
           select 1
@@ -748,6 +784,9 @@ for each row execute function mc_intel.write_audit_event();
 create trigger findings_audit
 after insert or update or delete on mc_intel.findings
 for each row execute function mc_intel.write_audit_event();
+create trigger finding_provenance_audit
+after insert or update or delete on mc_intel.finding_provenance
+for each row execute function mc_intel.write_audit_event();
 create trigger finding_evidence_audit
 after insert or update or delete on mc_intel.finding_evidence
 for each row execute function mc_intel.write_audit_event();
@@ -779,6 +818,8 @@ alter table mc_intel.evidence_provenance enable row level security;
 alter table mc_intel.evidence_provenance force row level security;
 alter table mc_intel.findings enable row level security;
 alter table mc_intel.findings force row level security;
+alter table mc_intel.finding_provenance enable row level security;
+alter table mc_intel.finding_provenance force row level security;
 alter table mc_intel.finding_evidence enable row level security;
 alter table mc_intel.finding_evidence force row level security;
 alter table mc_intel.verification_reviews enable row level security;
@@ -804,6 +845,7 @@ grant select, insert, update on table
   mc_intel.evidence,
   mc_intel.evidence_provenance,
   mc_intel.findings,
+  mc_intel.finding_provenance,
   mc_intel.finding_evidence,
   mc_intel.verification_reviews,
   mc_intel.report_drafts,
