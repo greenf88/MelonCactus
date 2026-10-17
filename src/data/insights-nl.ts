@@ -1,6 +1,7 @@
 import type { Insight } from "@/data/insights";
 import { industrialInsights } from "@/data/industrial-insights";
 import { decisionLoopInsightNl } from "@/data/decision-loop-insights";
+import { practicalAiCasesNl } from "@/data/practical-ai-cases";
 import { articleSources } from "@/data/article-sources";
 import { articleVisuals } from "@/data/article-visuals";
 
@@ -253,6 +254,7 @@ const originalInsightsNl: readonly Insight[] = [
 ];
 
 export const insightsNl: readonly Insight[] = [
+  ...practicalAiCasesNl,
   decisionLoopInsightNl,
   ...industrialInsights.filter((insight) => insight.locale === "nl"),
   ...originalInsightsNl,

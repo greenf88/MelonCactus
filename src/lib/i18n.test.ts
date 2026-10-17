@@ -23,7 +23,9 @@ describe("localized public routes", () => {
   });
 
   it("includes every translated article and both language URLs in the sitemap", () => {
-    expect(routePairs.length).toBe(12 + insights.length + 3 + 4);
+    expect(routePairs.length).toBe(14 + insights.length + 3 + 4);
+    expect(routePairs).toContainEqual(["/ai-help-netherlands", "/nl/ai-hulp-nederland"]);
+    expect(routePairs).toContainEqual(["/ai-help-twente", "/nl/ai-hulp-twente"]);
     expect(routePairs).toContainEqual(["/services/public-profile-exposure-scan", "/nl/diensten/openbare-informatiescan"]);
     expect(routePairs).toContainEqual(["/example-case/fourth-pillar", "/nl/voorbeeldcase/vierde-pijler"]);
     expect(routePairs).toContainEqual(["/example-case/public-profile", "/nl/voorbeeldcase/openbaar-profiel"]);

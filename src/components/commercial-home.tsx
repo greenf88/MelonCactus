@@ -3,6 +3,7 @@ import { ButtonLink } from "@/components/buttons";
 import { Container } from "@/components/container";
 import { SectionHeading } from "@/components/section-heading";
 import { ServiceCard } from "@/components/service-card";
+import { ServiceEntrances } from "@/components/service-entrances";
 import { commercialHome, type HomeLocale } from "@/config/commercial-home";
 import { publicProfileScan, reportOptions, siteConfig } from "@/config/site";
 import { publicProfileScanNl, reportOptionsNl } from "@/config/site-nl";
@@ -14,6 +15,7 @@ export function CommercialHome({ locale }: { locale: HomeLocale }) {
   const sample = isNl ? "/nl/voorbeeldrapport" : "/sample-report";
   const services = isNl ? "/nl/diensten" : "/services";
   const methodology = isNl ? "/nl/werkwijze" : "/methodology";
+  const aiHelp = isNl ? "/nl/ai-hulp-nederland" : "/ai-help-netherlands";
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -36,7 +38,7 @@ export function CommercialHome({ locale }: { locale: HomeLocale }) {
             <p className="hero-intro">{content.hero.intro}</p>
             <div className="button-row">
               <ButtonLink href={contact}>{content.hero.primary}</ButtonLink>
-              <ButtonLink href={sample} variant="secondary">{content.hero.secondary}</ButtonLink>
+              <ButtonLink href={services} variant="secondary">{content.hero.secondary}</ButtonLink>
             </div>
           </div>
           <div className="evidence-panel" role="group" aria-label={isNl ? "Illustratieve bewijsclassificatie" : "Illustrative evidence classification"}>
@@ -49,6 +51,17 @@ export function CommercialHome({ locale }: { locale: HomeLocale }) {
             </dl>
             <p className="evidence-note">{isNl ? "Illustratief schema, geen onderzoeksbevinding." : "Illustrative format, not a research finding."}</p>
           </div>
+        </Container>
+      </section>
+
+      <section className="section service-entrances-section" aria-labelledby={isNl ? "twee-diensten" : "two-services"}>
+        <Container>
+          <SectionHeading
+            eyebrow={isNl ? "Twee diensten, één werkwijze" : "Two services, one way of working"}
+            title={isNl ? "Begin bij de vraag die voor uw bedrijf telt." : "Start with the question that matters to your business."}
+            intro={isNl ? "Kies onderzoek voor een externe markt- of concurrentievraag, of praktische AI-hulp voor werk dat u slimmer wilt organiseren." : "Choose research for an external market or competitor question, or practical AI help for work you want to organise more intelligently."}
+          />
+          <ServiceEntrances locale={locale} researchHref={`${services}#${isNl ? "onderzoek" : "research"}`} />
         </Container>
       </section>
 
@@ -179,7 +192,7 @@ export function CommercialHome({ locale }: { locale: HomeLocale }) {
         </Container>
       </section>
 
-      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">{content.closing.eyebrow}</p><h2>{content.closing.title}</h2><p>{content.closing.body}</p></div><div className="button-row"><ButtonLink href={contact}>{content.closing.primary}</ButtonLink><ButtonLink href={sample} variant="secondary">{content.closing.secondary}</ButtonLink></div></Container></section>
+      <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">{content.closing.eyebrow}</p><h2>{content.closing.title}</h2><p>{content.closing.body}</p></div><div className="button-row"><ButtonLink href={contact}>{content.closing.primary}</ButtonLink><ButtonLink href={aiHelp} variant="secondary">{content.closing.secondary}</ButtonLink></div></Container></section>
     </>
   );
 }

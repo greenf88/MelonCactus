@@ -13,7 +13,7 @@ import { sourceSans, sourceSerif } from "../fonts";
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: "MelonCactus | Industrial Intelligence",
+    default: "MelonCactus | Research & Practical AI",
     template: "%s | MelonCactus",
   },
   description: siteConfig.description,
@@ -22,14 +22,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
-    title: "MelonCactus | Industrial Intelligence",
+    title: "MelonCactus | Research & Practical AI",
     description: siteConfig.description,
     url: "/",
-    images: [{ url: socialImageUrl("en", "default"), width: 1200, height: 630, alt: "MelonCactus Industrial Intelligence: public evidence for decisions" }],
+    images: [{ url: socialImageUrl("en", "default"), width: 1200, height: 630, alt: "MelonCactus: industrial research and practical AI" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MelonCactus | Industrial Intelligence",
+    title: "MelonCactus | Research & Practical AI",
     description: siteConfig.description,
     images: [socialImageUrl("en", "default")],
   },

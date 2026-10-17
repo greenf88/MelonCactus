@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { insights } from "@/data/insights";
 import { insightsNl } from "@/data/insights-nl";
 import { industrialInsights } from "@/data/industrial-insights";
+import { practicalAiCasesEn, practicalAiCasesNl } from "@/data/practical-ai-cases";
 import { articleReadingLabel, articleReadingMinutes, articleWordCount } from "./reading-time";
 
 describe("article reading time", () => {
@@ -18,15 +19,15 @@ describe("article reading time", () => {
   });
 
   it("calculates localized times for every existing and new article", () => {
-    expect(insights).toHaveLength(9);
-    expect(insightsNl).toHaveLength(9);
+    expect(insights).toHaveLength(9 + practicalAiCasesEn.length);
+    expect(insightsNl).toHaveLength(9 + practicalAiCasesNl.length);
     for (const article of insights) {
-      expect(articleWordCount(article, "en")).toBeGreaterThan(400);
+      expect(articleWordCount(article, "en"), article.slug).toBeGreaterThan(400);
       expect(articleReadingLabel(article, "en")).toMatch(/^\d+ min read$/);
       expect(articleReadingMinutes(article, "en")).toBe(Math.ceil(articleWordCount(article, "en") / 225));
     }
     for (const article of insightsNl) {
-      expect(articleWordCount(article, "nl")).toBeGreaterThan(400);
+      expect(articleWordCount(article, "nl"), article.slug).toBeGreaterThan(400);
       expect(articleReadingLabel(article, "nl")).toMatch(/^\d+ min leestijd$/);
       expect(articleReadingMinutes(article, "nl")).toBe(Math.ceil(articleWordCount(article, "nl") / 225));
     }
