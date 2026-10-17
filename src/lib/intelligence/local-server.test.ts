@@ -1,4 +1,5 @@
 import { mkdtempSync, rmSync } from "node:fs";
+import { request as httpRequest } from "node:http";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -70,13 +71,22 @@ describe("local Control Room server", () => {
       "content-type": "application/x-www-form-urlencoded",
     };
 
-    const editMode = await fetch(`${server.url}/edit-mode`, {
+    const wrongOrigin = await fetch(`${server.url}/edit-mode`, {
       method: "POST",
-      headers: formHeaders,
+      headers: { ...formHeaders, origin: "https://attacker.invalid" },
       body: new URLSearchParams({ _csrf: csrf!, state: "on" }),
       redirect: "manual",
     });
-    expect(editMode.status).toBe(303);
+    expect(wrongOrigin.status).toBe(403);
+
+    const editModeStatus = await postForm(`${server.url}/edit-mode`, {
+      ...formHeaders,
+      origin: "null",
+      "sec-fetch-site": "same-origin",
+      "sec-fetch-mode": "navigate",
+      "sec-fetch-dest": "document",
+    }, new URLSearchParams({ _csrf: csrf!, state: "on" }).toString());
+    expect(editModeStatus).toBe(303);
 
     const editingPage = await fetch(server.url, { headers: { cookie } });
     expect(await editingPage.text()).toContain("Edit-modus actief");
@@ -414,3 +424,20 @@ describe("local Control Room server", () => {
     expect(deletedHtml).not.toContain(`/dossiers/${dossier.id}/sources`);
   });
 });
+
+function postForm(url: string, headers: Record<string, string>, body: string): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const request = httpRequest(url, {
+      method: "POST",
+      headers: {
+        ...headers,
+        "content-length": Buffer.byteLength(body).toString(),
+      },
+    }, (response) => {
+      response.resume();
+      response.once("end", () => resolve(response.statusCode ?? 0));
+    });
+    request.once("error", reject);
+    request.end(body);
+  });
+}

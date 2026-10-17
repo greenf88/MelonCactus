@@ -138,7 +138,7 @@ export async function startLocalControlRoomServer(
       response.end();
       return;
     }
-    if (request.headers.origin !== origin) {
+    if (!isTrustedFormOrigin(request, origin)) {
       throw new UserInputError("Ongeldige request-origin.", 403);
     }
     if (!request.headers["content-type"]?.toLowerCase().startsWith("application/x-www-form-urlencoded")) {
@@ -600,6 +600,23 @@ function safeEqual(left: string, right: string): boolean {
 
 function isLoopback(address: string | undefined): boolean {
   return address === "127.0.0.1" || address === "::1" || address === "::ffff:127.0.0.1";
+}
+
+function isTrustedFormOrigin(request: IncomingMessage, origin: string): boolean {
+  if (request.headers.origin === origin) return true;
+
+  // Embedded browsers can expose a loopback page through an opaque origin and
+  // send `Origin: null`. Only accept that compatibility case when browser-owned
+  // Fetch Metadata confirms a same-origin top-level form navigation. The exact
+  // Host, loopback socket, authenticated session cookie and CSRF token are still
+  // checked separately for every mutation.
+  const opaqueOrigin = request.headers.origin === undefined || request.headers.origin === "null";
+  return (
+    opaqueOrigin &&
+    request.headers["sec-fetch-site"] === "same-origin" &&
+    request.headers["sec-fetch-mode"] === "navigate" &&
+    request.headers["sec-fetch-dest"] === "document"
+  );
 }
 
 class UserInputError extends Error {
