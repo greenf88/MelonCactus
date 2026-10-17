@@ -126,6 +126,65 @@ describe("LocalIntelligenceStore", () => {
     ).toThrow(/incomplete job: analysis/);
   });
 
+  it("atomically rejects stale dossier revisions without retaining partial writes", () => {
+    const store = createStore();
+    const dossier = store.registerDossier({
+      receivedAt: "2026-11-03T11:00:00.000Z",
+      decisionQuestion: "Can a stale local screen overwrite newer dossier work?",
+      actor: { type: "human", ref: "test-operator" },
+    });
+    const initialRevision = store.getDossierRevision(dossier.id);
+
+    expect(() =>
+      store.withExpectedDossierRevision(dossier.id, initialRevision, () => {
+        store.addSource(
+          dossier.id,
+          {
+            code: "SRC-ROLLBACK",
+            title: "Rolled-back synthetic source",
+            sourceType: "public_web",
+            retrievedAt: "2026-11-03T11:05:00.000Z",
+          },
+          { type: "human", ref: "test-operator" },
+        );
+        throw new Error("Synthetic failure after a nested store mutation.");
+      }),
+    ).toThrow(/Synthetic failure/);
+    expect(store.getBundle(dossier.id).sources).toHaveLength(0);
+    expect(store.getDossierRevision(dossier.id)).toBe(initialRevision);
+
+    store.withExpectedDossierRevision(dossier.id, initialRevision, () =>
+      store.addSource(
+        dossier.id,
+        {
+          code: "SRC-CURRENT",
+          title: "Current synthetic source",
+          sourceType: "public_web",
+          retrievedAt: "2026-11-03T11:10:00.000Z",
+        },
+        { type: "human", ref: "test-operator" },
+      ),
+    );
+    expect(store.getDossierRevision(dossier.id)).toBeGreaterThan(initialRevision);
+    expect(() =>
+      store.withExpectedDossierRevision(dossier.id, initialRevision, () =>
+        store.addSource(
+          dossier.id,
+          {
+            code: "SRC-STALE",
+            title: "Stale synthetic source",
+            sourceType: "public_web",
+            retrievedAt: "2026-11-03T11:15:00.000Z",
+          },
+          { type: "human", ref: "stale-operator" },
+        ),
+      ),
+    ).toThrow(/revision conflict/i);
+    expect(store.getBundle(dossier.id).sources.map((source) => source.code)).toEqual([
+      "SRC-CURRENT",
+    ]);
+  });
+
   it("does not complete red-team work without a reviewer independent from the finding author", () => {
     const store = createStore();
     const dossier = store.registerDossier({

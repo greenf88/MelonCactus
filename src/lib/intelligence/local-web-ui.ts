@@ -22,6 +22,7 @@ export function renderLocalControlRoomPage(
       const draft = store.getLatestDraft(dossier.id);
       const audit = store.verifyAuditChain(dossier.id);
       const auditRows = store.listAuditEvents(dossier.id, 20);
+      const revision = store.getDossierRevision(dossier.id);
       const scopeJob = jobs.find((job) => job.key === "scope");
       const qaJob = jobs.find((job) => job.key === "qa");
 
@@ -38,6 +39,7 @@ export function renderLocalControlRoomPage(
         </div>
         <dl>
           <div><dt>Dossierstatus</dt><dd>${escapeHtml(dossier.status)}</dd></div>
+          <div><dt>Dossierrevisie</dt><dd>${revision}</dd></div>
           <div><dt>Conceptrapport</dt><dd>${escapeHtml(draft?.status ?? "nog niet aangemaakt")}</dd></div>
           <div><dt>Bronnen</dt><dd>${bundle.sources.length}</dd></div>
           <div><dt>Bewijsstukken</dt><dd>${bundle.evidence.length}</dd></div>
@@ -46,7 +48,7 @@ export function renderLocalControlRoomPage(
 
         <section class="section-block">
           <h3>Onderzoeksworkflow</h3>
-          <ol class="jobs">${jobs.map((job) => renderJob(job, dossier.id, options, canEdit)).join("")}</ol>
+          <ol class="jobs">${jobs.map((job) => renderJob(job, dossier.id, revision, options, canEdit)).join("")}</ol>
           ${
             canEdit && scopeJob?.status === "waiting_for_approval"
               ? form(
@@ -58,6 +60,7 @@ export function renderLocalControlRoomPage(
                    </div>
                    <button type="submit">Scope expliciet goedkeuren</button>`,
                   "approval-form",
+                  revision,
                 )
               : ""
           }
@@ -69,8 +72,9 @@ export function renderLocalControlRoomPage(
           ${renderEvidence(bundle.evidence, bundle.sources)}
           ${
             canEdit
-              ? `${sourceForm(dossier.id, options.csrfToken)}${evidenceForm(
+              ? `${sourceForm(dossier.id, revision, options.csrfToken)}${evidenceForm(
                   dossier.id,
+                  revision,
                   options.csrfToken,
                   bundle.sources,
                 )}`
@@ -83,12 +87,13 @@ export function renderLocalControlRoomPage(
           ${renderFindings(bundle.findings, bundle.links, bundle.evidence, bundle.reviews)}
           ${
             canEdit
-              ? `${findingForm(dossier.id, options.csrfToken)}${linkForm(
+              ? `${findingForm(dossier.id, revision, options.csrfToken)}${linkForm(
                   dossier.id,
+                   revision,
                   options.csrfToken,
                   bundle.findings,
                   bundle.evidence,
-                )}${reviewForm(dossier.id, options.csrfToken, bundle.findings)}`
+                )}${reviewForm(dossier.id, revision, options.csrfToken, bundle.findings)}`
               : ""
           }
         </details>
@@ -112,6 +117,8 @@ export function renderLocalControlRoomPage(
                     ${input("createdBy", "Opsteller", "text", "local-report-operator", true, 200)}
                    </div>
                    <button type="submit">Nieuwe interne conceptversie maken</button>`,
+                  "data-form",
+                  revision,
                 )
               : ""
           }
@@ -128,6 +135,7 @@ export function renderLocalControlRoomPage(
                    <button class="danger" type="submit">Rapport expliciet goedkeuren</button>
                    <p class="hint">Goedkeuring verzendt of publiceert niets.</p>`,
                   "approval-form",
+                  revision,
                 )
               : ""
           }
@@ -210,6 +218,7 @@ export function renderLocalControlRoomPage(
 function renderJob(
   job: LocalResearchJob,
   dossierId: string,
+  dossierRevision: number,
   options: LocalControlRoomPageOptions,
   canEdit: boolean,
 ): string {
@@ -220,6 +229,7 @@ function renderJob(
           options.csrfToken,
           `<button class="small" type="submit">Markeer voltooid</button>`,
           "inline-form",
+          dossierRevision,
         )
       : "";
   return `<li>
@@ -249,7 +259,7 @@ function newDossierForm(csrfToken: string): string {
   </section>`;
 }
 
-function sourceForm(dossierId: string, csrfToken: string): string {
+function sourceForm(dossierId: string, dossierRevision: number, csrfToken: string): string {
   return form(
     `/dossiers/${encodeURIComponent(dossierId)}/sources`,
     csrfToken,
@@ -263,11 +273,14 @@ function sourceForm(dossierId: string, csrfToken: string): string {
       ${input("retrievedAt", "Ophaalmoment", "datetime-local", localDateTimeValue(), true)}
       ${input("sha256", "SHA-256 (optioneel)", "text", "", false, 64)}
     </div><button type="submit">Bron opslaan</button></fieldset>`,
+    "data-form",
+    dossierRevision,
   );
 }
 
 function evidenceForm(
   dossierId: string,
+  dossierRevision: number,
   csrfToken: string,
   sources: ReturnType<LocalIntelligenceStore["getBundle"]>["sources"],
 ): string {
@@ -282,10 +295,12 @@ function evidenceForm(
       ${input("locator", "Vindplaats/pagina", "text", "", false, 1000)}
       ${input("observedAt", "Waargenomen op", "datetime-local")}
     </div><button type="submit">Bewijs opslaan</button></fieldset>`,
+    "data-form",
+    dossierRevision,
   );
 }
 
-function findingForm(dossierId: string, csrfToken: string): string {
+function findingForm(dossierId: string, dossierRevision: number, csrfToken: string): string {
   return form(
     `/dossiers/${encodeURIComponent(dossierId)}/findings`,
     csrfToken,
@@ -301,11 +316,14 @@ function findingForm(dossierId: string, csrfToken: string): string {
       <label class="wide">Informatiegaten (één per regel)<textarea name="informationGaps" maxlength="8000"></textarea></label>
       <label class="wide">Behandeling tegenbewijs<textarea name="contradictionResolution" maxlength="8000"></textarea></label>
     </div><button type="submit">Bevinding opslaan</button></fieldset>`,
+    "data-form",
+    dossierRevision,
   );
 }
 
 function linkForm(
   dossierId: string,
+  dossierRevision: number,
   csrfToken: string,
   findings: ReturnType<LocalIntelligenceStore["getBundle"]>["findings"],
   evidence: ReturnType<LocalIntelligenceStore["getBundle"]>["evidence"],
@@ -319,11 +337,14 @@ function linkForm(
       ${selectFromRecords("evidenceId", "Bewijs", evidence.map((item) => [item.id, `${item.code} — ${item.observation}`]))}
       ${select("direction", "Richting", ["supports", "contradicts", "context"])}
     </div><button type="submit">Koppeling opslaan</button></fieldset>`,
+    "data-form",
+    dossierRevision,
   );
 }
 
 function reviewForm(
   dossierId: string,
+  dossierRevision: number,
   csrfToken: string,
   findings: ReturnType<LocalIntelligenceStore["getBundle"]>["findings"],
 ): string {
@@ -342,6 +363,8 @@ function reviewForm(
       <label class="wide">Openstaande gaten (één per regel)<textarea name="unresolvedGaps" maxlength="8000"></textarea></label>
       <label class="wide">Reviewnotitie<textarea name="notes" maxlength="12000"></textarea></label>
     </div><button type="submit">Review opslaan</button></fieldset>`,
+    "data-form",
+    dossierRevision,
   );
 }
 
@@ -405,9 +428,19 @@ function renderFindings(
     .join("")}</div>`;
 }
 
-function form(action: string, csrfToken: string, body: string, className = "data-form"): string {
+function form(
+  action: string,
+  csrfToken: string,
+  body: string,
+  className = "data-form",
+  dossierRevision?: number,
+): string {
   return `<form class="${className}" method="post" action="${escapeHtml(action)}">
-    <input type="hidden" name="_csrf" value="${escapeHtml(csrfToken)}">${body}
+    <input type="hidden" name="_csrf" value="${escapeHtml(csrfToken)}">${
+      dossierRevision === undefined
+        ? ""
+        : `<input type="hidden" name="_revision" value="${dossierRevision}">`
+    }${body}
   </form>`;
 }
 

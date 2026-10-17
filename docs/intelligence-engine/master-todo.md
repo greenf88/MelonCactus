@@ -49,7 +49,7 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 - [~] Implement a server-only Postgres adapter only if online or multi-user operation becomes necessary.
 - [x] Build local operator screens for dossier registration, scope approval, job status, source/evidence entry, findings, red-team review and report review.
 - [x] Make the UI read-only by default and require an explicit external private-storage confirmation plus session-local edit mode for writes.
-- [ ] Add optimistic-concurrency or version checks to prevent analysts overwriting each other.
+- [x] Add audit-revision concurrency checks that atomically reject stale local forms before they can overwrite newer dossier work.
 - [x] Add a visible, collapsed audit timeline containing metadata only.
 - [x] Add export to a restricted working file; no email or client-delivery buttons exist in Phase 1.
 - [ ] Verify browser → authenticated server → database → rendered response end to end on protected staging.

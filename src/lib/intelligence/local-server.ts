@@ -1,7 +1,11 @@
 import { randomBytes, timingSafeEqual } from "node:crypto";
 import http, { type IncomingMessage, type ServerResponse } from "node:http";
 
-import type { LocalDossier, LocalIntelligenceStore } from "./local-store";
+import {
+  DossierRevisionConflictError,
+  type LocalDossier,
+  type LocalIntelligenceStore,
+} from "./local-store";
 import { renderLocalControlRoomPage } from "./local-web-ui";
 
 const MAX_BODY_BYTES = 64 * 1024;
@@ -37,10 +41,16 @@ export async function startLocalControlRoomServer(
         response.destroy();
         return;
       }
-      const message = error instanceof UserInputError ? error.message : "Onverwachte lokale serverfout.";
+      const conflict = error instanceof DossierRevisionConflictError;
+      const message =
+        error instanceof UserInputError
+          ? error.message
+          : conflict
+            ? "Dit dossier is intussen gewijzigd. De bewerking is niet opgeslagen; controleer de nieuwste versie en probeer opnieuw."
+            : "Onverwachte lokale serverfout.";
       sendHtml(
         response,
-        error instanceof UserInputError ? error.status : 500,
+        error instanceof UserInputError ? error.status : conflict ? 409 : 500,
         renderLocalControlRoomPage(store, {
           csrfToken,
           editMode,
@@ -174,130 +184,133 @@ export async function startLocalControlRoomServer(
     if (!route) throw new UserInputError("Onbekende lokale formulieractie.", 404);
     const dossier = store.getDossier(route.dossierId);
     if (!dossier) throw new UserInputError("Dossier niet gevonden.", 404);
+    const expectedRevision = integerField(fields, "_revision");
 
-    if (route.action === "scope-approve") {
-      store.approveScope({
-        dossierId: dossier.id,
-        decidedBy: field(fields, "decidedBy", 200),
-        rationale: field(fields, "rationale", 1_000),
-      });
-      notice = `Scope van ${dossier.dossierNumber} is expliciet goedgekeurd.`;
-    } else if (route.action === "complete-job") {
-      const actorRef = "local-human-operator";
-      store.updateResearchJobStatus({
-        dossierId: dossier.id,
-        jobKey: route.jobKey!,
-        status: "completed",
-        actor: { type: "human", ref: actorRef },
-      });
-      advanceDossierForJob(store, dossier, route.jobKey!, actorRef);
-      notice = `Onderzoeksstap ${route.jobKey} is voltooid.`;
-    } else if (route.action === "sources") {
-      const sha256 = optionalField(fields, "sha256", 64);
-      if (sha256 && !/^[a-f0-9]{64}$/i.test(sha256)) {
-        throw new UserInputError("SHA-256 moet exact 64 hexadecimale tekens bevatten.");
-      }
-      store.addSource(
-        dossier.id,
-        {
-          code: field(fields, "code", 60),
-          title: field(fields, "title", 500),
-          canonicalUrl: optionalHttpUrl(fields, "canonicalUrl"),
-          publisher: optionalField(fields, "publisher", 300),
-          sourceType: field(fields, "sourceType", 100),
-          publishedAt: dateTimeField(fields, "publishedAt", false),
-          retrievedAt: dateTimeField(fields, "retrievedAt", true)!,
-          sha256: sha256?.toLowerCase(),
-        },
-        { type: "human", ref: "local-source-operator" },
-      );
-      notice = `Bron is aan ${dossier.dossierNumber} toegevoegd.`;
-    } else if (route.action === "evidence") {
-      store.addEvidence(
-        dossier.id,
-        {
-          sourceId: field(fields, "sourceId", 100),
-          code: field(fields, "code", 60),
-          observation: field(fields, "observation", 8_000),
-          locator: optionalField(fields, "locator", 1_000),
-          observedAt: dateTimeField(fields, "observedAt", false),
-        },
-        { type: "human", ref: "local-evidence-operator" },
-      );
-      notice = `Bewijsstuk is aan ${dossier.dossierNumber} toegevoegd.`;
-    } else if (route.action === "findings") {
-      const createdBy = field(fields, "createdBy", 200);
-      store.addFinding(
-        dossier.id,
-        {
-          code: field(fields, "code", 60),
-          statement: field(fields, "statement", 8_000),
-          type: oneOf(fields, "type", ["observation", "assessment", "inference", "unknown"]),
-          confidence: oneOf(fields, "confidence", ["high", "moderate", "low", "unknown"]),
-          rationale: field(fields, "rationale", 12_000),
-          material: oneOf(fields, "material", ["yes", "no"]) === "yes",
+    store.withExpectedDossierRevision(dossier.id, expectedRevision, () => {
+      if (route.action === "scope-approve") {
+        store.approveScope({
+          dossierId: dossier.id,
+          decidedBy: field(fields, "decidedBy", 200),
+          rationale: field(fields, "rationale", 1_000),
+        });
+        notice = `Scope van ${dossier.dossierNumber} is expliciet goedgekeurd.`;
+      } else if (route.action === "complete-job") {
+        const actorRef = "local-human-operator";
+        store.updateResearchJobStatus({
+          dossierId: dossier.id,
+          jobKey: route.jobKey!,
+          status: "completed",
+          actor: { type: "human", ref: actorRef },
+        });
+        advanceDossierForJob(store, dossier, route.jobKey!, actorRef);
+        notice = `Onderzoeksstap ${route.jobKey} is voltooid.`;
+      } else if (route.action === "sources") {
+        const sha256 = optionalField(fields, "sha256", 64);
+        if (sha256 && !/^[a-f0-9]{64}$/i.test(sha256)) {
+          throw new UserInputError("SHA-256 moet exact 64 hexadecimale tekens bevatten.");
+        }
+        store.addSource(
+          dossier.id,
+          {
+            code: field(fields, "code", 60),
+            title: field(fields, "title", 500),
+            canonicalUrl: optionalHttpUrl(fields, "canonicalUrl"),
+            publisher: optionalField(fields, "publisher", 300),
+            sourceType: field(fields, "sourceType", 100),
+            publishedAt: dateTimeField(fields, "publishedAt", false),
+            retrievedAt: dateTimeField(fields, "retrievedAt", true)!,
+            sha256: sha256?.toLowerCase(),
+          },
+          { type: "human", ref: "local-source-operator" },
+        );
+        notice = `Bron is aan ${dossier.dossierNumber} toegevoegd.`;
+      } else if (route.action === "evidence") {
+        store.addEvidence(
+          dossier.id,
+          {
+            sourceId: field(fields, "sourceId", 100),
+            code: field(fields, "code", 60),
+            observation: field(fields, "observation", 8_000),
+            locator: optionalField(fields, "locator", 1_000),
+            observedAt: dateTimeField(fields, "observedAt", false),
+          },
+          { type: "human", ref: "local-evidence-operator" },
+        );
+        notice = `Bewijsstuk is aan ${dossier.dossierNumber} toegevoegd.`;
+      } else if (route.action === "findings") {
+        const createdBy = field(fields, "createdBy", 200);
+        store.addFinding(
+          dossier.id,
+          {
+            code: field(fields, "code", 60),
+            statement: field(fields, "statement", 8_000),
+            type: oneOf(fields, "type", ["observation", "assessment", "inference", "unknown"]),
+            confidence: oneOf(fields, "confidence", ["high", "moderate", "low", "unknown"]),
+            rationale: field(fields, "rationale", 12_000),
+            material: oneOf(fields, "material", ["yes", "no"]) === "yes",
+            createdBy,
+            status: oneOf(fields, "status", [
+              "proposed",
+              "evidence_linked",
+              "red_teamed",
+              "verified",
+              "rejected",
+            ]),
+            contradictionResolution: optionalField(fields, "contradictionResolution", 8_000),
+            informationGaps: lines(fields, "informationGaps", 100, 8_000),
+          },
+          { type: "human", ref: createdBy },
+        );
+        notice = `Bevinding is aan ${dossier.dossierNumber} toegevoegd.`;
+      } else if (route.action === "links") {
+        store.linkEvidence(
+          dossier.id,
+          field(fields, "findingId", 100),
+          field(fields, "evidenceId", 100),
+          oneOf(fields, "direction", ["supports", "contradicts", "context"]),
+          { type: "human", ref: "local-evidence-operator" },
+        );
+        notice = `Bewijskoppeling is in ${dossier.dossierNumber} opgeslagen.`;
+      } else if (route.action === "reviews") {
+        const reviewerRef = field(fields, "reviewerRef", 200);
+        store.addVerificationReview(
+          dossier.id,
+          {
+            findingId: field(fields, "findingId", 100),
+            reviewType: oneOf(fields, "reviewType", ["source_verification", "red_team", "qa"]),
+            reviewerKind: "human",
+            reviewerRef,
+            verdict: oneOf(fields, "verdict", ["pass", "qualified", "inconclusive", "reject"]),
+            confidenceBefore: oneOf(fields, "confidenceBefore", ["high", "moderate", "low", "unknown"]),
+            confidenceAfter: oneOf(fields, "confidenceAfter", ["high", "moderate", "low", "unknown"]),
+            alternativeExplanations: lines(fields, "alternatives", 100, 8_000),
+            unresolvedGaps: lines(fields, "unresolvedGaps", 100, 8_000),
+            notes: optionalField(fields, "notes", 12_000),
+            completedAt: new Date().toISOString(),
+          },
+          { type: "human", ref: reviewerRef },
+        );
+        notice = `Onafhankelijke review is in ${dossier.dossierNumber} opgeslagen.`;
+      } else if (route.action === "drafts") {
+        const createdBy = field(fields, "createdBy", 200);
+        const draft = store.createDraft({
+          dossierId: dossier.id,
+          title: field(fields, "title", 300),
           createdBy,
-          status: oneOf(fields, "status", [
-            "proposed",
-            "evidence_linked",
-            "red_teamed",
-            "verified",
-            "rejected",
-          ]),
-          contradictionResolution: optionalField(fields, "contradictionResolution", 8_000),
-          informationGaps: lines(fields, "informationGaps", 100, 8_000),
-        },
-        { type: "human", ref: createdBy },
-      );
-      notice = `Bevinding is aan ${dossier.dossierNumber} toegevoegd.`;
-    } else if (route.action === "links") {
-      store.linkEvidence(
-        dossier.id,
-        field(fields, "findingId", 100),
-        field(fields, "evidenceId", 100),
-        oneOf(fields, "direction", ["supports", "contradicts", "context"]),
-        { type: "human", ref: "local-evidence-operator" },
-      );
-      notice = `Bewijskoppeling is in ${dossier.dossierNumber} opgeslagen.`;
-    } else if (route.action === "reviews") {
-      const reviewerRef = field(fields, "reviewerRef", 200);
-      store.addVerificationReview(
-        dossier.id,
-        {
-          findingId: field(fields, "findingId", 100),
-          reviewType: oneOf(fields, "reviewType", ["source_verification", "red_team", "qa"]),
-          reviewerKind: "human",
-          reviewerRef,
-          verdict: oneOf(fields, "verdict", ["pass", "qualified", "inconclusive", "reject"]),
-          confidenceBefore: oneOf(fields, "confidenceBefore", ["high", "moderate", "low", "unknown"]),
-          confidenceAfter: oneOf(fields, "confidenceAfter", ["high", "moderate", "low", "unknown"]),
-          alternativeExplanations: lines(fields, "alternatives", 100, 8_000),
-          unresolvedGaps: lines(fields, "unresolvedGaps", 100, 8_000),
-          notes: optionalField(fields, "notes", 12_000),
-          completedAt: new Date().toISOString(),
-        },
-        { type: "human", ref: reviewerRef },
-      );
-      notice = `Onafhankelijke review is in ${dossier.dossierNumber} opgeslagen.`;
-    } else if (route.action === "drafts") {
-      const createdBy = field(fields, "createdBy", 200);
-      const draft = store.createDraft({
-        dossierId: dossier.id,
-        title: field(fields, "title", 300),
-        createdBy,
-        actor: { type: "human", ref: createdBy },
-      });
-      store.exportLatestDraft(dossier.id);
-      notice = `Conceptversie ${draft.version} is lokaal aangemaakt (${draft.status}).`;
-    } else if (route.action === "report-approve") {
-      store.approveDraft({
-        dossierId: dossier.id,
-        draftId: field(fields, "draftId", 100),
-        decidedBy: field(fields, "decidedBy", 200),
-        rationale: field(fields, "rationale", 1_000),
-      });
-      notice = `Rapport van ${dossier.dossierNumber} is lokaal goedgekeurd; niets is verzonden.`;
-    }
+          actor: { type: "human", ref: createdBy },
+        });
+        store.exportLatestDraft(dossier.id);
+        notice = `Conceptversie ${draft.version} is lokaal aangemaakt (${draft.status}).`;
+      } else if (route.action === "report-approve") {
+        store.approveDraft({
+          dossierId: dossier.id,
+          draftId: field(fields, "draftId", 100),
+          decidedBy: field(fields, "decidedBy", 200),
+          rationale: field(fields, "rationale", 1_000),
+        });
+        notice = `Rapport van ${dossier.dossierNumber} is lokaal goedgekeurd; niets is verzonden.`;
+      }
+    });
     redirectHome(response);
   }
 
@@ -365,6 +378,14 @@ function field(fields: URLSearchParams, name: string, maxLength: number): string
   if (!value) throw new UserInputError(`${name} is verplicht.`);
   if (value.length > maxLength) throw new UserInputError(`${name} is te lang.`);
   return value;
+}
+
+function integerField(fields: URLSearchParams, name: string): number {
+  const value = field(fields, name, 20);
+  if (!/^[1-9]\d*$/.test(value)) throw new UserInputError(`${name} is geen geldige versie.`);
+  const result = Number(value);
+  if (!Number.isSafeInteger(result)) throw new UserInputError(`${name} is geen geldige versie.`);
+  return result;
 }
 
 function optionalField(fields: URLSearchParams, name: string, maxLength: number): string | undefined {

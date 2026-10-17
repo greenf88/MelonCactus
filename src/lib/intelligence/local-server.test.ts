@@ -96,7 +96,52 @@ describe("local Control Room server", () => {
     });
     expect(createDossier.status).toBe(303);
     expect(store.getStatus().dossiers).toBe(1);
-    expect(store.listResearchJobs(store.listDossiers()[0].id)).toHaveLength(10);
+    const dossier = store.listDossiers()[0];
+    expect(store.listResearchJobs(dossier.id)).toHaveLength(10);
+
+    const currentPage = await fetch(server.url, { headers: { cookie } });
+    const currentHtml = await currentPage.text();
+    const revision = currentHtml.match(/name="_revision" value="(\d+)"/)?.[1];
+    expect(revision).toBe(String(store.getDossierRevision(dossier.id)));
+    expect(currentHtml).toContain("Dossierrevisie");
+    const dossierForms = currentHtml.match(
+      /<form[^>]+action="\/dossiers\/[^/\"]+\/[^\"]+"[\s\S]*?<\/form>/g,
+    );
+    expect(dossierForms?.length).toBeGreaterThan(0);
+    expect(dossierForms?.every((form) => form.includes('name="_revision"'))).toBe(true);
+
+    const firstSource = await fetch(`${server.url}/dossiers/${dossier.id}/sources`, {
+      method: "POST",
+      headers: formHeaders,
+      body: new URLSearchParams({
+        _csrf: csrf!,
+        _revision: revision!,
+        code: "SRC-HTTP-1",
+        title: "Eerste synthetische bron",
+        sourceType: "public_web",
+        retrievedAt: "2026-10-17T12:30",
+      }),
+      redirect: "manual",
+    });
+    expect(firstSource.status).toBe(303);
+    expect(store.getBundle(dossier.id).sources).toHaveLength(1);
+
+    const staleSource = await fetch(`${server.url}/dossiers/${dossier.id}/sources`, {
+      method: "POST",
+      headers: formHeaders,
+      body: new URLSearchParams({
+        _csrf: csrf!,
+        _revision: revision!,
+        code: "SRC-HTTP-STALE",
+        title: "Deze verouderde wijziging moet worden geweigerd",
+        sourceType: "public_web",
+        retrievedAt: "2026-10-17T12:31",
+      }),
+      redirect: "manual",
+    });
+    expect(staleSource.status).toBe(409);
+    expect(await staleSource.text()).toContain("Dit dossier is intussen gewijzigd");
+    expect(store.getBundle(dossier.id).sources).toHaveLength(1);
 
     const noCsrf = await fetch(`${server.url}/dossiers/new`, {
       method: "POST",

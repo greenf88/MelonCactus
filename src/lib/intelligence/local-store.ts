@@ -102,11 +102,24 @@ export interface IsolatedRestoreResult {
   auditEvents: number;
 }
 
+export class DossierRevisionConflictError extends Error {
+  constructor(
+    readonly expectedRevision: number,
+    readonly currentRevision: number,
+  ) {
+    super(
+      `Dossier revision conflict: expected ${expectedRevision}, current ${currentRevision}.`,
+    );
+    this.name = "DossierRevisionConflictError";
+  }
+}
+
 export class LocalIntelligenceStore {
   readonly homePath: string;
   readonly databasePath: string;
   private readonly database: DatabaseSync;
   private closed = false;
+  private transactionDepth = 0;
 
   constructor(homePath = path.resolve(DEFAULT_LOCAL_HOME)) {
     this.homePath = path.resolve(homePath);
@@ -216,6 +229,33 @@ export class LocalIntelligenceStore {
       decisionQuestion,
     );
     return row ? mapDossier(row) : undefined;
+  }
+
+  getDossierRevision(dossierId: string): number {
+    this.requireDossier(dossierId);
+    const row = this.get<{ revision: number }>(
+      `select coalesce(max(sequence), 0) as revision
+       from audit_events where dossier_id = ?`,
+      dossierId,
+    );
+    return row?.revision ?? 0;
+  }
+
+  withExpectedDossierRevision<T>(
+    dossierId: string,
+    expectedRevision: number,
+    work: () => T,
+  ): T {
+    if (!Number.isSafeInteger(expectedRevision) || expectedRevision < 1) {
+      throw new TypeError("A positive dossier revision is required.");
+    }
+    return this.transaction(() => {
+      const currentRevision = this.getDossierRevision(dossierId);
+      if (currentRevision !== expectedRevision) {
+        throw new DossierRevisionConflictError(expectedRevision, currentRevision);
+      }
+      return work();
+    });
   }
 
   updateDossierStatus(
@@ -971,7 +1011,9 @@ export class LocalIntelligenceStore {
   }
 
   private transaction<T>(work: () => T): T {
+    if (this.transactionDepth > 0) return work();
     this.database.exec("begin immediate");
+    this.transactionDepth = 1;
     try {
       const result = work();
       this.database.exec("commit");
@@ -979,6 +1021,8 @@ export class LocalIntelligenceStore {
     } catch (error) {
       this.database.exec("rollback");
       throw error;
+    } finally {
+      this.transactionDepth = 0;
     }
   }
 

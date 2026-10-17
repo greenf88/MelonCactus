@@ -60,6 +60,8 @@ Replace the example path with the verified, access-controlled location. Do not u
 
 Every mutation is a local form post protected by the session cookie, an origin check and a per-process CSRF token. The input screen covers dossier registration, scope approval, workflow status, source and evidence registration, findings, evidence links, independent review, internal draft creation and final human report approval. Workflow prerequisites remain enforced in the store; the screen cannot mark evidence, analysis, red-team or report jobs complete without the required records. Approval never sends or publishes anything.
 
+Every dossier form also carries the latest audit-event sequence as its dossier revision. The server acquires a SQLite write transaction and compares that revision before making any change. If another browser tab or operator session changed the dossier first, the complete stale operation is rolled back and the screen returns a conflict message. Review the newly rendered dossier and submit again; do not bypass the conflict by editing the hidden revision field.
+
 ## Regular checks
 
 ```powershell
