@@ -22,13 +22,15 @@ describe("decision-led assessment and delivery choices", () => {
   it("renders the decision-led form, Standard default and an optional NDA request in both languages", () => {
     const en = renderToStaticMarkup(createElement(ContactForm));
     const nl = renderToStaticMarkup(createElement(ContactForm, { locale: "nl" }));
-    expect(en).toContain("What decision are you trying to make?");
-    expect(en).toContain("Company, market or technology to examine");
+    expect(en).toContain("What would you like to decide or improve?");
+    expect(en).toContain("Task, process, company, market or technology");
+    expect(en).toContain("What is your enquiry about?");
     expect(en).toMatch(/<option value="standard" selected="">Standard/);
     expect(en).toContain("not automatic acceptance");
     expect(en).toContain('name="ndaRequest"');
     expect(en).toContain("does not create an agreement");
     expect(nl).toMatch(/<option value="standard" selected="">Standaard/);
+    expect(nl).toContain("Waar gaat uw vraag over?");
     expect(nl).toContain("geen automatische aanvaarding");
     expect(nl).toContain("geen overeenkomst tot stand");
   });

@@ -18,6 +18,7 @@ describe("enquiry validation", () => {
     expect(validateEnquiry({ ...validPayload, name: "" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, email: "invalid" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, role: "" }).ok).toBe(false);
+    expect(validateEnquiry({ ...validPayload, topic: "" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, decision: "" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, target: "" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, deliveryPriority: "" }).ok).toBe(false);
@@ -49,6 +50,15 @@ describe("enquiry validation", () => {
     expect(validateEnquiry({ ...validPayload, multiplier: 1 }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, price: "€995" }).ok).toBe(false);
   });
+  it("allows only the five explicit enquiry topics", () => {
+    for (const topic of ["research", "ai-guidance", "ai-workday", "automation", "vacancy-tasks"]) {
+      expect(validateEnquiry({ ...validPayload, topic, report: topic === "research" ? validPayload.report : "" }).ok).toBe(true);
+    }
+    expect(validateEnquiry({ ...validPayload, topic: "other" }).ok).toBe(false);
+    expect(validateEnquiry({ ...validPayload, topic: "automation\r\nBcc: outsider@example.test" }).ok).toBe(false);
+    expect(validateEnquiry({ ...validPayload, topic: "automation", deliveryPriority: "critical", report: "" }).ok).toBe(false);
+    expect(validateEnquiry({ ...validPayload, topic: "automation", report: publicProfileScan.name }).ok).toBe(false);
+  });
   it("includes the decision, optional details, requested timing and NDA preference in both email versions", () => {
     const result = validateEnquiry({ ...validPayload, deliveryPriority: "critical" });
     expect(result.ok).toBe(true);
@@ -56,12 +66,21 @@ describe("enquiry validation", () => {
     const email = composeEnquiry(result.enquiry, new Date("2026-09-23T12:00:00Z"));
     expect(email.text).toContain(validPayload.decision);
     expect(email.text).toContain(validPayload.target);
+    expect(email.text).toContain("Enquiry topic:\nMarket and competitor research");
     expect(email.text).toContain(validPayload.geography);
     expect(email.text).toContain(validPayload.budget);
     expect(email.text).toContain("Critical / 24–48 hours — selected assignments only");
     expect(email.html).toContain("Critical / 24–48 hours — selected assignments only");
     expect(email.text).toContain("Yes — request only, no NDA concluded");
     expect(email.text).toContain("subject to written acceptance");
+  });
+  it("includes the selected practical-AI topic in the internal enquiry email", () => {
+    const result = validateEnquiry({ ...validPayload, topic: "automation", deliveryPriority: "standard", report: "" });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const email = composeEnquiry(result.enquiry, new Date("2026-10-17T12:00:00Z"));
+    expect(email.text).toContain("Enquiry topic:\nAutomate a task");
+    expect(email.html).toContain("Automate a task");
   });
   it("escapes visitor HTML while preserving plain text", () => {
     const result = validateEnquiry({ ...validPayload, company: "<Acme>", decision: "Decide what <script>alert(1)</script> evidence means for procurement." });

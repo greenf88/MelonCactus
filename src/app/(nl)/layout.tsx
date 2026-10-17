@@ -13,12 +13,12 @@ import { sourceSans, sourceSerif } from "../fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: { default: "MelonCactus | Industrieel onderzoek", template: "%s | MelonCactus" },
+  title: { default: "MelonCactus | Onderzoek & praktische AI", template: "%s | MelonCactus" },
   description: siteNl.description,
   referrer: "origin",
   alternates: languageAlternates("/", "nl"),
-  openGraph: { type: "website", siteName: siteConfig.name, title: "MelonCactus | Industrieel onderzoek", description: siteNl.description, url: "/nl", locale: "nl_NL", images: [{ url: socialImageUrl("nl", "default"), width: 1200, height: 630, alt: "MelonCactus: openbaar bewijs voor industriële beslissingen" }] },
-  twitter: { card: "summary_large_image", title: "MelonCactus | Industrieel onderzoek", description: siteNl.description, images: [socialImageUrl("nl", "default")] },
+  openGraph: { type: "website", siteName: siteConfig.name, title: "MelonCactus | Onderzoek & praktische AI", description: siteNl.description, url: "/nl", locale: "nl_NL", images: [{ url: socialImageUrl("nl", "default"), width: 1200, height: 630, alt: "MelonCactus: industrieel onderzoek en praktische AI" }] },
+  twitter: { card: "summary_large_image", title: "MelonCactus | Onderzoek & praktische AI", description: siteNl.description, images: [socialImageUrl("nl", "default")] },
   robots: process.env.VERCEL_ENV === "preview" ? { index: false, follow: false } : { index: true, follow: true },
 };
 

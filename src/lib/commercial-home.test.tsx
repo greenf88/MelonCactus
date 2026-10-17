@@ -84,13 +84,15 @@ describe("commercial homepage", () => {
     const nl = `${siteConfig.siteUrl}/nl`;
     expect(englishMetadata.alternates).toEqual({ canonical: en, languages: { en, "nl-NL": nl, "x-default": en } });
     expect(dutchMetadata.alternates).toEqual({ canonical: nl, languages: { en, "nl-NL": nl, "x-default": en } });
-    expect(siteConfig.nav.map((item) => item.label)).toEqual(["Services", "Examples", "Methodology", "Pricing", "Insights", "About"]);
-    expect(siteNl.nav.map((item) => item.label)).toEqual(["Diensten", "Voorbeelden", "Werkwijze", "Prijzen", "Artikelen", "Over ons"]);
+    expect(siteConfig.nav.map((item) => item.label)).toEqual(["Services", "AI & automation", "Methodology", "Pricing", "Insights", "About"]);
+    expect(siteNl.nav.map((item) => item.label)).toEqual(["Diensten", "AI & automatisering", "Werkwijze", "Prijzen", "Artikelen", "Over ons"]);
     expect(routePairs).toContainEqual(["/", "/nl"]);
     expect(homes[0].html).toContain('href="/contact"');
     expect(homes[1].html).toContain('href="/nl/contact"');
     expect(homes[0].html).toContain('href="/services/public-profile-exposure-scan"');
     expect(homes[1].html).toContain('href="/nl/diensten/openbare-informatiescan"');
+    expect(homes[0].html).toContain('href="/ai-help-twente"');
+    expect(homes[1].html).toContain('href="/nl/ai-hulp-twente"');
     expect(homes[0].html).toContain(siteConfig.businessEmail);
     expect(homes[1].html).toContain(siteConfig.businessEmail);
   });

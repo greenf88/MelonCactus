@@ -4,14 +4,15 @@ import { ButtonLink } from "@/components/buttons";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
+import { ServiceEntrances } from "@/components/service-entrances";
 import { publicProfileScanNl, reportOptionsNl } from "@/config/site-nl";
 import { deliveryOptions } from "@/config/delivery";
 import { seoTopics } from "@/data/seo-topics";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Diensten voor industriële intelligence",
-  description: "Onderzoek voor industriële beslissingen, met indicatieve opdrachtniveaus en prijzen. Elke opdracht wordt vooraf afgebakend.",
+  title: "Onderzoek & praktische AI-diensten",
+  description: "Markt- en concurrentieonderzoek plus praktische AI- en automatiseringshulp. Elke opdracht krijgt een duidelijke scope, vaste prijs en planning.",
   alternates: languageAlternates("/services", "nl"),
 };
 
@@ -35,8 +36,12 @@ const deliveryCopy: Record<(typeof deliveryOptions)[number]["value"], { title: s
 export default function DutchServicesPage() {
   return (
     <>
-      <PageHeader locale="nl" eyebrow="Diensten" title="Onderzoek rond uw beslissing, geen verzameling losse gegevens." intro="MelonCactus onderzoekt afgebakende commerciële en technische vragen met rechtmatig toegankelijke openbare bronnen, transparante bewijsnormen en afgewogen conclusies." breadcrumbs={[{ label: "Diensten" }]} />
-      <section className="section"><Container>
+      <PageHeader locale="nl" eyebrow="Diensten" title="Twee heldere diensten voor betere beslissingen en slimmer werk." intro="Kies onderbouwd markt- en concurrentieonderzoek voor een externe vraag, of praktische AI-hulp voor een terugkerende taak in uw bedrijf." breadcrumbs={[{ label: "Diensten" }]} />
+      <section className="section service-entrances-section"><Container>
+        <div className="content-heading"><p className="eyebrow">Kies uw vertrekpunt</p><h2>Met één afgebakende vraag kunt u beginnen.</h2><p>Beide diensten beginnen met een heldere uitkomst, passende controles en schriftelijke afspraken over opdracht, prijs en planning.</p></div>
+        <ServiceEntrances locale="nl" researchHref="#onderzoek" />
+      </Container></section>
+      <section className="section" id="onderzoek"><Container>
         <div className="content-heading"><p className="eyebrow">Onderzoeksterreinen</p><h2>Waar gericht bewijs het beeld kan veranderen.</h2></div>
         <div className="capability-list">{capabilities.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div>
       </Container></section>

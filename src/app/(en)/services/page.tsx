@@ -4,14 +4,15 @@ import { ButtonLink } from "@/components/buttons";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
 import { ServiceCard } from "@/components/service-card";
+import { ServiceEntrances } from "@/components/service-entrances";
 import { publicProfileScan, reportOptions } from "@/config/site";
 import { deliveryOptions } from "@/config/delivery";
 import { seoTopics } from "@/data/seo-topics";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Industrial Intelligence Services",
-  description: "Decision-led industrial intelligence assessments with indicative scope and fees. Each assignment is agreed before research begins.",
+  title: "Research & Practical AI Services",
+  description: "Market and competitor research plus practical AI and automation help. Each assignment has a defined scope, fixed fee and agreed schedule.",
   alternates: languageAlternates("/services", "en"),
 };
 
@@ -31,11 +32,17 @@ export default function ServicesPage() {
     <>
       <PageHeader
         eyebrow="Services"
-        title="Research shaped around a decision—not a data dump."
-        intro="MelonCactus investigates defined commercial and technical questions using lawful public sources, transparent evidence standards and proportionate conclusions."
+        title="Two clear services for better decisions and smarter work."
+        intro="Choose evidence-led market and competitor research for an external question, or practical AI help for a recurring task in your business."
         breadcrumbs={[{ label: "Services" }]}
       />
-      <section className="section">
+      <section className="section service-entrances-section">
+        <Container>
+          <div className="content-heading"><p className="eyebrow">Choose your starting point</p><h2>One defined question is enough to begin.</h2><p>Both services start with a clear outcome, proportionate checks and written agreement on scope, fee and timing.</p></div>
+          <ServiceEntrances locale="en" researchHref="#research" />
+        </Container>
+      </section>
+      <section className="section" id="research">
         <Container>
           <div className="content-heading"><p className="eyebrow">Capabilities</p><h2>Where focused evidence can change the picture.</h2></div>
           <div className="capability-list">

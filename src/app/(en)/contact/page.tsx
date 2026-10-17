@@ -6,12 +6,12 @@ import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Request an Intelligence Assessment",
-  description: "Discuss an industrial research question. MelonCactus reviews lawful sources and agrees the scope, fixed fee and delivery date in writing before work begins.",
+  title: "Discuss Your Business Question",
+  description: "Discuss market and competitor research, practical AI guidance or a task you want to automate. Scope, fixed fee and timing are agreed in writing first.",
   alternates: languageAlternates("/contact", "en"),
 };
 
-export default async function ContactPage({ searchParams }: { searchParams: Promise<{ report?: string; call?: string }> }) {
+export default async function ContactPage({ searchParams }: { searchParams: Promise<{ topic?: string; report?: string; call?: string }> }) {
   const query = await searchParams;
 
   return (
@@ -19,24 +19,24 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <Container className="contact-layout">
         <header className="contact-intro">
           <Breadcrumbs items={[{ label: "Contact" }]} />
-          <p className="eyebrow">Intelligence assessment</p>
-          <h1>Start with the decision.</h1>
-          <p className="page-intro">What decision are you trying to make, and which company, market or technology should be examined?</p>
-          <p>We first assess the question, the availability of lawful public sources and the evidence needed. Before work begins, you receive a defined scope, deliverables, fixed fee and agreed delivery date.</p>
+          <p className="eyebrow">Research · Practical AI</p>
+          <h1>Start with your question.</h1>
+          <p className="page-intro">Tell us what you want to understand, decide or improve. A concise description is enough for an initial review.</p>
+          <p>For research, we assess the question and available lawful sources. For practical AI, we first define the task, information, tools and human checks. Before work begins, you receive a defined scope, deliverables, fixed fee and agreed schedule.</p>
           <p>Prefer to contact us directly? Email <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a> or call <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>. MelonCactus is operated by GFNI in Enschede, Netherlands.</p>
         </header>
 
         <div className="contact-form-area">
-          <ContactForm initialReport={query.report ?? ""} callRequested={query.call === "true"} />
+          <ContactForm initialTopic={query.topic} initialReport={query.report ?? ""} callRequested={query.call === "true"} />
           <aside className="contact-guidance">
             <h2>From question to assignment</h2>
             <ol className="contact-steps">
-              <li><span>01</span><p>Initial review of your decision, question and lawful public sources.</p></li>
-              <li><span>02</span><p>Definition of the scope and what the evidence can and cannot establish.</p></li>
+              <li><span>01</span><p>Initial review of your question, desired outcome and relevant information.</p></li>
+              <li><span>02</span><p>Definition of the scope, boundaries and the checks needed.</p></li>
               <li><span>03</span><p>A proposal with deliverables, a fixed fee and delivery date.</p></li>
-              <li><span>04</span><p>Research after written agreement, followed by the report and, for larger assignments, a discussion of the conclusions.</p></li>
+              <li><span>04</span><p>Work starts after written agreement, followed by the agreed report, guidance or tested deliverable.</p></li>
             </ol>
-            <p>We may decline a question that cannot be answered responsibly using lawful sources.</p>
+            <p>We may decline work that cannot be performed responsibly within the requested scope, available evidence or selected tools.</p>
           </aside>
         </div>
       </Container>

@@ -3,6 +3,7 @@ export const validPayload = {
   email: "alex@business.test",
   company: "Acme Industries",
   role: "Director",
+  topic: "research",
   decision: "Decide whether a supplier is suitable for a long-term programme.",
   target: "An industrial supplier and its production technology",
   report: "Focused Intelligence Assessment",
