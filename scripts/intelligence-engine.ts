@@ -3,6 +3,7 @@ import path from "node:path";
 import { writeLocalDashboard } from "../src/lib/intelligence/local-dashboard";
 import { ensureFictionalDemo } from "../src/lib/intelligence/local-demo";
 import { ensureFictionalDiscoveryDemo } from "../src/lib/intelligence/local-discovery-demo";
+import { ensureFictionalSalesEngineerDemo } from "../src/lib/intelligence/local-sales-engineer-demo";
 import { startLocalControlRoomServer } from "../src/lib/intelligence/local-server";
 import {
   DEFAULT_LOCAL_HOME,
@@ -64,6 +65,22 @@ async function main(): Promise<void> {
       console.log("Model use: none | Estimated model cost: EUR 0.000000");
       console.log("Discovery, normalisation, finding proposal and red team used offline fixtures in separated contexts.");
       console.log("No network, message or publication action occurred.");
+      return;
+    }
+
+    if (command === "sales-engineer-demo") {
+      const dossierNumber = args[1];
+      if (!dossierNumber) throw new Error("Usage: sales-engineer-demo <dossier-number>");
+      const result = await ensureFictionalSalesEngineerDemo(store, dossierNumber);
+      console.log(result.reused ? "Fictional sales-engineer dry-run reused." : "Fictional sales-engineer dry-run completed.");
+      console.log(`Dossier: ${result.dossier.dossierNumber}`);
+      console.log(`Sources ${result.acceptedSources} | evidence ${result.normalisedEvidence} | findings ${result.proposedFindings}`);
+      console.log(`Human-approved findings ${result.humanApprovedFindings} | red-team reviews ${result.redTeamReviews}`);
+      console.log(`Agent runs ${result.agentRuns} | Estimated model cost: EUR ${(result.estimatedCostMicros / 1_000_000).toFixed(6)}`);
+      console.log(`Draft status: ${result.draftStatus}`);
+      console.log(`Draft: ${result.draftPath}`);
+      console.log(`Audit chain: ${result.auditValid ? "valid" : "invalid"} (${result.auditEvents} events)`);
+      console.log("Final report approval remains pending; nothing was sent, published or researched online.");
       return;
     }
 
@@ -203,6 +220,8 @@ Commands:
   init                  Create the private local database
   demo                  Create/reuse one entirely fictional dossier and draft
   discovery-demo        Run the bounded source-discovery agent on an offline fictional fixture
+  sales-engineer-demo <dossier-number>
+                        Run the zero-cost fictional sales-engineer decision dry-run
   status                Show local dossiers and workflow state
   serve                 Start the token-protected loopback Control Room
   verify                Verify SQLite integrity and every audit hash chain

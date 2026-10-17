@@ -15,6 +15,7 @@
     "intelligence:init": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js init",
     "intelligence:demo": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js demo",
     "intelligence:discovery-demo": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js discovery-demo",
+    "intelligence:sales-engineer-demo": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js sales-engineer-demo",
     "intelligence:status": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js status",
     "intelligence:serve": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js serve",
     "intelligence:verify": "npm run intelligence:build && node .intelligence-build/scripts/intelligence-engine.js verify",

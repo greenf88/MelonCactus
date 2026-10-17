@@ -31,6 +31,14 @@ The final approval remains open. The demo never sends, publishes, emails, deploy
 
 `intelligence:discovery-demo` creates or resumes a separate fictional dossier and executes the complete bounded agent proof against in-process fixtures. It accepts two `example.invalid` candidates, rejects a lookalike domain, creates two schema-validated and source-bound evidence records, produces one evidence-linked `proposed` finding from an identity-minimised brief, performs one independent red-team review and records a fictional human approval before analysis can complete. All four runs record input/output hashes and zero model tokens/cost. The demonstration performs no DNS lookup, HTTP request, model call or account action.
 
+For the deliberately isolated decision question `Moeten we een sales engineer aannemen?`, an already registered and human-scope-approved test dossier can run a complete reproducible dry-run:
+
+```powershell
+npm run intelligence:sales-engineer-demo -- 9912001 --home E:\MelonCactus-Private
+```
+
+Replace both values with the private test dossier and verified private home. The command refuses any other decision question or non-test classification. It uses three fixed `example.invalid` source candidates, three synthetic evidence records, one proposal-only finding evaluator, a separated red-team evaluator, a fictional human test decision and an internal review-ready draft. It uses no network, model, recruitment, message or publication action; final report approval remains pending.
+
 The proposal evaluator is an injected interface, not a configured live provider. Its response cannot set `verified`, approve itself or request delivery. In the edit-capable Control Room, an operator can record `approved`, `changes_requested` or `rejected`; approval is blocked until evidence and independent red team are present.
 
 Open `.meloncactus-intelligence/control-room.html` locally to inspect the generated overview. Regenerate it after changes with:

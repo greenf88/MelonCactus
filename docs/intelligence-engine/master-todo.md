@@ -43,6 +43,7 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 
 - [x] Implement an offline-first SQLite adapter using the same evidence and approval contracts.
 - [x] Keep all generated databases, exports, dashboards and backups outside Git tracking.
+- [x] Initialise the live local Control Room in an owner-confirmed BitLocker-protected folder outside Git; verify database integrity, backup and isolated restore without recording the private path in the repository.
 - [x] Add a resumable fictional dossier that reaches a review-ready draft without external calls.
 - [x] Add a read-only local HTML overview, Markdown export, integrity verification and consistent backups.
 - [x] Add a token-protected, loopback-only Control Room with CSRF/origin checks and no external assets.
@@ -69,6 +70,7 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 - [x] Enforce human approval methods for approved scope, agent-produced findings and final report status in the local adapter.
 - [x] Keep finding-proposal model context identity-minimised: only evidence/source codes, evidence class, observation and locator are supplied; dossier IDs/numbers, decision question, source titles and URLs are excluded.
 - [x] Fail finding proposals closed on unknown output fields, unknown evidence codes, duplicate links, missing support, timeouts and stale dossier revisions; persist only hashes, accounting metadata and validated records.
+- [x] Complete a decision-specific, zero-cost fictional dry-run in the private Control Room from three synthetic sources through normalised evidence, proposal-only analysis, independent red team, fictional human finding approval and a review-ready internal draft; verify idempotency, audit integrity and isolated restore while final report approval remains pending.
 
 ## P2 — evidence capture and search
 
