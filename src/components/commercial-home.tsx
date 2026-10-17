@@ -15,7 +15,7 @@ export function CommercialHome({ locale }: { locale: HomeLocale }) {
   const sample = isNl ? "/nl/voorbeeldrapport" : "/sample-report";
   const services = isNl ? "/nl/diensten" : "/services";
   const methodology = isNl ? "/nl/werkwijze" : "/methodology";
-  const aiHelp = isNl ? "/nl/ai-hulp-twente" : "/ai-help-twente";
+  const aiHelp = isNl ? "/nl/ai-hulp-nederland" : "/ai-help-netherlands";
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

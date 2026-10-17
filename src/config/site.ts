@@ -29,7 +29,7 @@ export const siteConfig = {
   linkedInCompanyUrl: "https://www.linkedin.com/company/meloncactus/",
   nav: [
     { href: "/services", label: "Services" },
-    { href: "/ai-help-twente", label: "AI & automation" },
+    { href: "/ai-help-netherlands", label: "AI & automation" },
     { href: "/methodology", label: "Methodology" },
     { href: "/#pricing", label: "Pricing" },
     { href: "/insights", label: "Insights" },

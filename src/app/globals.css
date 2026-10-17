@@ -498,8 +498,9 @@ main [id] { scroll-margin-top: 7rem; }
 .vacancy-panel > p:not(.eyebrow), .vacancy-panel > .button { grid-column: 2; }
 .vacancy-panel > p:not(.eyebrow) { grid-row: 1 / span 2; margin: 0; }
 .vacancy-panel > .button { align-self: end; justify-self: start; }
-.ai-research-link { margin: 1.5rem auto; text-align: center; }
-.ai-research-link a { color: var(--green-dark); font-weight: 700; text-decoration: underline; text-underline-offset: .22em; }
+.ai-related-links { margin-block: 1.5rem; text-align: center; }
+.ai-related-links p { margin: .45rem 0; }
+.ai-related-links a { color: var(--green-dark); font-weight: 700; text-decoration: underline; text-underline-offset: .22em; }
 
 @media (min-width: 900px) {
   body { font-size: 1.125rem; }

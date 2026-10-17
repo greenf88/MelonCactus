@@ -7,23 +7,34 @@ import { PageHeader } from "@/components/page-header";
 import { SectionHeading } from "@/components/section-heading";
 import { StructuredData } from "@/components/structured-data";
 import { enquiryHref } from "@/config/enquiry-topics";
-import { aiPaths, practicalAi } from "@/config/practical-ai";
+import { practicalAiNetherlands } from "@/config/practical-ai-netherlands";
+import { aiPaths, nationalAiPaths, practicalAi } from "@/config/practical-ai";
 import { languageAlternates, type Locale } from "@/lib/i18n";
 import { breadcrumbSchema, serviceSchema, socialImageMetadata } from "@/lib/seo";
 
-export function practicalAiMetadata(locale: Locale): Metadata {
-  const c = practicalAi[locale];
-  const social = socialImageMetadata(locale, "service", c.title, locale === "nl" ? "ai-hulp-twente" : "ai-help-twente");
+export type AiServiceArea = "twente" | "netherlands";
+
+export function practicalAiMetadata(locale: Locale, area: AiServiceArea = "twente"): Metadata {
+  const content = area === "netherlands" ? practicalAiNetherlands : practicalAi;
+  const paths = area === "netherlands" ? nationalAiPaths : aiPaths;
+  const c = content[locale];
+  const slug = area === "netherlands"
+    ? (locale === "nl" ? "ai-hulp-nederland" : "ai-help-netherlands")
+    : (locale === "nl" ? "ai-hulp-twente" : "ai-help-twente");
+  const social = socialImageMetadata(locale, "service", c.title, slug);
   return {
     title: c.title, description: c.description,
-    alternates: languageAlternates(aiPaths.en, locale),
-    openGraph: { title: c.title, description: c.description, url: aiPaths[locale], ...social.openGraph },
+    alternates: languageAlternates(paths.en, locale),
+    openGraph: { title: c.title, description: c.description, url: paths[locale], ...social.openGraph },
     twitter: { ...social.twitter, title: c.title, description: c.description },
   };
 }
 
-export function PracticalAiPage({ locale }: { locale: Locale }) {
-  const c = practicalAi[locale], nl = locale === "nl";
+export function PracticalAiPage({ locale, area = "twente" }: { locale: Locale; area?: AiServiceArea }) {
+  const content = area === "netherlands" ? practicalAiNetherlands : practicalAi;
+  const paths = area === "netherlands" ? nationalAiPaths : aiPaths;
+  const relatedPath = area === "netherlands" ? aiPaths[locale] : nationalAiPaths[locale];
+  const c = content[locale], nl = locale === "nl";
   return <>
     <PageHeader locale={locale} eyebrow={c.eyebrow} title={c.h1} intro={c.intro}
       breadcrumbs={[{ label: nl ? "Diensten" : "Services", href: nl ? "/nl/diensten" : "/services" }, { label: c.title }]} />
@@ -62,9 +73,17 @@ export function PracticalAiPage({ locale }: { locale: Locale }) {
       <div className="faq-grid">{c.faq.map(([question, answer]) => <details className="faq-item" key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div>
     </Container></section>
     <section className="closing-cta"><Container className="closing-inner"><div><h2>{c.closing}</h2><p>{c.closingText}</p></div><ButtonLink href={enquiryHref(locale, "ai-guidance")}>{c.primary}</ButtonLink></Container></section>
-    <Container><p className="ai-research-link"><Link href={nl ? "/nl/diensten#onderzoek" : "/services#research"}>{c.researchLink}</Link></p></Container>
-    <StructuredData data={{...serviceSchema({path: aiPaths[locale], name: c.title, description: c.intro, locale, priceNote: c.pricing}), areaServed: { "@type": "Place", name: "Twente" }}} />
-    <StructuredData data={breadcrumbSchema(locale, [{ name: nl ? "Diensten" : "Services", path: nl ? "/nl/diensten" : "/services" }, { name: c.title, path: aiPaths[locale] }])} />
+    <Container className="ai-related-links">
+      <p><Link href={relatedPath}>{c.regionLink}</Link></p>
+      <p><Link href={nl ? "/nl/diensten#onderzoek" : "/services#research"}>{c.researchLink}</Link></p>
+    </Container>
+    <StructuredData data={{
+      ...serviceSchema({path: paths[locale], name: c.title, description: c.intro, locale, priceNote: c.pricing}),
+      areaServed: area === "netherlands"
+        ? { "@type": "Country", name: "Netherlands" }
+        : { "@type": "Place", name: "Twente" },
+    }} />
+    <StructuredData data={breadcrumbSchema(locale, [{ name: nl ? "Diensten" : "Services", path: nl ? "/nl/diensten" : "/services" }, { name: c.title, path: paths[locale] }])} />
     <StructuredData data={{"@context":"https://schema.org","@type":"FAQPage",mainEntity:c.faq.map(([question,answer])=>({"@type":"Question",name:question,acceptedAnswer:{"@type":"Answer",text:answer}}))}} />
   </>;
 }

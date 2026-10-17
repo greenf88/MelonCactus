@@ -1,6 +1,7 @@
 import type { Locale } from "@/lib/i18n";
 
 export const aiPaths = { en: "/ai-help-twente", nl: "/nl/ai-hulp-twente" } as const;
+export const nationalAiPaths = { en: "/ai-help-netherlands", nl: "/nl/ai-hulp-nederland" } as const;
 
 export const practicalAi = {
   nl: {
@@ -67,6 +68,7 @@ export const practicalAi = {
     ],
     closing: "Welke taak zou u als eerste willen vereenvoudigen?",
     closingText: "Een korte omschrijving van het werk is genoeg voor het eerste gesprek. Deel nog geen vertrouwelijke documenten.",
+    regionLink: "Werkt u buiten Twente? Bekijk AI-hulp voor mkb-bedrijven in heel Nederland.",
     researchLink: "Op zoek naar markt- en concurrentieonderzoek?",
   },
   en: {
@@ -133,6 +135,7 @@ export const practicalAi = {
     ],
     closing: "Which task would you simplify first?",
     closingText: "A short description of the work is enough for an initial conversation. Please do not share confidential documents yet.",
+    regionLink: "Based outside Twente? Explore practical AI help for SMEs across the Netherlands.",
     researchLink: "Looking for market and competitor research?",
   },
 } as const;

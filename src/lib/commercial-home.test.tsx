@@ -91,8 +91,8 @@ describe("commercial homepage", () => {
     expect(homes[1].html).toContain('href="/nl/contact"');
     expect(homes[0].html).toContain('href="/services/public-profile-exposure-scan"');
     expect(homes[1].html).toContain('href="/nl/diensten/openbare-informatiescan"');
-    expect(homes[0].html).toContain('href="/ai-help-twente"');
-    expect(homes[1].html).toContain('href="/nl/ai-hulp-twente"');
+    expect(homes[0].html).toContain('href="/ai-help-netherlands"');
+    expect(homes[1].html).toContain('href="/nl/ai-hulp-nederland"');
     expect(homes[0].html).toContain(siteConfig.businessEmail);
     expect(homes[1].html).toContain(siteConfig.businessEmail);
   });

@@ -7,7 +7,7 @@ export const siteNl = {
   operatorStatement: "MelonCactus wordt geëxploiteerd door GFNI.",
   nav: [
     { href: "/nl/diensten", label: "Diensten" },
-    { href: "/nl/ai-hulp-twente", label: "AI & automatisering" },
+    { href: "/nl/ai-hulp-nederland", label: "AI & automatisering" },
     { href: "/nl/werkwijze", label: "Werkwijze" },
     { href: "/nl#prijzen", label: "Prijzen" },
     { href: "/nl/artikelen", label: "Artikelen" },

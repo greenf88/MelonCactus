@@ -5,12 +5,15 @@ import sitemap from "@/app/sitemap";
 import { ContactForm } from "@/components/contact-form";
 import { PracticalAiPage, practicalAiMetadata } from "@/components/practical-ai-page";
 import { enquiryTopics } from "@/config/enquiry-topics";
-import { aiPaths, practicalAi } from "@/config/practical-ai";
+import { practicalAiNetherlands } from "@/config/practical-ai-netherlands";
+import { aiPaths, nationalAiPaths, practicalAi } from "@/config/practical-ai";
 import { languageAlternates } from "@/lib/i18n";
 
 describe("practical AI service", () => {
   const english = renderToStaticMarkup(createElement(PracticalAiPage, { locale: "en" }));
   const dutch = renderToStaticMarkup(createElement(PracticalAiPage, { locale: "nl" }));
+  const englishNational = renderToStaticMarkup(createElement(PracticalAiPage, { locale: "en", area: "netherlands" }));
+  const dutchNational = renderToStaticMarkup(createElement(PracticalAiPage, { locale: "nl", area: "netherlands" }));
 
   it("renders the three offers, bounded examples and responsible claims in both languages", () => {
     for (const [locale, html] of [["en", english], ["nl", dutch]] as const) {
@@ -31,9 +34,13 @@ describe("practical AI service", () => {
   it("keeps matching canonicals, hreflang and sitemap entries", () => {
     expect(practicalAiMetadata("en").alternates).toEqual(languageAlternates(aiPaths.en, "en"));
     expect(practicalAiMetadata("nl").alternates).toEqual(languageAlternates(aiPaths.en, "nl"));
+    expect(practicalAiMetadata("en", "netherlands").alternates).toEqual(languageAlternates(nationalAiPaths.en, "en"));
+    expect(practicalAiMetadata("nl", "netherlands").alternates).toEqual(languageAlternates(nationalAiPaths.en, "nl"));
     const urls = sitemap().map((entry) => entry.url);
-    expect(urls).toContain(languageAlternates(aiPaths.en, "en").canonical);
-    expect(urls).toContain(languageAlternates(aiPaths.en, "nl").canonical);
+    for (const path of [aiPaths.en, nationalAiPaths.en]) {
+      expect(urls).toContain(languageAlternates(path, "en").canonical);
+      expect(urls).toContain(languageAlternates(path, "nl").canonical);
+    }
   });
 
   it("publishes visible FAQ and Service structured data", () => {
@@ -45,6 +52,24 @@ describe("practical AI service", () => {
       expect(service?.name).toBe(practicalAi[locale].title);
       expect(faq?.mainEntity).toHaveLength(practicalAi[locale].faq.length);
     }
+  });
+
+  it("keeps the national pages distinct, reciprocal and correctly scoped", () => {
+    for (const [locale, html] of [["en", englishNational], ["nl", dutchNational]] as const) {
+      const content = practicalAiNetherlands[locale];
+      expect(html).toContain(content.h1);
+      expect(html).toContain(content.examplesIntro);
+      expect(html).toContain(`href="${aiPaths[locale]}"`);
+      const scripts = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)]
+        .map((match) => JSON.parse(match[1]) as { "@type": string; areaServed?: { "@type": string; name: string } });
+      expect(scripts.find((schema) => schema["@type"] === "Service")?.areaServed)
+        .toEqual({ "@type": "Country", name: "Netherlands" });
+    }
+    expect(english).toContain(`href="${nationalAiPaths.en}"`);
+    expect(dutch).toContain(`href="${nationalAiPaths.nl}"`);
+    expect(practicalAiNetherlands.en.intro).not.toBe(practicalAi.en.intro);
+    expect(practicalAiNetherlands.nl.intro).not.toBe(practicalAi.nl.intro);
+    expect(dutchNational).not.toMatch(/\bje\b|\bjouw\b/i);
   });
 
   it("defaults the contact form to research and respects valid AI preselection", () => {
