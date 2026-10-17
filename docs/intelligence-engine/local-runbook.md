@@ -33,6 +33,33 @@ Open `.meloncactus-intelligence/control-room.html` locally to inspect the genera
 npm run intelligence:dashboard
 ```
 
+## Secure local input screen
+
+Start the Control Room in read-only mode with:
+
+```powershell
+npm run intelligence:serve
+```
+
+The terminal prints a one-time access URL. Open that exact URL locally; it is exchanged for an `HttpOnly`, `SameSite=Strict` session cookie and immediately removed from the browser address. The server binds only to `127.0.0.1`, chooses a random port by default, accepts no remote connections, loads no external assets and applies no-cache, anti-framing and restrictive content-security headers.
+
+Read-only is the safe default. Browser editing is available only when all of the following are true:
+
+1. the storage path is explicitly supplied with `--home`;
+2. that path is outside this Git repository;
+3. the operator confirms that the path is private and encrypted with `--confirm-private-storage`;
+4. the operator opens edit mode in the browser for the current server session.
+
+After first running `npm run intelligence:build`, the edit-capable command is:
+
+```powershell
+node .intelligence-build/scripts/intelligence-engine.js serve --home E:\MelonCactus-Private --confirm-private-storage
+```
+
+Replace the example path with the verified, access-controlled location. Do not use the edit flag merely to bypass the guard: verify Windows full-disk or folder encryption and the backup destination first. Edit mode is held in memory and closes automatically when the server stops.
+
+Every mutation is a local form post protected by the session cookie, an origin check and a per-process CSRF token. The input screen covers dossier registration, scope approval, workflow status, source and evidence registration, findings, evidence links, independent review, internal draft creation and final human report approval. Workflow prerequisites remain enforced in the store; the screen cannot mark evidence, analysis, red-team or report jobs complete without the required records. Approval never sends or publishes anything.
+
 ## Regular checks
 
 ```powershell
@@ -63,8 +90,9 @@ The command opens the restored copy, runs SQLite integrity verification and reca
 
 ## Current limitations
 
-- The generated HTML is read-only. Data entry still uses the TypeScript store until a protected local form is implemented.
 - SQLite file contents are not application-encrypted. Use an encrypted device/folder and restricted Windows account before real client data.
 - The local database is single-operator Phase 1 infrastructure; multi-user access and synchronisation are not implemented.
+- The local access cookie protects against accidental browser access on the same account, but it is not a substitute for a locked Windows session or full operator authentication in a future online deployment.
+- Phase 1 records source and evidence metadata and text through forms; it does not ingest file uploads, crawl sites or archive external content.
 - No live source discovery, browsing or model runtime is connected yet.
 - The prepared Supabase migration remains an optional later synchronisation/deployment path and has not been applied.

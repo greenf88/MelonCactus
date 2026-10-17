@@ -6,10 +6,11 @@ This directory describes the private, evidence-led operating core prepared for M
 
 - The domain rules and tests are implemented in `src/lib/intelligence/`.
 - An offline-first SQLite adapter, resumable fictional demonstration, Markdown export,
-  backup command and generated read-only HTML Control Room are implemented locally.
+  backup command, generated read-only HTML overview and token-protected loopback Control Room are implemented locally.
 - The private Postgres design is in `supabase/migrations/20261016201124_intelligence_engine_phase1.sql`.
 - The migration has **not** been applied to any database.
 - No private Control Room route is exposed by the public Next.js application.
+- Browser writes require an explicitly confirmed private storage path outside the repository and a session-local edit-mode action.
 - No agent has email, LinkedIn, publication, contract, invoice or client-delivery authority.
 - No client names, correspondence, source files, report content or credentials are stored in Git.
 

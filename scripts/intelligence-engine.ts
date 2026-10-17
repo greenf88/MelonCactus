@@ -2,6 +2,7 @@ import path from "node:path";
 
 import { writeLocalDashboard } from "../src/lib/intelligence/local-dashboard";
 import { ensureFictionalDemo } from "../src/lib/intelligence/local-demo";
+import { startLocalControlRoomServer } from "../src/lib/intelligence/local-server";
 import {
   DEFAULT_LOCAL_HOME,
   LocalIntelligenceStore,
@@ -13,6 +14,16 @@ async function main(): Promise<void> {
   const command = args[0] ?? "help";
   const homeArgument = option(args, "--home");
   const home = path.resolve(homeArgument ?? DEFAULT_LOCAL_HOME);
+  const confirmedPrivateStorage =
+    command === "serve" && args.includes("--confirm-private-storage");
+  if (confirmedPrivateStorage && !homeArgument) {
+    throw new Error("Editing requires an explicit --home path outside this Git repository.");
+  }
+  if (confirmedPrivateStorage && pathInside(process.cwd(), home)) {
+    throw new Error(
+      "Editing is blocked because --home is inside the Git repository. Choose a private encrypted location.",
+    );
+  }
   const store = new LocalIntelligenceStore(home);
 
   try {
@@ -46,6 +57,32 @@ async function main(): Promise<void> {
         console.log(
           `${dossier.dossierNumber} | ${dossier.status} | draft ${draft?.status ?? "none"} | ${dossier.decisionQuestion}`,
         );
+      }
+      return;
+    }
+
+    if (command === "serve") {
+      const server = await startLocalControlRoomServer(store, {
+        mutationsEnabled: confirmedPrivateStorage,
+        port: numberOption(args, "--port") ?? 0,
+      });
+      const shutdown = (): void => {
+        void server.stop();
+      };
+      process.once("SIGINT", shutdown);
+      process.once("SIGTERM", shutdown);
+      try {
+        console.log(`Open the private Control Room: ${server.accessUrl}`);
+        console.log(
+          confirmedPrivateStorage
+            ? `Editing can be enabled in the browser. Private storage: ${home}`
+            : "Read-only mode. Restart with an explicit external --home and --confirm-private-storage to permit edits.",
+        );
+        console.log("Nothing is sent, published or exposed to the local network.");
+        await server.closed;
+      } finally {
+        process.off("SIGINT", shutdown);
+        process.off("SIGTERM", shutdown);
       }
       return;
     }
@@ -119,6 +156,24 @@ function option(args: string[], name: string): string | undefined {
   return index >= 0 ? args[index + 1] : undefined;
 }
 
+function numberOption(args: string[], name: string): number | undefined {
+  const value = option(args, name);
+  if (value === undefined) return undefined;
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 0 || parsed > 65_535) {
+    throw new Error(`${name} must be a port between 0 and 65535.`);
+  }
+  return parsed;
+}
+
+function pathInside(parent: string, candidate: string): boolean {
+  const relative = path.relative(path.resolve(parent), path.resolve(candidate));
+  return (
+    relative === "" ||
+    (relative !== ".." && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative))
+  );
+}
+
 function printHelp(): void {
   console.log(`MelonCactus local Intelligence Engine
 
@@ -126,6 +181,7 @@ Commands:
   init                  Create the private local database
   demo                  Create/reuse one entirely fictional dossier and draft
   status                Show local dossiers and workflow state
+  serve                 Start the token-protected loopback Control Room
   verify                Verify SQLite integrity and every audit hash chain
   backup                Create a point-in-time database backup
   dashboard             Regenerate the private read-only HTML overview
@@ -134,6 +190,9 @@ Commands:
 
 Options:
   --home <path>         Override the default .meloncactus-intelligence directory
+  --port <number>       Override the random local port used by serve
+  --confirm-private-storage
+                        Permit browser edits after confirming --home is private and encrypted
 
 No command sends, publishes, deploys, emails or changes a cloud database.`);
 }

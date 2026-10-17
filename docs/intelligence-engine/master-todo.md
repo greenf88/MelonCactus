@@ -45,13 +45,15 @@ Legend: `[x]` completed in the Phase 1 branch, `[~]` prepared but not activated,
 - [x] Keep all generated databases, exports, dashboards and backups outside Git tracking.
 - [x] Add a resumable fictional dossier that reaches a review-ready draft without external calls.
 - [x] Add a read-only local HTML overview, Markdown export, integrity verification and consistent backups.
+- [x] Add a token-protected, loopback-only Control Room with CSRF/origin checks and no external assets.
 - [~] Implement a server-only Postgres adapter only if online or multi-user operation becomes necessary.
-- [ ] Build operator screens for dossier registration, scope approval, job status, evidence entry, findings, red-team review and report review.
-- [~] Make the UI read-only by default; the generated local overview is read-only, while protected data-entry forms remain.
+- [x] Build local operator screens for dossier registration, scope approval, job status, source/evidence entry, findings, red-team review and report review.
+- [x] Make the UI read-only by default and require an explicit external private-storage confirmation plus session-local edit mode for writes.
 - [ ] Add optimistic-concurrency or version checks to prevent analysts overwriting each other.
 - [x] Add a visible, collapsed audit timeline containing metadata only.
 - [x] Add export to a restricted working file; no email or client-delivery buttons exist in Phase 1.
 - [ ] Verify browser → authenticated server → database → rendered response end to end on protected staging.
+- [x] Verify token → local server → SQLite mutation → rendered response end to end with automated integration tests.
 - [~] Add backup, restore and deletion tests aligned with `docs/legal/retention-schedule.md`; consistent backup and isolated restore verification are tested, deletion approval flows remain.
 
 ## P1 — first agent execution

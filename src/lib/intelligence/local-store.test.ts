@@ -126,6 +126,109 @@ describe("LocalIntelligenceStore", () => {
     ).toThrow(/incomplete job: analysis/);
   });
 
+  it("does not complete red-team work without a reviewer independent from the finding author", () => {
+    const store = createStore();
+    const dossier = store.registerDossier({
+      receivedAt: "2026-11-04T10:00:00.000Z",
+      decisionQuestion: "Can a finding author satisfy their own red-team gate?",
+      actor: { type: "human", ref: "test-operator" },
+    });
+    store.ensureResearchPlan(dossier.id, { type: "system", ref: "test-system" });
+    store.approveScope({
+      dossierId: dossier.id,
+      decidedBy: "test-human",
+      rationale: "Synthetic public-only test scope.",
+    });
+    for (const jobKey of ["discover", "technical", "corporate"]) {
+      store.updateResearchJobStatus({
+        dossierId: dossier.id,
+        jobKey,
+        status: "completed",
+        actor: { type: "agent", ref: `test-${jobKey}` },
+      });
+    }
+    const source = store.addSource(
+      dossier.id,
+      {
+        code: "SRC-1",
+        title: "Synthetic source",
+        sourceType: "public_web",
+        retrievedAt: "2026-11-04T10:30:00.000Z",
+      },
+      { type: "human", ref: "test-human" },
+    );
+    const evidence = store.addEvidence(
+      dossier.id,
+      { sourceId: source.id, code: "EV-1", observation: "Synthetic observation." },
+      { type: "human", ref: "test-human" },
+    );
+    store.updateResearchJobStatus({
+      dossierId: dossier.id,
+      jobKey: "evidence",
+      status: "completed",
+      actor: { type: "agent", ref: "test-evidence" },
+    });
+    const finding = store.addFinding(
+      dossier.id,
+      {
+        code: "F-1",
+        statement: "Synthetic finding.",
+        type: "assessment",
+        confidence: "low",
+        rationale: "Synthetic rationale.",
+        material: true,
+        createdBy: "finding-author",
+        status: "evidence_linked",
+        informationGaps: [],
+      },
+      { type: "agent", ref: "finding-author" },
+    );
+    store.linkEvidence(dossier.id, finding.id, evidence.id, "supports", {
+      type: "agent",
+      ref: "finding-author",
+    });
+    const review = {
+      findingId: finding.id,
+      reviewType: "red_team" as const,
+      reviewerKind: "human" as const,
+      verdict: "pass" as const,
+      confidenceBefore: "low" as const,
+      confidenceAfter: "low" as const,
+      alternativeExplanations: [],
+      unresolvedGaps: [],
+      completedAt: "2026-11-04T11:00:00.000Z",
+    };
+    store.addVerificationReview(
+      dossier.id,
+      { ...review, reviewerRef: "finding-author" },
+      { type: "human", ref: "finding-author" },
+    );
+
+    expect(() =>
+      store.updateResearchJobStatus({
+        dossierId: dossier.id,
+        jobKey: "red-team",
+        status: "completed",
+        actor: { type: "human", ref: "finding-author" },
+      }),
+    ).toThrow(/independent red-team review/);
+
+    store.addVerificationReview(
+      dossier.id,
+      { ...review, reviewerRef: "independent-reviewer" },
+      { type: "human", ref: "independent-reviewer" },
+    );
+    store.updateResearchJobStatus({
+      dossierId: dossier.id,
+      jobKey: "red-team",
+      status: "completed",
+      actor: { type: "human", ref: "independent-reviewer" },
+    });
+    expect(store.listResearchJobs(dossier.id).find((job) => job.key === "red-team")?.status).toBe(
+      "completed",
+    );
+  });
+
   it("records an explicit human report approval and creates a restorable backup", async () => {
     const store = createStore();
     const result = ensureFictionalDemo(store);

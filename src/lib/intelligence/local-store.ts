@@ -358,6 +358,29 @@ export class LocalIntelligenceStore {
           );
           if (!approval) throw new Error("This research job requires a recorded human approval.");
         }
+        if (row.job_key === "evidence" && this.countForDossier("evidence", input.dossierId) === 0) {
+          throw new Error("Evidence normalisation cannot complete without an evidence record.");
+        }
+        if (row.job_key === "red-team") {
+          const review = this.get<{ id: string }>(
+            `select review.id
+             from verification_reviews as review
+             join findings as finding on finding.id = review.finding_id
+             where review.dossier_id = ? and review.review_type = 'red_team'
+               and review.reviewer_ref <> finding.created_by
+             limit 1`,
+            input.dossierId,
+          );
+          if (!review) {
+            throw new Error("Red-team work cannot complete without an independent red-team review.");
+          }
+        }
+        if (row.job_key === "analysis" && this.countForDossier("findings", input.dossierId) === 0) {
+          throw new Error("Analysis cannot complete without a finding.");
+        }
+        if (row.job_key === "report" && !this.getLatestDraft(input.dossierId)) {
+          throw new Error("Report work cannot complete without a stored draft.");
+        }
       }
       this.run(
         "update research_jobs set status = ?, updated_at = ? where id = ?",
@@ -974,6 +997,14 @@ export class LocalIntelligenceStore {
     ]);
     if (!allowed.has(table)) throw new TypeError("Unsupported count table.");
     const row = this.get<{ count: number }>(`select count(*) as count from ${table} ${suffix}`);
+    return row?.count ?? 0;
+  }
+
+  private countForDossier(table: "evidence" | "findings", dossierId: string): number {
+    const row = this.get<{ count: number }>(
+      `select count(*) as count from ${table} where dossier_id = ?`,
+      dossierId,
+    );
     return row?.count ?? 0;
   }
 
