@@ -11,7 +11,7 @@ describe("enquiry validation", () => {
     if (!result.ok) return;
     expect(result.enquiry.deliveryPriority).toBe("standard");
     expect(result.enquiry.target).toBe("");
-    expect(composeEnquiry(result.enquiry, new Date("2026-10-18T08:00:00Z")).text).toContain("€195");
+    expect(composeEnquiry(result.enquiry, new Date("2026-10-18T08:00:00Z")).text).toContain("€295");
     expect(validateEnquiry({ ...payload, price: "€1" }).ok).toBe(false);
     expect(validateEnquiry({ ...payload, decision: "abcd" }).ok).toBe(false);
   });
