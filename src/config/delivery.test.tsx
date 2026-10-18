@@ -28,8 +28,9 @@ describe("decision-led assessment and delivery choices", () => {
       expect(html).not.toMatch(/name="(?:role|target|context|geography|budget|ndaRequest)"/);
       expect(html).toContain('name="deliveryPriority" value="standard"');
       expect(html).toContain('aria-describedby="contact-price"');
-      expect(html).toContain("€195");
-      expect(html).toContain("€795");
+      expect(html).toContain("€295");
+      expect(html).toContain(locale === "nl" ? "€1.295" : "€1,295");
+      expect(html).toContain(locale === "nl" ? "Vanaf €1.995" : "From €1,995");
       expect(html).toContain("€995");
       expect((html.match(/class="form-field-note form-privacy"/g) ?? []).length).toBe(1);
     }
