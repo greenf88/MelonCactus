@@ -19,29 +19,29 @@ describe("decision-led assessment and delivery choices", () => {
     expect(JSON.stringify(deliveryOptions)).not.toMatch(/[23]×|multiplier|surcharge/i);
   });
 
-  it("renders the decision-led form, Standard default and an optional NDA request in both languages", () => {
-    const en = renderToStaticMarkup(createElement(ContactForm));
-    const nl = renderToStaticMarkup(createElement(ContactForm, { locale: "nl" }));
-    expect(en).toContain("What would you like to decide or improve?");
-    expect(en).toContain("Task, process, company, market or technology");
-    expect(en).toContain("What is your enquiry about?");
-    expect(en).toMatch(/<option value="standard" selected="">Standard/);
-    expect(en).toContain("not automatic acceptance");
-    expect(en).toContain('name="ndaRequest"');
-    expect(en).toContain("does not create an agreement");
-    expect(nl).toMatch(/<option value="standard" selected="">Standaard/);
-    expect(nl).toContain("Waar gaat uw vraag over?");
-    expect(nl).toContain("geen automatische aanvaarding");
-    expect(nl).toContain("geen overeenkomst tot stand");
+  it("renders five visible questions, compact pricing and one privacy note in both languages", () => {
+    for (const locale of ["en", "nl"] as const) {
+      const html = renderToStaticMarkup(createElement(ContactForm, { locale }));
+      expect((html.match(/<select /g) ?? []).length).toBe(1);
+      expect((html.match(/<textarea /g) ?? []).length).toBe(1);
+      expect((html.match(/<input (?!type="hidden")/g) ?? []).length).toBe(4); // Three visible fields plus the honeypot.
+      expect(html).not.toMatch(/name="(?:role|target|context|geography|budget|ndaRequest)"/);
+      expect(html).toContain('name="deliveryPriority" value="standard"');
+      expect(html).toContain('aria-describedby="contact-price"');
+      expect(html).toContain("€195");
+      expect(html).toContain("€795");
+      expect(html).toContain("€995");
+      expect((html.match(/class="form-field-note form-privacy"/g) ?? []).length).toBe(1);
+    }
   });
 
-  it("preserves assessment preselection, including old inbound report links", () => {
+  it("preserves priced assessment preselection, including old inbound report links", () => {
     const en = renderToStaticMarkup(createElement(ContactForm, { initialReport: "Technical Deep Dive" }));
     const nl = renderToStaticMarkup(createElement(ContactForm, { locale: "nl", initialReport: "Focused Intelligence Assessment" }));
     expect(en).toMatch(/<option value="Technical &amp; Competitive Intelligence" selected="">/);
     expect(nl).toMatch(/<option value="Focused Intelligence Assessment" selected="">Gerichte intelligencebeoordeling/);
+    expect(en).toContain('name="report" value="Technical &amp; Competitive Intelligence"');
     expect(renderToStaticMarkup(createElement(ContactForm, { initialReport: publicProfileScan.name }))).toMatch(/<option value="Public Profile Exposure Scan" selected="">/);
-    expect(renderToStaticMarkup(createElement(ContactForm, { locale: "nl", initialReport: publicProfileScan.name }))).toMatch(/<option value="Public Profile Exposure Scan" selected="">Openbare-informatiescan voor uw bedrijf/);
   });
 
   it("keeps the fixed-scope scan separate from the three indicative engagement levels", () => {

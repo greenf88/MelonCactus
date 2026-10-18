@@ -4,6 +4,17 @@ import { validPayload } from "./fixture";
 import { publicProfileScan } from "@/config/site";
 
 describe("enquiry validation", () => {
+  it("accepts the five-field form without requiring removed intake fields", () => {
+    const payload = { name: "Alex", email: "alex@example.test", company: "Acme", topic: "ai-guidance", decision: "AI uitleg" };
+    const result = validateEnquiry(payload);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.enquiry.deliveryPriority).toBe("standard");
+    expect(result.enquiry.target).toBe("");
+    expect(composeEnquiry(result.enquiry, new Date("2026-10-18T08:00:00Z")).text).toContain("€195");
+    expect(validateEnquiry({ ...payload, price: "€1" }).ok).toBe(false);
+    expect(validateEnquiry({ ...payload, decision: "abcd" }).ok).toBe(false);
+  });
   it("accepts a valid enquiry", () => {
     const result = validateEnquiry(validPayload);
     expect(result.ok).toBe(true);
@@ -17,10 +28,9 @@ describe("enquiry validation", () => {
   it("rejects missing fields and invalid email", () => {
     expect(validateEnquiry({ ...validPayload, name: "" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, email: "invalid" }).ok).toBe(false);
-    expect(validateEnquiry({ ...validPayload, role: "" }).ok).toBe(false);
+    expect(validateEnquiry({ ...validPayload, company: "" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, topic: "" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, decision: "" }).ok).toBe(false);
-    expect(validateEnquiry({ ...validPayload, target: "" }).ok).toBe(false);
     expect(validateEnquiry({ ...validPayload, deliveryPriority: "" }).ok).toBe(false);
   });
   it("rejects excess length, malformed fields and header injection", () => {

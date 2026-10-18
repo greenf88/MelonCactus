@@ -22,7 +22,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <p className="eyebrow">Research · Practical AI</p>
           <h1>Start with your question.</h1>
           <p className="page-intro">Tell us what you want to understand, decide or improve. A concise description is enough for an initial review.</p>
-          <p>For research, we assess the question and available lawful sources. For practical AI, we first define the task, information, tools and human checks. Before work begins, you receive a defined scope, deliverables, fixed fee and agreed schedule.</p>
           <p>Prefer to contact us directly? Email <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a> or call <a href={siteConfig.businessPhoneHref}>{siteConfig.businessPhoneDisplay}</a>. MelonCactus is operated by GFNI in Enschede, Netherlands.</p>
         </header>
 
@@ -36,7 +35,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
               <li><span>03</span><p>A proposal with deliverables, a fixed fee and delivery date.</p></li>
               <li><span>04</span><p>Work starts after written agreement, followed by the agreed report, guidance or tested deliverable.</p></li>
             </ol>
-            <p>We may decline work that cannot be performed responsibly within the requested scope, available evidence or selected tools.</p>
           </aside>
         </div>
       </Container>
