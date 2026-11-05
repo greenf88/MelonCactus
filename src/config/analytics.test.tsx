@@ -9,7 +9,7 @@ import { redactAnalyticsEvent } from "@/components/privacy-analytics";
 import { ContactForm } from "@/components/contact-form";
 import { siteConfig } from "@/config/site";
 import { Footer } from "@/components/footer";
-import { routePairs } from "@/lib/i18n";
+import { publicRoutePaths, standaloneArticlePaths } from "@/lib/i18n";
 
 describe("Web Analytics privacy notices", () => {
   it("describes page-view measurement consistently in both languages", () => {
@@ -93,8 +93,9 @@ describe("Web Analytics privacy notices", () => {
     expect(redactAnalyticsEvent({ type: "event", url: "https://meloncactus.com/contact" })).toBeNull();
   });
 
-  it("measures every published bilingual route without enquiry data, including new SEO pages", () => {
-    for (const path of routePairs.flat()) {
+  it("measures every published route without enquiry data, including standalone articles", () => {
+    expect(standaloneArticlePaths).toContain("/nl/artikelen/marktanalyse-maakindustrie-meerdere-indicatoren");
+    for (const path of publicRoutePaths) {
       const url = `https://meloncactus.com${path}`;
       expect(redactAnalyticsEvent({
         type: "pageview",

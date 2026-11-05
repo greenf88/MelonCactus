@@ -11,7 +11,7 @@ import { siteConfig } from "@/config/site";
 import { articleMetadataDescription, articleMetadataTitle, articleSummary } from "@/data/article-summaries";
 import { seoTopics } from "@/data/seo-topics";
 import { getServiceDetail } from "@/data/seo-services";
-import { counterpartPath, languageAlternates } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n";
 import { articleReadingLabel } from "@/lib/reading-time";
 import { breadcrumbSchema, entityIds, socialImageMetadata } from "@/lib/seo";
 
@@ -24,15 +24,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const insight = getInsightNl(slug);
   if (!insight) return {};
   const path = `/nl/artikelen/${slug}`;
-  const enPath = counterpartPath(path);
-  if (!enPath) throw new Error(`Missing English counterpart for ${path}`);
   const title = articleMetadataTitle("nl", slug, insight.title);
   const description = articleMetadataDescription("nl", slug, insight.description);
   const social = socialImageMetadata("nl", "article", insight.title, slug);
   return {
     title,
     description,
-    alternates: languageAlternates(enPath, "nl"),
+    alternates: localizedAlternates(path, "nl"),
     openGraph: { type: "article", title, description, url: path, locale: "nl_NL", publishedTime: insight.date, modifiedTime: insight.modifiedDate ?? insight.date, ...social.openGraph },
     twitter: { title, description, ...social.twitter },
   };

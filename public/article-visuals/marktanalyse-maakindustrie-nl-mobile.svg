@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Van sectorsignaal naar een onderbouwde marktshortlist</title>
+  <desc id="desc">Mobiel besliskader: sectorsignaal, technische fit, afnemersactiviteit, concurrentiedruk en bronzekerheid leiden naar een marktshortlist met een volgende verificatiestap.</desc>
+  <rect width="760" height="1100" rx="34" fill="#F7F6EE"/>
+  <text x="54" y="70" fill="#173D2D" font-family="Arial, sans-serif" font-size="30" font-weight="700">Van signaal naar marktkeuze</text>
+  <text x="54" y="108" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Het bewijs bepaalt de shortlist.</text>
+
+  <rect x="54" y="150" width="652" height="190" rx="26" fill="#173D2D"/>
+  <text x="86" y="196" fill="#EEE9BE" font-family="Arial, sans-serif" font-size="17" font-weight="700">1 · CONTEXT: SECTORSIGNAAL</text>
+  <text x="86" y="242" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Bron + datum · meetdefinitie · brancheverschil</text>
+  <text x="86" y="286" fill="#DCE5DC" font-family="Arial, sans-serif" font-size="18">Geen omzetprognose, bedrijfsbewijs of koopintentie</text>
+
+  <path d="M380 354v36" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 380 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="54" y="412" width="652" height="128" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="104" cy="476" r="24" fill="#EEE9BE"/>
+  <text x="104" y="484" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">A</text>
+  <text x="148" y="466" fill="#173D2D" font-family="Arial, sans-serif" font-size="23" font-weight="700">Technische fit</text>
+  <text x="148" y="501" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Past de behoefte bij aanbod en technologie?</text>
+
+  <rect x="54" y="562" width="652" height="128" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="104" cy="626" r="24" fill="#EEE9BE"/>
+  <text x="104" y="634" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">B</text>
+  <text x="148" y="616" fill="#173D2D" font-family="Arial, sans-serif" font-size="23" font-weight="700">Afnemersactiviteit</text>
+  <text x="148" y="651" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Welke actuele signalen zijn controleerbaar?</text>
+
+  <rect x="54" y="712" width="652" height="128" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="104" cy="776" r="24" fill="#EEE9BE"/>
+  <text x="104" y="784" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">C</text>
+  <text x="148" y="766" fill="#173D2D" font-family="Arial, sans-serif" font-size="23" font-weight="700">Concurrentiedruk</text>
+  <text x="148" y="801" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Welk alternatief heeft de afnemer al?</text>
+
+  <path d="M380 854v32" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 876 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="54" y="908" width="652" height="138" rx="26" fill="#DCE5DC"/>
+  <text x="86" y="952" fill="#173D2D" font-family="Arial, sans-serif" font-size="17" font-weight="700">2 · ONDERBOUWDE SHORTLIST</text>
+  <text x="86" y="994" fill="#18201D" font-family="Arial, sans-serif" font-size="20">Bron · datum · zekerheid · volgende verificatiestap</text>
+  <rect x="518" y="932" width="156" height="82" rx="16" fill="#EEE9BE"/>
+  <text x="596" y="965" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="17" font-weight="700">Eerst toetsen,</text>
+  <text x="596" y="991" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="17" font-weight="700">dan kiezen</text>
+</svg>

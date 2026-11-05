@@ -11,7 +11,7 @@ import { siteConfig } from "@/config/site";
 import { articleMetadataDescription, articleMetadataTitle, articleSummary } from "@/data/article-summaries";
 import { seoTopics } from "@/data/seo-topics";
 import { getServiceDetail } from "@/data/seo-services";
-import { languageAlternates } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n";
 import { articleReadingLabel } from "@/lib/reading-time";
 import { breadcrumbSchema, entityIds, socialImageMetadata } from "@/lib/seo";
 
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = articleMetadataTitle("en", slug, insight.title);
   const description = articleMetadataDescription("en", slug, insight.description);
   const social = socialImageMetadata("en", "article", insight.title, slug);
-  return { title, description, alternates: languageAlternates(url, "en"), openGraph: { type: "article", title, description, url, publishedTime: insight.date, modifiedTime: insight.modifiedDate ?? insight.date, ...social.openGraph }, twitter: { title, description, ...social.twitter } };
+  return { title, description, alternates: localizedAlternates(url, "en"), openGraph: { type: "article", title, description, url, publishedTime: insight.date, modifiedTime: insight.modifiedDate ?? insight.date, ...social.openGraph }, twitter: { title, description, ...social.twitter } };
 }
 
 export default async function InsightPage({ params }: Props) {

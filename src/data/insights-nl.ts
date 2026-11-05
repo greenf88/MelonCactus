@@ -4,6 +4,7 @@ import { decisionLoopInsightNl } from "@/data/decision-loop-insights";
 import { practicalAiCasesNl } from "@/data/practical-ai-cases";
 import { articleSources } from "@/data/article-sources";
 import { articleVisuals } from "@/data/article-visuals";
+import { marketAnalysisInsightNl } from "@/data/market-analysis-insight";
 
 const originalInsightsNl: readonly Insight[] = [
   {
@@ -254,6 +255,7 @@ const originalInsightsNl: readonly Insight[] = [
 ];
 
 export const insightsNl: readonly Insight[] = [
+  marketAnalysisInsightNl,
   ...practicalAiCasesNl,
   decisionLoopInsightNl,
   ...industrialInsights.filter((insight) => insight.locale === "nl"),

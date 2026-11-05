@@ -3,6 +3,7 @@ import { insights } from "@/data/insights";
 import { insightsNl } from "@/data/insights-nl";
 import { industrialInsights } from "@/data/industrial-insights";
 import { practicalAiCasesEn, practicalAiCasesNl } from "@/data/practical-ai-cases";
+import { standaloneArticlePaths } from "@/lib/i18n";
 import { articleReadingLabel, articleReadingMinutes, articleWordCount } from "./reading-time";
 
 describe("article reading time", () => {
@@ -19,8 +20,8 @@ describe("article reading time", () => {
   });
 
   it("calculates localized times for every existing and new article", () => {
-    expect(insights).toHaveLength(9 + practicalAiCasesEn.length);
-    expect(insightsNl).toHaveLength(9 + practicalAiCasesNl.length);
+    expect(insights).toHaveLength(9 + practicalAiCasesEn.length + standaloneArticlePaths.filter((path) => path.startsWith("/insights/")).length);
+    expect(insightsNl).toHaveLength(9 + practicalAiCasesNl.length + standaloneArticlePaths.filter((path) => path.startsWith("/nl/artikelen/")).length);
     for (const article of insights) {
       expect(articleWordCount(article, "en"), article.slug).toBeGreaterThan(400);
       expect(articleReadingLabel(article, "en")).toMatch(/^\d+ min read$/);

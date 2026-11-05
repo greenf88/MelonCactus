@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Van sectorsignaal naar een onderbouwde marktshortlist</title>
+  <desc id="desc">Een sectorsignaal geeft context. Technische fit, afnemersactiviteit, concurrentiedruk en bronzekerheid leiden samen naar een marktshortlist met een volgende verificatiestap.</desc>
+  <rect width="1200" height="760" rx="36" fill="#F7F6EE"/>
+  <text x="80" y="82" fill="#173D2D" font-family="Arial, sans-serif" font-size="34" font-weight="700">Van sectorsignaal naar marktkeuze</text>
+  <text x="80" y="122" fill="#4C5852" font-family="Arial, sans-serif" font-size="20">Het cijfer opent de vraag; het bewijs bepaalt de shortlist.</text>
+
+  <rect x="80" y="190" width="260" height="430" rx="28" fill="#173D2D"/>
+  <text x="112" y="240" fill="#EEE9BE" font-family="Arial, sans-serif" font-size="18" font-weight="700">1 · CONTEXT</text>
+  <text x="112" y="292" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="29" font-weight="700">Sectorsignaal</text>
+  <text x="112" y="340" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Bron + datum</text>
+  <text x="112" y="374" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Meetdefinitie</text>
+  <text x="112" y="408" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20">Brancheverschil</text>
+  <line x1="112" y1="454" x2="308" y2="454" stroke="#8FAE9B" stroke-width="2"/>
+  <text x="112" y="500" fill="#DCE5DC" font-family="Arial, sans-serif" font-size="18">Geen omzetprognose</text>
+  <text x="112" y="530" fill="#DCE5DC" font-family="Arial, sans-serif" font-size="18">Geen bedrijfsbewijs</text>
+  <text x="112" y="560" fill="#DCE5DC" font-family="Arial, sans-serif" font-size="18">Geen koopintentie</text>
+
+  <path d="M360 405h48" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m398 393 14 12-14 12" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="430" y="190" width="350" height="125" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="478" cy="252" r="24" fill="#EEE9BE"/>
+  <text x="478" y="260" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">A</text>
+  <text x="520" y="241" fill="#173D2D" font-family="Arial, sans-serif" font-size="23" font-weight="700">Technische fit</text>
+  <text x="520" y="274" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Past behoefte bij aanbod en technologie?</text>
+
+  <rect x="430" y="343" width="350" height="125" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="478" cy="405" r="24" fill="#EEE9BE"/>
+  <text x="478" y="413" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">B</text>
+  <text x="520" y="394" fill="#173D2D" font-family="Arial, sans-serif" font-size="23" font-weight="700">Afnemersactiviteit</text>
+  <text x="520" y="427" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Welke actuele signalen zijn controleerbaar?</text>
+
+  <rect x="430" y="496" width="350" height="125" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="478" cy="558" r="24" fill="#EEE9BE"/>
+  <text x="478" y="566" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">C</text>
+  <text x="520" y="547" fill="#173D2D" font-family="Arial, sans-serif" font-size="23" font-weight="700">Concurrentiedruk</text>
+  <text x="520" y="580" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Welk alternatief heeft de afnemer al?</text>
+
+  <path d="M802 405h48" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m840 393 14 12-14 12" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="870" y="190" width="250" height="430" rx="28" fill="#DCE5DC"/>
+  <text x="902" y="240" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700">2 · BESLUIT</text>
+  <text x="902" y="292" fill="#173D2D" font-family="Arial, sans-serif" font-size="29" font-weight="700">Shortlist</text>
+  <rect x="902" y="330" width="186" height="58" rx="15" fill="#FFFFFF"/>
+  <text x="924" y="366" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Bron en datum</text>
+  <rect x="902" y="404" width="186" height="58" rx="15" fill="#FFFFFF"/>
+  <text x="924" y="440" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Zekerheidsniveau</text>
+  <rect x="902" y="478" width="186" height="82" rx="15" fill="#EEE9BE"/>
+  <text x="924" y="512" fill="#18201D" font-family="Arial, sans-serif" font-size="18" font-weight="700">Volgende</text>
+  <text x="924" y="540" fill="#18201D" font-family="Arial, sans-serif" font-size="18" font-weight="700">verificatiestap</text>
+  <text x="80" y="698" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Bewijsgrens: een positief branchesignaal bewijst geen order, capaciteit of koopbereidheid bij één onderneming.</text>
+</svg>

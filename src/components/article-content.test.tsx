@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { industrialInsights } from "@/data/industrial-insights";
 import { insights } from "@/data/insights";
 import { insightsNl } from "@/data/insights-nl";
+import { standaloneArticlePaths } from "@/lib/i18n";
 import { ArticleContent } from "./article-content";
 
 describe("sourced article rendering", () => {
@@ -21,8 +22,9 @@ describe("sourced article rendering", () => {
   it("renders numbered claim citations and a localized source register", () => {
     const english = insights.filter((article) => article.sources?.length);
     const dutch = insightsNl.filter((article) => article.sources?.length);
+    const standaloneDutchCount = standaloneArticlePaths.filter((path) => path.startsWith("/nl/artikelen/")).length;
     expect(english).toHaveLength(9);
-    expect(dutch).toHaveLength(9);
+    expect(dutch).toHaveLength(9 + standaloneDutchCount);
 
     for (const article of english) {
       const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix="section" locale="en" />);
@@ -52,7 +54,10 @@ describe("sourced article rendering", () => {
   it("renders localized article visuals with accessible text equivalents", () => {
     for (const [articles, locale, idPrefix] of [[insights, "en", "section"], [insightsNl, "nl", "sectie"]] as const) {
       const visualArticles = articles.filter((article) => article.visual);
-      expect(visualArticles).toHaveLength(9);
+      const standaloneCount = standaloneArticlePaths.filter((path) => locale === "nl"
+        ? path.startsWith("/nl/artikelen/")
+        : path.startsWith("/insights/")).length;
+      expect(visualArticles).toHaveLength(9 + standaloneCount);
 
       for (const article of visualArticles) {
         const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix={idPrefix} locale={locale} />);

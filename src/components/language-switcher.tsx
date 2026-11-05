@@ -11,13 +11,13 @@ function Links({ locale }: { locale: Locale }) {
   const counterpart = counterpartPath(pathname);
   const query = pathname.endsWith("/contact") ? searchParams.toString() : "";
   const suffix = query ? `?${query}` : "";
-  const en = locale === "en" ? pathname : counterpart ?? "/";
-  const nl = locale === "nl" ? pathname : counterpart ?? "/nl";
+  const en = locale === "en" ? pathname : counterpart;
+  const nl = locale === "nl" ? pathname : counterpart;
   return (
     <nav className="language-switcher" aria-label={locale === "nl" ? "Taal kiezen" : "Choose language"}>
-      <Link href={`${en}${suffix}`} lang="en" hrefLang="en" aria-current={locale === "en" ? "page" : undefined}>EN</Link>
+      {en ? <Link href={`${en}${suffix}`} lang="en" hrefLang="en" aria-current={locale === "en" ? "page" : undefined}>EN</Link> : <span className="language-unavailable" lang="en" aria-label="English version unavailable">EN</span>}
       <span aria-hidden="true">/</span>
-      <Link href={`${nl}${suffix}`} lang="nl" hrefLang="nl-NL" aria-current={locale === "nl" ? "page" : undefined}>NL</Link>
+      {nl ? <Link href={`${nl}${suffix}`} lang="nl" hrefLang="nl-NL" aria-current={locale === "nl" ? "page" : undefined}>NL</Link> : <span className="language-unavailable" lang="nl" aria-label="Nederlandse versie niet beschikbaar">NL</span>}
     </nav>
   );
 }

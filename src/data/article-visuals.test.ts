@@ -3,12 +3,15 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { insights } from "@/data/insights";
 import { insightsNl } from "@/data/insights-nl";
+import { routePairs } from "@/lib/i18n";
 
 describe("localized article visuals", () => {
-  const pairs = insights.filter((article) => article.visual).map((article, index) => ({
-    en: article,
-    nl: insightsNl.filter((item) => item.visual)[index],
-  }));
+  const pairs = routePairs.filter(([en]) => en.startsWith("/insights/")).map(([enPath, nlPath]) => {
+    const en = insights.find((article) => enPath.endsWith(`/${article.slug}`));
+    const nl = insightsNl.find((article) => nlPath.endsWith(`/${article.slug}`));
+    if (!en || !nl) throw new Error(`Missing visual article pair for ${enPath}`);
+    return { en, nl };
+  }).filter((pair) => pair.en.visual && pair.nl.visual);
 
   it("provides nine English and Dutch visual pairs", () => {
     expect(pairs).toHaveLength(9);
