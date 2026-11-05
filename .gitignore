@@ -16,6 +16,8 @@
 /playwright-report
 /test-results
 /.agent-browser
+/.meloncactus-intelligence
+/.intelligence-build
 /.npm-cache
 
 # next.js
