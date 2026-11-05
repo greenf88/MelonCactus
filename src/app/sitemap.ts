@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 import { insights } from "@/data/insights";
-import { languageAlternates, routePairs } from "@/lib/i18n";
+import { insightsNl } from "@/data/insights-nl";
+import { localizedAlternates, languageAlternates, routePairs } from "@/lib/i18n";
 
 const updatedPaths = new Set(["/", "/about", "/contact", "/services", "/insights", "/privacy", "/terms", "/sample-report"]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routePairs.flatMap(([enPath, nlPath]) => {
+  const paired = routePairs.flatMap(([enPath, nlPath]) => {
     const languages = languageAlternates(enPath, "en").languages;
     const en = languages.en;
     const nl = languages["nl-NL"];
@@ -19,4 +20,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: nl, lastModified, changeFrequency: nlPath === "/nl" ? "weekly" as const : "monthly" as const, priority: nlPath === "/nl" ? 1 : article ? .75 : .7, alternates },
     ];
   });
+
+  const pairedEnglish = new Set<string>(routePairs.map(([path]) => path));
+  const pairedDutch = new Set<string>(routePairs.map(([, path]) => path));
+  const standalone = [
+    ...insights
+      .map((article) => ({ article, locale: "en" as const, path: `/insights/${article.slug}` }))
+      .filter(({ path }) => !pairedEnglish.has(path)),
+    ...insightsNl
+      .map((article) => ({ article, locale: "nl" as const, path: `/nl/artikelen/${article.slug}` }))
+      .filter(({ path }) => !pairedDutch.has(path)),
+  ].map(({ article, locale, path }) => {
+    const metadata = localizedAlternates(path, locale);
+    return {
+      url: metadata.canonical,
+      lastModified: new Date(article.modifiedDate ?? article.date),
+      changeFrequency: "monthly" as const,
+      priority: .75,
+      alternates: { languages: metadata.languages },
+    };
+  });
+
+  return [...paired, ...standalone];
 }

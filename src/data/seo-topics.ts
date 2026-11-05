@@ -78,7 +78,7 @@ const nl: readonly Topic[] = [
     method: "Wij bepalen eerst de beslissing, onderzochte ondernemingen, periode en bewijsnorm. Bedrijfsdocumenten, registers, technische publicaties, vacatures en officieel beeldmateriaal worden op tijdlijn en samenhang vergeleken. Tegenstrijdigheden en alternatieve verklaringen blijven zichtbaar.",
     evidenceLimit: "Een vergunning bevestigt toestemming, geen productie. Werving kan wijzen op een voornemen, niet op geïnstalleerde capaciteit. Een foto kan apparatuur tonen, niet de bezettingsgraad of output. Zonder onafhankelijke bevestiging blijft een conclusie voorlopig.",
     application: "Een gerichte beoordeling past bij één concurrentievraag. Een bredere strategische opdracht is geschikt wanneer meerdere organisaties en samenhangende beslissingen vergeleken moeten worden. Scope en prijs worden vooraf afgesproken.",
-    articlePaths: ["/nl/artikelen/wat-is-industriele-concurrentie-intelligentie", "/nl/artikelen/wat-bewijst-een-aangekondigde-fabrieksuitbreiding", "/nl/artikelen/nieuwe-fabriek-openen-versus-volledig-produceren"],
+    articlePaths: ["/nl/artikelen/marktanalyse-maakindustrie-meerdere-indicatoren", "/nl/artikelen/wat-is-industriele-concurrentie-intelligentie", "/nl/artikelen/wat-bewijst-een-aangekondigde-fabrieksuitbreiding", "/nl/artikelen/nieuwe-fabriek-openen-versus-volledig-produceren"],
     servicePaths: ["/nl/diensten/gerichte-intelligencebeoordeling", "/nl/diensten/strategische-intelligenceopdracht"], examplePath: "/nl/voorbeeldcase/vierde-pijler",
   },
   {

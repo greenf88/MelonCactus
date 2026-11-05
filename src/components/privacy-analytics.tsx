@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Analytics, type BeforeSendEvent } from "@vercel/analytics/next";
-import { routePairs } from "@/lib/i18n";
+import { publicRoutePaths } from "@/lib/i18n";
 import {
   browserPreferenceStorage,
   preferenceAfterStorageEvent,
@@ -13,7 +13,7 @@ import {
   type PreferenceStorage,
 } from "@/lib/analytics-preference";
 
-const publicPaths = new Set<string>(routePairs.flat());
+const publicPaths = new Set<string>(publicRoutePaths);
 const preferenceChangeEvent = "meloncactus:analytics-preference-change";
 type PreferenceState = AnalyticsPreference | "checking";
 

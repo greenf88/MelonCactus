@@ -6,7 +6,7 @@ import { reportOptionsNl } from "@/config/site-nl";
 import { seoServices } from "@/data/seo-services";
 import { seoTopics } from "@/data/seo-topics";
 import sitemap from "@/app/sitemap";
-import { counterpartPath, languageAlternates, pathForLocale, routePairs } from "./i18n";
+import { counterpartPath, localizedAlternates, languageAlternates, pathForLocale, routePairs, standaloneArticlePaths } from "./i18n";
 
 describe("localized public routes", () => {
   it("maps each English route to one reciprocal Dutch route", () => {
@@ -22,20 +22,39 @@ describe("localized public routes", () => {
     expect(counterpartPath("/no-such-page")).toBeNull();
   });
 
-  it("includes every translated article and both language URLs in the sitemap", () => {
-    expect(routePairs.length).toBe(14 + insights.length + 3 + 4);
+  it("keeps standalone articles canonical without inventing a translated counterpart", () => {
+    expect(localizedAlternates("/nl/artikelen/zelfstandig-artikel", "nl")).toEqual({
+      canonical: "https://meloncactus.com/nl/artikelen/zelfstandig-artikel",
+      languages: { "nl-NL": "https://meloncactus.com/nl/artikelen/zelfstandig-artikel" },
+    });
+    expect(localizedAlternates("/insights/standalone-article", "en")).toEqual({
+      canonical: "https://meloncactus.com/insights/standalone-article",
+      languages: {
+        en: "https://meloncactus.com/insights/standalone-article",
+        "x-default": "https://meloncactus.com/insights/standalone-article",
+      },
+    });
+  });
+
+  it("includes every paired and standalone article in the sitemap", () => {
     expect(routePairs).toContainEqual(["/ai-help-netherlands", "/nl/ai-hulp-nederland"]);
     expect(routePairs).toContainEqual(["/ai-help-twente", "/nl/ai-hulp-twente"]);
     expect(routePairs).toContainEqual(["/services/public-profile-exposure-scan", "/nl/diensten/openbare-informatiescan"]);
     expect(routePairs).toContainEqual(["/example-case/fourth-pillar", "/nl/voorbeeldcase/vierde-pijler"]);
     expect(routePairs).toContainEqual(["/example-case/public-profile", "/nl/voorbeeldcase/openbaar-profiel"]);
-    expect(insightsNl).toHaveLength(insights.length);
     expect(seoServices.en).toHaveLength(3);
     expect(seoServices.nl).toHaveLength(3);
     expect(seoTopics.en).toHaveLength(4);
     expect(seoTopics.nl).toHaveLength(4);
     const entries = sitemap();
-    expect(entries).toHaveLength(routePairs.length * 2);
+    const pairedPaths = new Set<string>(routePairs.flatMap(([en, nl]) => [en, nl]));
+    const standaloneEnglish = insights.filter((article) => !pairedPaths.has(`/insights/${article.slug}`));
+    const standaloneDutch = insightsNl.filter((article) => !pairedPaths.has(`/nl/artikelen/${article.slug}`));
+    expect([...standaloneArticlePaths].sort()).toEqual([
+      ...standaloneEnglish.map((article) => `/insights/${article.slug}`),
+      ...standaloneDutch.map((article) => `/nl/artikelen/${article.slug}`),
+    ].sort());
+    expect(entries).toHaveLength(routePairs.length * 2 + standaloneEnglish.length + standaloneDutch.length);
     for (const [enPath, nlPath] of routePairs) {
       const en = languageAlternates(enPath, "en").canonical;
       const nl = languageAlternates(enPath, "nl").canonical;
@@ -51,6 +70,12 @@ describe("localized public routes", () => {
         expect(english?.description).toBeTruthy();
         expect(dutch?.description).toBeTruthy();
       }
+    }
+    for (const article of insights) {
+      expect(entries.find((entry) => entry.url === `https://meloncactus.com/insights/${article.slug}`), article.slug).toBeDefined();
+    }
+    for (const article of insightsNl) {
+      expect(entries.find((entry) => entry.url === `https://meloncactus.com/nl/artikelen/${article.slug}`), article.slug).toBeDefined();
     }
   });
 

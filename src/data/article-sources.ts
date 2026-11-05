@@ -281,4 +281,18 @@ export const articleSources = {
       nl: "Productinformatie van Infor. De bron is primair bewijs voor de manier waarop Infor zijn eigen goedkeuringsprocessen en agents beschrijft, niet voor een onafhankelijke validatie van prestaties, compliance of geschiktheid.",
     },
   },
+  cbsProducerConfidence2026: {
+    id: "cbs-producer-confidence-2026-10",
+    organization: "Centraal Bureau voor de Statistiek (CBS)",
+    title: "Producentenvertrouwen; stemmingsindicator van de industrie, bedrijfstak",
+    url: "https://www.cbs.nl/nl-nl/cijfers/detail/81234ned",
+    date: "2026-10-29",
+    dateKind: "updated",
+    datePrecision: "day",
+    accessed: "2026-11-05",
+    note: {
+      en: "Official CBS StatLine table with provisional, seasonally adjusted monthly sentiment indicators. The balances indicate direction and confidence; they are not turnover, production-growth or company-order percentages.",
+      nl: "Officiële CBS StatLine-tabel met voorlopige, seizoengecorrigeerde maandelijkse stemmingsindicatoren. De saldi duiden richting en vertrouwen; het zijn geen percentages voor omzet, productiegroei of de orderpositie van één bedrijf.",
+    },
+  },
 } satisfies Record<string, ArticleSource>;

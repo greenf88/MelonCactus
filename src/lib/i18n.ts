@@ -39,6 +39,17 @@ export const routePairs = [
   ["/insights/industrial-ai-decision-loop-manufacturing", "/nl/artikelen/industriele-ai-beslislus-productie"],
 ] as const;
 
+// Keep this list lightweight: it is imported by the client-side Analytics
+// filter, so it must not pull the full article data set into the browser.
+export const standaloneArticlePaths = [
+  "/nl/artikelen/marktanalyse-maakindustrie-meerdere-indicatoren",
+] as const;
+
+export const publicRoutePaths: readonly string[] = [
+  ...routePairs.flat(),
+  ...standaloneArticlePaths,
+];
+
 const enToNl = new Map<string, string>(routePairs);
 const nlToEn = new Map<string, string>(routePairs.map(([en, nl]) => [nl, en]));
 
@@ -61,4 +72,20 @@ export function languageAlternates(englishPath: string, locale: Locale) {
     canonical: locale === "en" ? en : nl,
     languages: { en, "nl-NL": nl, "x-default": en },
   };
+}
+
+export function localizedAlternates(pathname: string, locale: Locale) {
+  const base = siteConfig.siteUrl.replace(/\/$/, "");
+  const canonical = pathname === "/" ? base : `${base}${pathname}`;
+  const counterpart = counterpartPath(pathname);
+  if (!counterpart) {
+    return {
+      canonical,
+      languages: locale === "nl"
+        ? { "nl-NL": canonical }
+        : { en: canonical, "x-default": canonical },
+    };
+  }
+  const englishPath = locale === "en" ? pathname : counterpart;
+  return languageAlternates(englishPath, locale);
 }
