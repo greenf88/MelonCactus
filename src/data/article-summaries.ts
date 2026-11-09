@@ -17,6 +17,7 @@ const summaries: Record<Locale, Record<string, string>> = {
     "asml-capacity-plans-reading-manufacturing-forecasts": "This article reads ASML's capacity outlook as a forecast with assumptions rather than a completed result. Public figures can clarify intended manufacturing scale and timing. They do not prove that a future production or delivery target has already been achieved.",
   },
   nl: {
+    "ai-productieplanning-maakindustrie-orderfamilie": "Test één orderfamilie met dezelfde historische orders, beschikbare informatie en meetlat voor de huidige regel en een AI-voorstel. Vergelijk niet alleen late orders en wachttijd, maar ook handmatige correcties en technisch onuitvoerbare voorstellen. Een planner houdt de vrijgave en beslist op vooraf gekozen criteria of een beperkte vervolgproef verantwoord is.",
     "marktanalyse-maakindustrie-meerdere-indicatoren": "Eén industriecijfer is context, geen verkoopprognose. Dit artikel vertaalt actuele CBS-signalen naar een praktisch selectiekader voor industriële marktsegmenten. Het resultaat is een shortlist met technische fit, afnemersactiviteit, concurrentiedruk, bronzekerheid en een concrete volgende verificatiestap.",
     "fictieve-ai-case-interne-kennisbank": "Een fictief technisch dienstverlenend bedrijf toetst of een interne AI-zoekfunctie medewerkers naar goedgekeurde technische informatie kan leiden. Bronpassages, documentversies en onbeantwoorde vragen blijven zichtbaar. Technische specialisten blijven verantwoordelijk voor interpretatie en handelen.",
     "fictieve-ai-case-aanbestedingsdocumenten-vergelijken": "Een fictief installatiebedrijf onderzoekt AI-ondersteunde vergelijking van aanbestedingsdocumenten. De werkwijze bereidt een herleidbare eisenmatrix voor en markeert mogelijke wijzigingen. Technische en commerciële beoordelaars blijven verantwoordelijk voor omvang, prijs en contractuele toezeggingen.",
@@ -55,6 +56,7 @@ const seoDescriptions: Record<Locale, Record<string, string>> = {
     "asml-capacity-plans-reading-manufacturing-forecasts": "ASML's EUV and DUV capacity plans are forecasts, not delivered output. Learn to distinguish capability, orders, deliveries and scenarios.",
   },
   nl: {
+    "ai-productieplanning-maakindustrie-orderfamilie": "AI voor productieplanning: vergelijk één orderfamilie eerlijk met historische orders, een nulmeting, duidelijke criteria en menselijke vrijgave.",
     "marktanalyse-maakindustrie-meerdere-indicatoren": "Marktanalyse voor de maakindustrie: vertaal CBS-sectorsignalen naar een onderbouwde marktshortlist met technische fit en controleerbare bronnen.",
     "fictieve-ai-case-interne-kennisbank": "Een fictief mkb-bedrijf toetst een interne AI-kennisbank met bronpassages, documentversies, toegangsbeheer en menselijke technische controle.",
     "fictieve-ai-case-aanbestedingsdocumenten-vergelijken": "Een fictief installatiebedrijf toetst AI voor aanbestedingsdocumenten met herleidbare eisen, versiecontrole en menselijke goedkeuring.",
@@ -89,6 +91,7 @@ export function articleMetadataTitle(locale: Locale, slug: string, fallback: str
       "battery-factory-from-pilot-to-commercial-scale": "Battery Factory: Pilot to Commercial Scale",
     },
     nl: {
+      "ai-productieplanning-maakindustrie-orderfamilie": "AI-productieplanning: test één orderfamilie",
       "marktanalyse-maakindustrie-meerdere-indicatoren": "Marktanalyse maakindustrie: van cijfer naar marktkeuze",
       "fictieve-ai-case-interne-kennisbank": "Fictieve AI-case: interne kennisbank voor het mkb",
       "fictieve-ai-case-aanbestedingsdocumenten-vergelijken": "Fictieve AI-case: aanbestedingsdocumenten vergelijken",

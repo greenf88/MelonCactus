@@ -11,6 +11,7 @@ export function InsightCard({ insight, locale = "en" }: { insight: Insight; loca
         <time dateTime={insight.date}>{insight.displayDate}</time>
         <span>{articleReadingLabel(insight, locale)}</span>
         {insight.kind === "fictional-ai-case" ? <span>{locale === "nl" ? "Fictieve case" : "Fictional case"}</span> : null}
+        {insight.kind === "practical-ai-guide" ? <span>{locale === "nl" ? "Praktische handleiding" : "Practical guide"}</span> : null}
       </p>
       <h2><Link href={href}>{insight.title}</Link></h2>
       <p>{insight.description}</p>
