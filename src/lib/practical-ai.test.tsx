@@ -1,6 +1,8 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import DutchArticlePage from "@/app/(nl)/nl/artikelen/[slug]/page";
+import DutchInsightsPage from "@/app/(nl)/nl/artikelen/page";
 import sitemap from "@/app/sitemap";
 import { ContactForm } from "@/components/contact-form";
 import { PracticalAiPage, practicalAiMetadata } from "@/components/practical-ai-page";
@@ -8,6 +10,7 @@ import { enquiryTopics } from "@/config/enquiry-topics";
 import { practicalAiNetherlands } from "@/config/practical-ai-netherlands";
 import { aiPaths, nationalAiPaths, practicalAi } from "@/config/practical-ai";
 import { practicalAiCasesEn, practicalAiCasesNl } from "@/data/practical-ai-cases";
+import { productionPlanningInsightNl } from "@/data/production-planning-insight";
 import { languageAlternates } from "@/lib/i18n";
 
 describe("practical AI service", () => {
@@ -89,6 +92,23 @@ describe("practical AI service", () => {
     }
     expect(englishNational).toContain("not customer assignments or measured results");
     expect(dutchNational).toContain("geen klantopdrachten of gemeten resultaten");
+  });
+
+  it("publishes the standalone production-planning guide as sourced practical AI, not as a client case", async () => {
+    const indexHtml = renderToStaticMarkup(createElement(DutchInsightsPage));
+    const articleHtml = renderToStaticMarkup(await DutchArticlePage({
+      params: Promise.resolve({ slug: productionPlanningInsightNl.slug }),
+    }));
+    expect(productionPlanningInsightNl.kind).toBe("practical-ai-guide");
+    expect(productionPlanningInsightNl.sources).toHaveLength(1);
+    expect(indexHtml).toContain(`/nl/artikelen/${productionPlanningInsightNl.slug}`);
+    expect(indexHtml).toContain("Praktische handleiding");
+    expect(articleHtml).toContain("Praktische AI-handleiding");
+    expect(articleHtml).not.toContain("fictional-case-notice");
+    expect(articleHtml).toContain("Onderstaand voorbeeld is fictief");
+    expect(articleHtml).toContain('href="/nl/ai-hulp-twente"');
+    expect(articleHtml).toContain('href="/nl/artikelen/industriele-ai-beslislus-productie"');
+    expect(articleHtml).toContain("article-sources");
   });
 
   it("defaults the contact form to research and respects valid AI preselection", () => {

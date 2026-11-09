@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Eén orderpakket, twee planningen, dezelfde meetlat</title>
+  <desc id="desc">Mobiel schema waarin hetzelfde historische orderpakket via een vaste regel en een AI-voorstel wordt vergeleken voordat een planner beslist.</desc>
+  <rect width="760" height="1100" rx="34" fill="#F7F6EE"/>
+  <text x="48" y="66" fill="#173D2D" font-family="Arial, sans-serif" font-size="29" font-weight="700">Eén orderpakket, twee planningen</text>
+  <text x="48" y="102" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Dezelfde informatie en meetlat.</text>
+
+  <rect x="48" y="142" width="664" height="190" rx="26" fill="#173D2D"/>
+  <text x="80" y="186" fill="#EEE9BE" font-family="Arial, sans-serif" font-size="17" font-weight="700">GELIJKE HISTORISCHE INVOER</text>
+  <text x="80" y="230" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Orders · materiaal · bewerkingstijd</text>
+  <text x="80" y="266" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" font-weight="700">beloofde datum · machinebeschikbaarheid</text>
+  <text x="80" y="304" fill="#DCE5DC" font-family="Arial, sans-serif" font-size="18">Alleen informatie die toen bekend was</text>
+
+  <path d="M380 346v34" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 370 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="48" y="402" width="316" height="205" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="96" cy="450" r="23" fill="#EEE9BE"/>
+  <text x="96" y="458" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="21" font-weight="700">A</text>
+  <text x="134" y="442" fill="#173D2D" font-family="Arial, sans-serif" font-size="22" font-weight="700">Vaste regel</text>
+  <text x="80" y="504" fill="#4C5852" font-family="Arial, sans-serif" font-size="17">Huidige nulmeting</text>
+  <text x="80" y="546" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Vroegste datum +</text>
+  <text x="80" y="576" fill="#18201D" font-family="Arial, sans-serif" font-size="18">materiaal groeperen</text>
+
+  <rect x="396" y="402" width="316" height="205" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="444" cy="450" r="23" fill="#EEE9BE"/>
+  <text x="444" y="458" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="21" font-weight="700">B</text>
+  <text x="482" y="442" fill="#173D2D" font-family="Arial, sans-serif" font-size="22" font-weight="700">AI-voorstel</text>
+  <text x="428" y="504" fill="#4C5852" font-family="Arial, sans-serif" font-size="17">Afgeschermde proef</text>
+  <text x="428" y="546" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Geen automatische</text>
+  <text x="428" y="576" fill="#18201D" font-family="Arial, sans-serif" font-size="18">productievrijgave</text>
+
+  <path d="M380 624v34" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 648 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="48" y="680" width="664" height="300" rx="28" fill="#DCE5DC"/>
+  <text x="80" y="724" fill="#173D2D" font-family="Arial, sans-serif" font-size="17" font-weight="700">DEZELFDE MEETLAT</text>
+  <rect x="80" y="750" width="286" height="58" rx="14" fill="#FFFFFF"/>
+  <text x="104" y="786" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Te late orders</text>
+  <rect x="394" y="750" width="286" height="58" rx="14" fill="#FFFFFF"/>
+  <text x="418" y="786" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Wachttijd</text>
+  <rect x="80" y="824" width="286" height="58" rx="14" fill="#FFFFFF"/>
+  <text x="104" y="860" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Correcties</text>
+  <rect x="394" y="824" width="286" height="58" rx="14" fill="#FFFFFF"/>
+  <text x="418" y="860" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Uitvoerbaarheid</text>
+  <rect x="80" y="900" width="600" height="56" rx="14" fill="#EEE9BE"/>
+  <text x="380" y="936" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="19" font-weight="700">Planner controleert en beslist</text>
+
+  <text x="48" y="1028" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700">Proefgrens</text>
+  <text x="48" y="1060" fill="#4C5852" font-family="Arial, sans-serif" font-size="17">Geen toekomstdata · geen automatische planning · geen verzonnen besparing</text>
+</svg>

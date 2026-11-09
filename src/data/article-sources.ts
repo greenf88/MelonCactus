@@ -295,4 +295,15 @@ export const articleSources = {
       nl: "Officiële CBS StatLine-tabel met voorlopige, seizoengecorrigeerde maandelijkse stemmingsindicatoren. De saldi duiden richting en vertrouwen; het zijn geen percentages voor omzet, productiegroei of de orderpositie van één bedrijf.",
     },
   },
+  kortProductionPlanning: {
+    id: "kort-intelligent-production-planning",
+    organization: "Fraunhofer Innovation Platform for Advanced Manufacturing at the University of Twente (FIP-AM@UT)",
+    title: "KORT realises gateway to intelligent production planning",
+    url: "https://fip.utwente.nl/news/kort-realises-gateway-to-intelligent-production-planning/",
+    accessed: "2026-11-09",
+    note: {
+      en: "Project publication about a proof-of-concept for buffer and touch time at four sheet-metal companies. No publication date is shown. It does not independently establish current implementation, savings or suitability for another factory.",
+      nl: "Projectpublicatie over een proof of concept voor buffer- en bewerkingstijd bij vier plaatwerkbedrijven. Een publicatiedatum is niet zichtbaar. De bron bewijst niet onafhankelijk dat de aanpak nu operationeel is, een besparing oplevert of bij een ander bedrijf past.",
+    },
+  },
 } satisfies Record<string, ArticleSource>;

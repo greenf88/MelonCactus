@@ -33,7 +33,7 @@ export type Insight = {
   sections: readonly InsightSection[];
   sources?: readonly ArticleSource[];
   visual?: ArticleVisual;
-  kind?: "research" | "fictional-ai-case";
+  kind?: "research" | "fictional-ai-case" | "practical-ai-guide";
 };
 
 const originalInsights: readonly Insight[] = [
