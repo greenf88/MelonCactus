@@ -29,7 +29,8 @@ describe("evergreen article evidence records", () => {
     expect(evergreenDutch).toHaveLength(4);
     for (const article of [...evergreenEnglish, ...evergreenDutch]) {
       expect(article.date).toBe("2026-09-22");
-      expect(article.modifiedDate).toBe("2026-10-09");
+      expect(article.modifiedDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect((article.modifiedDate ?? "") >= "2026-10-09").toBe(true);
       expect(article.sources?.length).toBeGreaterThanOrEqual(3);
     }
   });

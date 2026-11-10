@@ -10,20 +10,26 @@ import { productionPlanningInsightNl } from "@/data/production-planning-insight"
 const originalInsightsNl: readonly Insight[] = [
   {
     slug: "wat-is-industriele-concurrentie-intelligentie",
-    title: "Wat is industriële concurrentie-informatie?",
-    description: "Een praktische gids voor onderbouwd onderzoek naar concurrenten, bedoeld voor industriële beslissers.",
+    title: "Onderzoek concurrentie: vergelijk industriële concurrenten in vijf stappen",
+    description: "Hoe onderzoekt u uw concurrentie? Kies welke aanbieders u vergelijkt, toets hun claims met openbare bronnen en vertaal de uitkomst naar een besluit.",
     date: "2026-09-22",
     displayDate: "22 september 2026",
-    modifiedDate: "2026-10-09",
-    displayModifiedDate: "9 oktober 2026",
+    modifiedDate: "2026-11-10",
+    displayModifiedDate: "10 november 2026",
     visual: articleVisuals.nl.industrialIntelligence,
     sources: [articleSources.scipEthics, articleSources.espacenet, articleSources.ted, articleSources.phiaStandards],
     sections: [
       {
-        heading: "Een hulpmiddel voor beslissingen, geen verzamelwoede",
+        heading: "Hoe onderzoekt u uw concurrentie? Vijf stappen",
         paragraphs: [
-          "Industriële concurrentie-informatie ontstaat door rechtmatig toegankelijke gegevens over bedrijven, technologieën, capaciteiten en markten gestructureerd te verzamelen en te duiden. Het doel is een betere beslissing: een markt betreden, op een concurrent reageren, een partner beoordelen, een productplanning aanpassen of een strategische aanname toetsen.",
-          "Dat onderscheid is belangrijk. Een grote map documenten is nog geen bruikbaar inzicht. Goede analyse koppelt bewijs aan een afgebakende vraag, legt uit hoe betrouwbaar de bronnen zijn en laat zien welke conclusies worden ondersteund. Ook onzekerheid blijft zichtbaar. Juist in technische markten, waar productclaims vaak onvolledig zijn en leveranciers verschillende termen gebruiken, telt die discipline meer dan de hoeveelheid materiaal.",
+          "Begin uw concurrentieonderzoek met een besluit. Wilt u weten welke aanbieders op dezelfde offerte inschrijven, of een concurrent in een nieuw segment al kan leveren? Die vraag bepaalt welke bedrijven, producten en bronnen relevant zijn.",
+        ],
+        bullets: [
+          "1. Baken uw vraag af. Noteer de productgroep, de regio en de periode waarop uw besluit betrekking heeft.",
+          "2. Kies wie u vergelijkt. Neem directe concurrenten mee die hetzelfde type klant bedienen, en indirecte concurrenten die hetzelfde klantprobleem op een andere manier oplossen.",
+          "3. Kies dezelfde criteria voor iedere aanbieder. Vergelijk bijvoorbeeld toepassingen, aantoonbare referenties, technische specificaties en service in de regio.",
+          "4. Toets de claims met openbare bronnen. Noteer per bevinding de bron en de datum. Zoek een onafhankelijke bevestiging voor claims die uw besluit kunnen veranderen.",
+          "5. Trek een conclusie per criterium. Noteer wat is bevestigd, wat alleen door de aanbieder wordt geclaimd en wat onbekend blijft. Kies daarna welke onzekerheid u als eerste wilt verkleinen.",
         ],
       },
       {
@@ -54,10 +60,17 @@ const originalInsightsNl: readonly Insight[] = [
         ],
       },
       {
-        heading: "Wanneer is gericht onderzoek zinvol?",
+        heading: "Wanneer is gericht concurrentieonderzoek zinvol?",
         paragraphs: [
           { text: "Onderzoek heeft de meeste waarde wanneer de beslissing belangrijk is, openbare informatie versnipperd is en een onjuiste aanname gevolgen kan hebben. Een goede opdracht omschrijft de beslissing, het doel, de termijn en de bewijsstandaard. Ook de juridische en ethische grenzen horen erbij: gebruik alleen openbare bronnen, doe u niet voor als een ander, zoek geen ongeoorloofde toegang en gebruik geen onrechtmatig verkregen materiaal.", sourceIds: ["scip-ethics"] },
           "Een scherp afgebakende vraag levert meestal meer op dan het verzoek om alles over een bedrijf te vinden. Begin bij de onzekerheid die uw beslissing kan veranderen. Het onderzoek kan vervolgens aangeven wat bekend, aannemelijk of onbekend is en welke vervolgvraag de onzekerheid het meest verkleint.",
+        ],
+      },
+      {
+        heading: "Voorbeeld: concurrentieonderzoek bij verpakkingsmachines",
+        paragraphs: [
+          "Stel dat u als machinebouwer wilt weten of een concurrerende verpakkingslijn ook geschikt is voor korte productieruns. In de brochure ziet u een omsteltijd van tien minuten. Noteer dat als leveranciersclaim en kijk welke productformaten, handelingen en operatorbezetting bij die tijd horen. Een openbare demonstratie kan helpen, mits het duidelijk is welke stappen in beeld komen.",
+          "Vindt u alleen een demonstratie tussen twee vergelijkbare formaten? Noteer dan dat die wissel zichtbaar is, maar dat de omsteltijd bij andere formaten onbekend blijft. Zo weet uw verkoopteam welke vergelijking het kan onderbouwen en welke vraag eerst om een praktijktest vraagt.",
         ],
       },
     ],
