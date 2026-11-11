@@ -42,6 +42,7 @@ export const routePairs = [
 // Keep this list lightweight: it is imported by the client-side Analytics
 // filter, so it must not pull the full article data set into the browser.
 export const standaloneArticlePaths = [
+  "/insights/laser-cutting-supplier-independence-check",
   "/nl/artikelen/ai-productieplanning-maakindustrie-orderfamilie",
   "/nl/artikelen/marktanalyse-maakindustrie-meerdere-indicatoren",
 ] as const;

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Verify the supply route behind each brand</title>
+  <desc id="desc">Mobile diagram tracing two branded quotations through legal identity, ownership, service and parts before a shortlist decision.</desc>
+  <rect width="760" height="1100" rx="34" fill="#F7F6EE"/>
+  <text x="48" y="65" fill="#173D2D" font-family="Arial, sans-serif" font-size="29" font-weight="700">Trace the route behind each brand</text>
+  <text x="48" y="101" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">A logo is not a continuity plan.</text>
+
+  <rect x="48" y="142" width="664" height="174" rx="26" fill="#173D2D"/>
+  <text x="80" y="184" fill="#EEE9BE" font-family="Arial, sans-serif" font-size="17" font-weight="700">TWO QUOTED OPTIONS</text>
+  <rect x="80" y="216" width="280" height="68" rx="16" fill="#FFFFFF"/>
+  <text x="106" y="259" fill="#173D2D" font-family="Arial, sans-serif" font-size="21" font-weight="700">Brand A + legal name</text>
+  <rect x="400" y="216" width="280" height="68" rx="16" fill="#FFFFFF"/>
+  <text x="426" y="259" fill="#173D2D" font-family="Arial, sans-serif" font-size="21" font-weight="700">Brand B + legal name</text>
+
+  <path d="M380 330v38" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 358 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="48" y="390" width="664" height="386" rx="26" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <text x="80" y="434" fill="#173D2D" font-family="Arial, sans-serif" font-size="17" font-weight="700">TRACE EACH LAYER · WITH A DATE</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="468" width="600" height="58" rx="14" fill="#EEE9BE"/>
+    <text x="106" y="504" fill="#18201D" font-size="20" font-weight="700">1. Contracting company</text>
+    <rect x="80" y="540" width="600" height="58" rx="14" fill="#DCE5DC"/>
+    <text x="106" y="576" fill="#173D2D" font-size="20" font-weight="700">2. Ownership group</text>
+    <rect x="80" y="612" width="600" height="58" rx="14" fill="#EEE9BE"/>
+    <text x="106" y="648" fill="#18201D" font-size="20" font-weight="700">3. Service provider</text>
+    <rect x="80" y="684" width="600" height="58" rx="14" fill="#DCE5DC"/>
+    <text x="106" y="720" fill="#173D2D" font-size="20" font-weight="700">4. Critical parts and software route</text>
+  </g>
+
+  <path d="M380 790v38" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 818 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="48" y="850" width="664" height="190" rx="26" fill="#DCE5DC"/>
+  <text x="80" y="894" fill="#173D2D" font-family="Arial, sans-serif" font-size="17" font-weight="700">DECISION GATE</text>
+  <text x="80" y="940" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">Which open answer changes the shortlist?</text>
+  <text x="80" y="982" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Remove · re-rank · require written clarification</text>
+  <text x="80" y="1016" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Do not turn an unknown into an assumption.</text>
+</svg>

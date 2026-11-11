@@ -3,6 +3,7 @@ import { articleSources, type ArticleSource } from "@/data/article-sources";
 import { articleVisuals, type ArticleVisual } from "@/data/article-visuals";
 import { decisionLoopInsightEn } from "@/data/decision-loop-insights";
 import { practicalAiCasesEn } from "@/data/practical-ai-cases";
+import { supplierIndependenceInsightEn } from "@/data/supplier-independence-insight";
 
 export type InsightParagraph = string | {
   text: string;
@@ -285,6 +286,7 @@ const originalInsights: readonly Insight[] = [
 ] as const;
 
 export const insights: readonly Insight[] = [
+  supplierIndependenceInsightEn,
   ...practicalAiCasesEn,
   decisionLoopInsightEn,
   ...industrialInsights.filter((insight) => insight.locale === "en"),

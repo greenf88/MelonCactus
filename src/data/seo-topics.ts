@@ -51,7 +51,7 @@ const en: readonly Topic[] = [
     method: "We define the capability and geography in scope, then compare official company material with public tenders, relevant registers, technical documentation and independently published project information. Where names or roles are ambiguous, the report states the ambiguity rather than inferring a relationship.",
     evidenceLimit: "A listed customer does not prove the current scope of supply; a facility image does not prove available capacity; absence of a public record is not proof that a capability does not exist. Direct supplier questionnaires, site visits and contractual checks remain separate steps.",
     application: "A focused intelligence assessment can address one supplier question. A technical and competitive assessment is appropriate when processes, facilities or several relationships need deeper comparison.",
-    articlePaths: ["/insights/what-is-industrial-competitive-intelligence", "/insights/factory-opening-versus-full-production-infineon", "/insights/battery-factory-from-pilot-to-commercial-scale"],
+    articlePaths: ["/insights/laser-cutting-supplier-independence-check", "/insights/what-is-industrial-competitive-intelligence", "/insights/factory-opening-versus-full-production-infineon", "/insights/battery-factory-from-pilot-to-commercial-scale"],
     servicePaths: ["/services/focused-intelligence-assessment", "/services/technical-competitive-intelligence"], examplePath: "/example-case/fourth-pillar",
   },
   {

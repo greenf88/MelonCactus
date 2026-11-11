@@ -22,8 +22,9 @@ describe("sourced article rendering", () => {
   it("renders numbered claim citations and a localized source register", () => {
     const english = insights.filter((article) => article.sources?.length);
     const dutch = insightsNl.filter((article) => article.sources?.length);
+    const standaloneEnglishCount = standaloneArticlePaths.filter((path) => path.startsWith("/insights/")).length;
     const standaloneDutchCount = standaloneArticlePaths.filter((path) => path.startsWith("/nl/artikelen/")).length;
-    expect(english).toHaveLength(9);
+    expect(english).toHaveLength(9 + standaloneEnglishCount);
     expect(dutch).toHaveLength(9 + standaloneDutchCount);
 
     for (const article of english) {
