@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">A second brand is not automatically a second supply route</title>
+  <desc id="desc">Two branded quotations are traced through legal counterparties and ownership to service and parts routes, ending in one open question that can change the shortlist.</desc>
+  <rect width="1200" height="760" rx="36" fill="#F7F6EE"/>
+  <text x="70" y="70" fill="#173D2D" font-family="Arial, sans-serif" font-size="32" font-weight="700">Verify the route behind each brand</text>
+  <text x="70" y="108" fill="#4C5852" font-family="Arial, sans-serif" font-size="19">Identity, ownership and support answer different questions.</text>
+
+  <rect x="70" y="164" width="250" height="420" rx="28" fill="#173D2D"/>
+  <text x="98" y="207" fill="#EEE9BE" font-family="Arial, sans-serif" font-size="17" font-weight="700">QUOTED OPTIONS</text>
+  <rect x="98" y="242" width="194" height="104" rx="18" fill="#FFFFFF"/>
+  <text x="120" y="279" fill="#173D2D" font-family="Arial, sans-serif" font-size="21" font-weight="700">Brand A</text>
+  <text x="120" y="313" fill="#4C5852" font-family="Arial, sans-serif" font-size="17">Offer + legal name</text>
+  <rect x="98" y="372" width="194" height="104" rx="18" fill="#FFFFFF"/>
+  <text x="120" y="409" fill="#173D2D" font-family="Arial, sans-serif" font-size="21" font-weight="700">Brand B</text>
+  <text x="120" y="443" fill="#4C5852" font-family="Arial, sans-serif" font-size="17">Offer + legal name</text>
+  <text x="98" y="527" fill="#DCE5DC" font-family="Arial, sans-serif" font-size="17">Do not count logos.</text>
+  <text x="98" y="555" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" font-weight="700">Trace dependencies.</text>
+
+  <path d="M342 374h52" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m382 362 14 12-14 12" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="414" y="164" width="354" height="420" rx="28" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <text x="446" y="207" fill="#173D2D" font-family="Arial, sans-serif" font-size="17" font-weight="700">TRACE EACH LAYER</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="446" y="238" width="290" height="58" rx="14" fill="#EEE9BE"/>
+    <text x="470" y="274" fill="#18201D" font-size="19" font-weight="700">1. Contracting company</text>
+    <rect x="446" y="310" width="290" height="58" rx="14" fill="#DCE5DC"/>
+    <text x="470" y="346" fill="#173D2D" font-size="19" font-weight="700">2. Ownership group</text>
+    <rect x="446" y="382" width="290" height="58" rx="14" fill="#EEE9BE"/>
+    <text x="470" y="418" fill="#18201D" font-size="19" font-weight="700">3. Service provider</text>
+    <rect x="446" y="454" width="290" height="58" rx="14" fill="#DCE5DC"/>
+    <text x="470" y="490" fill="#173D2D" font-size="19" font-weight="700">4. Parts and software</text>
+    <text x="446" y="548" fill="#4C5852" font-size="17">Record source and evidence date.</text>
+  </g>
+
+  <path d="M790 374h52" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m830 362 14 12-14 12" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="862" y="164" width="268" height="420" rx="28" fill="#DCE5DC"/>
+  <text x="894" y="207" fill="#173D2D" font-family="Arial, sans-serif" font-size="17" font-weight="700">DECISION GATE</text>
+  <text x="894" y="255" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">One open question</text>
+  <text x="894" y="286" fill="#18201D" font-family="Arial, sans-serif" font-size="22" font-weight="700">must change an action.</text>
+  <line x1="894" y1="322" x2="1098" y2="322" stroke="#8FAE9B" stroke-width="2"/>
+  <text x="894" y="365" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700">REMOVE</text>
+  <text x="894" y="394" fill="#4C5852" font-family="Arial, sans-serif" font-size="17">same hidden dependency</text>
+  <text x="894" y="440" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700">RE-RANK</text>
+  <text x="894" y="469" fill="#4C5852" font-family="Arial, sans-serif" font-size="17">different support route</text>
+  <text x="894" y="515" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700">REQUIRE</text>
+  <text x="894" y="544" fill="#4C5852" font-family="Arial, sans-serif" font-size="17">written clarification</text>
+
+  <rect x="70" y="626" width="1060" height="72" rx="20" fill="#EEE9BE"/>
+  <text x="98" y="671" fill="#18201D" font-family="Arial, sans-serif" font-size="20" font-weight="700">Common ownership may affect leverage; shared service and parts may affect continuity.</text>
+</svg>
