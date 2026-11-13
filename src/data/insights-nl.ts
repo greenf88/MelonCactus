@@ -6,6 +6,7 @@ import { articleSources } from "@/data/article-sources";
 import { articleVisuals } from "@/data/article-visuals";
 import { marketAnalysisInsightNl } from "@/data/market-analysis-insight";
 import { productionPlanningInsightNl } from "@/data/production-planning-insight";
+import { weldPhotoInspectionInsightNl } from "@/data/weld-photo-inspection-insight";
 
 const originalInsightsNl: readonly Insight[] = [
   {
@@ -269,6 +270,7 @@ const originalInsightsNl: readonly Insight[] = [
 ];
 
 export const insightsNl: readonly Insight[] = [
+  weldPhotoInspectionInsightNl,
   productionPlanningInsightNl,
   marketAnalysisInsightNl,
   ...practicalAiCasesNl,
