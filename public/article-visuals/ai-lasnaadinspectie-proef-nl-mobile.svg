@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">AI-lasnaadinspectie als afgebakende fotoproef</title>
+  <desc id="desc">Mobiel schema van vaste foto-opname via vaklabels en gesloten testset naar een menselijke kwaliteitsbeslissing.</desc>
+  <rect width="760" height="1100" rx="34" fill="#F7F6EE"/>
+  <text x="48" y="64" fill="#173D2D" font-family="Arial, sans-serif" font-size="29" font-weight="700">AI-lasnaadinspectie als proef</text>
+  <text x="48" y="100" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Eén lasnaadtype · vaste beelden · mens beslist</text>
+
+  <rect x="48" y="140" width="664" height="176" rx="24" fill="#173D2D"/>
+  <circle cx="94" cy="184" r="22" fill="#EEE9BE"/>
+  <text x="94" y="192" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="20" font-weight="700">1</text>
+  <text x="132" y="192" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Vaste foto-opname</text>
+  <text x="80" y="238" fill="#DCE5DC" font-family="Arial, sans-serif" font-size="18">Zelfde lasnaad · camera · afstand · hoek · licht</text>
+  <rect x="80" y="260" width="264" height="38" rx="10" fill="#2A5A43"/>
+  <text x="212" y="285" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16" font-weight="700">Foto bruikbaar?</text>
+
+  <path d="M380 328v28" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 346 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="48" y="378" width="664" height="180" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="94" cy="422" r="22" fill="#EEE9BE"/>
+  <text x="94" y="430" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="20" font-weight="700">2</text>
+  <text x="132" y="430" fill="#173D2D" font-family="Arial, sans-serif" font-size="22" font-weight="700">Vaklabels zonder AI-uitvoer</text>
+  <text x="80" y="478" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Zichtbare afwijking · niet zichtbaar</text>
+  <text x="80" y="514" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Twijfel · onbruikbare foto</text>
+
+  <path d="M380 570v28" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 588 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="48" y="620" width="664" height="190" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+  <circle cx="94" cy="664" r="22" fill="#EEE9BE"/>
+  <text x="94" y="672" text-anchor="middle" fill="#18201D" font-family="Arial, sans-serif" font-size="20" font-weight="700">3</text>
+  <text x="132" y="672" fill="#173D2D" font-family="Arial, sans-serif" font-size="22" font-weight="700">Gesloten testset</text>
+  <text x="80" y="720" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Gemiste afwijkingen · onterechte meldingen</text>
+  <text x="80" y="756" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Twijfel · onbruikbaar · herbeoordelingstijd</text>
+  <text x="80" y="788" fill="#4C5852" font-family="Arial, sans-serif" font-size="16">Geen modelafstelling op de eindtoets</text>
+
+  <path d="M380 822v28" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round"/>
+  <path d="m368 840 12 14 12-14" fill="none" stroke="#8FAE9B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="48" y="872" width="664" height="124" rx="24" fill="#EEE9BE"/>
+  <circle cx="94" cy="916" r="22" fill="#173D2D"/>
+  <text x="94" y="924" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" font-weight="700">4</text>
+  <text x="132" y="916" fill="#173D2D" font-family="Arial, sans-serif" font-size="21" font-weight="700">Vakmens bepaalt het vervolg</text>
+  <text x="132" y="952" fill="#18201D" font-family="Arial, sans-serif" font-size="18">Opnieuw fotograferen · aanvullend meten · vrijgave</text>
+
+  <text x="48" y="1044" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700">Proefgrens</text>
+  <text x="48" y="1074" fill="#4C5852" font-family="Arial, sans-serif" font-size="16">Geen automatische vrijgave en geen vervanging van voorgeschreven inspectie</text>
+</svg>

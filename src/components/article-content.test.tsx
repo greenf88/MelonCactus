@@ -63,7 +63,10 @@ describe("sourced article rendering", () => {
       for (const article of visualArticles) {
         const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix={idPrefix} locale={locale} />);
         expect(html).toContain('class="article-visual"');
-        expect(html).toContain(`alt="${article.visual?.alt.replaceAll("&", "&amp;").replaceAll("\"", "&quot;")}`);
+        expect(html).toContain(`alt="${article.visual?.alt
+          .replaceAll("&", "&amp;")
+          .replaceAll("'", "&#x27;")
+          .replaceAll("\"", "&quot;")}`);
         expect(html).toContain(article.visual?.title);
         expect(html).toContain(`aria-label="${article.visual?.explanationLabel}`);
         for (const detail of article.visual?.details ?? []) {
