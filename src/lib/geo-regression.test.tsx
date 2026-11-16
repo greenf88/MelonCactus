@@ -65,7 +65,14 @@ describe("GEO content regression", () => {
       }
     }
     for (const { en, nl } of articlePairs()) {
-      expect(nl.sources?.map((source) => source.id)).toEqual(en.sources?.map((source) => source.id));
+      const englishIds = en.sources?.map((source) => source.id) ?? [];
+      const dutchIds = nl.sources?.map((source) => source.id) ?? [];
+      expect(dutchIds).toEqual(expect.arrayContaining(englishIds));
+      if (nl.slug === "wat-bewijst-een-aangekondigde-fabrieksuitbreiding") {
+        expect(dutchIds).toEqual([...englishIds, "umicore-hoboken-growth-2026"]);
+      } else {
+        expect(dutchIds).toEqual(englishIds);
+      }
     }
   });
 

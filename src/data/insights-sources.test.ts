@@ -53,7 +53,9 @@ describe("evergreen article evidence records", () => {
     expect(caseEnglish).toHaveLength(4);
     expect(caseDutch).toHaveLength(4);
     for (const article of [...caseEnglish, ...caseDutch]) {
-      expect(article.modifiedDate).toBe("2026-10-12");
+      expect(article.modifiedDate).toBe(
+        article.slug === "wat-bewijst-een-aangekondigde-fabrieksuitbreiding" ? "2026-11-16" : "2026-10-12",
+      );
       expect(article.sources?.length).toBeGreaterThan(0);
       expect(article.visual).toBeDefined();
     }
@@ -81,9 +83,18 @@ describe("evergreen article evidence records", () => {
     }
   });
 
-  it("uses the same evidence set for each English and Dutch counterpart", () => {
+  it("keeps paired evidence aligned while allowing a documented locale-specific update", () => {
     for (const { en, nl } of sourcedArticlePairs()) {
-      expect(nl?.sources?.map((source) => source.id)).toEqual(en?.sources?.map((source) => source.id));
+      const englishIds = en.sources?.map((source) => source.id) ?? [];
+      const dutchIds = nl.sources?.map((source) => source.id) ?? [];
+      expect(dutchIds).toEqual(expect.arrayContaining(englishIds));
+      if (nl.slug === "wat-bewijst-een-aangekondigde-fabrieksuitbreiding") {
+        expect(dutchIds).toEqual([...englishIds, "umicore-hoboken-growth-2026"]);
+        expect(nl.modifiedDate).toBe("2026-11-16");
+        expect(en.modifiedDate).toBe("2026-10-12");
+      } else {
+        expect(dutchIds).toEqual(englishIds);
+      }
     }
   });
 });

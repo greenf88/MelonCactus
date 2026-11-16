@@ -183,6 +183,20 @@ export const articleSources = {
       nl: "Bedrijfsmededeling van ASML. De bron ondersteunt de genoemde bouwmijlpaal, geplande omvang, aantallen werkplekken en planning; zij bewijst geen actuele productie-output of het latere operationele effect van de campus.",
     },
   },
+  umicoreHobokenGrowth2026: {
+    id: "umicore-hoboken-growth-2026",
+    organization: "Umicore",
+    title: "Umicore to invest €450 million for growth",
+    url: "https://www.umicore.com/en/media/newsroom/umicore-to-invest-450-million-euros-for-growth/",
+    date: "2026-11-12",
+    dateKind: "published",
+    datePrecision: "day",
+    accessed: "2026-11-16",
+    note: {
+      en: "Umicore company announcement. It supports the investment decision, stated project period, expected commissioning year and regulatory condition. It does not confirm an external piping package, procurement route, tender date or supplier appointment.",
+      nl: "Bedrijfsmededeling van Umicore. De bron ondersteunt het investeringsbesluit, de genoemde projectperiode, het verwachte jaar van ingebruikname en het voorbehoud van goedkeuringen. Zij bevestigt geen extern leidingenpakket, inkooproute, aanbestedingsdatum of aangestelde leverancier.",
+    },
+  },
   infineonFabOpening: {
     id: "infineon-smart-power-fab-opening-2026",
     organization: "Infineon Technologies",
