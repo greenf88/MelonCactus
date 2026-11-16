@@ -2,7 +2,7 @@
 
 **Voorgestelde URL:** `/nl/artikelen/wat-bewijst-een-aangekondigde-fabrieksuitbreiding`
 
-**Meta description:** Een bouwstart toont investeringsrichting, maar geen actuele productiecapaciteit. Zo leest u de openbare gegevens over ASML's nieuwe campus zorgvuldig.
+**Meta description:** Een fabrieksuitbreiding toont investeringsrichting, maar nog geen leveranciersopdracht. Controleer werkpakket en inkooproute vóór u calculatietijd reserveert.
 
 **Publicatiedatum:** 2026-09-27
 
@@ -32,6 +32,32 @@ Voor een controleerbaar dossier is een eenvoudige tijdlijn nuttig. Noteer per pu
 
 Bewaar ook het verschil tussen **ruimte voor werkzaamheden** en **extra output**. Productie- en logistieke functies kunnen op één terrein worden samengebracht om processen efficiënter te maken zonder dat elke verhuizing direct leidt tot een nieuwe productielijn. De grootste verandering kan eerst zitten in interne doorstroming, magazijnruimte of betrouwbaarheid. Pas een latere, gespecificeerde productieclaim zou een berekening van extra systeemcapaciteit rechtvaardigen.
 
+### Wanneer wordt een uitbreiding een bruikbaar leverancierssignaal?
+
+Een investeringsbesluit kan commercieel relevant zijn voordat een installatie draait. Toch is het nog geen bewijs dat een bepaald werkpakket extern wordt ingekocht. De [aankondiging van Umicore op 12 november 2026](https://www.umicore.com/en/media/newsroom/umicore-to-invest-450-million-euros-for-growth/) maakt dat verschil zichtbaar. Umicore meldde een investering van €450 miljoen in uitbreiding van het raffinageproces voor edelmetalen in Hoboken. Het bedrijf noemt 2027–2030 als investeringsperiode en verwacht ingebruikname in 2030, onder voorbehoud van de vereiste goedkeuringen.
+
+De bron bevestigt daarmee een investeringsbesluit, een technische richting en een globaal tijdpad. Zij vermeldt niet dat er een extern pakket voor procesleidingen bestaat, wie zo'n pakket zou inkopen, welke scope het zou hebben of wanneer leveranciers zich kunnen melden. Een leverancier die deze onbekende punten overslaat, verandert een bedrijfsplan ongemerkt in een verkooppijplijn.
+
+Houd daarom drie beslisniveaus apart:
+
+- **Project volgen:** bevestig besluit, locatie, globale techniek, tijdpad en voorwaarden. Open een dossier en houd de concrete onbekenden bij.
+- **Werkpakket onderzoeken:** zoek bewijs voor het bestaan en de grens van het pakket, de verantwoordelijke inkoper of hoofdaannemer, de inkooproute en het verwachte beslismoment. Doe pas daarna gericht bronnenonderzoek of stel een korte kwalificatievraag.
+- **Calculatietijd reserveren:** vraag om herleidbare bevestiging van scope, route, benodigde stukken en reactietermijn. Plan pas dan mensen in voor een offerte of technische uitwerking.
+
+Een gepubliceerd inkoopdocument, een bevestigde prekwalificatie of communicatie van de verantwoordelijke inkoper kan het tweede of derde niveau ondersteunen. Een algemene projectaankondiging, een vacature of een bestaand leverancierscontact doet dat niet automatisch. Noteer bij ieder signaal daarom niet alleen wat het bevestigt, maar ook welke commerciële stap nog niet verantwoord is.
+
+### Fictief beslisvoorbeeld: een mogelijk pakket voor procesleidingen
+
+Het volgende voorbeeld is volledig fictief. Het beschrijft geen werkelijk Umicore-werkpakket, bekende aanbesteding, aangestelde leverancier of uitgevoerde opdracht. Een Nederlandse leverancier van industriële procesleidingen ziet de Hoboken-aankondiging en vraagt zich af of extra calculatiecapaciteit nodig is.
+
+**Stap 1 — het project volgen.** De leverancier legt de officiële aankondiging vast, inclusief datum, bedrag, projectperiode, verwacht jaar van ingebruikname en het voorbehoud van goedkeuringen. In het dossier staat expliciet dat de verdeling in werkpakketten en de externe inkooproute onbekend zijn. Er wordt nog geen omzetkans of offertedatum geregistreerd.
+
+**Stap 2 — scope en route controleren.** Het team zoekt vervolgens alleen naar bronnen die de eigen beslisvraag kunnen beantwoorden: bestaat er een afzonderlijk leidingenpakket, welke procesgrens hoort erbij, koopt Umicore rechtstreeks in of loopt de route via een hoofdaannemer, gelden er prekwalificaties en is er een bevestigd moment voor marktbenadering? Als zulke informatie niet openbaar is, kan een korte kwalificatievraag passend zijn. Een aanname in het CRM is geen vervanging voor een antwoord.
+
+**Stap 3 — pas na bevestiging calculeren.** De leverancier reserveert pas gerichte calculatie- of engineeringtijd wanneer een herleidbare bron of de verantwoordelijke inkoper het relevante pakket, de inkooproute, de benodigde documenten en de reactietermijn bevestigt. Tot dat moment blijft het project een te volgen signaal. Zo voorkomt het bedrijf dat schaarse technische tijd wordt vastgezet voor een pakket dat mogelijk anders is afgebakend, intern wordt uitgevoerd of nog niet in de markt staat.
+
+Dit besliskader geeft geen garantie op toegang tot de opdracht. Het helpt alleen om de inzet evenredig te maken aan de sterkte van het bewijs. Ook na bevestiging blijven technische geschiktheid, capaciteit, contractvoorwaarden en veiligheids- of kwaliteitseisen afzonderlijke beslissingen.
+
 ### De vraag achter het nieuws
 
 Voor inkoop kan de werkelijke vraag zijn of een toekomstige locatie de leverzekerheid van een specifieke productfamilie verbetert. Voor een concurrent kan het gaan om het moment waarop een nieuw proces commercieel effect krijgt. Voor een regionale leverancier is vooral relevant welke activiteiten op welke datum naar de campus verhuizen. Hetzelfde persbericht levert voor elk van die beslissingen andere bruikbare aanwijzingen op.
@@ -40,7 +66,7 @@ Neem bijvoorbeeld een leverancier die wil investeren in extra eigen capaciteit. 
 
 De praktische les: registreer een aangekondigde uitbreiding als een sterke aanwijzing voor investeringsrichting. Trek pas een conclusie over gerealiseerde productie als er daarvoor afzonderlijk bewijs is. Zo blijft een indrukwekkend bouwproject bruikbare informatie zonder dat toekomstige capaciteit stilzwijgend als huidige capaciteit wordt gepresenteerd.
 
-**Bron:** [ASML, bouwstart nieuwe campus, 8 september 2026](https://www.asml.com/en/news/press-releases/2026/asml-begins-construction-of-new-eindhoven-campus). Alle genoemde plannen, oppervlaktes en tijdpaden komen uit deze bedrijfsmededeling; de onderscheidingen tussen bewijsniveaus zijn redactionele analyse.
+**Bronnen:** [ASML, bouwstart nieuwe campus, 8 september 2026](https://www.asml.com/en/news/press-releases/2026/asml-begins-construction-of-new-eindhoven-campus) en [Umicore, investeringsbesluit voor Hoboken, 12 november 2026](https://www.umicore.com/en/media/newsroom/umicore-to-invest-450-million-euros-for-growth/). De bedrijfsmededelingen ondersteunen alleen de daaraan toegeschreven besluiten, plannen en tijdpaden. Het leverancierskader is redactionele analyse; het leidingenpakket is fictief.
 
 **Interne link:** [Hoe wij bronnen en onzekerheid beoordelen](/nl/werkwijze).
 

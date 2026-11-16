@@ -11,6 +11,8 @@ const source = readFileSync(join(process.cwd(), "src/data/industrial-insights.md
 type ArticleEnhancement = {
   sources: readonly ArticleSource[];
   visual: ArticleVisual;
+  modifiedDate?: string;
+  displayModifiedDate?: string;
 };
 
 const enhancements: Readonly<Record<string, ArticleEnhancement>> = {
@@ -19,8 +21,10 @@ const enhancements: Readonly<Record<string, ArticleEnhancement>> = {
     visual: articleVisuals.en.factoryExpansion,
   },
   "wat-bewijst-een-aangekondigde-fabrieksuitbreiding": {
-    sources: [articleSources.asmlCampus],
+    sources: [articleSources.asmlCampus, articleSources.umicoreHobokenGrowth2026],
     visual: articleVisuals.nl.factoryExpansion,
+    modifiedDate: "2026-11-16",
+    displayModifiedDate: "16 november 2026",
   },
   "factory-opening-versus-full-production-infineon": {
     sources: [articleSources.infineonFabOpening, articleSources.infineonQuarterly2026],
@@ -88,8 +92,8 @@ function parseArticle(chunk: string): Insight & { locale: "en" | "nl" } {
     displayDate: new Intl.DateTimeFormat(locale === "nl" ? "nl-NL" : "en-GB", {
       day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
     }).format(new Date(`${date}T00:00:00Z`)),
-    modifiedDate: "2026-10-12",
-    displayModifiedDate: locale === "nl" ? "12 oktober 2026" : "12 October 2026",
+    modifiedDate: enhancement.modifiedDate ?? "2026-10-12",
+    displayModifiedDate: enhancement.displayModifiedDate ?? (locale === "nl" ? "12 oktober 2026" : "12 October 2026"),
     introMarkdown: introMarkdown.trim(),
     sections,
     ...enhancement,
