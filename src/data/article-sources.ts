@@ -404,4 +404,18 @@ export const articleSources = {
       nl: "Fraunhofer-publicatie over een demonstratie waarbij een vooraf getraind model camerabeelden van lasnaden op batterijmodules analyseert. Zij levert geen onafhankelijke validatie voor een ander lasnaadtype, andere camera-opstelling of productieomgeving.",
     },
   },
+  nistProductDataIdentifiers: {
+    id: "nist-product-data-identifiers-2024",
+    organization: "National Institute of Standards and Technology (NIST)",
+    title: "Research Results and Recommendations for Universally Unique Identifiers in Product Data Standards",
+    url: "https://doi.org/10.6028/NIST.AMS.300-12",
+    date: "2024-07",
+    dateKind: "published",
+    datePrecision: "month",
+    accessed: "2026-11-18",
+    note: {
+      en: "Primary NIST research publication on persistent identifiers and traceability across design, manufacturing and inspection data. Its design-to-manufacturing use case is technical context, not validation of the simplified work-order trial described here.",
+      nl: "Primaire NIST-onderzoekspublicatie over blijvende identificatie en herleidbaarheid tussen ontwerp-, productie- en inspectiegegevens. De use case voor ontwerpvrijgave is technische context, geen validatie van de vereenvoudigde werkbonproef in dit artikel.",
+    },
+  },
 } satisfies Record<string, ArticleSource>;
