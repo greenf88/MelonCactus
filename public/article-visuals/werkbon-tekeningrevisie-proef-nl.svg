@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Vijf werkbonnen, drie bronvelden, één menselijke vrijgave</title>
+  <desc id="desc">Vijf fictieve werkbonnen worden gecontroleerd op tekeningnummer, revisie en vrijgavestatus. Een vaste regel vergelijkt de velden, AI helpt alleen bij extractie en werkvoorbereiding beslist.</desc>
+  <rect width="1200" height="760" rx="36" fill="#F7F6EE"/>
+  <text x="62" y="66" fill="#173D2D" font-family="Arial, sans-serif" font-size="31" font-weight="700">Vijf werkbonnen vóór productie</text>
+  <text x="62" y="104" fill="#4C5852" font-family="Arial, sans-serif" font-size="19">Vergelijk nummer, revisie en vrijgavestatus. Laat werkvoorbereiding beslissen.</text>
+
+  <rect x="62" y="142" width="360" height="54" rx="15" fill="#173D2D"/>
+  <text x="88" y="176" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" font-weight="700">FICTIEVE DOCUMENTEN</text>
+  <rect x="446" y="142" width="306" height="54" rx="15" fill="#DCE5DC"/>
+  <text x="472" y="176" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700">VASTE VELDCONTROLE</text>
+  <rect x="776" y="142" width="362" height="54" rx="15" fill="#EEE9BE"/>
+  <text x="802" y="176" fill="#18201D" font-family="Arial, sans-serif" font-size="18" font-weight="700">BESLISSING WERKVOORBEREIDING</text>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="62" y="218" width="1076" height="76" rx="18" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="100" cy="256" r="22" fill="#173D2D"/><text x="100" y="263" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">01</text>
+    <text x="138" y="249" fill="#18201D" font-size="18" font-weight="700">4711 · revisie C · vrijgegeven</text><text x="138" y="274" fill="#4C5852" font-size="16">Alle drie bronvelden komen overeen</text>
+    <text x="472" y="263" fill="#173D2D" font-size="18" font-weight="700">Overeenkomst</text>
+    <text x="802" y="263" fill="#18201D" font-size="18">Volgens normale procedure</text>
+
+    <rect x="62" y="308" width="1076" height="76" rx="18" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="100" cy="346" r="22" fill="#173D2D"/><text x="100" y="353" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">02</text>
+    <text x="138" y="339" fill="#18201D" font-size="18" font-weight="700">4711 · revisie B · bron staat op C</text><text x="138" y="364" fill="#4C5852" font-size="16">Het tekeningnummer klopt, de revisie niet</text>
+    <text x="472" y="353" fill="#173D2D" font-size="18" font-weight="700">Afwijkende revisie</text>
+    <text x="802" y="353" fill="#18201D" font-size="18">Stoppen en laten bevestigen</text>
+
+    <rect x="62" y="398" width="1076" height="76" rx="18" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="100" cy="436" r="22" fill="#173D2D"/><text x="100" y="443" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">03</text>
+    <text x="138" y="429" fill="#18201D" font-size="18" font-weight="700">4711 · revisie ontbreekt</text><text x="138" y="454" fill="#4C5852" font-size="16">Onbekend is geen overeenkomst</text>
+    <text x="472" y="443" fill="#173D2D" font-size="18" font-weight="700">Ontbrekend veld</text>
+    <text x="802" y="443" fill="#18201D" font-size="18">Niet doorzetten</text>
+
+    <rect x="62" y="488" width="1076" height="76" rx="18" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="100" cy="526" r="22" fill="#173D2D"/><text x="100" y="533" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">04</text>
+    <text x="138" y="519" fill="#18201D" font-size="18" font-weight="700">4712 · revisie C · verwacht 4711</text><text x="138" y="544" fill="#4C5852" font-size="16">De revisie lijkt gelijk, het nummer verschilt</text>
+    <text x="472" y="533" fill="#173D2D" font-size="18" font-weight="700">Verkeerde tekening</text>
+    <text x="802" y="533" fill="#18201D" font-size="18">Opdracht opnieuw koppelen</text>
+
+    <rect x="62" y="578" width="1076" height="76" rx="18" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="100" cy="616" r="22" fill="#173D2D"/><text x="100" y="623" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">05</text>
+    <text x="138" y="609" fill="#18201D" font-size="18" font-weight="700">Scan · nummer en stempel onleesbaar</text><text x="138" y="634" fill="#4C5852" font-size="16">AI mag onzekerheid niet invullen</text>
+    <text x="472" y="623" fill="#173D2D" font-size="18" font-weight="700">Onleesbaar</text>
+    <text x="802" y="623" fill="#18201D" font-size="18">Leesbare bron opvragen</text>
+  </g>
+
+  <rect x="62" y="682" width="1076" height="46" rx="14" fill="#173D2D"/>
+  <text x="600" y="712" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="18" font-weight="700">AI helpt alleen bij extractie · de vaste regel vergelijkt · een bevoegde medewerker beslist</text>
+</svg>

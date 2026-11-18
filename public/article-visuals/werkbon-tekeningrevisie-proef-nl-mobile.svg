@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Vijf werkbonnen vóór productie</title>
+  <desc id="desc">Mobiel overzicht van vijf fictieve werkbonnen en hun verwachte controlesignaal, gevolgd door menselijke vrijgave door werkvoorbereiding.</desc>
+  <rect width="760" height="1100" rx="34" fill="#F7F6EE"/>
+  <text x="44" y="62" fill="#173D2D" font-family="Arial, sans-serif" font-size="29" font-weight="700">Vijf werkbonnen vóór productie</text>
+  <text x="44" y="98" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Drie bronvelden, één menselijke vrijgave.</text>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="44" y="132" width="672" height="152" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="88" cy="176" r="23" fill="#173D2D"/><text x="88" y="183" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">01</text>
+    <text x="128" y="170" fill="#18201D" font-size="27" font-weight="700">4711 · C · vrijgegeven</text>
+    <text x="128" y="204" fill="#4C5852" font-size="24">Overeenkomst</text>
+    <rect x="76" y="224" width="608" height="38" rx="11" fill="#DCE5DC"/>
+    <text x="380" y="250" text-anchor="middle" fill="#173D2D" font-size="22" font-weight="700">Volgens normale procedure</text>
+
+    <rect x="44" y="300" width="672" height="152" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="88" cy="344" r="23" fill="#173D2D"/><text x="88" y="351" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">02</text>
+    <text x="128" y="338" fill="#18201D" font-size="27" font-weight="700">4711 · B / bron C</text>
+    <text x="128" y="372" fill="#4C5852" font-size="24">Afwijkende revisie</text>
+    <rect x="76" y="392" width="608" height="38" rx="11" fill="#EEE9BE"/>
+    <text x="380" y="418" text-anchor="middle" fill="#18201D" font-size="22" font-weight="700">Stoppen en revisie bevestigen</text>
+
+    <rect x="44" y="468" width="672" height="152" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="88" cy="512" r="23" fill="#173D2D"/><text x="88" y="519" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">03</text>
+    <text x="128" y="506" fill="#18201D" font-size="27" font-weight="700">4711 · revisie ontbreekt</text>
+    <text x="128" y="540" fill="#4C5852" font-size="24">Ontbrekend veld</text>
+    <rect x="76" y="560" width="608" height="38" rx="11" fill="#EEE9BE"/>
+    <text x="380" y="586" text-anchor="middle" fill="#18201D" font-size="22" font-weight="700">Niet doorzetten</text>
+
+    <rect x="44" y="636" width="672" height="152" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="88" cy="680" r="23" fill="#173D2D"/><text x="88" y="687" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">04</text>
+    <text x="128" y="674" fill="#18201D" font-size="27" font-weight="700">4712 · C / verwacht 4711</text>
+    <text x="128" y="708" fill="#4C5852" font-size="24">Verkeerde tekening</text>
+    <rect x="76" y="728" width="608" height="38" rx="11" fill="#EEE9BE"/>
+    <text x="380" y="754" text-anchor="middle" fill="#18201D" font-size="22" font-weight="700">Opdracht opnieuw koppelen</text>
+
+    <rect x="44" y="804" width="672" height="152" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <circle cx="88" cy="848" r="23" fill="#173D2D"/><text x="88" y="855" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">05</text>
+    <text x="128" y="842" fill="#18201D" font-size="25" font-weight="700">Scan: nummer en stempel onleesbaar</text>
+    <text x="128" y="876" fill="#4C5852" font-size="24">Onleesbaar</text>
+    <rect x="76" y="896" width="608" height="38" rx="11" fill="#EEE9BE"/>
+    <text x="380" y="922" text-anchor="middle" fill="#18201D" font-size="22" font-weight="700">Leesbare bron opvragen</text>
+  </g>
+
+  <rect x="44" y="980" width="672" height="76" rx="20" fill="#173D2D"/>
+  <text x="380" y="1012" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="24" font-weight="700">AI extraheert alleen waar nodig.</text>
+  <text x="380" y="1042" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="24" font-weight="700">Werkvoorbereiding controleert en beslist.</text>
+</svg>

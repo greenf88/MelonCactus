@@ -18,6 +18,7 @@ const summaries: Record<Locale, Record<string, string>> = {
     "asml-capacity-plans-reading-manufacturing-forecasts": "This article reads ASML's capacity outlook as a forecast with assumptions rather than a completed result. Public figures can clarify intended manufacturing scale and timing. They do not prove that a future production or delivery target has already been achieved.",
   },
   nl: {
+    "werkbon-tekeningrevisie-controleren-voor-productie": "Controleer tekeningnummer, revisie en vrijgavestatus eerst met een vaste regel. Gebruik AI alleen om velden uit scans of vrije tekst voor te stellen en houd bron en onzekerheid zichtbaar. Een fictieve proef met vijf werkbonnen meet gemiste verschillen, onterechte meldingen en correctiewerk; werkvoorbereiding beslist over iedere vervolgactie.",
     "ai-lasnaadinspectie-test-bestaande-fotos": "Test AI voor lasnaadfoto's op één afgebakend lasnaadtype met vaste beeldcriteria, vooraf vastgelegde vaklabels en een afgescheiden testset. Tel gemiste zichtbare afwijkingen, onterechte meldingen, onbruikbare foto's en herbeoordelingstijd. Een bevoegde vakbeoordelaar houdt de kwaliteitsvrijgave en bepaalt wanneer aanvullende meting nodig is.",
     "ai-productieplanning-maakindustrie-orderfamilie": "Test één orderfamilie met dezelfde historische orders, beschikbare informatie en meetlat voor de huidige regel en een AI-voorstel. Vergelijk niet alleen late orders en wachttijd, maar ook handmatige correcties en technisch onuitvoerbare voorstellen. Een planner houdt de vrijgave en beslist op vooraf gekozen criteria of een beperkte vervolgproef verantwoord is.",
     "marktanalyse-maakindustrie-meerdere-indicatoren": "Eén industriecijfer is context, geen verkoopprognose. Dit artikel vertaalt actuele CBS-signalen naar een praktisch selectiekader voor industriële marktsegmenten. Het resultaat is een shortlist met technische fit, afnemersactiviteit, concurrentiedruk, bronzekerheid en een concrete volgende verificatiestap.",
@@ -59,6 +60,7 @@ const seoDescriptions: Record<Locale, Record<string, string>> = {
     "asml-capacity-plans-reading-manufacturing-forecasts": "ASML's EUV and DUV capacity plans are forecasts, not delivered output. Learn to distinguish capability, orders, deliveries and scenarios.",
   },
   nl: {
+    "werkbon-tekeningrevisie-controleren-voor-productie": "Werkbon en tekeningrevisie controleren: test vijf fictieve documenten met vaste regels, begrensde AI-extractie en menselijke vrijgave.",
     "ai-lasnaadinspectie-test-bestaande-fotos": "AI voor lasnaadinspectie testen: gebruik één lasnaadtype, vaste foto's, vaklabels, foutentelling en menselijke kwaliteitsvrijgave.",
     "ai-productieplanning-maakindustrie-orderfamilie": "AI voor productieplanning: vergelijk één orderfamilie eerlijk met historische orders, een nulmeting, duidelijke criteria en menselijke vrijgave.",
     "marktanalyse-maakindustrie-meerdere-indicatoren": "Marktanalyse voor de maakindustrie: vertaal CBS-sectorsignalen naar een onderbouwde marktshortlist met technische fit en controleerbare bronnen.",
@@ -97,6 +99,7 @@ export function articleMetadataTitle(locale: Locale, slug: string, fallback: str
       "battery-factory-from-pilot-to-commercial-scale": "Battery Factory: Pilot to Commercial Scale",
     },
     nl: {
+      "werkbon-tekeningrevisie-controleren-voor-productie": "Werkbon en tekeningrevisie controleren",
       "ai-lasnaadinspectie-test-bestaande-fotos": "AI-lasnaadinspectie: test met bestaande foto's",
       "ai-productieplanning-maakindustrie-orderfamilie": "AI-productieplanning: test één orderfamilie",
       "marktanalyse-maakindustrie-meerdere-indicatoren": "Marktanalyse maakindustrie: van cijfer naar marktkeuze",
