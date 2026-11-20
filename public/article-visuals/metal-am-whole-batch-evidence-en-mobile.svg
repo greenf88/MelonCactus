@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Whole-batch evidence for a metal additive-manufacturing order</title>
+  <desc id="desc">A vertical chain follows a fictional order from sixty accepted parts through printing, post-processing and inspection.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#8A5A35"/></marker></defs>
+  <rect width="760" height="1100" fill="#F7F5EE"/>
+  <text x="52" y="62" fill="#173D2D" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="1.6">METAL AM SUPPLIER EVIDENCE</text>
+  <text x="52" y="108" fill="#18201D" font-family="Georgia, serif" font-size="28">The batch ends at acceptance</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="52" y="146" width="656" height="164" rx="18" fill="#173D2D"/>
+    <text x="82" y="186" fill="#DCE5DC" font-size="15" font-weight="700">01 · ORDER BASELINE</text>
+    <text x="82" y="228" fill="#FFFFFF" font-size="25" font-weight="700">60 accepted parts</text>
+    <text x="82" y="266" fill="#DCE5DC" font-size="17">Same geometry, material and acceptance method</text>
+
+    <path d="M380 310V334" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="52" y="344" width="656" height="164" rx="18" fill="#E8E1D4" stroke="#B79D7D"/>
+    <text x="82" y="384" fill="#704628" font-size="15" font-weight="700">02 · PRINT</text>
+    <text x="82" y="426" fill="#18201D" font-size="25" font-weight="700">Starts are not delivery</text>
+    <text x="82" y="464" fill="#454C48" font-size="17">Record material, build evidence and reserved capacity</text>
+
+    <path d="M380 508V532" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="52" y="542" width="656" height="184" rx="18" fill="#E8E1D4" stroke="#B79D7D"/>
+    <text x="82" y="582" fill="#704628" font-size="15" font-weight="700">03 · DOWNSTREAM</text>
+    <text x="82" y="624" fill="#18201D" font-size="25" font-weight="700">Name every process owner</text>
+    <text x="82" y="662" fill="#454C48" font-size="17">Thermal treatment · machining · finishing</text>
+    <text x="82" y="696" fill="#454C48" font-size="17">Who owns damage, queues and replacement?</text>
+
+    <path d="M380 726V750" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="52" y="760" width="656" height="184" rx="18" fill="#DCE5DC" stroke="#6E8B7A"/>
+    <text x="82" y="800" fill="#173D2D" font-size="15" font-weight="700">04 · ACCEPTANCE</text>
+    <text x="82" y="842" fill="#18201D" font-size="25" font-weight="700">Release the complete batch</text>
+    <text x="82" y="880" fill="#454C48" font-size="17">Inspection record · accepted quantity</text>
+    <text x="82" y="914" fill="#454C48" font-size="17">Written replacement window for shortfalls</text>
+
+    <rect x="52" y="980" width="656" height="82" rx="16" fill="#FFFDF8" stroke="#C9C2B7"/>
+    <text x="82" y="1016" fill="#173D2D" font-size="16" font-weight="700">DECISION GATE</text>
+    <text x="82" y="1046" fill="#454C48" font-size="16">Comparable evidence—or hold before award.</text>
+  </g>
+</svg>

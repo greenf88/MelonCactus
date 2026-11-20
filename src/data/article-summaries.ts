@@ -2,6 +2,7 @@ import type { Locale } from "@/lib/i18n";
 
 const summaries: Record<Locale, Record<string, string>> = {
   en: {
+    "metal-am-supplier-whole-batch-evidence": "A metal AM quotation is not complete when it states printer capacity. This guide compares the accepted quantity after post-processing and inspection. It maps responsibility for each step and tests the replacement route when a fictional batch falls short.",
     "laser-cutting-supplier-independence-check": "Two machine brands are not automatically two independent supply routes. This guide separates legal entity, ownership, service and critical-parts support before a buyer treats offers as diversification. A fictional comparison sheet shows how one unresolved question can change the shortlist.",
     "fictional-ai-case-internal-knowledge-search": "A fictional technical service company tests whether an internal AI search workflow can help employees find approved technical information. The design keeps source passages, document versions and unanswered questions visible. Human specialists remain responsible for interpretation and action.",
     "fictional-ai-case-tender-document-review": "A fictional installation company explores AI-assisted comparison of tender documents. The workflow prepares a traceable requirement matrix and flags possible changes. Technical and commercial reviewers remain responsible for scope, price and contractual commitments.",
@@ -46,6 +47,7 @@ export function articleSummary(locale: Locale, slug: string) {
 
 const seoDescriptions: Record<Locale, Record<string, string>> = {
   en: {
+    "metal-am-supplier-whole-batch-evidence": "Metal AM supplier qualification: compare accepted batch quantity, post-processing, inspection evidence and replacement lead time before award.",
     "laser-cutting-supplier-independence-check": "Laser-cutting supplier due diligence: verify legal entities, ownership, service and parts before treating two brands as independent options.",
     "fictional-ai-case-internal-knowledge-search": "A fictional SME tests an internal AI knowledge search with source passages, document versions, access controls and human technical review.",
     "fictional-ai-case-tender-document-review": "A fictional installation company tests AI tender document review with traceable requirements, version comparison and human commercial approval.",
@@ -85,6 +87,7 @@ export function articleMetadataDescription(locale: Locale, slug: string, fallbac
 export function articleMetadataTitle(locale: Locale, slug: string, fallback: string) {
   const conciseTitles: Record<Locale, Record<string, string>> = {
     en: {
+      "metal-am-supplier-whole-batch-evidence": "Metal AM Supplier: Whole-Batch Evidence",
       "laser-cutting-supplier-independence-check": "Laser-Cutting Supplier Independence Check",
       "fictional-ai-case-internal-knowledge-search": "AI Knowledge Search for SMEs: Fictional Case",
       "fictional-ai-case-tender-document-review": "AI Tender Document Review: Fictional Case",
