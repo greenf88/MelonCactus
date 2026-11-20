@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Whole-batch evidence for a metal additive-manufacturing order</title>
+  <desc id="desc">A fictional order moves from sixty accepted parts required through printing, post-processing and inspection. Each step shows the evidence and responsibility needed before the batch is accepted.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#8A5A35"/></marker></defs>
+  <rect width="1200" height="760" fill="#F7F5EE"/>
+  <text x="70" y="74" fill="#173D2D" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="2">METAL AM SUPPLIER EVIDENCE</text>
+  <text x="70" y="122" fill="#18201D" font-family="Georgia, serif" font-size="34">The batch ends at acceptance, not at the printer</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="70" y="184" width="250" height="330" rx="20" fill="#173D2D"/>
+    <text x="100" y="226" fill="#DCE5DC" font-size="14" font-weight="700">01 · ORDER BASELINE</text>
+    <text x="100" y="272" fill="#FFFFFF" font-size="24" font-weight="700">60 accepted parts</text>
+    <text x="100" y="314" fill="#DCE5DC" font-size="16">Same geometry</text>
+    <text x="100" y="344" fill="#DCE5DC" font-size="16">Same 316L route</text>
+    <text x="100" y="374" fill="#DCE5DC" font-size="16">Same acceptance method</text>
+    <line x1="100" y1="408" x2="286" y2="408" stroke="#6E8B7A"/>
+    <text x="100" y="444" fill="#FFFFFF" font-size="15" font-weight="700">EVIDENCE</text>
+    <text x="100" y="474" fill="#DCE5DC" font-size="15">Approved order revision</text>
+
+    <rect x="350" y="184" width="250" height="330" rx="20" fill="#E8E1D4" stroke="#B79D7D"/>
+    <text x="380" y="226" fill="#704628" font-size="14" font-weight="700">02 · PRINT</text>
+    <text x="380" y="272" fill="#18201D" font-size="24" font-weight="700">Starts are not delivery</text>
+    <text x="380" y="314" fill="#454C48" font-size="16">Machine and material</text>
+    <text x="380" y="344" fill="#454C48" font-size="16">Build record</text>
+    <text x="380" y="374" fill="#454C48" font-size="16">Capacity reservation</text>
+    <line x1="380" y1="408" x2="566" y2="408" stroke="#B79D7D"/>
+    <text x="380" y="444" fill="#704628" font-size="15" font-weight="700">QUESTION</text>
+    <text x="380" y="474" fill="#454C48" font-size="15">How many parts start?</text>
+
+    <rect x="630" y="184" width="250" height="330" rx="20" fill="#E8E1D4" stroke="#B79D7D"/>
+    <text x="660" y="226" fill="#704628" font-size="14" font-weight="700">03 · DOWNSTREAM</text>
+    <text x="660" y="272" fill="#18201D" font-size="24" font-weight="700">Name every owner</text>
+    <text x="660" y="314" fill="#454C48" font-size="16">Thermal treatment</text>
+    <text x="660" y="344" fill="#454C48" font-size="16">Machining and finishing</text>
+    <text x="660" y="374" fill="#454C48" font-size="16">Subcontractor queues</text>
+    <line x1="660" y1="408" x2="846" y2="408" stroke="#B79D7D"/>
+    <text x="660" y="444" fill="#704628" font-size="15" font-weight="700">QUESTION</text>
+    <text x="660" y="474" fill="#454C48" font-size="15">Who replaces damage?</text>
+
+    <rect x="910" y="184" width="220" height="330" rx="20" fill="#DCE5DC" stroke="#6E8B7A"/>
+    <text x="940" y="226" fill="#173D2D" font-size="14" font-weight="700">04 · ACCEPTANCE</text>
+    <text x="940" y="272" fill="#18201D" font-size="24" font-weight="700">Release the batch</text>
+    <text x="940" y="314" fill="#454C48" font-size="16">Inspection method</text>
+    <text x="940" y="344" fill="#454C48" font-size="16">Accepted quantity</text>
+    <text x="940" y="374" fill="#454C48" font-size="16">Replacement window</text>
+    <line x1="940" y1="408" x2="1098" y2="408" stroke="#6E8B7A"/>
+    <text x="940" y="444" fill="#173D2D" font-size="15" font-weight="700">DECISION</text>
+    <text x="940" y="474" fill="#454C48" font-size="15">Comparable or hold?</text>
+
+    <path d="M320 349H340" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <path d="M600 349H620" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+    <path d="M880 349H900" stroke="#8A5A35" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <rect x="70" y="558" width="1060" height="126" rx="18" fill="#FFFDF8" stroke="#C9C2B7"/>
+    <text x="100" y="600" fill="#173D2D" font-size="17" font-weight="700">THE WHOLE-BATCH TEST</text>
+    <text x="100" y="638" fill="#18201D" font-size="19">Same requirement + named process owners + repeated-series evidence + written shortfall route</text>
+    <text x="100" y="668" fill="#6B716E" font-size="15">Fictional framework. Supplier statements and certificates still need direct verification for the intended order.</text>
+  </g>
+</svg>
