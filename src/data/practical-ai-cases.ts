@@ -1,6 +1,27 @@
+import type { ArticleVisual } from "@/data/article-visuals";
+import { articleSources } from "@/data/article-sources";
 import type { Insight } from "@/data/insights";
 
 const publicationDate = "2026-10-17";
+
+const serviceRequestIntakeVisualNl: ArticleVisual = {
+  width: 1200,
+  height: 760,
+  mobileWidth: 760,
+  mobileHeight: 1100,
+  src: "/article-visuals/ai-offerteaanvraag-controle-nl.svg",
+  mobileSrc: "/article-visuals/ai-offerteaanvraag-controle-nl-mobile.svg",
+  alt: "Besliskader voor vijf fictieve technische offerteaanvragen: vaste controle van onderdeel, hoeveelheid, materiaal, tekening en gewenste datum, waarna een calculator ontbrekende informatie beoordeelt.",
+  title: "Vijf bronvelden vóór de calculator aan een offerte begint",
+  caption: "Laat een regel of AI-extractie alleen vastleggen wat werkelijk in de aanvraag staat. Ontbrekende informatie blijft zichtbaar en de calculator beslist of calculatie kan starten of dat een gerichte vraag nodig is.",
+  explanationLabel: "Uitleg van de intakecontrole in tekst",
+  details: [
+    { label: "Vaste basis", text: "Controleer gevraagd onderdeel, hoeveelheid, materiaal, tekening of bronverwijzing en gewenste datum als afzonderlijke velden." },
+    { label: "Begrensde AI-hulp", text: "Gebruik AI alleen om tekst en bijlagen te ordenen; toon per veld de bron en vul ontbrekende waarden niet aan." },
+    { label: "Menselijke beslissing", text: "De calculator controleert tegenstrijdigheden en bepaalt of calculatie begint, informatie wordt nagevraagd of de aanvraag naar een specialist gaat." },
+  ],
+  afterSectionIndex: 3,
+};
 
 export const practicalAiCasesEn: readonly Insight[] = [
   {
@@ -366,51 +387,125 @@ export const practicalAiCasesNl: readonly Insight[] = [
   {
     kind: "fictional-ai-case",
     slug: "fictieve-ai-case-klantaanvragen-automatiseren",
-    title: "Fictieve AI-case: klantaanvragen structureren vóór het werk begint",
-    description: "Een fictieve technische groothandel toetst AI voor klantaanvragen, bijlagen en ontbrekende informatie zonder automatisch prijzen of levertijden toe te zeggen.",
+    title: "Fictieve AI-case: technische aanvragen controleren vóór calculatie",
+    description: "Een fictieve technische groothandel test vijf offerteaanvragen op onderdeel, hoeveelheid, materiaal, tekening en gewenste datum, zonder prijs of levertijd te automatiseren.",
     date: publicationDate,
     displayDate: "17 oktober 2026",
+    modifiedDate: "2026-11-23",
+    displayModifiedDate: "23 november 2026",
+    visual: serviceRequestIntakeVisualNl,
+    sources: [
+      articleSources.schneiderSpsIndustrialIntelligence2026,
+      articleSources.fmeVibeCodingManufacturing2026,
+      articleSources.nistGenerativeAiProfile,
+    ],
     sections: [
       {
-        heading: "De fictieve situatie: iedere aanvraag komt anders binnen",
+        heading: "De fictieve situatie: calculatie begint met onvolledige informatie",
         paragraphs: [
-          "Een fictieve technische groothandel ontvangt klantaanvragen per e-mail met productomschrijvingen, foto's, spreadsheets en leveringsvragen. Medewerkers bepalen eerst wat de klant vraagt, of genoeg informatie aanwezig is en welke collega moet beoordelen. Door de variatie past een star formulier niet altijd, terwijl volledig handmatige intake leidt tot overtypen en wisselende overdracht.",
-          "Het bedrijf wil AI-automatisering voor klantaanvragen onderzoeken. Het afgebakende doel is een gestructureerde interne intake voorbereiden en ontbrekende informatie aanwijzen. De werkwijze kiest geen product, stelt geen prijs vast en belooft geen leverdatum zonder bevoegde controle.",
+          "Een fictieve technische groothandel ontvangt offerteaanvragen per e-mail met korte omschrijvingen, tekeningen, foto's en spreadsheets. Een calculator moet eerst bepalen welk onderdeel wordt gevraagd, om welke hoeveelheid het gaat, welk materiaal geldt, welke tekening of bron leidend is en tegen welke gewenste datum de klant een antwoord of levering verwacht. Ontbreekt één van die gegevens, dan kan een snelle calculatie op een verkeerde aanname rusten.",
+          "De beslisvraag blijft bewust klein: kan een interne controle vastleggen wat werkelijk in de aanvraag staat en ontbrekende informatie zichtbaar maken voordat calculatie begint? De werkwijze kiest geen product of materiaal, berekent geen prijs, belooft geen levertijd en verstuurt geen antwoord zonder bevoegde medewerker.",
+          { text: "Schneider Electric kondigde voor SPS 2026 aan operationele en energiegegevens met AI en automatisering te willen verbinden. Dat bedrijfsbericht illustreert de bredere stap van data naar actie, maar bewijst geen resultaat bij een afnemer. Voor deze fictieve intakecase is de relevante controlevraag kleiner: welke bronwaarde ondersteunt iedere volgende handeling, en ziet de medewerker wanneer een waarde ontbreekt of verouderd is?", sourceIds: ["schneider-sps-industrial-intelligence-2026"] },
         ],
       },
       {
-        heading: "Scheid het uitlezen van de zakelijke beslissing",
+        heading: "Leg vijf bronvelden vast vóór u over AI praat",
         paragraphs: [
-          "Een kleine proef kan de genoemde behoefte, het product, aantal, gewenste datum en bijlagen in een conceptregistratie zetten. Ook kan zij aangeven welke velden mogelijk ontbreken. De oorspronkelijke e-mail en bestanden blijven de bron; het concept helpt de medewerker navigeren.",
-          "Dat onderscheid is belangrijk omdat klanttekst dubbelzinnig kan zijn en een bijlage de e-mail kan tegenspreken. AI kan mogelijke informatie ordenen, maar de medewerker bepaalt wat de aanvraag betekent en welke vragen nog moeten worden gesteld.",
+          "Bepaal met verkoop, calculatie en techniek welke minimale informatie nodig is om deze ene categorie aanvragen voor te bereiden. In de fictieve proef zijn dat vijf velden. De eigen organisatie kan andere velden of strengere eisen hebben; deze lijst is een werksjabloon en geen technisch of contractueel advies.",
+          "Leg per veld vast welke bron voorrang heeft. Een tekening kan een e-mailtekst aanvullen, maar zij kan ook een andere revisie of eenheid tonen. Het conceptrecord bewaart daarom niet alleen de uitgelezen waarde, maar ook bestandsnaam, pagina of tekstpassage. Tegenstrijdig en niet gevonden zijn afzonderlijke uitkomsten, geen lege plekken die automatisch mogen worden ingevuld.",
+        ],
+        table: {
+          caption: "Vijf velden voor de fictieve controle vóór calculatie",
+          headers: ["Veld", "Wat wordt vastgelegd", "Stopreden"],
+          rows: [
+            ["Onderdeel", "Nummer of duidelijke omschrijving met bron", "Meerdere mogelijke onderdelen of geen herleidbare verwijzing"],
+            ["Hoeveelheid", "Aantal en eenheid per regel", "Ontbreekt of spreekt een bijlage tegen"],
+            ["Materiaal", "Letterlijke materiaalvermelding of specificatie", "Alleen een algemene familie of geen vermelding"],
+            ["Tekening of bron", "Bestand, revisie en relevante passage", "Geen tekening, onbekende revisie of conflicterende versies"],
+            ["Gewenste datum", "Datum plus betekenis: offerte, prototype of levering", "Datum ontbreekt of het bedoelde moment is onduidelijk"],
+          ],
+        },
+      },
+      {
+        heading: "Gebruik eerst vaste regels en pas daarna AI-extractie",
+        paragraphs: [
+          "Wanneer de gegevens al in vaste velden staan, is een eenvoudige verplichte-veldencontrole de beste nulmeting. Controleer aantallen, eenheden en revisies met voorspelbare regels. Gebruik AI alleen voor ongestructureerde e-mailtekst of bijlagen waarvan de relevante passage anders handmatig moet worden overgenomen.",
+          "De AI-stap levert per veld een voorstel, bronpassage en onzekerheidsstatus. Zij mag 'materiaal onbekend' niet omzetten in een waarschijnlijke legering en mag een gewenste leverdatum niet afleiden uit de onderwerpregel. De calculator ziet het originele bericht naast het concept en kan iedere waarde corrigeren of afwijzen.",
         ],
         bullets: [
-          "Bewaar het oorspronkelijke bericht en de bijlagen",
-          "Toon welke tekst ieder uitgelezen veld ondersteunt",
-          "Stuur onzekere gevallen naar een medewerker in plaats van te gokken",
-          "Voorkom automatische prijzen, leverbeloften of productadvies",
+          "Bewaar het oorspronkelijke bericht en de geteste bijlagen",
+          "Toon welke tekst of tabelcel ieder veld ondersteunt",
+          "Gebruik niet gevonden en tegenstrijdig als geldige uitkomsten",
+          "Stuur twijfel naar een calculator in plaats van te gokken",
+          "Voorkom automatische materiaalkeuze, prijs, levertijd of externe reactie",
         ],
       },
       {
-        heading: "Toets met representatieve variatie",
+        heading: "Test vijf fictieve offerteaanvragen",
         paragraphs: [
-          "Het fictieve bedrijf kan een testset maken met een duidelijke aanvraag, een onvolledig bericht, een ongebruikelijk bestandstype en een vraag met meerdere producten. Medewerkers bepalen welke fouten acceptabel zijn en bij welke onzekerheid de werkwijze moet stoppen.",
-          "Beginnen zonder koppeling met een actuele mailbox houdt het experiment beheersbaar. Blijkt het gestructureerde concept bruikbaar, dan kan een volgende fase veilige intake vanuit een gedeelde mailbox en beheerste overdracht naar het bestaande systeem onderzoeken.",
+          "Onderstaand proefblad is volledig fictief. Het beschrijft geen MelonCactus-klant, uitgevoerde opdracht of gemeten resultaat. Maak vijf aanvragen voor één denkbeeldige categorie plaatdelen en leg vóór de proef per aanvraag vast welke velden aanwezig zijn, welke ontbreken en wat de calculator moet doen.",
+          "Houd productcategorie en beoordelaar gelijk. Varieer telkens één belangrijk probleem: ontbrekende hoeveelheid, te algemeen materiaal, conflicterende revisie of een datum zonder betekenis. Zo ziet u of de controle de bedoelde informatiegrens herkent in plaats van alleen een nette samenvatting te maken.",
+        ],
+        table: {
+          caption: "Fictief proefblad met vijf technische aanvragen",
+          headers: ["Aanvraag", "Fictieve invoer", "Verwacht signaal", "Beslissing calculator"],
+          rows: [
+            ["OA-01", "Onderdeel P-41, 25 stuks, S355, tekening C, offerte vóór 30 november", "Vijf velden aanwezig", "Bronnen controleren en voorbereiding starten"],
+            ["OA-02", "Onderdeel P-42 met tekening; hoeveelheid ontbreekt", "Ontbrekende hoeveelheid", "Aantal en eenheid gericht navragen"],
+            ["OA-03", "Onderdeel P-43, 50 stuks, materiaal 'aluminium'", "Materiaal onvoldoende specifiek", "Geldende materiaalspecificatie laten bevestigen"],
+            ["OA-04", "E-mail noemt revisie B; bijlage toont revisie C", "Tegenstrijdige revisie", "Leidende versie laten vaststellen"],
+            ["OA-05", "Volledige technische gegevens; datum '15 december'", "Betekenis datum onbekend", "Vragen of dit offerte-, prototype- of leverdatum is"],
+          ],
+        },
+      },
+      {
+        heading: "Laat een tweede medewerker de proef uitvoeren",
+        paragraphs: [
+          { text: "FME beschrijft in een actueel programma voor de maakindustrie een werkwijze waarin deelnemers één concrete toepassing bouwen, het prototype door een collega laten gebruiken en daarna betrouwbaarheid, controle, privacy, informatiebeveiliging en beheer beoordelen. Dat programma is regionale praktijkcontext; het levert geen bewijs dat de fictieve intakeproef werkt of bespaart.", sourceIds: ["fme-vibe-coding-manufacturing-2026"] },
+          "Laat daarom na de eerste controle een tweede calculator dezelfde vijf fictieve aanvragen beoordelen zonder de verwachte uitkomst te zien. Noteer welke uitleg nodig was, welke velden werden gemist, welke bron onduidelijk werd weergegeven en welke correcties de medewerker aanbracht. Een prototype dat alleen voor de maker begrijpelijk is, is nog geen bruikbare werkwijze.",
+        ],
+        table: {
+          caption: "Meetlat voor de collegatest",
+          headers: ["Maatstaf", "Wat u telt", "Waarom dit telt"],
+          rows: [
+            ["Gemiste ontbrekende velden", "Werkelijke lacunes zonder signaal", "Calculatie kan op een stille aanname starten"],
+            ["Onterechte meldingen", "Aanwezige gegevens die toch als ontbrekend staan", "Te veel ruis kost controlewerk"],
+            ["Verkeerde bronkoppeling", "Waarde met onjuiste passage of bijlage", "Maakt het concept niet herleidbaar"],
+            ["Correcties", "Velden die de calculator moet herstellen", "Toont waar extractie of regels tekortschieten"],
+            ["Beoordelingstijd", "Minuten voor controle en vervolgkeuze", "Laat zien of de werkwijze praktisch helpt"],
+          ],
+        },
+      },
+      {
+        heading: "Test expliciet of het systeem durft te stoppen",
+        paragraphs: [
+          { text: "NIST beschrijft confabulatie als generatieve AI die onjuiste inhoud overtuigend kan presenteren en waarschuwt voor overmatig menselijk vertrouwen in zulke uitvoer. Het vrijwillige profiel adviseert organisaties risico's binnen hun eigen gebruikscontext te identificeren en te meten. Voor deze proef betekent dat: ontbrekende technische informatie blijft ontbrekend, ook wanneer een waarschijnlijke aanvulling eenvoudig lijkt.", sourceIds: ["nist-generative-ai-profile"] },
+          "Voeg een tegenproef toe met een niet-bestaand onderdeelnummer, een onleesbare tabelcel en een bijlage voor een andere aanvraag. Controleer of het systeem niet alleen de normale voorbeelden verwerkt, maar ook de grensgevallen zichtbaar afwijst. Eén verzonnen hoeveelheid, materiaalcode of revisie is voldoende reden om de proef niet aan een actuele mailbox of calculatieomgeving te koppelen.",
         ],
       },
       {
         heading: "Klantinformatie vraagt bewuste verwerking",
         paragraphs: [
-          "Aanvragen kunnen namen, contactgegevens en commercieel gevoelige bestanden bevatten. Vóór gebruik van actuele gegevens zijn passende afspraken over toegang, verwerking en bewaring nodig. Fictieve voorbeelden zijn voldoende om tijdens de eerste sessie velden en controlestappen te ontwerpen.",
-          "Ook automatische antwoorden vragen terughoudendheid. Een beleefd bericht kan een verwachting wekken of informatie aan de verkeerde ontvanger tonen. De eerste versie bereidt daarom een intern concept voor en verstuurt geen externe communicatie.",
+          "Aanvragen kunnen namen, contactgegevens, prijzen, tekeningen en commercieel gevoelige bestanden bevatten. Vóór gebruik van actuele gegevens bepaalt het bedrijf welke tool en abonnementsvorm passend zijn, wie toegang heeft, waar verwerking plaatsvindt en hoe lang proefmateriaal wordt bewaard. Fictieve documenten zijn voldoende om velden, regels en reviewstappen te ontwerpen.",
+          "Ook automatische antwoorden blijven buiten de eerste proef. Een beleefd bericht kan een verwachting over prijs, productkeuze of levertijd wekken of informatie naar de verkeerde ontvanger sturen. De eerste versie bereidt alleen een intern controleblad en eventueel een conceptvraag voor; de medewerker controleert ontvanger en inhoud voordat iets wordt verzonden.",
         ],
       },
       {
-        heading: "Een bruikbare proef maakt het volgende besluit eenvoudiger",
+        heading: "Beslis vooraf wanneer de proef stopt of doorgaat",
         paragraphs: [
-          "De proef laat zien of medewerkers een vollediger en herleidbaar startpunt krijgen en of uitzonderingen bij de juiste beoordelaar terechtkomen. Ook wordt zichtbaar welk beheer nodig blijft: categorieën onderhouden, nieuwe bestandstypen verwerken en leveranciersinstellingen controleren.",
-          "Deze fictieve case laat zien hoe administratieve processen stapsgewijs kunnen worden geautomatiseerd. Voor een mkb-bedrijf kan een betrouwbare interne intake waardevoller zijn dan een brede klantenservice-agent. De passende omvang volgt uit de taak, de informatie en de gevolgen van een verkeerd antwoord.",
+          "Schrijf vóór de collegatest de besluitregel op. Stop wanneer een ontbrekende waarde wordt verzonnen, een bron verkeerd wordt gekoppeld, een tegenstrijdige revisie wordt gemist of een externe toezegging verschijnt. Een bruikbare uitkomst rechtvaardigt alleen een grotere afgeschermde proef met representatieve historische aanvragen; zij bewijst geen algemene nauwkeurigheid of besparing.",
+          "Begin de eerste werkdag met één aanvraagcategorie, vijf fictieve documenten en de bestaande vaste controle als nulmeting. Deze aanpak past bij technische mkb-bedrijven in Twente, de Achterhoek en elders in Nederland. De regionale focus is geen grens aan de dienstverlening. De calculator blijft eigenaar van de betekenis, de ontbrekende vraag en het besluit om wel of niet te calculeren.",
         ],
+        table: {
+          caption: "Besluit na de fictieve intakeproef",
+          headers: ["Uitkomst", "Passende vervolgstap"],
+          rows: [
+            ["Vaste veldencontrole is voldoende", "Gebruik de eenvoudige regel en voeg geen AI toe"],
+            ["Bronpassages zijn onduidelijk", "Verbeter documentweergave en velddefinities"],
+            ["Een waarde wordt verzonnen of conflict gemist", "Stop; herzie extractie, regels en testgevallen"],
+            ["Beide calculators handelen vijf cases herleidbaar af", "Overweeg een grotere test zonder mailbox- of calculatiekoppeling"],
+          ],
+        },
       },
     ],
   },

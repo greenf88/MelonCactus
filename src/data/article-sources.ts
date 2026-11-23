@@ -418,4 +418,43 @@ export const articleSources = {
       nl: "Primaire NIST-onderzoekspublicatie over blijvende identificatie en herleidbaarheid tussen ontwerp-, productie- en inspectiegegevens. De use case voor ontwerpvrijgave is technische context, geen validatie van de vereenvoudigde werkbonproef in dit artikel.",
     },
   },
+  schneiderSpsIndustrialIntelligence2026: {
+    id: "schneider-sps-industrial-intelligence-2026",
+    organization: "Schneider Electric",
+    title: "Schneider Electric turns Industrial Intelligence into action at SPS 2026",
+    url: "https://www.globenewswire.com/news-release/2026/11/22/3407944/0/en/schneider-electric-turns-industrial-intelligence-into-action-at-sps-2026.html",
+    date: "2026-11-22",
+    dateKind: "published",
+    datePrecision: "day",
+    accessed: "2026-11-23",
+    note: {
+      en: "Schneider Electric company announcement distributed by GlobeNewswire. It supports attribution of the announced SPS demonstrations and product claims; it is not independent evidence of customer results or suitability for the fictional intake trial.",
+      nl: "Bedrijfsbericht van Schneider Electric, verspreid via GlobeNewswire. Het ondersteunt de toeschrijving van de aangekondigde SPS-demonstraties en productclaims; het is geen onafhankelijk bewijs van klantresultaten of geschiktheid voor de fictieve intakeproef.",
+    },
+  },
+  fmeVibeCodingManufacturing2026: {
+    id: "fme-vibe-coding-manufacturing-2026",
+    organization: "FME",
+    title: "Vibe Coding in de maakindustrie — Van idee naar werkende applicatie",
+    url: "https://www.fme.nl/agenda/vibe-coding-de-maakindustrie-van-idee-naar-werkende-applicatie",
+    accessed: "2026-11-23",
+    note: {
+      en: "Official FME programme for a manufacturing workshop series in the eastern Netherlands. It describes a prototype, colleague testing and review of reliability, control and governance; it does not report measured results for the fictional case.",
+      nl: "Officieel FME-programma voor een workshopreeks in de maakindustrie in Oost-Nederland. Het beschrijft een prototype, testen door een collega en beoordeling van betrouwbaarheid, controle en beheer; het rapporteert geen gemeten resultaat voor de fictieve case.",
+    },
+  },
+  nistGenerativeAiProfile: {
+    id: "nist-generative-ai-profile",
+    organization: "National Institute of Standards and Technology (NIST)",
+    title: "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile",
+    url: "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+    date: "2024-07-26",
+    dateKind: "published",
+    datePrecision: "day",
+    accessed: "2026-11-23",
+    note: {
+      en: "Official voluntary NIST profile describing generative-AI risks including confabulation, information integrity and human over-reliance. It is cross-sector guidance, not certification or validation of the fictional trial.",
+      nl: "Officieel vrijwillig NIST-profiel over risico's van generatieve AI, waaronder confabulatie, informatie-integriteit en overmatig menselijk vertrouwen. Het is sectoroverstijgende richtlijn, geen certificering of validatie van de fictieve proef.",
+    },
+  },
 } satisfies Record<string, ArticleSource>;

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Vijf bronvelden vóór calculatie</title>
+  <desc id="desc">Mobiel overzicht van vijf te controleren velden in een fictieve technische offerteaanvraag en de menselijke beslissing door de calculator.</desc>
+  <rect width="760" height="1100" rx="34" fill="#F7F6EE"/>
+  <text x="44" y="62" fill="#173D2D" font-family="Arial, sans-serif" font-size="29" font-weight="700">Vijf velden vóór calculatie</text>
+  <text x="44" y="98" fill="#4C5852" font-family="Arial, sans-serif" font-size="18">Bron zichtbaar · ontbrekend blijft ontbrekend</text>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="44" y="132" width="672" height="126" rx="22" fill="#173D2D"/>
+    <text x="76" y="174" fill="#FFFFFF" font-size="24" font-weight="700">Fictieve aanvraag</text>
+    <text x="76" y="208" fill="#DCE5DC" font-size="21">E-mail · tekening · spreadsheet</text>
+    <text x="76" y="236" fill="#EEE9BE" font-size="18" font-weight="700">Geen live mailbox in de eerste proef</text>
+
+    <rect x="44" y="278" width="672" height="560" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <text x="76" y="322" fill="#173D2D" font-size="22" font-weight="700">Vaste controle + begrensde AI-extractie</text>
+
+    <rect x="76" y="350" width="608" height="72" rx="15" fill="#DCE5DC"/>
+    <circle cx="112" cy="386" r="18" fill="#173D2D"/><text x="112" y="393" text-anchor="middle" fill="#FFFFFF" font-size="15" font-weight="700">1</text>
+    <text x="148" y="382" fill="#18201D" font-size="24" font-weight="700">Onderdeel</text><text x="148" y="409" fill="#4C5852" font-size="19">nummer of omschrijving + bron</text>
+
+    <rect x="76" y="438" width="608" height="72" rx="15" fill="#DCE5DC"/>
+    <circle cx="112" cy="474" r="18" fill="#173D2D"/><text x="112" y="481" text-anchor="middle" fill="#FFFFFF" font-size="15" font-weight="700">2</text>
+    <text x="148" y="470" fill="#18201D" font-size="24" font-weight="700">Hoeveelheid</text><text x="148" y="497" fill="#4C5852" font-size="19">aantal en eenheid per regel</text>
+
+    <rect x="76" y="526" width="608" height="72" rx="15" fill="#DCE5DC"/>
+    <circle cx="112" cy="562" r="18" fill="#173D2D"/><text x="112" y="569" text-anchor="middle" fill="#FFFFFF" font-size="15" font-weight="700">3</text>
+    <text x="148" y="558" fill="#18201D" font-size="24" font-weight="700">Materiaal</text><text x="148" y="585" fill="#4C5852" font-size="19">letterlijke specificatie</text>
+
+    <rect x="76" y="614" width="608" height="72" rx="15" fill="#DCE5DC"/>
+    <circle cx="112" cy="650" r="18" fill="#173D2D"/><text x="112" y="657" text-anchor="middle" fill="#FFFFFF" font-size="15" font-weight="700">4</text>
+    <text x="148" y="646" fill="#18201D" font-size="24" font-weight="700">Tekening of bron</text><text x="148" y="673" fill="#4C5852" font-size="19">bestand, revisie en passage</text>
+
+    <rect x="76" y="702" width="608" height="72" rx="15" fill="#EEE9BE"/>
+    <circle cx="112" cy="738" r="18" fill="#173D2D"/><text x="112" y="745" text-anchor="middle" fill="#FFFFFF" font-size="15" font-weight="700">5</text>
+    <text x="148" y="734" fill="#18201D" font-size="24" font-weight="700">Gewenste datum</text><text x="148" y="761" fill="#4C5852" font-size="19">offerte, prototype of levering?</text>
+
+    <text x="76" y="812" fill="#4C5852" font-size="18">Aanwezig · ontbrekend · tegenstrijdig · onleesbaar</text>
+
+    <rect x="44" y="858" width="672" height="198" rx="24" fill="#173D2D"/>
+    <text x="76" y="904" fill="#FFFFFF" font-size="25" font-weight="700">De calculator beslist</text>
+    <text x="76" y="942" fill="#DCE5DC" font-size="21">Voorbereiden · navragen · specialist inschakelen</text>
+    <rect x="76" y="972" width="608" height="52" rx="14" fill="#EEE9BE"/>
+    <text x="380" y="1005" text-anchor="middle" fill="#173D2D" font-size="20" font-weight="700">Geen automatische prijs, levertijd of reactie</text>
+  </g>
+</svg>
