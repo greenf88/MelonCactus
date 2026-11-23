@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Vijf bronvelden vóór calculatie</title>
+  <desc id="desc">Een fictieve technische aanvraag wordt gecontroleerd op onderdeel, hoeveelheid, materiaal, tekening en gewenste datum. Ontbrekende informatie blijft zichtbaar en de calculator beslist.</desc>
+  <rect width="1200" height="760" rx="36" fill="#F7F6EE"/>
+  <text x="62" y="70" fill="#173D2D" font-family="Arial, sans-serif" font-size="31" font-weight="700">Vijf bronvelden vóór calculatie</text>
+  <text x="62" y="108" fill="#4C5852" font-family="Arial, sans-serif" font-size="19">AI ordent alleen wat in bericht en bijlagen staat. De calculator behandelt ontbrekend en tegenstrijdig.</text>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="62" y="150" width="276" height="480" rx="28" fill="#173D2D"/>
+    <text x="92" y="198" fill="#FFFFFF" font-size="21" font-weight="700">FICTIEVE AANVRAAG</text>
+    <rect x="92" y="228" width="216" height="70" rx="16" fill="#FFFFFF"/>
+    <text x="112" y="258" fill="#18201D" font-size="17" font-weight="700">E-mail</text>
+    <text x="112" y="282" fill="#4C5852" font-size="15">vraag en gewenste datum</text>
+    <rect x="92" y="316" width="216" height="70" rx="16" fill="#FFFFFF"/>
+    <text x="112" y="346" fill="#18201D" font-size="17" font-weight="700">Tekening</text>
+    <text x="112" y="370" fill="#4C5852" font-size="15">nummer, revisie, materiaal</text>
+    <rect x="92" y="404" width="216" height="70" rx="16" fill="#FFFFFF"/>
+    <text x="112" y="434" fill="#18201D" font-size="17" font-weight="700">Spreadsheet</text>
+    <text x="112" y="458" fill="#4C5852" font-size="15">regels, aantallen, eenheden</text>
+    <text x="92" y="520" fill="#EEE9BE" font-size="17" font-weight="700">Bron blijft zichtbaar</text>
+    <text x="92" y="548" fill="#DCE5DC" font-size="16">Geen live mailbox in</text>
+    <text x="92" y="574" fill="#DCE5DC" font-size="16">de eerste proef</text>
+
+    <path d="M354 390h54" stroke="#173D2D" stroke-width="5" stroke-linecap="round"/><path d="m398 378 14 12-14 12" fill="none" stroke="#173D2D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="428" y="150" width="414" height="480" rx="28" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <text x="458" y="198" fill="#173D2D" font-size="21" font-weight="700">VASTE CONTROLE + BEGRENSDE EXTRACTIE</text>
+    <g font-size="18">
+      <rect x="458" y="228" width="354" height="58" rx="14" fill="#DCE5DC"/>
+      <circle cx="488" cy="257" r="15" fill="#173D2D"/><text x="488" y="263" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">1</text>
+      <text x="516" y="263" fill="#18201D" font-weight="700">Onderdeel</text><text x="700" y="263" fill="#4C5852">bronpassage</text>
+      <rect x="458" y="300" width="354" height="58" rx="14" fill="#DCE5DC"/>
+      <circle cx="488" cy="329" r="15" fill="#173D2D"/><text x="488" y="335" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">2</text>
+      <text x="516" y="335" fill="#18201D" font-weight="700">Hoeveelheid</text><text x="700" y="335" fill="#4C5852">aantal + eenheid</text>
+      <rect x="458" y="372" width="354" height="58" rx="14" fill="#DCE5DC"/>
+      <circle cx="488" cy="401" r="15" fill="#173D2D"/><text x="488" y="407" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">3</text>
+      <text x="516" y="407" fill="#18201D" font-weight="700">Materiaal</text><text x="700" y="407" fill="#4C5852">letterlijk genoemd</text>
+      <rect x="458" y="444" width="354" height="58" rx="14" fill="#DCE5DC"/>
+      <circle cx="488" cy="473" r="15" fill="#173D2D"/><text x="488" y="479" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">4</text>
+      <text x="516" y="479" fill="#18201D" font-weight="700">Tekening</text><text x="700" y="479" fill="#4C5852">bestand + revisie</text>
+      <rect x="458" y="516" width="354" height="58" rx="14" fill="#EEE9BE"/>
+      <circle cx="488" cy="545" r="15" fill="#173D2D"/><text x="488" y="551" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">5</text>
+      <text x="516" y="551" fill="#18201D" font-weight="700">Gewenste datum</text><text x="700" y="551" fill="#4C5852">betekenis bekend?</text>
+    </g>
+    <text x="458" y="606" fill="#4C5852" font-size="16">Uitkomst per veld: aanwezig · ontbrekend · tegenstrijdig · onleesbaar</text>
+
+    <path d="M858 390h54" stroke="#173D2D" stroke-width="5" stroke-linecap="round"/><path d="m902 378 14 12-14 12" fill="none" stroke="#173D2D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="932" y="150" width="206" height="480" rx="28" fill="#173D2D"/>
+    <text x="962" y="198" fill="#FFFFFF" font-size="21" font-weight="700">CALCULATOR</text>
+    <text x="962" y="226" fill="#FFFFFF" font-size="21" font-weight="700">BESLIST</text>
+    <rect x="962" y="266" width="146" height="52" rx="14" fill="#FFFFFF"/>
+    <text x="1035" y="299" text-anchor="middle" fill="#173D2D" font-size="17" font-weight="700">Voorbereiden</text>
+    <rect x="962" y="334" width="146" height="52" rx="14" fill="#EEE9BE"/>
+    <text x="1035" y="367" text-anchor="middle" fill="#18201D" font-size="17" font-weight="700">Navragen</text>
+    <rect x="962" y="402" width="146" height="52" rx="14" fill="#EEE9BE"/>
+    <text x="1035" y="435" text-anchor="middle" fill="#18201D" font-size="17" font-weight="700">Specialist</text>
+    <text x="962" y="498" fill="#DCE5DC" font-size="16">Geen automatische</text>
+    <text x="962" y="524" fill="#DCE5DC" font-size="16">materiaalkeuze, prijs,</text>
+    <text x="962" y="550" fill="#DCE5DC" font-size="16">levertijd of reactie</text>
+  </g>
+
+  <rect x="62" y="660" width="1076" height="54" rx="16" fill="#DCE5DC"/>
+  <text x="600" y="694" text-anchor="middle" fill="#173D2D" font-family="Arial, sans-serif" font-size="19" font-weight="700">Ontbrekend blijft ontbrekend · iedere waarde houdt een bron · een bevoegde medewerker beslist</text>
+</svg>

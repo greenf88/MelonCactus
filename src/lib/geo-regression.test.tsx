@@ -51,8 +51,7 @@ describe("GEO content regression", () => {
       expect(article.date, article.slug).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(article.date <= today, article.slug).toBe(true);
       expect((article.modifiedDate ?? article.date) <= today, article.slug).toBe(true);
-      if (article.kind === "fictional-ai-case") {
-        expect(article.sources, article.slug).toBeUndefined();
+      if (article.kind === "fictional-ai-case" && !article.sources) {
         expect(article.visual, article.slug).toBeUndefined();
       } else {
         expect(article.sources?.length, article.slug).toBeGreaterThan(0);
@@ -70,6 +69,12 @@ describe("GEO content regression", () => {
       expect(dutchIds).toEqual(expect.arrayContaining(englishIds));
       if (nl.slug === "wat-bewijst-een-aangekondigde-fabrieksuitbreiding") {
         expect(dutchIds).toEqual([...englishIds, "umicore-hoboken-growth-2026"]);
+      } else if (nl.slug === "fictieve-ai-case-klantaanvragen-automatiseren") {
+        expect(dutchIds).toEqual([
+          "schneider-sps-industrial-intelligence-2026",
+          "fme-vibe-coding-manufacturing-2026",
+          "nist-generative-ai-profile",
+        ]);
       } else {
         expect(dutchIds).toEqual(englishIds);
       }
@@ -112,10 +117,12 @@ describe("GEO content regression", () => {
       expect(html, article.slug).toContain("article-summary");
       if (article.kind === "fictional-ai-case") {
         expect(html, article.slug).toContain("fictional-case-notice");
-        expect(html, article.slug).not.toContain("article-sources");
-      } else {
+      }
+      if (article.sources?.length) {
         expect(html, article.slug).toContain("article-sources");
         expect(html, article.slug).toContain(article.visual?.src);
+      } else {
+        expect(html, article.slug).not.toContain("article-sources");
       }
       const schemas = jsonLd(html);
       expect(schemas.length, article.slug).toBeGreaterThanOrEqual(2);
