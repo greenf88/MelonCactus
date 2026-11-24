@@ -11,7 +11,7 @@ import { practicalAiNetherlands } from "@/config/practical-ai-netherlands";
 import { aiPaths, nationalAiPaths, practicalAi } from "@/config/practical-ai";
 import { practicalAiCases } from "@/data/practical-ai-cases";
 import { languageAlternates, type Locale } from "@/lib/i18n";
-import { breadcrumbSchema, serviceSchema, socialImageMetadata } from "@/lib/seo";
+import { serviceSchema, socialImageMetadata } from "@/lib/seo";
 
 export type AiServiceArea = "twente" | "netherlands";
 
@@ -92,7 +92,6 @@ export function PracticalAiPage({ locale, area = "twente" }: { locale: Locale; a
         ? { "@type": "Country", name: "Netherlands" }
         : { "@type": "Place", name: "Twente" },
     }} />
-    <StructuredData data={breadcrumbSchema(locale, [{ name: nl ? "Diensten" : "Services", path: nl ? "/nl/diensten" : "/services" }, { name: c.title, path: paths[locale] }])} />
     <StructuredData data={{"@context":"https://schema.org","@type":"FAQPage",mainEntity:c.faq.map(([question,answer])=>({"@type":"Question",name:question,acceptedAnswer:{"@type":"Answer",text:answer}}))}} />
   </>;
 }

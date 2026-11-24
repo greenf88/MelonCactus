@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { StructuredData } from "@/components/structured-data";
 import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
-import { breadcrumbSchema, personSchema } from "@/lib/seo";
+import { personSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About Our Industrial Intelligence Practice",
@@ -48,6 +48,5 @@ export default function AboutPage() {
       </div>
     </Container></section>
     <StructuredData data={personSchema("en")} />
-    <StructuredData data={breadcrumbSchema("en", [{ name: "About", path: "/about" }])} />
   </>;
 }

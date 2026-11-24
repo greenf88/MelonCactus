@@ -6,7 +6,7 @@ import { StructuredData } from "@/components/structured-data";
 import { siteNl } from "@/config/site-nl";
 import { siteConfig } from "@/config/site";
 import { languageAlternates } from "@/lib/i18n";
-import { breadcrumbSchema, personSchema } from "@/lib/seo";
+import { personSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Rick Groeneveld en GFNI: over ons",
@@ -49,6 +49,5 @@ export default function DutchAboutPage() {
       </div>
     </Container></section>
     <StructuredData data={personSchema("nl")} />
-    <StructuredData data={breadcrumbSchema("nl", [{ name: "Over ons", path: "/nl/over-ons" }])} />
   </>;
 }

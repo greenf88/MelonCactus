@@ -103,7 +103,7 @@ describe("GEO content regression", () => {
     }
   });
 
-  it("renders primary article content, honest case labels and matching Article JSON-LD in source HTML", async () => {
+  it("renders primary article content, breadcrumb microdata and matching Article JSON-LD in source HTML", async () => {
     for (const { article, locale } of articleEntries()) {
       const html = renderToStaticMarkup(locale === "en"
         ? await EnglishArticlePage({ params: Promise.resolve({ slug: article.slug }) })
@@ -117,8 +117,10 @@ describe("GEO content regression", () => {
         expect(html, article.slug).toContain("article-sources");
         expect(html, article.slug).toContain(article.visual?.src);
       }
+      expect(html, article.slug).toContain('itemType="https://schema.org/BreadcrumbList"');
+      expect(html, article.slug).toContain('itemProp="itemListElement"');
       const schemas = jsonLd(html);
-      expect(schemas.length, article.slug).toBeGreaterThanOrEqual(2);
+      expect(schemas.length, article.slug).toBeGreaterThanOrEqual(1);
       const schema = schemas.find((item) => item["@type"] === "Article");
       expect(schema, article.slug).toBeDefined();
       expect(schema?.inLanguage, article.slug).toBe(locale);

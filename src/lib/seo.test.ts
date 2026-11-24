@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 import { insights } from "@/data/insights";
 import { insightsNl } from "@/data/insights-nl";
 import { articleSummary } from "@/data/article-summaries";
-import { breadcrumbSchema, entityGraph, entityIds, serviceSchema, socialImageUrl } from "./seo";
+import { entityGraph, entityIds, serviceSchema, socialImageUrl } from "./seo";
 
 describe("SEO identity and content", () => {
   it("uses one operator-backed organization entity, not a fictitious second company", () => {
@@ -30,9 +30,7 @@ describe("SEO identity and content", () => {
     expect(assessment.offers).not.toHaveProperty("price");
   });
 
-  it("uses canonical absolute URLs for breadcrumbs and social images", () => {
-    const breadcrumb = breadcrumbSchema("nl", [{ name: "Dienst", path: "/nl/diensten" }]);
-    expect(breadcrumb.itemListElement.map((item) => item.item)).toEqual(["https://meloncactus.com/nl", "https://meloncactus.com/nl/diensten"]);
+  it("uses canonical absolute URLs for social images", () => {
     expect(socialImageUrl("en", "article", "example")).toBe("https://meloncactus.com/social/en/article/example");
   });
 });
