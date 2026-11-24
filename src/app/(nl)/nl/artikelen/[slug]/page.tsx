@@ -13,7 +13,7 @@ import { seoTopics } from "@/data/seo-topics";
 import { getServiceDetail } from "@/data/seo-services";
 import { localizedAlternates } from "@/lib/i18n";
 import { articleReadingLabel } from "@/lib/reading-time";
-import { breadcrumbSchema, entityIds, socialImageMetadata } from "@/lib/seo";
+import { entityIds, socialImageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -66,7 +66,6 @@ export default async function DutchInsightPage({ params }: Props) {
           : <div className="article-cta"><h2>Gebruik deze aanpak voor uw actuele vraag.</h2><p>Bepaal de beslissing, de bewijsstandaard en de onzekerheid die ertoe doet.</p><div className="button-row"><ButtonLink href="/nl/contact">Bespreek uw onderzoeksvraag</ButtonLink><Link className="section-link" href="/nl/werkwijze">Bekijk de werkwijze →</Link></div></div>}
       </div>
     </Container>
-    <StructuredData data={breadcrumbSchema("nl", [{ name: "Artikelen", path: "/nl/artikelen" }, { name: insight.title, path }])} />
     <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`, headline: insight.title, description: insight.description, articleSection: isAiCase ? "Fictieve praktijkcase over AI" : isPracticalAiGuide ? "Praktische AI-handleiding" : "Industrieel onderzoek", inLanguage: "nl-NL", datePublished: insight.date, dateModified: insight.modifiedDate ?? insight.date, mainEntityOfPage: url, image: socialImageMetadata("nl", "article", insight.title, insight.slug).openGraph.images[0].url, author: { "@id": entityIds.organization }, publisher: { "@id": entityIds.organization }, ...(insight.sources?.length ? { citation: insight.sources.map((source) => source.url) } : {}) }} />
   </article>;
 }

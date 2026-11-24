@@ -7,7 +7,7 @@ import type { ServiceDetail } from "@/data/seo-services";
 import { getInsight } from "@/data/insights";
 import { getInsightNl } from "@/data/insights-nl";
 import type { Locale } from "@/lib/i18n";
-import { breadcrumbSchema, serviceSchema } from "@/lib/seo";
+import { serviceSchema } from "@/lib/seo";
 
 export function ServiceDetailPage({ detail, locale }: { detail: ServiceDetail; locale: Locale }) {
   const nl = locale === "nl";
@@ -39,7 +39,6 @@ export function ServiceDetailPage({ detail, locale }: { detail: ServiceDetail; l
       <p><Link className="section-link" href={detail.examplePath}>{nl ? "Bekijk een fictief voorbeeld" : "View a fictional example"} →</Link></p>
     </Container></section>
     <section className="closing-cta"><Container className="closing-inner"><div><p className="eyebrow">{nl ? "Bespreek uw vraag" : "Discuss the question"}</p><h2>{nl ? "Begin met de beslissing en de onzekerheid." : "Start with the decision and uncertainty."}</h2><p>{nl ? "Een formulieraanvraag is geen opdracht. Wij beoordelen eerst scope, prijs, bronnen en planning." : "A form enquiry is not an engagement. We review scope, fee, sources and timing first."}</p></div><ButtonLink href={`${contactPath}?report=${encodeURIComponent(detail.report.formValue ?? detail.report.name)}`}>{nl ? "Bespreek deze opdracht" : "Discuss this assessment"}</ButtonLink></Container></section>
-    <StructuredData data={breadcrumbSchema(locale, [{ name: nl ? "Diensten" : "Services", path: overviewPath }, { name: detail.title, path }])} />
     <StructuredData data={serviceSchema({ path, name: detail.title, description: detail.description, locale, priceNote: detail.timing })} />
   </>;
 }

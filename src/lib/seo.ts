@@ -59,17 +59,6 @@ export function personSchema(locale: Locale) {
   };
 }
 
-export function breadcrumbSchema(locale: Locale, entries: readonly { name: string; path: string }[]) {
-  const home = locale === "nl" ? { name: "Startpagina", path: "/nl" } : { name: "Home", path: "/" };
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [home, ...entries].map((entry, index) => ({
-      "@type": "ListItem", position: index + 1, name: entry.name, item: absoluteUrl(entry.path),
-    })),
-  };
-}
-
 export function serviceSchema(input: {
   path: string;
   name: string;

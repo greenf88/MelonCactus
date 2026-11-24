@@ -13,7 +13,7 @@ import { seoTopics } from "@/data/seo-topics";
 import { getServiceDetail } from "@/data/seo-services";
 import { localizedAlternates } from "@/lib/i18n";
 import { articleReadingLabel } from "@/lib/reading-time";
-import { breadcrumbSchema, entityIds, socialImageMetadata } from "@/lib/seo";
+import { entityIds, socialImageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -61,7 +61,6 @@ export default async function InsightPage({ params }: Props) {
           : <div className="article-cta"><h2>Apply this discipline to a live question.</h2><p>Define the decision, the evidence standard and the uncertainty that matters most.</p><div className="button-row"><ButtonLink href="/contact">Discuss an Intelligence Requirement</ButtonLink><Link className="section-link" href="/methodology">Review the methodology →</Link></div></div>}
       </div>
     </Container>
-    <StructuredData data={breadcrumbSchema("en", [{ name: "Insights", path: "/insights" }, { name: insight.title, path }])} />
     <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", "@id": `${url}#article`, headline: insight.title, description: insight.description, articleSection: isAiCase ? "Fictional practical AI case" : "Industrial intelligence", inLanguage: "en", datePublished: insight.date, dateModified: insight.modifiedDate ?? insight.date, mainEntityOfPage: url, image: socialImageMetadata("en", "article", insight.title, insight.slug).openGraph.images[0].url, author: { "@id": entityIds.organization }, publisher: { "@id": entityIds.organization }, ...(insight.sources?.length ? { citation: insight.sources.map((source) => source.url) } : {}) }} />
   </article>;
 }
