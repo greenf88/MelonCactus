@@ -102,7 +102,7 @@ const nl: readonly Topic[] = [
     method: "Wij begrenzen de benodigde capaciteit en regio, en vergelijken officieel bedrijfsmateriaal met openbare aanbestedingen, relevante registers, technische documentatie en onafhankelijk gepubliceerd projectmateriaal. Wanneer namen of rollen onduidelijk zijn, vermelden wij dat in plaats van een relatie te veronderstellen.",
     evidenceLimit: "Een genoemde klant bewijst de huidige leveromvang niet; een locatiebeeld bewijst geen beschikbare capaciteit; ontbrekend openbaar bewijs bewijst niet dat een vaardigheid ontbreekt. Vragenlijsten, locatiebezoek en contractcontrole blijven afzonderlijke stappen.",
     application: "Een gerichte intelligencebeoordeling kan één leveranciersvraag behandelen. Een technische en concurrentiegerichte beoordeling past wanneer processen, locaties of meerdere relaties meer diepgang vragen.",
-    articlePaths: ["/nl/artikelen/wat-is-industriele-concurrentie-intelligentie", "/nl/artikelen/nieuwe-fabriek-openen-versus-volledig-produceren", "/nl/artikelen/batterijfabriek-van-proefproductie-naar-commerciele-schaal"],
+    articlePaths: ["/nl/artikelen/herkomst-composietgrondstoffen-leveranciersrisico", "/nl/artikelen/wat-is-industriele-concurrentie-intelligentie", "/nl/artikelen/nieuwe-fabriek-openen-versus-volledig-produceren", "/nl/artikelen/batterijfabriek-van-proefproductie-naar-commerciele-schaal"],
     servicePaths: ["/nl/diensten/gerichte-intelligencebeoordeling", "/nl/diensten/technische-concurrentie-intelligence"], examplePath: "/nl/voorbeeldcase/vierde-pijler",
   },
   {
