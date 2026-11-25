@@ -13,6 +13,34 @@ export type ArticleSource = {
 const accessed = "2026-10-07";
 
 export const articleSources = {
+  euCompositeSafeguardAnnouncement: {
+    id: "eu-composites-safeguard-announcement-2026",
+    organization: "Europese Commissie, DG Handel en Economische Veiligheid",
+    title: "Europese Commissie start onderzoek naar de invoer van bepaalde composietgrondstoffen",
+    url: "https://policy.trade.ec.europa.eu/news/commission-initiates-safeguard-investigation-imports-certain-composites-2026-11-23_en",
+    date: "2026-11-23",
+    dateKind: "published",
+    datePrecision: "day",
+    accessed: "2026-11-25",
+    note: {
+      en: "Confirms initiation and outlines the material groups. It does not establish the outcome or the effects on a specific purchase.",
+      nl: "Bevestigt de start en beschrijft de materiaalcategorieën. De aankondiging bevat geen uitkomst of gevolgen voor een specifieke inkooppositie.",
+    },
+  },
+  euCompositeSafeguardNotice: {
+    id: "eu-composites-safeguard-notice-2026",
+    organization: "Publicatieblad van de Europese Unie",
+    title: "Officiële bekendmaking van de start van het onderzoek (C/2026/6060)",
+    url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52026XC06060",
+    date: "2026-11-23",
+    dateKind: "published",
+    datePrecision: "day",
+    accessed: "2026-11-25",
+    note: {
+      en: "Specifies the products under investigation and the associated commodity codes. It does not document the classification or origin of an individual shipment.",
+      nl: "Specificeert de producten in het onderzoek en vermeldt goederencodes. De indeling of oorsprong van een afzonderlijke zending moet apart worden vastgesteld.",
+    },
+  },
   scipEthics: {
     id: "scip-ethics",
     organization: "Strategic Consortium of Intelligence Professionals (SCIP)",

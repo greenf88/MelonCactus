@@ -5,6 +5,7 @@ import { practicalAiCasesNl } from "@/data/practical-ai-cases";
 import { articleSources } from "@/data/article-sources";
 import { articleVisuals } from "@/data/article-visuals";
 import { marketAnalysisInsightNl } from "@/data/market-analysis-insight";
+import { compositeSupplyInsightNl } from "@/data/composite-supply-insight";
 import { productionPlanningInsightNl } from "@/data/production-planning-insight";
 import { weldPhotoInspectionInsightNl } from "@/data/weld-photo-inspection-insight";
 import { workOrderRevisionInsightNl } from "@/data/work-order-revision-insight";
@@ -271,6 +272,7 @@ const originalInsightsNl: readonly Insight[] = [
 ];
 
 export const insightsNl: readonly Insight[] = [
+  compositeSupplyInsightNl,
   workOrderRevisionInsightNl,
   weldPhotoInspectionInsightNl,
   productionPlanningInsightNl,

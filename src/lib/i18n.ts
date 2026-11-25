@@ -47,6 +47,7 @@ export const standaloneArticlePaths = [
   "/nl/artikelen/ai-lasnaadinspectie-test-bestaande-fotos",
   "/nl/artikelen/ai-productieplanning-maakindustrie-orderfamilie",
   "/nl/artikelen/marktanalyse-maakindustrie-meerdere-indicatoren",
+  "/nl/artikelen/herkomst-composietgrondstoffen-leveranciersrisico",
 ] as const;
 
 export const publicRoutePaths: readonly string[] = [

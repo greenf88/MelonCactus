@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Drie bewijsstappen vóór een materiaalwissel</title>
+  <desc id="desc">Leg de juiste productkwaliteit vast, verifieer de leverroute en toets het alternatief aan de eigen technische eisen.</desc>
+  <rect width="1200" height="760" rx="32" fill="#F7F6EE"/>
+  <g transform="translate(0 80)" font-family="Arial, sans-serif" fill="#173D2D">
+    <text x="62" y="110" font-size="47" font-weight="700">Vóór u van materiaal wisselt</text>
+    <rect x="62" y="176" width="332" height="290" rx="24" fill="#173D2D"/>
+    <rect x="434" y="176" width="332" height="290" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <rect x="806" y="176" width="332" height="290" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <g font-size="24" font-weight="700">
+      <text x="90" y="229" fill="#EEE9BE">01 · PRODUCT</text>
+      <text x="462" y="229">02 · LEVERROUTE</text>
+      <text x="834" y="229">03 · ALTERNATIEF</text>
+    </g>
+    <g font-size="35" font-weight="700">
+      <text x="90" y="297" fill="#FFFFFF">Exacte kwaliteit</text>
+      <text x="462" y="297">Herkomst</text>
+      <text x="834" y="297">Technische toets</text>
+    </g>
+    <g font-size="28" fill="#4C5852">
+      <text x="90" y="369" fill="#FFFFFF">Fabrikantcode</text>
+      <text x="90" y="411" fill="#FFFFFF">Specificatie + partij</text>
+      <text x="462" y="369">Fabrikant + locatie</text>
+      <text x="462" y="411">Bewijs van oorsprong</text>
+      <text x="834" y="369">Dezelfde eisen</text>
+      <text x="834" y="411">Proef indien nodig</text>
+    </g>
+    <path d="M394 320h40m332 0h40" stroke="#709280" stroke-width="4"/>
+    <text x="62" y="537" font-size="28">Leg per stap vast wat u weet en wie het ontbrekende bewijs opvraagt.</text>
+  </g>
+</svg>
