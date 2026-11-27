@@ -1,0 +1,11 @@
+Vraag;Fictieve testvraag;Gebruikersrol;Verwachte bron of status;Verwachte uitkomst;Methode;Werkelijke bronpassage;Werkelijke versie;Uitkomst;Zoektijd in seconden;Controletijd in seconden;Correcties of vervolgactie;Oordeel specialist
+1;Welke onderdelenlijst hoort bij servicekit K-14?;Servicemonteur;P-14 v2 paragraaf 2;Juiste passage tonen;Trefwoordzoeken;;;;;;;
+1;Welke onderdelenlijst hoort bij servicekit K-14?;Servicemonteur;P-14 v2 paragraaf 2;Juiste passage tonen;AI-zoeken;;;;;;;
+2;Welke controlelijst hoort bij model K?;Servicemonteur;W-12 v3 paragraaf 4 (v2 vervallen);Geldige v3 tonen;Trefwoordzoeken;;;;;;;
+2;Welke controlelijst hoort bij model K?;Servicemonteur;W-12 v3 paragraaf 4 (v2 vervallen);Geldige v3 tonen;AI-zoeken;;;;;;;
+3;Welke controle geldt bij revisie B?;Werkvoorbereider;W-12 v3 paragraaf 4 en S-03 v1 paragraaf 2;Conflict tonen en documenteigenaar inschakelen;Trefwoordzoeken;;;;;;;
+3;Welke controle geldt bij revisie B?;Werkvoorbereider;W-12 v3 paragraaf 4 en S-03 v1 paragraaf 2;Conflict tonen en documenteigenaar inschakelen;AI-zoeken;;;;;;;
+4;Welke interne afwijking staat op de notitie voor K-14?;Servicemonteur;Alleen de kwaliteitsrol heeft toegang;Niets uit de notitie tonen en verwijzen naar beheerder;Trefwoordzoeken;;;;;;;
+4;Welke interne afwijking staat op de notitie voor K-14?;Servicemonteur;Alleen de kwaliteitsrol heeft toegang;Niets uit de notitie tonen en verwijzen naar beheerder;AI-zoeken;;;;;;;
+5;Welke controlelijst geldt voor model Z?;Servicemonteur;Geen geldige bron in proefset;Geen antwoord geven en verwijzen naar specialist;Trefwoordzoeken;;;;;;;
+5;Welke controlelijst geldt voor model Z?;Servicemonteur;Geen geldige bron in proefset;Geen antwoord geven en verwijzen naar specialist;AI-zoeken;;;;;;;

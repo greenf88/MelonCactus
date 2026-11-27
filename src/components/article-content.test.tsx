@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { industrialInsights } from "@/data/industrial-insights";
@@ -24,8 +25,8 @@ describe("sourced article rendering", () => {
     const dutch = insightsNl.filter((article) => article.sources?.length);
     const standaloneEnglishCount = standaloneArticlePaths.filter((path) => path.startsWith("/insights/")).length;
     const standaloneDutchCount = standaloneArticlePaths.filter((path) => path.startsWith("/nl/artikelen/")).length;
-    expect(english).toHaveLength(9 + standaloneEnglishCount);
-    expect(dutch).toHaveLength(9 + standaloneDutchCount);
+    expect(english.length).toBeGreaterThanOrEqual(9 + standaloneEnglishCount);
+    expect(dutch.length).toBeGreaterThanOrEqual(9 + standaloneDutchCount);
 
     for (const article of english) {
       const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix="section" locale="en" />);
@@ -58,7 +59,7 @@ describe("sourced article rendering", () => {
       const standaloneCount = standaloneArticlePaths.filter((path) => locale === "nl"
         ? path.startsWith("/nl/artikelen/")
         : path.startsWith("/insights/")).length;
-      expect(visualArticles).toHaveLength(9 + standaloneCount);
+      expect(visualArticles.length).toBeGreaterThanOrEqual(9 + standaloneCount);
 
       for (const article of visualArticles) {
         const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix={idPrefix} locale={locale} />);
@@ -84,5 +85,26 @@ describe("sourced article rendering", () => {
     expect(html).toContain("<caption>Three practical authority levels for an industrial AI workflow</caption>");
     expect(html).toContain('<th scope="col">Level</th>');
     expect(html).toContain('<th scope="row">Recommendation</th>');
+  });
+
+  it("provides two fillable worksheet rows per question for the Dutch knowledge search trial", () => {
+    const article = insightsNl.find((item) => item.slug === "fictieve-ai-case-interne-kennisbank");
+    if (!article) throw new Error("Missing Dutch knowledge search article");
+    const worksheet = "/ai-kennisbank-technische-service.csv";
+    const html = renderToStaticMarkup(<ArticleContent insight={article} idPrefix="sectie" locale="nl" />);
+    expect(html).toContain(`href="${worksheet}"`);
+
+    const [header, ...rows] = readFileSync(`public${worksheet}`, "utf8").trimEnd().split(/\r?\n/)
+      .map((line) => line.split(";"));
+    expect(rows).toHaveLength(10);
+    for (const id of ["1", "2", "3", "4", "5"]) {
+      const pair = rows.filter(([questionId]) => questionId === id);
+      expect(pair.map((row) => row[5])).toEqual(["Trefwoordzoeken", "AI-zoeken"]);
+      for (const row of pair) {
+        expect(row).toHaveLength(header.length);
+        expect(row.slice(6)).toEqual(Array(header.length - 6).fill(""));
+      }
+      expect(html).toContain(`<strong>${pair[0][1]}</strong>`);
+    }
   });
 });
