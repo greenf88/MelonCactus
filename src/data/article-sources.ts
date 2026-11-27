@@ -13,6 +13,34 @@ export type ArticleSource = {
 const accessed = "2026-10-07";
 
 export const articleSources = {
+  cbsAiUseByCompanySize2026: {
+    id: "cbs-ai-use-company-size-2026",
+    organization: "Centraal Bureau voor de Statistiek",
+    title: "AI-gebruik bedrijven ruim verdubbeld, sterkste toename in mkb",
+    url: "https://www.cbs.nl/nl-nl/nieuws/2026/48/ai-gebruik-bedrijven-ruim-verdubbeld-sterkste-toename-in-mkb",
+    date: "2026-11-26",
+    dateKind: "published",
+    datePrecision: "day",
+    accessed: "2026-11-27",
+    note: {
+      en: "The Dutch table reports provisional AI adoption by business size. It does not measure the output of a knowledge-search trial.",
+      nl: "De tabel geeft voorlopige cijfers over AI-gebruik naar bedrijfsgrootte. Ze meet geen uitkomst van een proef met technisch zoeken.",
+    },
+  },
+  cbsSmallBusinessIct2026: {
+    id: "cbs-ict-small-business-2026",
+    organization: "Centraal Bureau voor de Statistiek",
+    title: "ICT-gebruik bij kleine bedrijven; bedrijfstak en bedrijfsgrootte, 2026",
+    url: "https://www.cbs.nl/nl-nl/cijfers/detail/86364NED?dl=E2794",
+    date: "2026-11-26",
+    dateKind: "published",
+    datePrecision: "day",
+    accessed: "2026-11-27",
+    note: {
+      en: "Describes the coverage by industry and the change to SBI 2025 for the 2026 table.",
+      nl: "Beschrijft welke bedrijfstakken de tabel bestrijkt en vermeldt de overgang naar SBI 2025 voor deze publicatie.",
+    },
+  },
   scipEthics: {
     id: "scip-ethics",
     organization: "Strategic Consortium of Intelligence Professionals (SCIP)",

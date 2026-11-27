@@ -1,3 +1,4 @@
+import { articleSources } from "@/data/article-sources";
 import type { Insight } from "@/data/insights";
 
 const publicationDate = "2026-10-17";
@@ -213,16 +214,41 @@ export const practicalAiCasesNl: readonly Insight[] = [
   {
     kind: "fictional-ai-case",
     slug: "fictieve-ai-case-interne-kennisbank",
-    title: "Fictieve AI-case: technische kennis vinden zonder te gokken",
-    description: "Hoe een fictief technisch dienstverlenend bedrijf een interne AI-kennisbank kan toetsen met zichtbare bronnen, documentversies en menselijke controle.",
+    title: "Een AI-kennisbank voor technische service testen: vijf fictieve vragen",
+    description: "Vergelijk een interne AI-kennisbank met gewoon zoeken. Gebruik vijf fictieve vragen om bronversies, toegangsrechten en correctiewerk te toetsen.",
     date: publicationDate,
     displayDate: "17 oktober 2026",
+    modifiedDate: "2026-11-27",
+    displayModifiedDate: "27 november 2026",
+    sources: [articleSources.cbsAiUseByCompanySize2026, articleSources.cbsSmallBusinessIct2026],
+    visual: {
+      width: 1200,
+      height: 760,
+      mobileWidth: 760,
+      mobileHeight: 1100,
+      src: "/article-visuals/kennisbank-broncontrole-nl.svg",
+      mobileSrc: "/article-visuals/kennisbank-broncontrole-nl-mobile.svg",
+      alt: "Besliskader voor technische zoekvragen: controleer toegang, zoek de geldige passage en verwijs bij ontbrekende of tegenstrijdige bronnen naar een specialist.",
+      title: "Van zoekvraag naar een controleerbare uitkomst",
+      caption: "Bij elke vraag bepaalt u vooraf welke rol de bron mag openen, welke versie geldig is en wanneer een specialist nodig is.",
+      explanationLabel: "Uitleg van de broncontrole",
+      details: [
+        { label: "Toegang", text: "Het systeem gebruikt alleen documenten die de medewerker met die rol mag openen." },
+        { label: "Broncontrole", text: "Een actueel antwoord verwijst naar de geldige versie en de precieze passage." },
+        { label: "Escalatie", text: "Bij een inhoudelijk conflict of een ontbrekende bron houdt de specialist het besluit." },
+      ],
+      afterSectionIndex: 1,
+    },
     sections: [
       {
         heading: "De fictieve situatie: kennis verspreid over documenten",
         paragraphs: [
           "Een fictief technisch dienstverlenend bedrijf bewaart handleidingen, werkinstructies, leveranciersbulletins en projectnotities in verschillende mappen. Ervaren medewerkers weten meestal waar zij moeten zoeken. Nieuwe collega's zijn langer bezig of gebruiken soms een verouderd document. De directie wil praktische AI-hulp, maar geen chatbot die een antwoord verzint en als beleid presenteert.",
-          "De beslisvraag blijft bewust klein: kan een interne AI-zoekfunctie medewerkers sneller naar de juiste passage leiden, terwijl interpretatie en handelen bij de medewerker blijven? Dit gaat over kennis terugvinden, niet over het vervangen van technisch oordeel.",
+          "De directie wil weten of medewerkers met een interne AI-kennisbank sneller bij de geldige passage komen én hoeveel controlewerk daarna overblijft. Dat is herkenbaar voor een technisch servicebedrijf in Twente, de Achterhoek of elders in Nederland. De specialist blijft verantwoordelijk voor de interpretatie van de instructie.",
+          {
+            text: "Het CBS meldde op 26 november 2026 dat volgens voorlopige cijfers 55 procent van de bedrijven met 10 tot 50 werknemers in de onderzochte Nederlandse bedrijfstakken in 2026 AI gebruikte. De tabel omvat meerdere bedrijfstakken. Het cijfer zegt niets over tijdwinst bij technische service of het gebruik in Twente of de Achterhoek. Voor dat besluit telt de uitkomst van uw eigen proef.",
+            sourceIds: ["cbs-ai-use-company-size-2026", "cbs-ict-small-business-2026"],
+          },
         ],
       },
       {
@@ -239,10 +265,24 @@ export const practicalAiCasesNl: readonly Insight[] = [
         ],
       },
       {
-        heading: "Wat een praktische AI-werkdag kan toetsen",
+        heading: "Testblad voor vijf fictieve technische vragen",
+        markdown: [
+          "Alle vragen, documentcodes en versies hieronder zijn verzonnen voor de proef. Laat een specialist per testregel vooraf de verwachte passage en uitkomst vastleggen. Neem ook fictieve documenten op met de status vervallen of beperkt toegankelijk, zodat u kunt toetsen of de zoekfunctie die grenzen respecteert.",
+          "",
+          "1. **Welke onderdelenlijst hoort bij servicekit K-14?** De servicemonteur mag de onderdelenlijst P-14 v2, § 2 openen. Verwacht een verwijzing naar de juiste passage en versie.",
+          "2. **Welke controlelijst hoort bij model K?** De servicemonteur mag werkinstructie W-12 v3, § 4 openen. Een archiefkopie bevat v2 en is vervallen. Verwacht een verwijzing naar v3 met herkenbare status.",
+          "3. **Welke controle geldt bij revisie B?** De werkvoorbereider mag W-12 v3, § 4 en servicebulletin S-03 v1, § 2 openen. De stukken spreken elkaar tegen en het vrijgaveoverzicht geeft geen uitsluitsel. Verwacht dat het conflict zichtbaar blijft en vraag de documenteigenaar om een besluit.",
+          "4. **Welke interne afwijking staat op de notitie voor K-14?** De notitie is alleen beschikbaar voor de kwaliteitsrol. De servicemonteur krijgt geen inhoud, samenvatting of bronverwijzing en wordt naar de beheerder verwezen.",
+          "5. **Welke controlelijst geldt voor model Z?** De servicemonteur mag de bronset voor model K openen. Er is geen geldige bron voor model Z in de proefset. Verwacht een melding dat een antwoord ontbreekt en verwijs naar een specialist.",
+          "",
+          "[Open het invulbare testblad als CSV](/ai-kennisbank-technische-service.csv). Sla het lokaal op en noteer voor elke vraag en zoekmethode de werkelijke bron, versie, uitkomst, zoektijd, controletijd, correcties en het oordeel van de specialist.",
+        ].join("\n"),
+      },
+      {
+        heading: "Vergelijk met gewoon zoeken op dezelfde vragen",
         paragraphs: [
-          "Tijdens een AI-werkdag kan het team representatieve vragen verzamelen, bepalen wat een goed antwoord moet bevatten en vaststellen waar gewone zoekfuncties al voldoen. Een afgebakende proef kan daarna zoeken op trefwoorden vergelijken met AI-ondersteund zoeken. Het doel is leren welke aanpak bruikbaar is, niet AI in iedere vraag dwingen.",
-          "De test hoort ook lastige voorbeelden te bevatten: een vervallen instructie, twee documenten met andere terminologie en een vraag die niet uit het beschikbare materiaal kan worden beantwoord. Juist die gevallen laten zien of de werkwijze onzekerheid zichtbaar maakt.",
+          "Gebruik voor trefwoordzoeken en AI-zoeken dezelfde documentset, versiestatus, toegangsregels en vragen. Laat twee medewerkers de zoekmethoden in omgekeerde volgorde gebruiken, zodat het vooraf vinden van een passage de tweede methode minder bevoordeelt. Start de tijdmeting bij de vraag en stop pas wanneer de medewerker de oorspronkelijke passage heeft gecontroleerd of weet naar wie de vraag moet.",
+          "Laat de specialist beoordelen of de passage klopt, of de gebruiker die mag openen en of een antwoord of doorverwijzing terecht was. Houd bij welke handmatige correcties nodig waren. Met vijf vragen ziet u waar de opzet faalt of extra werk vraagt. Voor een uitspraak over structurele tijdwinst hebt u een grotere, representatieve proef nodig.",
         ],
       },
       {
@@ -255,8 +295,8 @@ export const practicalAiCasesNl: readonly Insight[] = [
       {
         heading: "Een verstandige uitkomst is bewijs voor een besluit",
         paragraphs: [
-          "De proef slaagt wanneer medewerkers voor de afgesproken vragen herleidbare informatie vinden en begrijpen wanneer zij naar het oorspronkelijke document of een expert moeten terugkeren. De proef kan ook aantonen dat betere mappen, metadata of gewone zoekfuncties het grootste deel van het probleem oplossen.",
-          "Pas met dat bewijs besluit het fictieve bedrijf of het meer documenten opneemt of een koppeling onderzoekt. Zo blijft kennismanagement met AI beheersbaar voor het mkb: één afgebakende toepassing, zichtbare bronnen en geen verborgen overdracht van verantwoordelijkheid.",
+          "Stop de proef als de zoekfunctie beperkte inhoud toont, een vervallen instructie als geldig presenteert of een bronloze uitkomst geeft. Laat de documenteigenaar een onopgelost bronconflict behandelen. Herhaal de betreffende proeven na herstel voordat u meer mensen of documenten toevoegt.",
+          "Werkt trefwoordzoeken op dezelfde vragen even goed met minder controlewerk? Verbeter dan eerst de documentnamen en metadata. Geeft de AI-zoekfunctie vaker een bruikbare verwijzing met beheersbaar correctiewerk, dan kan het team een grotere proef afspreken. Beide keuzes vragen dezelfde discipline: maak zichtbaar welke bron leidend is en wie een technische beslissing vrijgeeft.",
         ],
       },
     ],

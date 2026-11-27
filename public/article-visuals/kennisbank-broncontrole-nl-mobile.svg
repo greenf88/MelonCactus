@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1100" viewBox="0 0 760 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Van zoekvraag naar een controleerbare uitkomst</title>
+  <desc id="desc">Controleer toegang en de geldige bronpassage. Schakel een specialist in bij tegenstrijdige of ontbrekende bronnen.</desc>
+  <rect width="760" height="1100" rx="32" fill="#F7F6EE"/>
+  <g font-family="Arial, sans-serif" fill="#173D2D">
+    <text x="58" y="105" font-size="46" font-weight="700">Een antwoord controleren</text>
+    <path d="M380 370v29m-9-10 9 10 9-10m-9 221v29m-9-10 9 10 9-10" fill="none" stroke="#557C66" stroke-width="4"/>
+    <rect x="58" y="165" width="644" height="200" rx="24" fill="#173D2D"/>
+    <text x="92" y="236" font-size="41" font-weight="700" fill="#FFFFFF">Toegang</text>
+    <text x="92" y="303" font-size="31" fill="#EEE9BE">Mag de rol het document openen?</text>
+    <rect x="58" y="405" width="644" height="200" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <text x="92" y="476" font-size="41" font-weight="700">Geldige bron</text>
+    <text x="92" y="543" font-size="31" fill="#4C5852">Welke versie en welke passage?</text>
+    <rect x="58" y="645" width="644" height="200" rx="24" fill="#FFFFFF" stroke="#DCE5DC" stroke-width="3"/>
+    <text x="92" y="716" font-size="41" font-weight="700">Uitkomst</text>
+    <text x="92" y="783" font-size="31" fill="#4C5852">Antwoord of naar een specialist.</text>
+    <rect x="58" y="901" width="644" height="122" rx="24" fill="#EEE9BE"/>
+    <text x="92" y="952" font-size="31" font-weight="700">Bron ontbreekt of spreekt tegen?</text>
+    <text x="92" y="994" font-size="31" font-weight="700">Schakel een specialist in.</text>
+  </g>
+</svg>

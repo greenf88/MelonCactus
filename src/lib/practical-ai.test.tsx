@@ -87,7 +87,7 @@ describe("practical AI service", () => {
         expect(article.kind).toBe("fictional-ai-case");
         expect(article.sections.length).toBeGreaterThanOrEqual(5);
         expect(html).toContain(`href="${pathPrefix}${article.slug}"`);
-        expect(article.sources).toBeUndefined();
+        if (article.sources) expect(article.sources.length).toBeGreaterThan(0);
       }
     }
     expect(englishNational).toContain("not customer assignments or measured results");
