@@ -1,3 +1,4 @@
+import type { ArticleVisual } from "@/data/article-visuals";
 import { articleSources } from "@/data/article-sources";
 import type { Insight } from "@/data/insights";
 
@@ -238,7 +239,7 @@ export const practicalAiCasesNl: readonly Insight[] = [
         { label: "Escalatie", text: "Bij een inhoudelijk conflict of een ontbrekende bron houdt de specialist het besluit." },
       ],
       afterSectionIndex: 1,
-    },
+    } satisfies ArticleVisual,
     sections: [
       {
         heading: "De fictieve situatie: kennis verspreid over documenten",
